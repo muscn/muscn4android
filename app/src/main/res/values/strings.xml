@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">MUSCN</string>
+    <string name="loading">loading...</string>
+    <string name="error">Error Ocurred. Try again</string>
+    <string name="retry">Retry again...</string>
+    <string name="empty">Empty</string>
+    <string name="days">DAYS</string>
+    <string name="hours">HOURS</string>
+    <string name="mins">MINS</string>
+    <string name="secs">SECS</string>
 </resources>
