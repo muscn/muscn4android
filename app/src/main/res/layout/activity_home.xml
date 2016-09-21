@@ -190,7 +190,7 @@
 
             <!--competition name-->
             <TextView
-                android:id="@+id/competitionNameTextView"
+                android:id="@+id/competitionNameVenueTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/home_view_margin_top_large"
@@ -201,7 +201,7 @@
                 android:textSize="@dimen/competition_txt_size" />
 
             <TextView
-                android:id="@+id/tvChannelTextView"
+                android:id="@+id/broadCastChannelTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/activity_horizontal_margin"

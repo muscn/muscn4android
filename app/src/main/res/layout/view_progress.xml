@@ -26,7 +26,7 @@
             android:layout_gravity="center"
             android:padding="5dp"
             android:text="@string/loading"
-            android:textColor="#33475f"
+            android:textColor="@color/white"
             android:textSize="12sp" />
     </LinearLayout>
 </FrameLayout>

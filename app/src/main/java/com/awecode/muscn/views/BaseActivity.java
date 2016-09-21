@@ -36,4 +36,26 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     protected abstract int getLayoutResourceId();
+
+    protected void showProgressView(String message) {
+        mStateLayout.showProgressView(message);
+    }
+
+    protected void showProgressView() {
+        mStateLayout.showProgressView();
+    }
+
+    protected void showErrorView(String message) {
+        mStateLayout.showEmptyView(message);
+    }
+
+    protected void showErrorView() {
+        mStateLayout.showEmptyView();
+    }
+
+    protected void showContentView() {
+        mStateLayout.showContentView();
+    }
+
+
 }

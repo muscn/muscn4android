@@ -15,10 +15,6 @@ import android.widget.TextView;
 
 import com.awecode.muscn.R;
 
-
-/**
- * Created by lcc_luffy on 2016/1/30.
- */
 public class StateLayout extends FrameLayout {
     private View contentView;
 
