@@ -5,8 +5,14 @@ import android.util.Log;
 
 import com.awecode.muscn.R;
 import com.awecode.muscn.model.CountDownTime;
+import com.awecode.muscn.model.http.fixtures.FixturesResponse;
 import com.awecode.muscn.util.Util;
 import com.awecode.muscn.util.countdown_timer.CountDownTimer;
+
+import rx.Observable;
+import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class HomeActivity extends BaseActivity {
     private static final String TAG = HomeActivity.class.getSimpleName();
@@ -14,8 +20,31 @@ public class HomeActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        configureCountDownTimer();
 
+
+        requestFixturesList();
+    }
+
+    private void requestFixturesList() {
+        Observable<FixturesResponse> call = mApiInterface.getFixtures();
+        call.subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<FixturesResponse>() {
+                    @Override
+                    public void onCompleted() {
+                        Log.v(TAG, "fixture response complete");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.v(TAG, "fixture response error: "+e.getMessage());
+                    }
+
+                    @Override
+                    public void onNext(FixturesResponse fixturesResponse) {
+                        Log.v(TAG, "fixture response: " + fixturesResponse.getResults().get(0).getDatetime());
+                    }
+                });
     }
 
     private void configureCountDownTimer() {
