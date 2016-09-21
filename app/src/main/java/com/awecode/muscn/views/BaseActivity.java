@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.awecode.muscn.R;
 import com.awecode.muscn.util.Util;
+import com.awecode.muscn.util.retrofit.MuscnApiInterface;
+import com.awecode.muscn.util.retrofit.ServiceGenerator;
 import com.awecode.muscn.util.stateLayout.StateLayout;
 
 import butterknife.BindView;
@@ -16,9 +18,9 @@ import butterknife.ButterKnife;
  * Created by munnadroid on 9/21/16.
  */
 public abstract class BaseActivity extends AppCompatActivity {
+    protected MuscnApiInterface mApiInterface = ServiceGenerator.createService(MuscnApiInterface.class);
     @BindView(R.id.stateLayout)
     StateLayout mStateLayout;
-
     protected Context mContext;
 
     @Override
