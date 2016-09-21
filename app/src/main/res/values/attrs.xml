@@ -5,4 +5,5 @@
         <attr name="emptyDrawable" format="reference" />
         <attr name="progressView" format="reference" />
     </declare-styleable>
+
 </resources>
