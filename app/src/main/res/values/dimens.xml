@@ -4,7 +4,7 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="drawable_size">76dp</dimen>
     <dimen name="home_view_margin_top_large">30dp</dimen>
-    <dimen name="titlee_logo_size">25dp</dimen>
+    <dimen name="titlee_logo_size">30dp</dimen>
     <dimen name="match_between_txt_size">25sp</dimen>
     <dimen name="competition_txt_size">19sp</dimen>
     <dimen name="time_label_txt_size">18sp</dimen>
