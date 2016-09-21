@@ -10,4 +10,12 @@ public class Util {
     public static void toast(Context context, String message) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
     }
+
+    public static String getTwoDigitNumber(long number) {
+        if (number >= 0 && number < 10) {
+            return "0" + number;
+        }
+        return String.valueOf(number);
+    }
+
 }
