@@ -2,7 +2,6 @@ package com.awecode.muscn.views;
 
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -47,7 +46,7 @@ public class HomeActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        configureCountDownTimer();
+        initializeCountDownTimer();
         showProgressView("Loading fixture...");
         requestFixturesList();
     }
@@ -76,34 +75,55 @@ public class HomeActivity extends BaseActivity {
     }
 
     private void configureFixtureView(Result result) {
-        String opponentName = result.getOpponent().getName();
-        Boolean isHomeGame = result.getIsHomeGame();
-        //configure broadcast channel name
-        configureBroadCastChannelView(result.getBroadcastOn());
-        //configure countdown timer
-        configureCountDownTimer(result.getDatetime());
+        try {
+            String opponentName = result.getOpponent().getName();
+            Boolean isHomeGame = result.getIsHomeGame();
+            //configure broadcast channel name
+            configureBroadCastChannelView(result.getBroadcastOn());
+            //configure countdown timer
+            configureDateTime_CountDownTimer(result.getDatetime());
 
-        //configure game between team names
-        if (isHomeGame)
-            mCompetitionBetweenTextView.setText("Manchester United\nvs.\n" + opponentName);
-        else
-            mCompetitionBetweenTextView.setText(opponentName + "\nvs.\nManchester United");
+            //configure game between team names
+            if (isHomeGame)
+                mCompetitionBetweenTextView.setText("Manchester United\nvs.\n" + opponentName);
+            else
+                mCompetitionBetweenTextView.setText(opponentName + "\nvs.\nManchester United");
 
-        //configure venue name
-        mCompetitionNameVenueTextView.setText("English Premier League\n" + result.getVenue());
+            //configure venue name
+            mCompetitionNameVenueTextView.setText("English Premier League\n" + result.getVenue());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
     }
 
-    private void configureCountDownTimer(String dateStr) {
+
+    private void configureDateTime_CountDownTimer(String dateStr) {
         //2015-08-08T11:45:00Z //yyyy-MM-dd'T'HH:mm:ssZZ
-        dateStr="2016-09-22T23:45:00Z";
+        dateStr = "2016-09-26T23:45:00Z";
         try {
             SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-            Date date = myFormat.parse(dateStr);
 
-            long timeDiff = date.getTime()-new Date().getTime();
+            //set time for countdown
+            Date date = myFormat.parse(dateStr);
+            long timeDiff = date.getTime() - new Date().getTime();
             mCountDownTimer.setTime(timeDiff);
+
+            try {
+                //format new date format
+                SimpleDateFormat targetDateFormat = new SimpleDateFormat("dd MMMM, EEEE");
+                String newDateFormat = targetDateFormat.format(date);
+
+                //format for hr min
+                SimpleDateFormat timeFormatter = new SimpleDateFormat("h:mm a");
+                String displayValue = timeFormatter.format(date);
+
+                mDateTimeTextView.setText(newDateFormat + "\n" + displayValue + " NPT");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -117,15 +137,11 @@ public class HomeActivity extends BaseActivity {
             mBroadCastChannelTextView.setVisibility(View.GONE);
     }
 
-    private void configureCountDownTimer() {
+    private void initializeCountDownTimer() {
         mCountDownTimer = new CountDownTimer();
         mCountDownTimer.setOnTimerListener(new CountDownTimer.TimerListener() {
             @Override
             public void onTick(long millisUntilFinished, CountDownTime countDownTime) {
-
-
-                Log.v(TAG, "time ticked val: " + Util.getTwoDigitNumber(countDownTime.getDays()) + ":" + Util.getTwoDigitNumber(countDownTime.getHours()) + ":" + Util.getTwoDigitNumber(countDownTime.getMinutes())
-                        + ":" + Util.getTwoDigitNumber(countDownTime.getSeconds()));
                 mDaysTextView.setText(Util.getTwoDigitNumber(countDownTime.getDays()));
                 mHoursTextView.setText(Util.getTwoDigitNumber(countDownTime.getHours()));
                 mMinsTextView.setText(Util.getTwoDigitNumber(countDownTime.getMinutes()));
@@ -145,8 +161,4 @@ public class HomeActivity extends BaseActivity {
         return R.layout.activity_home;
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
 }
