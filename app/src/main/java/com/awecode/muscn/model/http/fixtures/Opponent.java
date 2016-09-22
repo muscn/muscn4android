@@ -20,19 +20,19 @@ public class Opponent {
     private String alternativeNames;
     @SerializedName("nick_name")
     @Expose
-    private String nickName;
+    private Object nickName;
     @SerializedName("foundation_date")
     @Expose
     private Object foundationDate;
     @SerializedName("crest")
     @Expose
-    private Object crest;
+    private String crest;
     @SerializedName("color")
     @Expose
-    private String color;
+    private Object color;
     @SerializedName("wiki")
     @Expose
-    private Object wiki;
+    private String wiki;
     @SerializedName("stadium")
     @Expose
     private Object stadium;
@@ -114,7 +114,7 @@ public class Opponent {
      * @return
      *     The nickName
      */
-    public String getNickName() {
+    public Object getNickName() {
         return nickName;
     }
 
@@ -123,7 +123,7 @@ public class Opponent {
      * @param nickName
      *     The nick_name
      */
-    public void setNickName(String nickName) {
+    public void setNickName(Object nickName) {
         this.nickName = nickName;
     }
 
@@ -150,7 +150,7 @@ public class Opponent {
      * @return
      *     The crest
      */
-    public Object getCrest() {
+    public String getCrest() {
         return crest;
     }
 
@@ -159,7 +159,7 @@ public class Opponent {
      * @param crest
      *     The crest
      */
-    public void setCrest(Object crest) {
+    public void setCrest(String crest) {
         this.crest = crest;
     }
 
@@ -168,7 +168,7 @@ public class Opponent {
      * @return
      *     The color
      */
-    public String getColor() {
+    public Object getColor() {
         return color;
     }
 
@@ -177,7 +177,7 @@ public class Opponent {
      * @param color
      *     The color
      */
-    public void setColor(String color) {
+    public void setColor(Object color) {
         this.color = color;
     }
 
@@ -186,7 +186,7 @@ public class Opponent {
      * @return
      *     The wiki
      */
-    public Object getWiki() {
+    public String getWiki() {
         return wiki;
     }
 
@@ -195,7 +195,7 @@ public class Opponent {
      * @param wiki
      *     The wiki
      */
-    public void setWiki(Object wiki) {
+    public void setWiki(String wiki) {
         this.wiki = wiki;
     }
 

@@ -4,6 +4,7 @@ package com.awecode.muscn.model.http.fixtures;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+
 public class CompetitionYear {
 
     @SerializedName("id")
@@ -14,7 +15,7 @@ public class CompetitionYear {
     private Integer year;
     @SerializedName("competition")
     @Expose
-    private Integer competition;
+    private Competition competition;
 
     /**
      * 
@@ -57,7 +58,7 @@ public class CompetitionYear {
      * @return
      *     The competition
      */
-    public Integer getCompetition() {
+    public Competition getCompetition() {
         return competition;
     }
 
@@ -66,7 +67,7 @@ public class CompetitionYear {
      * @param competition
      *     The competition
      */
-    public void setCompetition(Integer competition) {
+    public void setCompetition(Competition competition) {
         this.competition = competition;
     }
 

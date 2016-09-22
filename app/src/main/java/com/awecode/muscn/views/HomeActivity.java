@@ -3,6 +3,7 @@ package com.awecode.muscn.views;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.awecode.muscn.R;
@@ -11,6 +12,7 @@ import com.awecode.muscn.model.http.fixtures.FixturesResponse;
 import com.awecode.muscn.model.http.fixtures.Result;
 import com.awecode.muscn.util.Util;
 import com.awecode.muscn.util.countdown_timer.CountDownTimer;
+import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -33,14 +35,20 @@ public class HomeActivity extends BaseActivity {
     TextView mMinsTextView;
     @BindView(R.id.secsTextView)
     TextView mSecsTextView;
-    @BindView(R.id.competitionBetweenTextView)
-    TextView mCompetitionBetweenTextView;
+    @BindView(R.id.firstTeamNameTextView)
+    TextView mFirstTeamNameTextView;
+    @BindView(R.id.secondTeamNameTextView)
+    TextView mSecondTeamNameTextView;
     @BindView(R.id.competitionNameVenueTextView)
     TextView mCompetitionNameVenueTextView;
     @BindView(R.id.broadCastChannelTextView)
     TextView mBroadCastChannelTextView;
     @BindView(R.id.dateTimeTextView)
     TextView mDateTimeTextView;
+    @BindView(R.id.firstTeamImageView)
+    ImageView mFirstTeamImageView;
+    @BindView(R.id.secondTeamImageView)
+    ImageView mSecondTeamImageView;
 
     private CountDownTimer mCountDownTimer;
 
@@ -96,13 +104,38 @@ public class HomeActivity extends BaseActivity {
             configureDateTime_CountDownTimer(result.getDatetime());
 
             //configure game between team names
-            if (isHomeGame)
-                mCompetitionBetweenTextView.setText(getString(R.string.manchester_united) + opponentName);
-            else
-                mCompetitionBetweenTextView.setText(opponentName + "\nvs.\n"+getString(R.string.manchester_united));
+            if (isHomeGame) {
+                mFirstTeamNameTextView.setText(getString(R.string.manchester_united));
+                mSecondTeamNameTextView.setText(opponentName);
+                //populate imageview
+                Picasso.with(mContext)
+                        .load((String) result.getOpponent().getCrest())
+                        .resize(getDimen(R.dimen.team_logo_size), getDimen(R.dimen.team_logo_size))
+                        .into(mSecondTeamImageView);
+
+                Picasso.with(mContext)
+                        .load(R.drawable.manutd_logo)
+                        .resize(getDimen(R.dimen.team_logo_size), getDimen(R.dimen.team_logo_size))
+                        .into(mFirstTeamImageView);
+            } else {
+                mFirstTeamNameTextView.setText(opponentName);
+                mSecondTeamNameTextView.setText(getString(R.string.manchester_united));
+                //populate imageview
+                Picasso.with(mContext)
+                        .load((String) result.getOpponent().getCrest())
+                        .resize(getDimen(R.dimen.team_logo_size), getDimen(R.dimen.team_logo_size))
+                        .into(mFirstTeamImageView);
+
+                Picasso.with(mContext)
+                        .load(R.drawable.manutd_logo)
+                        .resize(getDimen(R.dimen.team_logo_size), getDimen(R.dimen.team_logo_size))
+                        .into(mFirstTeamImageView);
+            }
 
             //configure venue name
             mCompetitionNameVenueTextView.setText("English Premier League\n" + result.getVenue());
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }

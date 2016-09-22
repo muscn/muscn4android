@@ -9,5 +9,6 @@
     <dimen name="competition_txt_size">19sp</dimen>
     <dimen name="time_label_txt_size">18sp</dimen>
     <dimen name="vertical_line_height">60dp</dimen>
+    <dimen name="team_logo_size">45dp</dimen>
 
 </resources>

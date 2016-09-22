@@ -31,6 +31,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         mContext = this;
     }
 
+    protected int getDimen(int id) {
+        return (int) mContext.getResources().getDimension(id);
+    }
+
     public void toast(String message) {
         Util.toast(mContext, message);
     }

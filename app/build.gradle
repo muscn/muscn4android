@@ -38,6 +38,8 @@ dependencies {
     compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta3'
     compile 'com.squareup.retrofit2:adapter-rxjava:2.0.2'
     compile 'com.google.code.gson:gson:2.4'
+    //picaso library
+    compile 'com.squareup.picasso:picasso:2.5.2'
 
 
 }

@@ -177,13 +177,48 @@
 
             <!--match between -->
             <TextView
-                android:id="@+id/competitionBetweenTextView"
+                android:id="@+id/firstTeamNameTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/home_view_margin_top_large"
                 android:gravity="center"
                 android:lineSpacingExtra="8dp"
-                android:text="Northamption Town \nvs.\n Manchester United"
+                android:text="Northamption Town"
+                android:textColor="@color/white"
+                android:textSize="@dimen/match_between_txt_size" />
+
+            <ImageView
+                android:id="@+id/firstTeamImageView"
+                android:layout_width="@dimen/team_logo_size"
+                android:layout_height="@dimen/team_logo_size"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:src="@mipmap/ic_launcher" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:lineSpacingExtra="8dp"
+                android:text="vs."
+                android:textColor="@color/white"
+                android:textSize="@dimen/match_between_txt_size" />
+
+            <ImageView
+                android:id="@+id/secondTeamImageView"
+                android:layout_width="@dimen/team_logo_size"
+                android:layout_height="@dimen/team_logo_size"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:src="@mipmap/ic_launcher" />
+
+            <TextView
+                android:id="@+id/secondTeamNameTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:lineSpacingExtra="8dp"
+                android:text="Manchester United"
                 android:textColor="@color/white"
                 android:textSize="@dimen/match_between_txt_size" />
 
