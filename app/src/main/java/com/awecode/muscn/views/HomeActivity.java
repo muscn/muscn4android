@@ -22,7 +22,9 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 public class HomeActivity extends BaseActivity {
+
     private static final String TAG = HomeActivity.class.getSimpleName();
+
     @BindView(R.id.daysTextView)
     TextView mDaysTextView;
     @BindView(R.id.hoursTextView)
@@ -39,6 +41,7 @@ public class HomeActivity extends BaseActivity {
     TextView mBroadCastChannelTextView;
     @BindView(R.id.dateTimeTextView)
     TextView mDateTimeTextView;
+
     private CountDownTimer mCountDownTimer;
 
     @Override
@@ -46,16 +49,16 @@ public class HomeActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         initializeCountDownTimer();
-        showProgressView("Loading fixture...");
+        showProgressView(getString(R.string.loading_fixtures));
         requestFixturesList();
     }
 
     /**
-     * request manutd upcoming fixture list
+     * fetch manutd upcoming fixture list
      */
     private void requestFixturesList() {
         Observable<FixturesResponse> call = mApiInterface.getFixtures();
-        call.subscribeOn(Schedulers.newThread())
+        call.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<FixturesResponse>() {
                     @Override
@@ -94,9 +97,9 @@ public class HomeActivity extends BaseActivity {
 
             //configure game between team names
             if (isHomeGame)
-                mCompetitionBetweenTextView.setText("Manchester United\nvs.\n" + opponentName);
+                mCompetitionBetweenTextView.setText(getString(R.string.manchester_united) + opponentName);
             else
-                mCompetitionBetweenTextView.setText(opponentName + "\nvs.\nManchester United");
+                mCompetitionBetweenTextView.setText(opponentName + "\nvs.\n"+getString(R.string.manchester_united));
 
             //configure venue name
             mCompetitionNameVenueTextView.setText("English Premier League\n" + result.getVenue());

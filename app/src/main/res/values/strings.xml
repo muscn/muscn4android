@@ -8,4 +8,6 @@
     <string name="hours">HOURS</string>
     <string name="mins">MINS</string>
     <string name="secs">SECS</string>
+    <string name="loading_fixtures">Loading fixtures...</string>
+    <string name="manchester_united">Manchester United\nvs.\n</string>
 </resources>
