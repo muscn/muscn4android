@@ -40,7 +40,6 @@ public class HomeActivity extends BaseActivity {
     @BindView(R.id.dateTimeTextView)
     TextView mDateTimeTextView;
     private CountDownTimer mCountDownTimer;
-    private long mTimeDiff;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +50,9 @@ public class HomeActivity extends BaseActivity {
         requestFixturesList();
     }
 
+    /**
+     * request manutd upcoming fixture list
+     */
     private void requestFixturesList() {
         Observable<FixturesResponse> call = mApiInterface.getFixtures();
         call.subscribeOn(Schedulers.newThread())
@@ -64,7 +66,7 @@ public class HomeActivity extends BaseActivity {
 
                     @Override
                     public void onError(Throwable e) {
-                        showErrorView(e.getMessage());
+                        showErrorView(e.getMessage() + ". Try again");
                     }
 
                     @Override
@@ -74,6 +76,13 @@ public class HomeActivity extends BaseActivity {
                 });
     }
 
+    /**
+     * populate opponent name, date time
+     * broadcast tv channel name,
+     * start countdown timer
+     *
+     * @param result
+     */
     private void configureFixtureView(Result result) {
         try {
             String opponentName = result.getOpponent().getName();
@@ -99,8 +108,13 @@ public class HomeActivity extends BaseActivity {
     }
 
 
+    /**
+     * start countdown timer and
+     * format datetime to newformat, shown in view
+     *
+     * @param dateStr
+     */
     private void configureDateTime_CountDownTimer(String dateStr) {
-        //2015-08-08T11:45:00Z //yyyy-MM-dd'T'HH:mm:ssZZ
         dateStr = "2016-09-26T23:45:00Z";
         try {
             SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
@@ -130,6 +144,11 @@ public class HomeActivity extends BaseActivity {
 
     }
 
+    /**
+     * configure broadcast tv channel name
+     *
+     * @param broadCastOn
+     */
     private void configureBroadCastChannelView(Object broadCastOn) {
         if (broadCastOn != null && !TextUtils.isEmpty(String.valueOf(broadCastOn)))
             mBroadCastChannelTextView.setText(String.valueOf(broadCastOn));
@@ -137,6 +156,9 @@ public class HomeActivity extends BaseActivity {
             mBroadCastChannelTextView.setVisibility(View.GONE);
     }
 
+    /**
+     * init the countdown timer parameter and set listeners
+     */
     private void initializeCountDownTimer() {
         mCountDownTimer = new CountDownTimer();
         mCountDownTimer.setOnTimerListener(new CountDownTimer.TimerListener() {

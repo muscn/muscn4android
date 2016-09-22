@@ -33,12 +33,18 @@ public class CountDownTimer {
         startCountDown();
     }
 
+    /**
+     * start countdown
+     */
     public void startCountDown() {
         if (mCountDownTimer != null) {
             mCountDownTimer.start();
         }
     }
 
+    /**
+     * initialize countdowntimer
+     */
     private void initCounter() {
         mCountDownTimer = new android.os.CountDownTimer(mMilliSeconds, 1000) {
             @Override
@@ -57,6 +63,12 @@ public class CountDownTimer {
         };
     }
 
+    /**
+     * calculate the time constraints and
+     * set to listener's data model
+     *
+     * @param milliSeconds
+     */
     private void calculateTime(long milliSeconds) {
         mSeconds = (milliSeconds / 1000);
         mMinutes = mSeconds / 60;
