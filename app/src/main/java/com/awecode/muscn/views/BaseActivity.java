@@ -3,6 +3,8 @@ package com.awecode.muscn.views;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 
 import com.awecode.muscn.R;
@@ -18,7 +20,7 @@ import butterknife.ButterKnife;
  * Created by munnadroid on 9/21/16.
  */
 public abstract class BaseActivity extends AppCompatActivity {
-    protected MuscnApiInterface mApiInterface = ServiceGenerator.createService(MuscnApiInterface.class);
+    protected  MuscnApiInterface mApiInterface =ServiceGenerator.createService(MuscnApiInterface.class);
     @BindView(R.id.stateLayout)
     StateLayout mStateLayout;
     protected Context mContext;
@@ -49,7 +51,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         mStateLayout.showProgressView();
     }
 
-    protected void showErrorView(String message) {
+    public void showErrorView(String message) {
         mStateLayout.showEmptyView(message);
     }
 
@@ -57,9 +59,28 @@ public abstract class BaseActivity extends AppCompatActivity {
         mStateLayout.showEmptyView();
     }
 
-    protected void showContentView() {
+    public void showContentView() {
         mStateLayout.showContentView();
     }
+    public void openFragment(Fragment fragment) {
+        FragmentTransaction ft = getSupportFragmentManager()
+                .beginTransaction();
+        ft.replace(R.id.container,
+                fragment);
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        ft.addToBackStack(null);
+        ft.commitAllowingStateLoss();
+    }
+
+    public void openFragmentNoHistory(Fragment fragment) {
+        FragmentTransaction ft = getSupportFragmentManager()
+                .beginTransaction();
+        ft.replace(R.id.container,
+                fragment);
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        ft.commitAllowingStateLoss();
+    }
+
 
 
 }
