@@ -6,24 +6,29 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 import com.awecode.muscn.R;
 import com.awecode.muscn.util.Util;
 import com.awecode.muscn.util.retrofit.MuscnApiInterface;
 import com.awecode.muscn.util.retrofit.ServiceGenerator;
 import com.awecode.muscn.util.stateLayout.StateLayout;
+import com.github.clans.fab.FloatingActionMenu;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by munnadroid on 9/21/16.
  */
 public abstract class BaseActivity extends AppCompatActivity {
-    protected  MuscnApiInterface mApiInterface =ServiceGenerator.createService(MuscnApiInterface.class);
+    protected MuscnApiInterface mApiInterface = ServiceGenerator.createService(MuscnApiInterface.class);
     @BindView(R.id.stateLayout)
     StateLayout mStateLayout;
+
     protected Context mContext;
+    public FloatingActionMenu mActionMenu;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,6 +67,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     public void showContentView() {
         mStateLayout.showContentView();
     }
+
     public void openFragment(Fragment fragment) {
         FragmentTransaction ft = getSupportFragmentManager()
                 .beginTransaction();
@@ -81,6 +87,39 @@ public abstract class BaseActivity extends AppCompatActivity {
         ft.commitAllowingStateLoss();
     }
 
+    public void setupFloatingActionButton() {
+        mActionMenu = (FloatingActionMenu) findViewById(R.id.menu2);
+    }
 
+    @OnClick({R.id.fabLeagueTable, R.id.fabInjuries, R.id.fabTopScores, R.id.fabEplMatchWeek, R.id.fabRecentResults})
+    public void onClick(View view) {
+        mActionMenu.close(true);
+        switch (view.getId()) {
+            case R.id.fabLeagueTable:
+                openFragment(LeagueTableFragment.newInstance());
+                break;
+            case R.id.fabInjuries:
+//                openFragment(InjuriesFragment.newInstance());
+                break;
+            case R.id.fabTopScores:
+//                openFragment(TopScoresFragment.newInstance());
+                break;
+            case R.id.fabEplMatchWeek:
+//                openFragment(EplMatchWeekFragment.newInstance());
+                break;
+            case R.id.fabRecentResults:
+//                openFragment(RecentResultsFragment.newInstance());
+                break;
+        }
+    }
 
+    @Override
+    public void onBackPressed() {
+        if (mActionMenu.isOpened())
+            mActionMenu.close(true);
+
+        else {
+            super.onBackPressed();
+        }
+    }
 }
