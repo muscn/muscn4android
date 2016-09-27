@@ -41,5 +41,6 @@ dependencies {
     //picaso library
     compile 'com.squareup.picasso:picasso:2.5.2'
 
-
+    //floating action button
+    compile 'com.github.clans:fab:1.6.4'
 }

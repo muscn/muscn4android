@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.awecode.muscn.util.stateLayout.StateLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:id="@+id/stateLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,10 +14,9 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginTop="@dimen/activity_horizontal_margin"
             android:orientation="vertical">
 
@@ -41,221 +41,76 @@
                     android:textSize="18sp" />
             </LinearLayout>
 
-
-            <!--countdown timer: day,hr, min,sec-->
-            <LinearLayout
+            <!--main container-->
+            <FrameLayout
+                android:id="@+id/container"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:orientation="horizontal"
-                android:weightSum="10">
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:clickable="true" />
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/daysTextView"
-                        style="@style/countdown_timer_text_style"
-                        android:layout_gravity="center"
-                        android:text="0"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="5dp"
-                        android:text="@string/days"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/time_label_txt_size" />
-                </LinearLayout>
-
-
-                <View
-                    android:layout_width="0.4dp"
-                    android:layout_height="@dimen/vertical_line_height"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginTop="5dp"
-                    android:background="@color/white" />
-
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/hoursTextView"
-                        style="@style/countdown_timer_text_style"
-                        android:layout_gravity="center"
-                        android:text="55"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="5dp"
-                        android:text="@string/hours"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/time_label_txt_size" />
-                </LinearLayout>
-
-
-                <View
-                    android:layout_width="0.4dp"
-                    android:layout_height="@dimen/vertical_line_height"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginTop="5dp"
-                    android:background="@color/white" />
-
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/minsTextView"
-                        style="@style/countdown_timer_text_style"
-                        android:layout_gravity="center"
-                        android:text="55"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="5dp"
-                        android:text="@string/mins"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/time_label_txt_size" />
-                </LinearLayout>
-
-
-                <View
-                    android:layout_width="0.4dp"
-                    android:layout_height="@dimen/vertical_line_height"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginTop="5dp"
-                    android:background="@color/white" />
-
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/secsTextView"
-                        style="@style/countdown_timer_text_style"
-                        android:layout_gravity="center"
-                        android:text="55"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginTop="5dp"
-                        android:text="@string/secs"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/time_label_txt_size" />
-                </LinearLayout>
-
-
-            </LinearLayout>
-
-            <!--match between -->
-            <TextView
-                android:id="@+id/firstTeamNameTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/home_view_margin_top_large"
-                android:gravity="center"
-                android:lineSpacingExtra="8dp"
-                android:text="Northamption Town"
-                android:textColor="@color/white"
-                android:textSize="@dimen/match_between_txt_size" />
-
-            <ImageView
-                android:id="@+id/firstTeamImageView"
-                android:layout_width="@dimen/team_logo_size"
-                android:layout_height="@dimen/team_logo_size"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:src="@mipmap/ic_launcher" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:lineSpacingExtra="8dp"
-                android:text="vs."
-                android:textColor="@color/white"
-                android:textSize="@dimen/match_between_txt_size" />
-
-            <ImageView
-                android:id="@+id/secondTeamImageView"
-                android:layout_width="@dimen/team_logo_size"
-                android:layout_height="@dimen/team_logo_size"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:src="@mipmap/ic_launcher" />
-
-            <TextView
-                android:id="@+id/secondTeamNameTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:lineSpacingExtra="8dp"
-                android:text="Manchester United"
-                android:textColor="@color/white"
-                android:textSize="@dimen/match_between_txt_size" />
-
-
-            <!--competition name-->
-            <TextView
-                android:id="@+id/competitionNameVenueTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/home_view_margin_top_large"
-                android:gravity="center"
-                android:lineSpacingExtra="5dp"
-                android:text="English League Cup\nSixfields Stadium, Northamption"
-                android:textColor="@color/white"
-                android:textSize="@dimen/competition_txt_size" />
-
-            <TextView
-                android:id="@+id/broadCastChannelTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/activity_horizontal_margin"
-                android:gravity="center"
-                android:lineSpacingExtra="5dp"
-                android:text="Ten 1"
-                android:textColor="@color/white"
-                android:textSize="@dimen/competition_txt_size" />
-            <!--date/time-->
-            <TextView
-                android:id="@+id/dateTimeTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/home_view_margin_top_large"
-                android:gravity="center"
-                android:lineSpacingExtra="5dp"
-                android:text="22 September, Thursday\n 12:30AM NPT"
-                android:textColor="@color/white"
-                android:textSize="@dimen/competition_txt_size" />
         </LinearLayout>
+        <com.github.clans.fab.FloatingActionMenu
+            android:id="@+id/menu2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            fab:menu_animationDelayPerItem="0"
+            fab:menu_colorNormal="@color/white"
+            fab:menu_colorPressed="@color/colorPrimaryDark"
+            fab:menu_colorRipple="@color/colorRipple"
+            fab:menu_icon="@drawable/ic_fab_add"
+            fab:menu_labels_hideAnimation="@anim/jump_to_down"
+            fab:menu_labels_showAnimation="@anim/jump_from_down"
+            fab:menu_labels_style="@style/MenuLabelsStyle"
+            fab:menu_shadowColor="#444">
+
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/fabLeagueTable"
+                style="@style/MenuButtonsStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_menu_icon"
+                fab:fab_label="League Table" />
+
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/fabInjuries"
+                style="@style/MenuButtonsStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_menu_icon"
+                fab:fab_label="Injuries" />
+
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/fabTopScores"
+                style="@style/MenuButtonsStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_menu_icon"
+                fab:fab_label="Top Scores" />
+
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/fabEplMatchWeek"
+                style="@style/MenuButtonsStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_menu_icon"
+                android:visibility="gone"
+                fab:fab_label="EPL Matchweek" />
+
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/fabRecentResults"
+                style="@style/MenuButtonsStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_menu_icon"
+                fab:fab_label="Recent Results" />
+
+        </com.github.clans.fab.FloatingActionMenu>
     </RelativeLayout>
 </com.awecode.muscn.util.stateLayout.StateLayout>
