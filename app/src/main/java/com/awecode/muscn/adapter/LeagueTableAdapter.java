@@ -37,6 +37,10 @@ public class LeagueTableAdapter extends RecyclerView.Adapter<LeagueTableAdapter.
     @Override
     public void onBindViewHolder(LeagueViewHolder holder, int position) {
         final LeagueTableResponse leagueTableResponse = leagueList.get(position);
+//       White divider line is hide if the table item is last
+        if(position == getItemCount()-1){
+            holder.mTableRowDividerView.setVisibility(View.GONE);
+        }
 
         holder.serialNumber.setText(leagueTableResponse.getPosition());
         holder.club.setText(leagueTableResponse.getName());
@@ -63,6 +67,8 @@ public class LeagueTableAdapter extends RecyclerView.Adapter<LeagueTableAdapter.
         TextView gd;
         @BindView(R.id.pts)
         TextView pts;
+        @BindView(R.id.table_row_divider)
+        View mTableRowDividerView;
 
         public LeagueViewHolder(View itemView) {
             super(itemView);

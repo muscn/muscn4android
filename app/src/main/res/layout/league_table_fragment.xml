@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@color/colorPrimary"
     android:layout_height="match_parent"
+    android:layout_marginTop="@dimen/fragment_table_margin_top"
     android:orientation="vertical">
+<!--table column title-->
+    <include layout="@layout/league_table_row" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
@@ -12,5 +14,4 @@
         android:clipToPadding="false"
         android:paddingBottom="1dp"
         android:scrollbars="vertical" />
-
 </LinearLayout>
