@@ -5,5 +5,9 @@
     <color name="colorAccent">#ffffff</color>
     <color name="white">#ffffff</color>
     <color name="colorRipple">#f1a59a</color>
+    <color name="colorDraw">#F7FE2E</color>
+    <color name="colorWin">#088A08</color>
+    <color name="colorLose">#FF0000</color>
+
 
 </resources>

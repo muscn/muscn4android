@@ -16,6 +16,7 @@ import com.awecode.muscn.util.retrofit.ServiceGenerator;
 import com.awecode.muscn.util.stateLayout.StateLayout;
 import com.awecode.muscn.views.league.LeagueTableFragment;
 import com.awecode.muscn.views.matchweekfixtures.MatchWeekFixtureFragment;
+import com.awecode.muscn.views.recentresults.MatchResultFragment;
 import com.github.clans.fab.FloatingActionMenu;
 
 import butterknife.BindView;
@@ -116,7 +117,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                 openFragment(new MatchWeekFixtureFragment());
                 break;
             case R.id.fabRecentResults:
-//                openFragment(RecentResultsFragment.newInstance());
+                openFragment(new MatchResultFragment());
                 break;
         }
     }

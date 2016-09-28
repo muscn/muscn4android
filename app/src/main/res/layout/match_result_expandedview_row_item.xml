@@ -5,17 +5,15 @@
     android:orientation="vertical">
 
     <!--view to seprate different events-->
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginLeft="6dp"
-        android:backgroundTint="#B40404" />
+    <!--<View-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="1dp"-->
+        <!--android:background="@color/white" />-->
 
     <!--row layout to show the event details-->
 
     <LinearLayout
         android:paddingBottom="10dp"
-        android:paddingTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -24,11 +22,12 @@
         <!--textview to show time for the occured event-->
 
         <TextView
-            android:textColor="#000000"
+            android:textSize="11sp"
+            android:textColor="@color/white"
             android:id="@+id/expandedViewEventTime"
             android:layout_width="0dp"
-            android:layout_weight="0.2"
-            android:text="11'"
+            android:layout_weight="0.3"
+            android:text="90+5'"
             android:gravity="center"
             android:layout_height="match_parent" />
 
@@ -37,7 +36,7 @@
             android:id="@+id/homeTeamExpandedDetailView"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1.25"
+            android:layout_weight="1.2"
             android:orientation="vertical">
 
             <!--layout to show major event of home team-->
@@ -49,6 +48,7 @@
                 android:orientation="horizontal"
                 android:weightSum="2">
                 <TextView
+                    android:textColor="@color/white"
                     android:id="@+id/expandedEventPlayerName"
                     android:layout_width="0dp"
                     android:layout_weight="1.85"
@@ -101,6 +101,7 @@
             android:weightSum="3">
 
             <TextView
+                android:textColor="@color/white"
                 android:gravity="center"
                 android:id="@+id/expandedviewHomeTeamScore"
                 android:layout_width="0dp"
@@ -108,12 +109,14 @@
                 android:layout_weight="1"
                 android:text="8"/>
             <TextView
+                android:textColor="@color/white"
                 android:gravity="center"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="-"/>
             <TextView
+                android:textColor="@color/white"
                 android:gravity="center"
                 android:id="@+id/expandedviewAwayTeamScore"
                 android:layout_width="0dp"
@@ -128,7 +131,7 @@
             android:id="@+id/awayTeamExpandedDetailView"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1.25"
+            android:layout_weight="1.2"
             android:orientation="vertical">
 
             <!--layout to show major event of away team-->
@@ -148,6 +151,7 @@
                     android:src="@drawable/icon_football"
                     android:layout_gravity="center_vertical|left"/>
                 <TextView
+                    android:textColor="@color/white"
                     android:id="@+id/expandedEventAwayPlayerName"
                     android:layout_width="0dp"
                     android:layout_weight="1.85"
