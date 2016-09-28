@@ -2,6 +2,7 @@ package com.awecode.muscn.util.retrofit;
 
 import com.awecode.muscn.model.http.fixtures.FixturesResponse;
 import com.awecode.muscn.model.http.leaguetable.LeagueTableResponse;
+import com.awecode.muscn.model.http.topscorers.TopScorersResponse;
 
 import java.util.List;
 
@@ -18,5 +19,8 @@ public interface MuscnApiInterface {
 
     @GET("api/v1/league_table")
     Observable<List<LeagueTableResponse>> getLeague();
+
+    @GET("api/v1/top_scorers")
+    Observable<List<TopScorersResponse>> getTopScorers();
 
 }

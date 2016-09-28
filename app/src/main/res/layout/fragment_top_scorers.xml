@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="@dimen/fragment_table_margin_top"
+    android:orientation="vertical">
+    <!--table column title-->
+    <include layout="@layout/top_scorers_row_item" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/topScorersRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:paddingBottom="1dp"
+        android:scrollbars="vertical" />
+</LinearLayout>
