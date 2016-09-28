@@ -40,6 +40,7 @@ public class MatchWeekFixtureFragment extends MasterFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mActivity.setCustomTitle(R.string.epl_matchweek);
 //        showProgressView(getString(R.string.loading_fixtures));
         setupMatchFixtureRecylerView();
     }
