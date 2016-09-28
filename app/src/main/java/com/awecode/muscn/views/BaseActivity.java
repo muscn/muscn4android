@@ -7,12 +7,14 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.TextView;
 
 import com.awecode.muscn.R;
 import com.awecode.muscn.util.Util;
 import com.awecode.muscn.util.retrofit.MuscnApiInterface;
 import com.awecode.muscn.util.retrofit.ServiceGenerator;
 import com.awecode.muscn.util.stateLayout.StateLayout;
+import com.awecode.muscn.views.league.LeagueTableFragment;
 import com.github.clans.fab.FloatingActionMenu;
 
 import butterknife.BindView;
@@ -26,6 +28,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected MuscnApiInterface mApiInterface = ServiceGenerator.createService(MuscnApiInterface.class);
     @BindView(R.id.stateLayout)
     StateLayout mStateLayout;
+    @BindView(R.id.title)
+    TextView titleTextView;
 
     protected Context mContext;
     public FloatingActionMenu mActionMenu;
@@ -66,6 +70,9 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public void showContentView() {
         mStateLayout.showContentView();
+    }
+    public void setCustomTitle(int id){
+        titleTextView.setText(mContext.getResources().getString(id));
     }
 
     public void openFragment(Fragment fragment) {

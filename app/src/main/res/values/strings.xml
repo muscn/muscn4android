@@ -10,4 +10,8 @@
     <string name="secs">SECS</string>
     <string name="loading_fixtures">Loading fixtures...</string>
     <string name="manchester_united">Manchester United</string>
+    <string name="loading_league_table">Loading league table...</string>
+    <string name="league_table">League Table</string>
+
+
 </resources>

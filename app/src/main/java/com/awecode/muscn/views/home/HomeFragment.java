@@ -71,8 +71,6 @@ public class HomeFragment extends MasterFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        initializeCountDownTimer();
-        requestFixturesList();
     }
 
     @Override
@@ -85,6 +83,10 @@ public class HomeFragment extends MasterFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        showProgressView(getString(R.string.loading_fixtures));
+
+        initializeCountDownTimer();
+        requestFixturesList();
     }
 
     /**
@@ -123,6 +125,7 @@ public class HomeFragment extends MasterFragment {
      */
     private void configureFixtureView(Result result) {
         try {
+            mActivity.setCustomTitle(R.string.app_name);
             String opponentName = result.getOpponent().getName();
             Boolean isHomeGame = result.getIsHomeGame();
             //configure broadcast channel name

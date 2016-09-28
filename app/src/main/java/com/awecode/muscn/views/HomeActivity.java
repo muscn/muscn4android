@@ -14,8 +14,6 @@ public class HomeActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        showProgressView(getString(R.string.loading_fixtures));
         openFragmentNoHistory(HomeFragment.newInstance());
         setupFloatingActionButton();
     }

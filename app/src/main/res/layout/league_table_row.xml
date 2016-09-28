@@ -1,33 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:background="@color/colorPrimary"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_margin="3dp"
+    android:weightSum="7">
 
     <TextView
-        android:layout_width="match_parent"
+        android:id="@+id/serialNumber"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Number" />
+        android:textColor="@color/white"
+        android:text="Number"
+        android:layout_weight="1"/>
 
     <TextView
-        android:layout_width="match_parent"
+        android:id="@+id/club"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Time" />
+        android:textColor="@color/white"
+        android:text="Club"
+        android:layout_weight="3"/>
 
     <TextView
-        android:layout_width="match_parent"
+        android:id="@+id/p"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Score" />
+        android:textColor="@color/white"
+        android:text="P"
+        android:layout_weight="1"/>
 
     <TextView
-        android:layout_width="match_parent"
+        android:id="@+id/gd"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Opponent" />
+        android:textColor="@color/white"
+        android:text="GD"
+        android:layout_weight="1"/>
 
     <TextView
-        android:layout_width="match_parent"
+        android:id="@+id/pts"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Date" />
+        android:textColor="@color/white"
+        android:text="Pts"
+        android:layout_weight="1"/>
 
 
 </LinearLayout>
