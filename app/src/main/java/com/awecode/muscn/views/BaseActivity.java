@@ -114,7 +114,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 //                openFragment(TopScoresFragment.newInstance());
                 break;
             case R.id.fabEplMatchWeek:
-                openFragment(new MatchWeekFixtureFragment());
+//                openFragment(new MatchWeekFixtureFragment());
                 break;
             case R.id.fabRecentResults:
                 openFragment(new MatchResultFragment());

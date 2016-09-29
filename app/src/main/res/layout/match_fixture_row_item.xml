@@ -24,29 +24,37 @@
         android:layout_height="match_parent"
         android:layout_weight="1.5"
         android:text="NA"/>
+    <!--<TextView-->
+        <!--android:textColor="@color/white"-->
+        <!--android:gravity="center"-->
+        <!--android:id="@+id/fixtureHomeTeamScore"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_weight="0.15"-->
+        <!--android:text="\?"/>-->
+    <!--<TextView-->
+        <!--android:textColor="@color/white"-->
+        <!--android:gravity="center"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_weight="0.1"-->
+        <!--android:text="-"/>-->
+    <!--<TextView-->
+        <!--android:textColor="@color/white"-->
+        <!--android:gravity="center"-->
+        <!--android:id="@+id/fixtureAwayTeamScore"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_weight="0.15"-->
+        <!--android:text="\?"/>-->
     <TextView
-        android:textColor="@color/white"
-        android:gravity="center"
-        android:id="@+id/fixtureHomeTeamScore"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="0.15"
-        android:text="\?"/>
-    <TextView
-        android:textColor="@color/white"
+        android:layout_weight="0.4"
         android:gravity="center"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="0.1"
-        android:text="-"/>
-    <TextView
+        android:id="@+id/matchScore"
         android:textColor="@color/white"
-        android:gravity="center"
-        android:id="@+id/fixtureAwayTeamScore"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="0.15"
-        android:text="\?"/>
+        />
     <TextView
         android:textColor="@color/white"
         android:gravity="center"
