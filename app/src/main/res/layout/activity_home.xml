@@ -38,6 +38,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="3dp"
                     android:text="MUSCN"
+                    android:textAllCaps="true"
                     android:textColor="@color/white"
                     android:textSize="18sp" />
             </LinearLayout>

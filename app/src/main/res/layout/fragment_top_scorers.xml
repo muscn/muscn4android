@@ -4,11 +4,11 @@
     android:layout_height="match_parent"
     android:layout_marginTop="@dimen/fragment_table_margin_top"
     android:orientation="vertical">
-<!--table column title-->
-    <include layout="@layout/league_table_row" />
+    <!--table column title-->
+    <include layout="@layout/top_scorers_row_item" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/topScorersRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clipToPadding="false"

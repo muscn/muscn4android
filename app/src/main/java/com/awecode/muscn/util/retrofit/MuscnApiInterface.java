@@ -2,8 +2,10 @@ package com.awecode.muscn.util.retrofit;
 
 import com.awecode.muscn.model.http.eplmatchweek.EplMatchweekFixturesResponse;
 import com.awecode.muscn.model.http.fixtures.FixturesResponse;
+import com.awecode.muscn.model.http.injuries.InjuriesResponse;
 import com.awecode.muscn.model.http.leaguetable.LeagueTableResponse;
 import com.awecode.muscn.model.http.recentresults.RecentResultsResponse;
+import com.awecode.muscn.model.http.topscorers.TopScorersResponse;
 
 import java.util.List;
 
@@ -33,4 +35,11 @@ public interface MuscnApiInterface {
     */
     @GET("api/v1/fixtures/epl_matchweek/")
     Observable<ResponseBody> getEplMatchweekFixtures();
+
+    @GET("api/v1/top_scorers")
+    Observable<List<TopScorersResponse>> getTopScorers();
+
+    @GET("api/v1/injuries")
+    Observable<InjuriesResponse> getInjuredPlayers();
+
 }
