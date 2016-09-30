@@ -3,24 +3,27 @@ package com.awecode.muscn.views.matchweekfixtures;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.awecode.muscn.R;
-import com.awecode.muscn.adapter.MatchResultExpandableRecyclerviewAdapter;
-import com.awecode.muscn.model.Item;
-import com.awecode.muscn.model.http.eplmatchweek.EplMatchweekFixturesResponse;
-import com.awecode.muscn.model.http.recentresults.RecentResultsResponse;
+import com.awecode.muscn.adapter.MatchFixutreRecyclerviewAdapter;
+import com.awecode.muscn.model.http.eplmatchweek._20161001;
 import com.awecode.muscn.util.retrofit.MuscnApiInterface;
 import com.awecode.muscn.util.retrofit.ServiceGenerator;
 import com.awecode.muscn.views.MasterFragment;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import okhttp3.ResponseBody;
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -35,7 +38,7 @@ public class MatchWeekFixtureFragment extends MasterFragment {
     @BindView(R.id.matchFixtures)
     RecyclerView matchFixtures;
 
-//    private MatchFixutreRecyclerviewAdapter mMatchFixutreRecyclerviewAdapter;
+    private MatchFixutreRecyclerviewAdapter mMatchFixutreRecyclerviewAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,29 +57,29 @@ public class MatchWeekFixtureFragment extends MasterFragment {
         super.onViewCreated(view, savedInstanceState);
         mActivity.setCustomTitle(R.string.epl_matchweek);
         showProgressView(getString(R.string.loading_fixtures));
-//        requestEplMatchResults();
+        requestEplMatchResults();
     }
 
     /**
      * Setup match fixture recyclerview to show the matchweek mixtures
      */
-//    public void setupMatchFixtureRecylerView(EplMatchweekFixturesResponse eplMatchweekFixturesResponse){
-//        matchFixtures.setHasFixedSize(true);
-//        matchFixtures.setLayoutManager(new LinearLayoutManager(getActivity()));
-//        mMatchFixutreRecyclerviewAdapter = new MatchFixutreRecyclerviewAdapter(getActivity(),eplMatchweekFixturesResponse);
-//        matchFixtures.setAdapter(mMatchFixutreRecyclerviewAdapter);
-//
-//    }
+    public void setupMatchFixtureRecylerView(ArrayList<_20161001> mCategoryList) {
+        matchFixtures.setHasFixedSize(true);
+        matchFixtures.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mMatchFixutreRecyclerviewAdapter = new MatchFixutreRecyclerviewAdapter(getActivity(), mCategoryList);
+        matchFixtures.setAdapter(mMatchFixutreRecyclerviewAdapter);
+
+    }
 
     /**
      * fetch manutd recent match results list
      */
-    public void requestEplMatchResults(){
+    public void requestEplMatchResults() {
         mApiInterface = ServiceGenerator.createService(MuscnApiInterface.class);
-        Observable<EplMatchweekFixturesResponse> call = mApiInterface.getEplMatchweekFixtures();
+        Observable<ResponseBody> call = mApiInterface.getEplMatchweekFixtures();
         call.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<EplMatchweekFixturesResponse>() {
+                .subscribe(new Observer<ResponseBody>() {
                     @Override
                     public void onCompleted() {
                         mActivity.showContentView();
@@ -88,8 +91,47 @@ public class MatchWeekFixtureFragment extends MasterFragment {
                     }
 
                     @Override
-                    public void onNext(EplMatchweekFixturesResponse eplMatchweekFixturesResponse) {
-//                        setupMatchFixtureRecylerView(eplMatchweekFixturesResponse);
+                    public void onNext(ResponseBody eplMatchweekFixturesResponse) {
+
+                        /**
+                         * fetch dynamic key and its values from API and store it in ArrayList
+                         */
+                        try {
+                            JSONObject object = new JSONObject(eplMatchweekFixturesResponse.string());
+                            Iterator keys = object.keys();
+
+                            //Let's consider your POJO class is CategoryClass
+                            // Let's take HashMap to store your POJO class for specific KEY
+                            HashMap<String, ArrayList<_20161001>> mMap = new HashMap<String, ArrayList<_20161001>>();
+                            ArrayList<_20161001> mCategoryList = new ArrayList<_20161001>();
+
+                            while (keys.hasNext()) {
+                                // here you will get dynamic keys
+                                String dynamicKey = (String) keys.next();
+
+                                // get the value of the dynamic key
+                                JSONArray dynamicValue = object.getJSONArray(dynamicKey);
+
+                                //Let's store into POJO Class and Prepare HashMap.
+                                for (int i = 0; i < dynamicValue.length(); i++) {
+                                    _20161001 mCategory = new _20161001();
+                                    mCategory.setAwayTeam(dynamicValue.getJSONObject(i).get("away_team").toString());
+                                    mCategory.setHomeTeam(dynamicValue.getJSONObject(i).get("home_team").toString());
+                                    mCategory.setEid(dynamicValue.getJSONObject(i).get("eid").toString());
+                                    mCategory.setKickoff(dynamicValue.getJSONObject(i).get("kickoff").toString());
+                                    mCategory.setLive(dynamicValue.getJSONObject(i).get("live").toString());
+                                    mCategory.setMinute(dynamicValue.getJSONObject(i).get("minute").toString());
+                                    mCategory.setScore(dynamicValue.getJSONObject(i).get("score").toString());
+                                    mCategoryList.add(mCategory);
+                                }
+                                //Add Into Hashmap
+                                mMap.put(dynamicKey, mCategoryList);
+                                setupMatchFixtureRecylerView(mCategoryList);
+
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 });
     }

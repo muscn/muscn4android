@@ -4,7 +4,7 @@ package com.awecode.muscn.model.http.eplmatchweek;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class _20160927 {
+public class _20161001 {
 
     @SerializedName("home_team")
     @Expose
@@ -17,7 +17,7 @@ public class _20160927 {
     private String kickoff;
     @SerializedName("live")
     @Expose
-    private Boolean live;
+    private String live;
     @SerializedName("score")
     @Expose
     private String score;
@@ -87,7 +87,7 @@ public class _20160927 {
      * @return
      *     The live
      */
-    public Boolean getLive() {
+    public String getLive() {
         return live;
     }
 
@@ -96,7 +96,7 @@ public class _20160927 {
      * @param live
      *     The live
      */
-    public void setLive(Boolean live) {
+    public void setLive(String live) {
         this.live = live;
     }
 

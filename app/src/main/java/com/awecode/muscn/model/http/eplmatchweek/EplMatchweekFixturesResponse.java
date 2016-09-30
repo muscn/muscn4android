@@ -8,68 +8,47 @@ import com.google.gson.annotations.SerializedName;
 
 public class EplMatchweekFixturesResponse {
 
-    @SerializedName("2016-09-24")
+    @SerializedName("2016-10-02")
     @Expose
-    private List<com.awecode.muscn.model.http.eplmatchweek._20160924> _20160924 = new ArrayList<com.awecode.muscn.model.http.eplmatchweek._20160924>();
-    @SerializedName("2016-09-27")
+    private List<com.awecode.muscn.model.http.eplmatchweek._20161002> _20161002 = new ArrayList<com.awecode.muscn.model.http.eplmatchweek._20161002>();
+    @SerializedName("2016-10-01")
     @Expose
-    private List<com.awecode.muscn.model.http.eplmatchweek._20160927> _20160927 = new ArrayList<com.awecode.muscn.model.http.eplmatchweek._20160927>();
-    @SerializedName("2016-09-25")
-    @Expose
-    private List<com.awecode.muscn.model.http.eplmatchweek._20160925> _20160925 = new ArrayList<com.awecode.muscn.model.http.eplmatchweek._20160925>();
+    private List<com.awecode.muscn.model.http.eplmatchweek._20161001> _20161001 = new ArrayList<com.awecode.muscn.model.http.eplmatchweek._20161001>();
 
     /**
      * 
      * @return
-     *     The _20160924
+     *     The _20161002
      */
-    public List<com.awecode.muscn.model.http.eplmatchweek._20160924> get20160924() {
-        return _20160924;
+    public List<com.awecode.muscn.model.http.eplmatchweek._20161002> get20161002() {
+        return _20161002;
     }
 
     /**
      * 
-     * @param _20160924
-     *     The 2016-09-24
+     * @param _20161002
+     *     The 2016-10-02
      */
-    public void set20160924(List<com.awecode.muscn.model.http.eplmatchweek._20160924> _20160924) {
-        this._20160924 = _20160924;
+    public void set20161002(List<com.awecode.muscn.model.http.eplmatchweek._20161002> _20161002) {
+        this._20161002 = _20161002;
     }
 
     /**
      * 
      * @return
-     *     The _20160927
+     *     The _20161001
      */
-    public List<com.awecode.muscn.model.http.eplmatchweek._20160927> get20160927() {
-        return _20160927;
+    public List<com.awecode.muscn.model.http.eplmatchweek._20161001> get20161001() {
+        return _20161001;
     }
 
     /**
      * 
-     * @param _20160927
-     *     The 2016-09-27
+     * @param _20161001
+     *     The 2016-10-01
      */
-    public void set20160927(List<com.awecode.muscn.model.http.eplmatchweek._20160927> _20160927) {
-        this._20160927 = _20160927;
-    }
-
-    /**
-     * 
-     * @return
-     *     The _20160925
-     */
-    public List<com.awecode.muscn.model.http.eplmatchweek._20160925> get20160925() {
-        return _20160925;
-    }
-
-    /**
-     * 
-     * @param _20160925
-     *     The 2016-09-25
-     */
-    public void set20160925(List<com.awecode.muscn.model.http.eplmatchweek._20160925> _20160925) {
-        this._20160925 = _20160925;
+    public void set20161001(List<com.awecode.muscn.model.http.eplmatchweek._20161001> _20161001) {
+        this._20161001 = _20161001;
     }
 
 }

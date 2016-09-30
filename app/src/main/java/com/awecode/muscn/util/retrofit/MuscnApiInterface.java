@@ -7,6 +7,7 @@ import com.awecode.muscn.model.http.recentresults.RecentResultsResponse;
 
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.http.GET;
 import rx.Observable;
 
@@ -31,5 +32,5 @@ public interface MuscnApiInterface {
      * fetch epl matchweek results list
     */
     @GET("api/v1/fixtures/epl_matchweek/")
-    Observable<EplMatchweekFixturesResponse> getEplMatchweekFixtures();
+    Observable<ResponseBody> getEplMatchweekFixtures();
 }
