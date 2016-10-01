@@ -70,6 +70,13 @@
             fab:menu_labels_showAnimation="@anim/jump_from_down"
             fab:menu_labels_style="@style/MenuLabelsStyle"
             fab:menu_shadowColor="#444">
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/fabFixtures"
+                style="@style/MenuButtonsStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_menu_icon"
+                fab:fab_label="Fixtures" />
 
             <com.github.clans.fab.FloatingActionButton
                 android:id="@+id/fabLeagueTable"

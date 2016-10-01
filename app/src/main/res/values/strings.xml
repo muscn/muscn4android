@@ -19,5 +19,6 @@
     <string name="top_scorers">Top Scorers</string>
     <string name="loading_injuries">Loading injuries...</string>
     <string name="injuries">Injuries</string>
->>>>>>> cd3769a6e5ade3789f1420b532d7fb4faaf7917d
+    <string name="tapExitMessage">Tap back button in order to exit</string>
+    >>>>>>> cd3769a6e5ade3789f1420b532d7fb4faaf7917d
 </resources>
