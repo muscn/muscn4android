@@ -51,7 +51,7 @@ public class LeagueTableFragment extends MasterFragment{
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.league_table_fragment, container, false);
+        View view = inflater.inflate(R.layout.fragment_league_table, container, false);
         ButterKnife.bind(this, view);
         return view;
     }

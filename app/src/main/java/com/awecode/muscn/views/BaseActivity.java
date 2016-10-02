@@ -1,5 +1,6 @@
 package com.awecode.muscn.views;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,12 +9,14 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.awecode.muscn.R;
 import com.awecode.muscn.util.Util;
 import com.awecode.muscn.util.retrofit.MuscnApiInterface;
 import com.awecode.muscn.util.retrofit.ServiceGenerator;
 import com.awecode.muscn.util.stateLayout.StateLayout;
+import com.awecode.muscn.views.home.HomeFragment;
 import com.awecode.muscn.views.injuries.InjuriesFragment;
 import com.awecode.muscn.views.league.LeagueTableFragment;
 import com.awecode.muscn.views.matchweekfixtures.EplMatchWeekFixtureFragment;
@@ -36,7 +39,11 @@ public abstract class BaseActivity extends AppCompatActivity {
     TextView titleTextView;
 
     protected Context mContext;
+    protected Activity mActivity;
     public FloatingActionMenu mActionMenu;
+    private static final int TIME_INTERVAL = 2000; // # milliseconds, desired time passed between two back presses.
+    private long mBackPressed;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,6 +51,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         setContentView(getLayoutResourceId());
         ButterKnife.bind(this);
         mContext = this;
+        mActivity = this;
     }
 
     protected int getDimen(int id) {
@@ -75,7 +83,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     public void showContentView() {
         mStateLayout.showContentView();
     }
-    public void setCustomTitle(int id){
+
+    public void setCustomTitle(int id) {
         titleTextView.setText(mContext.getResources().getString(id));
     }
 
@@ -102,10 +111,13 @@ public abstract class BaseActivity extends AppCompatActivity {
         mActionMenu = (FloatingActionMenu) findViewById(R.id.menu2);
     }
 
-    @OnClick({R.id.fabLeagueTable, R.id.fabInjuries, R.id.fabTopScores, R.id.fabEplMatchWeek, R.id.fabRecentResults})
+    @OnClick({R.id.fabFixtures, R.id.fabLeagueTable, R.id.fabInjuries, R.id.fabTopScores, R.id.fabEplMatchWeek, R.id.fabRecentResults})
     public void onClick(View view) {
         mActionMenu.close(true);
         switch (view.getId()) {
+            case R.id.fabFixtures:
+                openFragment(HomeFragment.newInstance());
+                break;
             case R.id.fabLeagueTable:
                 openFragment(LeagueTableFragment.newInstance());
                 break;
@@ -130,7 +142,14 @@ public abstract class BaseActivity extends AppCompatActivity {
             mActionMenu.close(true);
 
         else {
-            super.onBackPressed();
+            if (mBackPressed + TIME_INTERVAL > System.currentTimeMillis()) {
+                super.onBackPressed();
+                mActivity.finish();
+            } else {
+                Util.toast(mContext,getString(R.string.tapExitMessage));
+            }
+
+            mBackPressed = System.currentTimeMillis();
         }
     }
 }
