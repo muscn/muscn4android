@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import com.awecode.muscn.R;
 import com.awecode.muscn.adapter.MatchFixutreRecyclerviewAdapter;
+import com.awecode.muscn.model.http.eplmatchweek.EplMatchweekFixturesResponse;
 import com.awecode.muscn.model.http.eplmatchweek._20161001;
 import com.awecode.muscn.util.retrofit.MuscnApiInterface;
 import com.awecode.muscn.util.retrofit.ServiceGenerator;
@@ -18,6 +19,9 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -33,7 +37,7 @@ import rx.schedulers.Schedulers;
  * Created by suresh on 9/28/16.
  */
 
-public class MatchWeekFixtureFragment extends MasterFragment {
+public class EplMatchWeekFixtureFragment extends MasterFragment {
 
     @BindView(R.id.matchFixtures)
     RecyclerView matchFixtures;
@@ -47,7 +51,7 @@ public class MatchWeekFixtureFragment extends MasterFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_fixture, container, false);
+        View view = inflater.inflate(R.layout.fragment_epl_matchweek_fixture, container, false);
         ButterKnife.bind(this, view);
         return view;
     }
@@ -126,8 +130,8 @@ public class MatchWeekFixtureFragment extends MasterFragment {
                                 }
                                 //Add Into Hashmap
                                 mMap.put(dynamicKey, mCategoryList);
+                                Collections.sort(mCategoryList);
                                 setupMatchFixtureRecylerView(mCategoryList);
-
                             }
                         } catch (Exception e) {
                             e.printStackTrace();

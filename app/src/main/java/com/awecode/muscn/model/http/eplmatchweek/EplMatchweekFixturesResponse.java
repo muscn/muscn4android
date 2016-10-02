@@ -6,7 +6,7 @@ import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class EplMatchweekFixturesResponse {
+public class EplMatchweekFixturesResponse  {
 
     @SerializedName("2016-10-02")
     @Expose

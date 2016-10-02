@@ -4,7 +4,7 @@ package com.awecode.muscn.model.http.eplmatchweek;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class _20161001 {
+public class _20161001 implements Comparable<_20161001> {
 
     @SerializedName("home_team")
     @Expose
@@ -154,4 +154,8 @@ public class _20161001 {
         this.minute = minute;
     }
 
+    @Override
+    public int compareTo(_20161001 p) {
+        return getKickoff().compareTo(p.getKickoff());
+    }
 }

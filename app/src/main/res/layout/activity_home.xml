@@ -30,7 +30,7 @@
                 <ImageView
                     android:layout_width="@dimen/titlee_logo_size"
                     android:layout_height="@dimen/titlee_logo_size"
-                    android:src="@drawable/logo_manutd" />
+                    android:src="@drawable/logo_muscn_white" />
 
                 <TextView
                     android:id="@+id/title"

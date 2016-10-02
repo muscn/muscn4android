@@ -1,10 +1,8 @@
 package com.awecode.muscn.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +28,6 @@ public class MatchResultExpandableRecyclerviewAdapter extends RecyclerView.Adapt
     public static final int HEADER = 0;
     public static final int CHILD = 1;
     public static final String TAG = HomeActivity.class.getSimpleName();
-
     private Context context;
     private List<Item> itemList;
 
@@ -47,7 +44,7 @@ public class MatchResultExpandableRecyclerviewAdapter extends RecyclerView.Adapt
         switch (viewType) {
             case HEADER:
                 LayoutInflater inflater = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                view = inflater.inflate(R.layout.match_result_row_item, parent, false);
+                view = inflater.inflate(R.layout.epl_matchweek_fixture_row_item, parent, false);
                 HeaderViewHolder header = new HeaderViewHolder(view);
                 return header;
             case CHILD:
@@ -65,38 +62,44 @@ public class MatchResultExpandableRecyclerviewAdapter extends RecyclerView.Adapt
             case HEADER:
                 Result result = itemList.get(position).getMatchResultResponse().getResults().get(position);
                 final HeaderViewHolder itemController = (HeaderViewHolder) holder;
-                if (result.getIsHomeGame()){
-                    itemController.matchResultHomeTeam.setText(R.string.manchester_united);
-                    if (result.getMufcScore()==null){
-                        itemController.matchResultHomeTeamScore.setText("?");
-                    }else
-                        itemController.matchResultHomeTeamScore.setText(result.getMufcScore().toString());
-                    itemController.matchResultAwayTeam.setText(result.getOpponentName());
-                    if (result.getOpponentScore()==null){
-                        itemController.matchResultAwayTeamScore.setText("?");
-                    }else
-                        itemController.matchResultAwayTeamScore.setText(result.getOpponentScore().toString());
+                if (result.getIsHomeGame()) {
+                    itemController.eplMatchweekHomeTeamShortName.setText("MU");
+                    if (result.getMufcScore() == null) {
+                        itemController.eplMatchweekHomeTeamScore.setText("?");
+                    } else
+                        itemController.eplMatchweekHomeTeamScore.setText(result.getMufcScore().toString());
+                    itemController.eplMatchweekAwayTeamShortName.setText(result.getOpponentName().substring(0,3).toUpperCase());
+                    itemController.eplMatchweekTimeandHomeGround.setText("12:45,  OldTraffod");
+                    if (result.getOpponentScore() == null) {
+                        itemController.eplMatchweekAwayTeamScore.setText("?");
+                    } else
+                        itemController.eplMatchweekAwayTeamScore.setText(result.getOpponentScore().toString());
+                    itemController.eplMatchweekFixtureHomeTeamLogo.setImageResource(R.drawable.logo_manutd);
+                    itemController.eplMatchweekFixtureAwayTeamLogo.setImageResource(R.drawable.logo_wathford);
 
-                }else {
-                    itemController.matchResultHomeTeam.setText(result.getOpponentName());
-                    if (result.getOpponentScore()==null){
-                        itemController.matchResultHomeTeamScore.setText("?");
-                    }else
-                        itemController.matchResultHomeTeamScore.setText(result.getOpponentScore().toString());
-                    itemController.matchResultAwayTeam.setText(R.string.manchester_united);
-                    if (result.getMufcScore()==null){
-                        itemController.matchResultAwayTeamScore.setText("?");
-                    }else
-                        itemController.matchResultAwayTeamScore.setText(result.getMufcScore().toString());
+                } else {
+                    itemController.eplMatchweekAwayTeamShortName.setText("MU");
+                    if (result.getOpponentScore() == null) {
+                        itemController.eplMatchweekHomeTeamScore.setText("?");
+                    } else
+                        itemController.eplMatchweekHomeTeamScore.setText(result.getOpponentScore().toString());
+                    itemController.eplMatchweekHomeTeamShortName.setText(result.getOpponentName().substring(0,3).toUpperCase());
+                    if (result.getMufcScore() == null) {
+                        itemController.eplMatchweekAwayTeamScore.setText("?");
+                    } else
+                        itemController.eplMatchweekAwayTeamScore.setText(result.getMufcScore().toString());
+                    itemController.eplMatchweekTimeandHomeGround.setText("12:45,  OpponentStadium");
+                    itemController.eplMatchweekFixtureHomeTeamLogo.setImageResource(R.drawable.logo_wathford);
+                    itemController.eplMatchweekFixtureAwayTeamLogo.setImageResource(R.drawable.logo_manutd);
                 }
-                if (result.getMufcScore()==result.getOpponentScore()){
-                    itemController.matchResultView.setBackgroundColor(ContextCompat.getColor(context, R.color.colorDraw));
-                }else if (result.getMufcScore()>result.getOpponentScore())
-                    itemController.matchResultView.setBackgroundColor(ContextCompat.getColor(context, R.color.colorWin));
-                else if (result.getMufcScore()<result.getOpponentScore())
-                    itemController.matchResultView.setBackgroundColor(ContextCompat.getColor(context, R.color.colorLose));
-                else
-                    itemController.matchResultView.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimaryDark));
+//                if (result.getMufcScore() == result.getOpponentScore()) {
+//                    itemController.matchResultView.setBackgroundColor(ContextCompat.getColor(context, R.color.colorDraw));
+//                } else if (result.getMufcScore() > result.getOpponentScore())
+//                    itemController.matchResultView.setBackgroundColor(ContextCompat.getColor(context, R.color.colorWin));
+//                else if (result.getMufcScore() < result.getOpponentScore())
+//                    itemController.matchResultView.setBackgroundColor(ContextCompat.getColor(context, R.color.colorLose));
+//                else
+//                    itemController.matchResultView.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimaryDark));
                 itemController.matchResultRowLayout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -163,16 +166,25 @@ public class MatchResultExpandableRecyclerviewAdapter extends RecyclerView.Adapt
      * header view holder for recent results
      */
     static class HeaderViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.matchResultView)
-        View matchResultView;
-        @BindView(R.id.matchResultHomeTeam)
-        TextView matchResultHomeTeam;
-        @BindView(R.id.matchResultHomeTeamScore)
-        TextView matchResultHomeTeamScore;
-        @BindView(R.id.matchResultAwayTeamScore)
-        TextView matchResultAwayTeamScore;
-        @BindView(R.id.matchResultAwayTeam)
-        TextView matchResultAwayTeam;
+
+        @BindView(R.id.table_row_divider)
+        View tableRowDivider;
+        @BindView(R.id.eplMatchweekFixtureHomeTeamLogo)
+        ImageView eplMatchweekFixtureHomeTeamLogo;
+        @BindView(R.id.eplMatchweekHomeTeamScore)
+        TextView eplMatchweekHomeTeamScore;
+        @BindView(R.id.eplMatchweekMatchStatus)
+        TextView eplMatchweekMatchStatus;
+        @BindView(R.id.eplMatchweekAwayTeamScore)
+        TextView eplMatchweekAwayTeamScore;
+        @BindView(R.id.eplMatchweekFixtureAwayTeamLogo)
+        ImageView eplMatchweekFixtureAwayTeamLogo;
+        @BindView(R.id.eplMatchweekHomeTeamShortName)
+        TextView eplMatchweekHomeTeamShortName;
+        @BindView(R.id.eplMatchweekTimeandHomeGround)
+        TextView eplMatchweekTimeandHomeGround;
+        @BindView(R.id.eplMatchweekAwayTeamShortName)
+        TextView eplMatchweekAwayTeamShortName;
         @BindView(R.id.matchResultRowLayout)
         LinearLayout matchResultRowLayout;
 
