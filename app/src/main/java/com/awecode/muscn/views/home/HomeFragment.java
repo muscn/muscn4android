@@ -163,7 +163,7 @@ public class HomeFragment extends MasterFragment {
                 Picasso.with(mContext)
                         .load(R.drawable.logo_manutd)
                         .resize(getDimen(R.dimen.team_logo_size), getDimen(R.dimen.team_logo_size))
-                        .into(mFirstTeamImageView);
+                        .into(mSecondTeamImageView);
             }
 
             //configure venue name
