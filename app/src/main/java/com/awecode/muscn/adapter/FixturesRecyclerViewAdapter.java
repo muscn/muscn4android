@@ -50,7 +50,10 @@ public class FixturesRecyclerViewAdapter extends RecyclerView.Adapter<FixturesRe
             holder.eplMatchweekFixtureHomeTeamLogo.setImageResource(R.drawable.logo_manutd);
             Picasso.with(context).load(result.getOpponent().getCrest()).into(holder.eplMatchweekFixtureAwayTeamLogo);
             holder.eplMatchweekHomeTeamShortName.setText(R.string.manutd_shortname);
-            holder.eplMatchweekAwayTeamShortName.setText(result.getOpponent().getShortName());
+            if (result.getOpponent().getShortName()==null||result.getOpponent().getShortName().isEmpty())
+                holder.eplMatchweekAwayTeamShortName.setText(result.getOpponent().getName().substring(0,3).toUpperCase());
+            else
+                holder.eplMatchweekAwayTeamShortName.setText(result.getOpponent().getShortName().toUpperCase());
             holder.eplMatchweekTimeandHomeGround.setText(Util.dateFormatter(result.getDatetime(),"yyyy-MM-dd'T'hh:mm:ss'Z'","hh:mm")+", "+context.getString(R.string.manutd_home_stadium));
         }
         /**
@@ -60,7 +63,10 @@ public class FixturesRecyclerViewAdapter extends RecyclerView.Adapter<FixturesRe
             holder.eplMatchweekFixtureAwayTeamLogo.setImageResource(R.drawable.logo_manutd);
             Picasso.with(context).load(result.getOpponent().getCrest()).into(holder.eplMatchweekFixtureHomeTeamLogo);
             holder.eplMatchweekAwayTeamShortName.setText(R.string.manutd_shortname);
-            holder.eplMatchweekHomeTeamShortName.setText(result.getOpponent().getShortName());
+            if (result.getOpponent().getShortName()==null||result.getOpponent().getShortName().isEmpty())
+                holder.eplMatchweekHomeTeamShortName.setText(result.getOpponent().getName().substring(0,3).toUpperCase());
+            else
+                holder.eplMatchweekHomeTeamShortName.setText(result.getOpponent().getShortName().toUpperCase());
             holder.eplMatchweekTimeandHomeGround.setText(Util.dateFormatter(result.getDatetime(),"yyyy-MM-dd'T'hh:mm:ss'Z'","hh:mm")+",  "+result.getVenue().substring(0,result.getVenue().indexOf(",")));
         }
 
