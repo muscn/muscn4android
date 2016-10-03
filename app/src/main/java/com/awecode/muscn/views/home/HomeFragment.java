@@ -89,7 +89,6 @@ public class HomeFragment extends MasterFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         showProgressView(getString(R.string.loading_fixtures));
-        changeParallaxImage(R.drawable.goal);
         initializeCountDownTimer();
         requestFixturesList();
 

@@ -54,9 +54,6 @@ public class FixturesFragment extends MasterFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setupFixturesRecyclerview();
-
-        //change background image
-        changeParallaxImage(R.drawable.background_2);
     }
 
     public void setupFixturesRecyclerview() {
