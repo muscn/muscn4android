@@ -38,4 +38,17 @@ public class Util {
         }
         return date;
     }
+
+    public static String dateFormatter(String date, String obtainedFormat,String requiredFormat){
+        SimpleDateFormat format = new SimpleDateFormat(obtainedFormat);
+        Date newDate = null;
+        try {
+            newDate = format.parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        format = new SimpleDateFormat(requiredFormat);
+        String time = format.format(newDate);
+        return time;
+    }
 }

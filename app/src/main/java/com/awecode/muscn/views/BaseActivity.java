@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.awecode.muscn.R;
+import com.awecode.muscn.model.http.fixtures.FixturesResponse;
 import com.awecode.muscn.util.Util;
 import com.awecode.muscn.util.retrofit.MuscnApiInterface;
 import com.awecode.muscn.util.retrofit.ServiceGenerator;
@@ -38,6 +39,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @BindView(R.id.title)
     TextView titleTextView;
 
+    private FixturesResponse fixturesResponse;
     protected Context mContext;
     protected Activity mActivity;
     public FloatingActionMenu mActionMenu;
@@ -111,11 +113,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         mActionMenu = (FloatingActionMenu) findViewById(R.id.menu2);
     }
 
-    @OnClick({R.id.fabFixtures, R.id.fabLeagueTable, R.id.fabInjuries, R.id.fabTopScores, R.id.fabEplMatchWeek, R.id.fabRecentResults})
+    @OnClick({R.id.fabHome, R.id.fabLeagueTable, R.id.fabInjuries, R.id.fabTopScores, R.id.fabEplMatchWeek, R.id.fabRecentResults, R.id.fabFixtures})
     public void onClick(View view) {
         mActionMenu.close(true);
         switch (view.getId()) {
-            case R.id.fabFixtures:
+            case R.id.fabHome:
                 openFragment(HomeFragment.newInstance());
                 break;
             case R.id.fabLeagueTable:
@@ -132,6 +134,9 @@ public abstract class BaseActivity extends AppCompatActivity {
                 break;
             case R.id.fabRecentResults:
                 openFragment(new MatchResultFragment());
+                break;
+            case R.id.fabFixtures:
+                openFragment(FixturesFragment.newInstance(fixturesResponse));
                 break;
         }
     }
@@ -151,5 +156,9 @@ public abstract class BaseActivity extends AppCompatActivity {
 
             mBackPressed = System.currentTimeMillis();
         }
+    }
+
+    public void setFixtureResponse(FixturesResponse fixtureResponse){
+        this.fixturesResponse = fixtureResponse;
     }
 }

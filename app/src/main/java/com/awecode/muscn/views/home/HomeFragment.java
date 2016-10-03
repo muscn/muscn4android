@@ -12,6 +12,7 @@ import com.awecode.muscn.R;
 import com.awecode.muscn.model.CountDownTime;
 import com.awecode.muscn.model.http.fixtures.FixturesResponse;
 import com.awecode.muscn.model.http.fixtures.Result;
+import com.awecode.muscn.model.listener.FixturesApiListener;
 import com.awecode.muscn.util.Util;
 import com.awecode.muscn.util.countdown_timer.CountDownTimer;
 import com.awecode.muscn.util.retrofit.MuscnApiInterface;
@@ -58,6 +59,9 @@ public class HomeFragment extends MasterFragment {
     ImageView mSecondTeamImageView;
     private CountDownTimer mCountDownTimer;
 
+    public FixturesResponse fixturesResponse;
+    public FixturesApiListener fixturesApiListener;
+
     public static HomeFragment newInstance() {
         HomeFragment fragment = new HomeFragment();
         return fragment;
@@ -70,7 +74,7 @@ public class HomeFragment extends MasterFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        fixturesApiListener = (FixturesApiListener) this.getContext();
     }
 
     @Override
@@ -110,6 +114,7 @@ public class HomeFragment extends MasterFragment {
 
                     @Override
                     public void onNext(FixturesResponse fixturesResponse) {
+                        fixturesApiListener.onCallFixtures(fixturesResponse);
                         configureFixtureView(fixturesResponse.getResults().get(0));
                     }
                 });
@@ -240,4 +245,5 @@ public class HomeFragment extends MasterFragment {
             }
         });
     }
+
 }
