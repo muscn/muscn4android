@@ -2,11 +2,10 @@ package com.awecode.muscn.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.awecode.muscn.R;
@@ -36,7 +35,7 @@ public class MatchFixutreRecyclerviewAdapter extends RecyclerView.Adapter<MatchF
 
     @Override
     public FixtureViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.epl_matchweek_fixture_row_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.epl_matchweek_row_iten_new, parent, false);
         FixtureViewHolder albumViewHolder = new FixtureViewHolder(view);
         return albumViewHolder;
     }
@@ -62,24 +61,25 @@ public class MatchFixutreRecyclerviewAdapter extends RecyclerView.Adapter<MatchF
         /**
          * populate data in viewholder
          */
-       if (data.getScore()==null||data.getScore().equalsIgnoreCase("?-?")||data.getScore().equalsIgnoreCase("? - ?")){
+        if (data.getScore() == null || data.getScore().equalsIgnoreCase("?-?") || data.getScore().equalsIgnoreCase("? - ?")) {
 
-       }else {
-           String score = data.getScore();
-           int indexofDash = score.indexOf("-");
-           String homeTeamScore = score.substring(0,indexofDash);
-           String awayTeamScore = score.substring(indexofDash+1,score.length());
-           holder.eplMatchweekAwayTeamScore.setText(awayTeamScore);
-           holder.eplMatchweekHomeTeamScore.setText(homeTeamScore);
-       }
-        if (data.getMinute().equalsIgnoreCase("FT")){
+        } else {
+            String score = data.getScore();
+            int indexofDash = score.indexOf("-");
+            String homeTeamScore = score.substring(0, indexofDash);
+            String awayTeamScore = score.substring(indexofDash + 1, score.length());
+            holder.eplMatchweekAwayTeamScore.setText(awayTeamScore);
+            holder.eplMatchweekHomeTeamScore.setText(homeTeamScore);
+        }
+        if (data.getMinute().equalsIgnoreCase("FT")) {
             holder.eplMatchweekMatchStatus.setText("FullTime");
-        }else
+        } else
             holder.eplMatchweekMatchStatus.setText("PreMatch");
-        holder.eplMatchweekTimeandHomeGround.setText(time+",  "+"HomeGround");
-        holder.eplMatchweekHomeTeamShortName.setText(data.getHomeTeam().substring(0,3).toUpperCase());
-        holder.eplMatchweekAwayTeamShortName.setText(data.getAwayTeam().substring(0,3).toUpperCase());
-
+        holder.eplMatchweekTimeandHomeGround.setText(time);
+        String homeTeamShortName = data.getHomeTeam().substring(0,3).toUpperCase();
+        String awayTeamShortName = data.getAwayTeam().substring(0,3).toUpperCase();
+        holder.eplMatchweekHomeTeam.setText(homeTeamShortName);
+        holder.eplMatchweekAwayTeam.setText(awayTeamShortName);
 
 
     }
@@ -94,22 +94,22 @@ public class MatchFixutreRecyclerviewAdapter extends RecyclerView.Adapter<MatchF
      */
 
     static class FixtureViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.eplMatchweekFixtureHomeTeamLogo)
-        ImageView eplMatchweekFixtureHomeTeamLogo;
+        @BindView(R.id.table_row_divider)
+        View tableRowDivider;
+        @BindView(R.id.eplMatchweekHomeTeam)
+        TextView eplMatchweekHomeTeam;
         @BindView(R.id.eplMatchweekHomeTeamScore)
         TextView eplMatchweekHomeTeamScore;
         @BindView(R.id.eplMatchweekMatchStatus)
         TextView eplMatchweekMatchStatus;
-        @BindView(R.id.eplMatchweekAwayTeamScore)
-        TextView eplMatchweekAwayTeamScore;
-        @BindView(R.id.eplMatchweekFixtureAwayTeamLogo)
-        ImageView eplMatchweekFixtureAwayTeamLogo;
-        @BindView(R.id.eplMatchweekHomeTeamShortName)
-        TextView eplMatchweekHomeTeamShortName;
         @BindView(R.id.eplMatchweekTimeandHomeGround)
         TextView eplMatchweekTimeandHomeGround;
-        @BindView(R.id.eplMatchweekAwayTeamShortName)
-        TextView eplMatchweekAwayTeamShortName;
+        @BindView(R.id.eplMatchweekAwayTeamScore)
+        TextView eplMatchweekAwayTeamScore;
+        @BindView(R.id.eplMatchweekAwayTeam)
+        TextView eplMatchweekAwayTeam;
+        @BindView(R.id.matchResultRowLayout)
+        LinearLayout matchResultRowLayout;
 
         FixtureViewHolder(View view) {
             super(view);
