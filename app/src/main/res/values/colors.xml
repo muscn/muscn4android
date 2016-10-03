@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#e54d36</color>
-    <color name="colorPrimaryDark">#c1422e</color>
+    <color name="colorPrimaryDark">#99e54d36</color>
     <color name="colorAccent">#ffffff</color>
     <color name="white">#ffffff</color>
     <color name="colorRipple">#f1a59a</color>
@@ -9,6 +9,7 @@
     <color name="colorWin">#088A08</color>
     <color name="colorLose">#FF0000</color>
     <color name="colorGrey">#A4A4A4</color>
+    <color name="view_bg_transparent">#99e54d36</color>
 
 
 </resources>
