@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +11,6 @@ import android.view.ViewGroup;
 import com.awecode.muscn.R;
 import com.awecode.muscn.adapter.FixturesRecyclerViewAdapter;
 import com.awecode.muscn.model.http.fixtures.FixturesResponse;
-import com.awecode.muscn.model.listener.FixturesApiListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -55,15 +53,16 @@ public class FixturesFragment extends MasterFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-//        showProgressView(getString(R.string.loading_fixtures));
         setupFixturesRecyclerview();
-        Log.v("TEST","sizr: "+fixturesResponse.getCount());
+
+        //change background image
+        changeParallaxImage(R.drawable.background_2);
     }
 
-    public void setupFixturesRecyclerview(){
+    public void setupFixturesRecyclerview() {
         matchFixtures.setHasFixedSize(true);
         matchFixtures.setLayoutManager(new LinearLayoutManager(getActivity()));
-        fixturesRecyclerViewAdapter = new FixturesRecyclerViewAdapter(getActivity(),fixturesResponse);
+        fixturesRecyclerViewAdapter = new FixturesRecyclerViewAdapter(getActivity(), fixturesResponse);
         matchFixtures.setAdapter(fixturesRecyclerViewAdapter);
 
     }

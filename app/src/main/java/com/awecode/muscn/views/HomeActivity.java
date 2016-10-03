@@ -2,6 +2,7 @@ package com.awecode.muscn.views;
 
 import android.animation.ValueAnimator;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 
@@ -31,6 +32,13 @@ public class HomeActivity extends BaseActivity implements FixturesApiListener {
         openFragmentNoHistory(HomeFragment.newInstance());
         setupFloatingActionButton();
         configureParallaxBackgroundEffect();
+    }
+
+    public void setParallaxImageBackground(int drawableId) {
+        mBackgroundOne.setImageDrawable(null);
+        mBackgroundTwo.setImageDrawable(null);
+        mBackgroundOne.setImageDrawable(ContextCompat.getDrawable(mContext, drawableId));
+        mBackgroundTwo.setImageDrawable(ContextCompat.getDrawable(mContext, drawableId));
     }
 
     private void configureParallaxBackgroundEffect() {

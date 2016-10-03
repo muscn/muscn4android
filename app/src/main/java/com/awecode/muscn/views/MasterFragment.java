@@ -50,8 +50,12 @@ public abstract class MasterFragment extends Fragment {
         mApiInterface = ((BaseActivity) mContext).mApiInterface;
         return mApiInterface;
     }
-    public void showProgressView(String message){
+
+    public void showProgressView(String message) {
         ((BaseActivity) mContext).showProgressView(message);
     }
 
+    public void changeParallaxImage(int drawableId) {
+        ((HomeActivity) getActivity()).setParallaxImageBackground(drawableId);
+    }
 }
