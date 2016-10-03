@@ -3,6 +3,7 @@ package com.awecode.muscn.adapter;
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +14,9 @@ import android.widget.TextView;
 import com.awecode.muscn.R;
 import com.awecode.muscn.model.Item;
 import com.awecode.muscn.model.http.recentresults.Result;
+import com.awecode.muscn.util.Util;
 import com.awecode.muscn.views.HomeActivity;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,17 +68,20 @@ public class MatchResultExpandableRecyclerviewAdapter extends RecyclerView.Adapt
                 if (result.getIsHomeGame()) {
                     itemController.eplMatchweekHomeTeamShortName.setText("MU");
                     if (result.getMufcScore() == null) {
-                        itemController.eplMatchweekHomeTeamScore.setText("?");
+                        itemController.eplMatchweekHomeTeamScore.setText("");
                     } else
                         itemController.eplMatchweekHomeTeamScore.setText(result.getMufcScore().toString());
-                    itemController.eplMatchweekAwayTeamShortName.setText(result.getOpponentName().substring(0,3).toUpperCase());
-                    itemController.eplMatchweekTimeandHomeGround.setText("12:45,  OldTraffod");
+                    if (result.getOpponentShortName()==null||result.getOpponentShortName().isEmpty())
+                        itemController.eplMatchweekAwayTeamShortName.setText(result.getOpponentName().substring(0,3).toUpperCase());
+                    else
+                        itemController.eplMatchweekAwayTeamShortName.setText(result.getOpponentShortName().toUpperCase());
+                    itemController.eplMatchweekTimeandHomeGround.setText(Util.dateFormatter(result.getDatetime(),"yyyy-MM-dd'T'hh:mm:ss'Z'","hh:mm")+",  OldTraffod");
                     if (result.getOpponentScore() == null) {
                         itemController.eplMatchweekAwayTeamScore.setText("?");
                     } else
                         itemController.eplMatchweekAwayTeamScore.setText(result.getOpponentScore().toString());
                     itemController.eplMatchweekFixtureHomeTeamLogo.setImageResource(R.drawable.logo_manutd);
-                    itemController.eplMatchweekFixtureAwayTeamLogo.setImageResource(R.drawable.logo_wathford);
+                    Picasso.with(context).load("http://manutd.org.np/"+result.getOpponentCrest()).into(itemController.eplMatchweekFixtureAwayTeamLogo);
 
                 } else {
                     itemController.eplMatchweekAwayTeamShortName.setText("MU");
@@ -83,13 +89,20 @@ public class MatchResultExpandableRecyclerviewAdapter extends RecyclerView.Adapt
                         itemController.eplMatchweekHomeTeamScore.setText("?");
                     } else
                         itemController.eplMatchweekHomeTeamScore.setText(result.getOpponentScore().toString());
-                    itemController.eplMatchweekHomeTeamShortName.setText(result.getOpponentName().substring(0,3).toUpperCase());
+                    if (result.getOpponentShortName()==null||result.getOpponentShortName().isEmpty())
+                        itemController.eplMatchweekHomeTeamShortName.setText(result.getOpponentName().substring(0,3).toUpperCase());
+                    else
+                        itemController.eplMatchweekHomeTeamShortName.setText(result.getOpponentShortName());
                     if (result.getMufcScore() == null) {
                         itemController.eplMatchweekAwayTeamScore.setText("?");
                     } else
                         itemController.eplMatchweekAwayTeamScore.setText(result.getMufcScore().toString());
-                    itemController.eplMatchweekTimeandHomeGround.setText("12:45,  OpponentStadium");
-                    itemController.eplMatchweekFixtureHomeTeamLogo.setImageResource(R.drawable.logo_wathford);
+                    if (result.getVenue().contains(","))
+                        itemController.eplMatchweekTimeandHomeGround.setText(Util.dateFormatter(result.getDatetime(),"yyyy-MM-dd'T'hh:mm:ss'Z'","hh:mm")+",  "+result.getVenue().substring(0,result.getVenue().indexOf(",")));
+                    else
+                        itemController.eplMatchweekTimeandHomeGround.setText(Util.dateFormatter(result.getDatetime(),"yyyy-MM-dd'T'hh:mm:ss'Z'","hh:mm")+",  "+result.getVenue());
+                    Picasso.with(context).load("http://manutd.org.np/"+result.getOpponentCrest()).into(itemController.eplMatchweekFixtureHomeTeamLogo);
+                    Log.v("TEST","crest: "+result.getOpponentCrest());
                     itemController.eplMatchweekFixtureAwayTeamLogo.setImageResource(R.drawable.logo_manutd);
                 }
 //                if (result.getMufcScore() == result.getOpponentScore()) {
