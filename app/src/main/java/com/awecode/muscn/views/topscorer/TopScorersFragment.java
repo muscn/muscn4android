@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import com.awecode.muscn.R;
 import com.awecode.muscn.adapter.TopScorerAdapter;
 import com.awecode.muscn.model.http.topscorers.TopScorersResponse;
+import com.awecode.muscn.model.listener.RecyclerViewScrollListener;
 import com.awecode.muscn.util.retrofit.MuscnApiInterface;
 import com.awecode.muscn.views.MasterFragment;
 
@@ -33,6 +34,7 @@ public class TopScorersFragment extends MasterFragment {
 
     TopScorerAdapter mAdapter;
     LinearLayoutManager mLinearLayoutManager;
+    RecyclerViewScrollListener mRecyclerViewScrollListener;
 
     public static TopScorersFragment newInstance() {
         TopScorersFragment fragment = new TopScorersFragment();
@@ -47,6 +49,8 @@ public class TopScorersFragment extends MasterFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         showProgressView(getString(R.string.loading_top_scorers));
+        mRecyclerViewScrollListener = (RecyclerViewScrollListener) this.getContext();
+
     }
 
     @Override
@@ -91,5 +95,6 @@ public class TopScorersFragment extends MasterFragment {
     private void setUpAdapter(List<TopScorersResponse> topScorersResponses){
         mAdapter = new TopScorerAdapter(mContext, topScorersResponses);
         mRecyclerView.setAdapter(mAdapter);
+        mRecyclerViewScrollListener.onRecyclerViewScrolled(mRecyclerView);
     }
 }

@@ -11,6 +11,7 @@ import com.awecode.muscn.R;
 import com.awecode.muscn.adapter.MatchFixutreRecyclerviewAdapter;
 import com.awecode.muscn.model.http.eplmatchweek.EplMatchweekFixturesResponse;
 import com.awecode.muscn.model.http.eplmatchweek._20161001;
+import com.awecode.muscn.model.listener.RecyclerViewScrollListener;
 import com.awecode.muscn.util.retrofit.MuscnApiInterface;
 import com.awecode.muscn.util.retrofit.ServiceGenerator;
 import com.awecode.muscn.views.MasterFragment;
@@ -43,10 +44,13 @@ public class EplMatchWeekFixtureFragment extends MasterFragment {
     RecyclerView matchFixtures;
 
     private MatchFixutreRecyclerviewAdapter mMatchFixutreRecyclerviewAdapter;
+    private RecyclerViewScrollListener mRecyclerViewScrollListener;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mRecyclerViewScrollListener = (RecyclerViewScrollListener) this.getContext();
+
     }
 
     @Override
@@ -72,7 +76,7 @@ public class EplMatchWeekFixtureFragment extends MasterFragment {
         matchFixtures.setLayoutManager(new LinearLayoutManager(getActivity()));
         mMatchFixutreRecyclerviewAdapter = new MatchFixutreRecyclerviewAdapter(getActivity(), mCategoryList);
         matchFixtures.setAdapter(mMatchFixutreRecyclerviewAdapter);
-
+        mRecyclerViewScrollListener.onRecyclerViewScrolled(matchFixtures);
     }
 
     /**

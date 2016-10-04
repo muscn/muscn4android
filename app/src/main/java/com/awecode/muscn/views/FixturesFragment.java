@@ -13,6 +13,7 @@ import com.awecode.muscn.R;
 import com.awecode.muscn.adapter.FixturesRecyclerViewAdapter;
 import com.awecode.muscn.model.http.fixtures.FixturesResponse;
 import com.awecode.muscn.model.listener.FixturesApiListener;
+import com.awecode.muscn.model.listener.RecyclerViewScrollListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,6 +28,7 @@ public class FixturesFragment extends MasterFragment {
     RecyclerView matchFixtures;
     private FixturesResponse fixturesResponse;
     private FixturesRecyclerViewAdapter fixturesRecyclerViewAdapter;
+    private RecyclerViewScrollListener mRecyclerViewScrollListener;
 
     public static FixturesFragment newInstance(FixturesResponse fixturesResponse) {
         FixturesFragment fixturesFragment = new FixturesFragment();
@@ -42,6 +44,7 @@ public class FixturesFragment extends MasterFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mRecyclerViewScrollListener = (RecyclerViewScrollListener) this.getContext();
     }
 
     @Override
@@ -65,7 +68,7 @@ public class FixturesFragment extends MasterFragment {
         matchFixtures.setLayoutManager(new LinearLayoutManager(getActivity()));
         fixturesRecyclerViewAdapter = new FixturesRecyclerViewAdapter(getActivity(),fixturesResponse);
         matchFixtures.setAdapter(fixturesRecyclerViewAdapter);
-
+        mRecyclerViewScrollListener.onRecyclerViewScrolled(matchFixtures);
     }
 
 }

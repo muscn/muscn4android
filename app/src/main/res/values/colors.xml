@@ -9,6 +9,7 @@
     <color name="colorWin">#088A08</color>
     <color name="colorLose">#FF0000</color>
     <color name="colorGrey">#A4A4A4</color>
+    <color name="colorTransparent">#d00a0909</color>
 
 
 </resources>

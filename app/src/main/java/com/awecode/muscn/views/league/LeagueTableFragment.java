@@ -11,7 +11,10 @@ import android.view.ViewGroup;
 import com.awecode.muscn.R;
 import com.awecode.muscn.adapter.LeagueTableAdapter;
 import com.awecode.muscn.model.http.leaguetable.LeagueTableResponse;
+import com.awecode.muscn.model.listener.FixturesApiListener;
+import com.awecode.muscn.model.listener.RecyclerViewScrollListener;
 import com.awecode.muscn.util.retrofit.MuscnApiInterface;
+import com.awecode.muscn.views.BaseActivity;
 import com.awecode.muscn.views.MasterFragment;
 
 import java.util.List;
@@ -27,12 +30,13 @@ import rx.schedulers.Schedulers;
  * Created by surensth on 9/25/16.
  */
 
-public class LeagueTableFragment extends MasterFragment{
+public class LeagueTableFragment extends MasterFragment {
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
 
     LeagueTableAdapter mAdapter;
     LinearLayoutManager mLinearLayoutManager;
+    RecyclerViewScrollListener recyclerViewScrollListener;
 
     public static LeagueTableFragment newInstance() {
         LeagueTableFragment fragment = new LeagueTableFragment();
@@ -46,6 +50,7 @@ public class LeagueTableFragment extends MasterFragment{
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         showProgressView(getString(R.string.loading_league_table));
+        recyclerViewScrollListener = (RecyclerViewScrollListener) this.getContext();
 
     }
 
@@ -91,5 +96,6 @@ public class LeagueTableFragment extends MasterFragment{
     private void setUpAdapter(List<LeagueTableResponse> leagueTableResponses){
         mAdapter = new LeagueTableAdapter(mContext, leagueTableResponses);
         mRecyclerView.setAdapter(mAdapter);
+        recyclerViewScrollListener.onRecyclerViewScrolled(mRecyclerView);
     }
 }

@@ -12,6 +12,7 @@ import com.awecode.muscn.R;
 import com.awecode.muscn.adapter.MatchResultExpandableRecyclerviewAdapter;
 import com.awecode.muscn.model.Item;
 import com.awecode.muscn.model.http.recentresults.RecentResultsResponse;
+import com.awecode.muscn.model.listener.RecyclerViewScrollListener;
 import com.awecode.muscn.util.retrofit.MuscnApiInterface;
 import com.awecode.muscn.util.retrofit.ServiceGenerator;
 import com.awecode.muscn.views.MasterFragment;
@@ -37,9 +38,13 @@ public class MatchResultFragment extends MasterFragment {
     private List<Item> data;
     private MatchResultExpandableRecyclerviewAdapter mMatchResultExpandableRecyclerviewAdapter;
     private MuscnApiInterface mApiInterface;
+    public RecyclerViewScrollListener recyclerViewScrollListener;
 
-
-
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        recyclerViewScrollListener = (RecyclerViewScrollListener) this.getContext();
+    }
 
     @Nullable
     @Override
@@ -66,6 +71,7 @@ public class MatchResultFragment extends MasterFragment {
         mMatchResultRecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
         mMatchResultExpandableRecyclerviewAdapter = new MatchResultExpandableRecyclerviewAdapter(getActivity(),data);
         mMatchResultRecyclerview.setAdapter(mMatchResultExpandableRecyclerviewAdapter);
+        recyclerViewScrollListener.onRecyclerViewScrolled(mMatchResultRecyclerview);
     }
 
 

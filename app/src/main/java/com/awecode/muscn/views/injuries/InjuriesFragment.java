@@ -13,6 +13,7 @@ import com.awecode.muscn.adapter.InjuriesAdapter;
 import com.awecode.muscn.adapter.TopScorerAdapter;
 import com.awecode.muscn.model.http.injuries.InjuriesResponse;
 import com.awecode.muscn.model.http.topscorers.TopScorersResponse;
+import com.awecode.muscn.model.listener.RecyclerViewScrollListener;
 import com.awecode.muscn.util.retrofit.MuscnApiInterface;
 import com.awecode.muscn.views.MasterFragment;
 
@@ -35,6 +36,7 @@ public class InjuriesFragment extends MasterFragment {
 
     InjuriesAdapter mAdapter;
     LinearLayoutManager mLinearLayoutManager;
+    RecyclerViewScrollListener mRecyclerViewScrollListener;
 
     public static InjuriesFragment newInstance() {
         InjuriesFragment fragment = new InjuriesFragment();
@@ -49,7 +51,7 @@ public class InjuriesFragment extends MasterFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         showProgressView(getString(R.string.loading_injuries));
-
+        mRecyclerViewScrollListener = (RecyclerViewScrollListener) this.getContext();
     }
 
     @Override
@@ -95,6 +97,7 @@ public class InjuriesFragment extends MasterFragment {
     private void setUpAdapter(InjuriesResponse injuriesResponse) {
         mAdapter = new InjuriesAdapter(mContext, injuriesResponse);
         mRecyclerView.setAdapter(mAdapter);
+        mRecyclerViewScrollListener.onRecyclerViewScrolled(mRecyclerView);
     }
 
 }

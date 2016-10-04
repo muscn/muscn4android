@@ -1,5 +1,9 @@
 package com.awecode.muscn.views;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
@@ -7,7 +11,9 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.animation.OvershootInterpolator;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +44,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     StateLayout mStateLayout;
     @BindView(R.id.title)
     TextView titleTextView;
+    @BindView(R.id.transparentView)
+    View transparentView;
 
     private FixturesResponse fixturesResponse;
     protected Context mContext;
@@ -45,7 +53,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     public FloatingActionMenu mActionMenu;
     private static final int TIME_INTERVAL = 2000; // # milliseconds, desired time passed between two back presses.
     private long mBackPressed;
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -111,6 +118,36 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public void setupFloatingActionButton() {
         mActionMenu = (FloatingActionMenu) findViewById(R.id.menu2);
+        createCustomAnimation();
+
+    }
+    private void createCustomAnimation() {
+        AnimatorSet set = new AnimatorSet();
+        ObjectAnimator scaleOutX = ObjectAnimator.ofFloat(mActionMenu.getMenuIconView(), "scaleX", 1.0f, 0.2f);
+        ObjectAnimator scaleOutY = ObjectAnimator.ofFloat(mActionMenu.getMenuIconView(), "scaleY", 1.0f, 0.2f);
+
+        ObjectAnimator scaleInX = ObjectAnimator.ofFloat(mActionMenu.getMenuIconView(), "scaleX", 0.2f, 1.0f);
+        ObjectAnimator scaleInY = ObjectAnimator.ofFloat(mActionMenu.getMenuIconView(), "scaleY", 0.2f, 1.0f);
+
+        scaleOutX.setDuration(50);
+        scaleOutY.setDuration(50);
+
+        scaleInX.setDuration(150);
+        scaleInY.setDuration(150);
+
+        scaleInX.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                mActionMenu.getMenuIconView().setImageResource(mActionMenu.isOpened()
+                        ? R.drawable.ic_fab_close_menu : R.drawable.ic_fab_menu);
+            }
+        });
+
+        set.play(scaleOutX).with(scaleOutY);
+        set.play(scaleInX).with(scaleInY).after(scaleOutX);
+        set.setInterpolator(new OvershootInterpolator(2));
+
+        mActionMenu.setIconToggleAnimatorSet(set);
     }
 
     @OnClick({R.id.fabHome, R.id.fabLeagueTable, R.id.fabInjuries, R.id.fabTopScores, R.id.fabEplMatchWeek, R.id.fabRecentResults, R.id.fabFixtures})
@@ -151,14 +188,30 @@ public abstract class BaseActivity extends AppCompatActivity {
                 super.onBackPressed();
                 mActivity.finish();
             } else {
-                Util.toast(mContext,getString(R.string.tapExitMessage));
+                Util.toast(mContext, getString(R.string.tapExitMessage));
             }
 
             mBackPressed = System.currentTimeMillis();
         }
     }
 
-    public void setFixtureResponse(FixturesResponse fixtureResponse){
+    public void setFixtureResponse(FixturesResponse fixtureResponse) {
         this.fixturesResponse = fixtureResponse;
+    }
+
+    /**
+     * when recycler view is scrolled, floating action button hide/show
+     * @param recyclerView recyclerview with scroll enabled
+     */
+    public void setScrollAnimation(RecyclerView recyclerView){
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy){
+                if (dy > 0)
+                   mActionMenu.hideMenu(true);
+                else if (dy < 0)
+                   mActionMenu.showMenu(true);
+            }
+        });
     }
 }
