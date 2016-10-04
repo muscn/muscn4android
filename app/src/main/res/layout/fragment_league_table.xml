@@ -5,7 +5,7 @@
     android:layout_marginTop="@dimen/fragment_table_margin_top"
     android:orientation="vertical">
 <!--table column title-->
-    <include layout="@layout/league_table_row" />
+    <include layout="@layout/league_table_caption_view" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"

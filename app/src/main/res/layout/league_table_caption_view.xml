@@ -2,21 +2,22 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/colorPrimaryDark">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="@dimen/table_item_padding"
+        android:padding="@dimen/table_caption_padding"
         android:weightSum="8">
 
         <TextView
-            android:id="@+id/serialNumber"
+            android:id="@+id/serialNumberCaption"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Position"
+            android:text="#"
             android:textColor="@color/white" />
 
         <TextView
@@ -24,6 +25,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="4"
+            android:textAllCaps="true"
             android:text="Club"
             android:textColor="@color/white" />
 
@@ -52,6 +54,6 @@
             android:textColor="@color/white" />
     </LinearLayout>
     <!--table row divider white line-->
-    <include layout="@layout/white_horizontal_line"/>
+    <!--<include layout="@layout/white_horizontal_line"/>-->
 
 </LinearLayout>

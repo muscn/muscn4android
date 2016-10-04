@@ -35,8 +35,6 @@ public class Util {
         try {
             Date originalDate = originalFormat.parse(date);
             date = targetFormat.format(originalDate);
-            Log.v("Test", "date " + date);
-
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -55,6 +53,7 @@ public class Util {
         String time = format.format(newDate);
         return time;
     }
+
     public static boolean checkInternetConnection(Context context) {
         ConnectivityManager connectivityManager
                 = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
