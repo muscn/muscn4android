@@ -12,6 +12,7 @@ import com.awecode.muscn.R;
 import com.awecode.muscn.adapter.FixturesRecyclerViewAdapter;
 import com.awecode.muscn.model.http.fixtures.FixturesResponse;
 import com.awecode.muscn.model.listener.RecyclerViewScrollListener;
+import com.awecode.muscn.util.Util;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -56,7 +57,11 @@ public class FixturesFragment extends MasterFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        setupFixturesRecyclerview();
+        if (Util.checkInternetConnection(mContext))
+            setupFixturesRecyclerview();
+        else {
+            ((HomeActivity) mContext).noInternetConnectionDialog(mContext);
+        }
     }
 
     public void setupFixturesRecyclerview() {

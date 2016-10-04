@@ -12,5 +12,5 @@
     <dimen name="team_logo_size">45dp</dimen>
     <dimen name="table_item_padding">10dp</dimen>
     <dimen name="fragment_table_margin_top">10dp</dimen>
-
+    <dimen name="fragment_table_margin_bottom">10dp</dimen>
 </resources>

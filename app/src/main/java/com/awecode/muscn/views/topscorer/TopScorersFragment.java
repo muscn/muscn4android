@@ -12,7 +12,9 @@ import com.awecode.muscn.R;
 import com.awecode.muscn.adapter.TopScorerAdapter;
 import com.awecode.muscn.model.http.topscorers.TopScorersResponse;
 import com.awecode.muscn.model.listener.RecyclerViewScrollListener;
+import com.awecode.muscn.util.Util;
 import com.awecode.muscn.util.retrofit.MuscnApiInterface;
+import com.awecode.muscn.views.HomeActivity;
 import com.awecode.muscn.views.MasterFragment;
 
 import java.util.List;
@@ -67,7 +69,11 @@ public class TopScorersFragment extends MasterFragment {
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
         mRecyclerView.setHasFixedSize(true);
         mActivity.setCustomTitle(R.string.top_scorers);
-        requestTopScorers();
+        if (Util.checkInternetConnection(mContext))
+            requestTopScorers();
+        else {
+            ((HomeActivity) mContext).noInternetConnectionDialog(mContext);
+        }
     }
 
     private void requestTopScorers() {
@@ -83,7 +89,8 @@ public class TopScorersFragment extends MasterFragment {
 
                     @Override
                     public void onError(Throwable e) {
-                        mActivity.showErrorView(e.getMessage() + ". Try again");
+//                        mActivity.showErrorView(e.getMessage() + ". Try again");
+                        mActivity.noInternetConnectionDialog(mContext);
                     }
 
                     @Override

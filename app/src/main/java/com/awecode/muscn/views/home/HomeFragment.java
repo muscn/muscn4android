@@ -90,9 +90,11 @@ public class HomeFragment extends MasterFragment {
         super.onViewCreated(view, savedInstanceState);
         showProgressView(getString(R.string.loading_fixtures));
         initializeCountDownTimer();
-        requestFixturesList();
-
-
+        if (Util.checkInternetConnection(mContext))
+            requestFixturesList();
+        else {
+            ((HomeActivity) mContext).noInternetConnectionDialog(mContext);
+        }
     }
 
 
@@ -113,7 +115,8 @@ public class HomeFragment extends MasterFragment {
 
                     @Override
                     public void onError(Throwable e) {
-                        mActivity.showErrorView(e.getMessage() + ". Try again");
+//                        mActivity.showErrorView(e.getMessage() + ". Try again");
+                        mActivity.noInternetConnectionDialog(mContext);
                     }
 
                     @Override

@@ -1,6 +1,10 @@
 package com.awecode.muscn.util;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -39,7 +43,7 @@ public class Util {
         return date;
     }
 
-    public static String dateFormatter(String date, String obtainedFormat,String requiredFormat){
+    public static String dateFormatter(String date, String obtainedFormat, String requiredFormat) {
         SimpleDateFormat format = new SimpleDateFormat(obtainedFormat);
         Date newDate = null;
         try {
@@ -51,4 +55,11 @@ public class Util {
         String time = format.format(newDate);
         return time;
     }
+    public static boolean checkInternetConnection(Context context) {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
 }

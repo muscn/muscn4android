@@ -13,8 +13,10 @@ import com.awecode.muscn.adapter.MatchResultExpandableRecyclerviewAdapter;
 import com.awecode.muscn.model.Item;
 import com.awecode.muscn.model.http.recentresults.RecentResultsResponse;
 import com.awecode.muscn.model.listener.RecyclerViewScrollListener;
+import com.awecode.muscn.util.Util;
 import com.awecode.muscn.util.retrofit.MuscnApiInterface;
 import com.awecode.muscn.util.retrofit.ServiceGenerator;
+import com.awecode.muscn.views.HomeActivity;
 import com.awecode.muscn.views.MasterFragment;
 
 import java.util.ArrayList;
@@ -60,7 +62,11 @@ public class MatchResultFragment extends MasterFragment {
         data = new ArrayList<Item>();
         mActivity.setCustomTitle(R.string.recent_results);
         showProgressView(getString(R.string.loading_recent_results));
-        requestMatchResults();
+        if (Util.checkInternetConnection(mContext))
+            requestMatchResults();
+        else {
+            ((HomeActivity) mContext).noInternetConnectionDialog(mContext);
+        }
     }
 
     /**
@@ -91,7 +97,8 @@ public class MatchResultFragment extends MasterFragment {
 
                     @Override
                     public void onError(Throwable e) {
-                        mActivity.showErrorView(e.getMessage() + ". Try again");
+//                        mActivity.showErrorView(e.getMessage() + ". Try again");
+                        mActivity.noInternetConnectionDialog(mContext);
                     }
 
                     @Override

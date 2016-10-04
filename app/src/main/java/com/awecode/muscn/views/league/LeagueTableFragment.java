@@ -13,8 +13,10 @@ import com.awecode.muscn.adapter.LeagueTableAdapter;
 import com.awecode.muscn.model.http.leaguetable.LeagueTableResponse;
 import com.awecode.muscn.model.listener.FixturesApiListener;
 import com.awecode.muscn.model.listener.RecyclerViewScrollListener;
+import com.awecode.muscn.util.Util;
 import com.awecode.muscn.util.retrofit.MuscnApiInterface;
 import com.awecode.muscn.views.BaseActivity;
+import com.awecode.muscn.views.HomeActivity;
 import com.awecode.muscn.views.MasterFragment;
 
 import java.util.List;
@@ -68,7 +70,11 @@ public class LeagueTableFragment extends MasterFragment {
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
         mRecyclerView.setHasFixedSize(true);
         mActivity.setCustomTitle(R.string.league_table);
-        requestLeagueTable();
+        if (Util.checkInternetConnection(mContext))
+            requestLeagueTable();
+        else {
+            ((HomeActivity) mContext).noInternetConnectionDialog(mContext);
+        }
     }
 
     private void requestLeagueTable() {
@@ -84,7 +90,8 @@ public class LeagueTableFragment extends MasterFragment {
 
                     @Override
                     public void onError(Throwable e) {
-                        mActivity.showErrorView(e.getMessage() + ". Try again");
+//                        mActivity.showErrorView(e.getMessage() + ". Try again");
+                        mActivity.noInternetConnectionDialog(mContext);
                     }
 
                     @Override

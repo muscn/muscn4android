@@ -6,10 +6,12 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -121,6 +123,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         createCustomAnimation();
 
     }
+
     private void createCustomAnimation() {
         AnimatorSet set = new AnimatorSet();
         ObjectAnimator scaleOutX = ObjectAnimator.ofFloat(mActionMenu.getMenuIconView(), "scaleX", 1.0f, 0.2f);
@@ -201,17 +204,43 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     /**
      * when recycler view is scrolled, floating action button hide/show
+     *
      * @param recyclerView recyclerview with scroll enabled
      */
-    public void setScrollAnimation(RecyclerView recyclerView){
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
+    public void setScrollAnimation(RecyclerView recyclerView) {
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy){
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 if (dy > 0)
-                   mActionMenu.hideMenu(true);
+                    mActionMenu.hideMenu(true);
                 else if (dy < 0)
-                   mActionMenu.showMenu(true);
+                    mActionMenu.showMenu(true);
             }
         });
+    }
+
+    /**
+     * dialog to show message
+     *
+     * @param context context of current view
+     * @param title   title of the dialog to show
+     * @param message message to show in dialog
+     */
+    public void showDialog(final Context context, String title, String message) {
+        new AlertDialog.Builder(context,R.style.AppCompatAlertDialogStyle)
+                .setTitle(title)
+                .setMessage(message)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+    }
+    public void noInternetConnectionDialog(Context mContext){
+        showDialog(mContext,"Oops!",getString(R.string.no_internet_message));
+//        showErrorView();
+//        mActionMenu.hideMenu(true);
     }
 }

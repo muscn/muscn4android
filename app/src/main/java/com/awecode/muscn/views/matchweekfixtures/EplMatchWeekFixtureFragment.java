@@ -12,8 +12,10 @@ import com.awecode.muscn.adapter.MatchFixutreRecyclerviewAdapter;
 import com.awecode.muscn.model.http.eplmatchweek.EplMatchweekFixturesResponse;
 import com.awecode.muscn.model.http.eplmatchweek._20161001;
 import com.awecode.muscn.model.listener.RecyclerViewScrollListener;
+import com.awecode.muscn.util.Util;
 import com.awecode.muscn.util.retrofit.MuscnApiInterface;
 import com.awecode.muscn.util.retrofit.ServiceGenerator;
+import com.awecode.muscn.views.HomeActivity;
 import com.awecode.muscn.views.MasterFragment;
 
 import org.json.JSONArray;
@@ -65,7 +67,11 @@ public class EplMatchWeekFixtureFragment extends MasterFragment {
         super.onViewCreated(view, savedInstanceState);
         mActivity.setCustomTitle(R.string.epl_matchweek);
         showProgressView(getString(R.string.loading_fixtures));
-        requestEplMatchResults();
+        if (Util.checkInternetConnection(mContext))
+            requestEplMatchResults();
+        else {
+            ((HomeActivity) mContext).noInternetConnectionDialog(mContext);
+        }
     }
 
     /**
@@ -95,7 +101,9 @@ public class EplMatchWeekFixtureFragment extends MasterFragment {
 
                     @Override
                     public void onError(Throwable e) {
-                        mActivity.showErrorView(e.getMessage() + ". Try again");
+//                        mActivity.showErrorView(e.getMessage() + ". Try again");
+                        mActivity.noInternetConnectionDialog(mContext);
+
                     }
 
                     @Override

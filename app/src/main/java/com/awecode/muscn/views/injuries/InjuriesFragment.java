@@ -10,14 +10,12 @@ import android.view.ViewGroup;
 
 import com.awecode.muscn.R;
 import com.awecode.muscn.adapter.InjuriesAdapter;
-import com.awecode.muscn.adapter.TopScorerAdapter;
 import com.awecode.muscn.model.http.injuries.InjuriesResponse;
-import com.awecode.muscn.model.http.topscorers.TopScorersResponse;
 import com.awecode.muscn.model.listener.RecyclerViewScrollListener;
+import com.awecode.muscn.util.Util;
 import com.awecode.muscn.util.retrofit.MuscnApiInterface;
+import com.awecode.muscn.views.HomeActivity;
 import com.awecode.muscn.views.MasterFragment;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -68,7 +66,11 @@ public class InjuriesFragment extends MasterFragment {
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
         mRecyclerView.setHasFixedSize(true);
         mActivity.setCustomTitle(R.string.injuries);
-        requestInjuries();
+        if (Util.checkInternetConnection(mContext))
+            requestInjuries();
+        else {
+            ((HomeActivity) mContext).noInternetConnectionDialog(mContext);
+        }
     }
 
     private void requestInjuries() {
@@ -84,7 +86,8 @@ public class InjuriesFragment extends MasterFragment {
 
                     @Override
                     public void onError(Throwable e) {
-                        mActivity.showErrorView(e.getMessage() + ". Try again");
+//                        mActivity.showErrorView(e.getMessage() + ". Try again");
+                        mActivity.noInternetConnectionDialog(mContext);
                     }
 
                     @Override
