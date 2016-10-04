@@ -136,7 +136,7 @@
                 style="@style/MenuButtonsStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_fab_top_score"
+                android:src="@drawable/ic_fab_tops_scorer"
                 fab:fab_label="Top Scores" />
 
             <com.github.clans.fab.FloatingActionButton
