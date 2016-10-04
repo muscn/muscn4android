@@ -42,9 +42,11 @@ public class InjuriesAdapter extends RecyclerView.Adapter<InjuriesAdapter.Injuri
         final Result injuredResult = injuriesResponse.getResults().get(position);
 
 //       White divider line is hide if the table item is last
-        if (position >= 0 && position == getItemCount() - 1) {
+        if (position >= 0 && position == getItemCount() - 1)
             holder.tableRowDivider.setVisibility(View.GONE);
-        }
+        else
+            holder.tableRowDivider.setVisibility(View.VISIBLE);
+
         holder.players.setText(injuredResult.getPlayerName());
         type = injuredResult.getType();
         if (injuredResult.getType() != null) {

@@ -38,9 +38,10 @@ public class LeagueTableAdapter extends RecyclerView.Adapter<LeagueTableAdapter.
     public void onBindViewHolder(LeagueViewHolder holder, int position) {
         final LeagueTableResponse leagueTableResponse = leagueList.get(position);
 //       White divider line is hide if the table item is last
-        if(position == getItemCount()-1){
+        if (position == getItemCount() - 1)
             holder.mTableRowDividerView.setVisibility(View.GONE);
-        }
+        else
+            holder.mTableRowDividerView.setVisibility(View.VISIBLE);
 
         holder.serialNumber.setText(leagueTableResponse.getPosition());
         holder.club.setText(leagueTableResponse.getName());

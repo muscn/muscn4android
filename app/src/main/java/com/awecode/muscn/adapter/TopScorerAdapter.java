@@ -39,9 +39,11 @@ public class TopScorerAdapter extends RecyclerView.Adapter<TopScorerAdapter.TopS
     public void onBindViewHolder(TopScorersViewHolder holder, int position) {
         final TopScorersResponse topScorersResponse = topScorersList.get(position);
 //       White divider line is hide if the table item is last
-        if (position == getItemCount() - 1) {
+        if (position == getItemCount() - 1)
             holder.tableRowDivider.setVisibility(View.GONE);
-        }
+        else
+            holder.tableRowDivider.setVisibility(View.VISIBLE);
+
         holder.players.setText(topScorersResponse.getName());
         holder.goals.setText(topScorersResponse.getScore().toString());
     }
