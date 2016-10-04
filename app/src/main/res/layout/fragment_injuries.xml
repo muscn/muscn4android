@@ -5,7 +5,7 @@
     android:layout_marginTop="@dimen/fragment_table_margin_top"
     android:orientation="vertical">
     <!--table column title-->
-    <include layout="@layout/injuries_row_item" />
+    <include layout="@layout/injuries_table_caption" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/injuriesRecyclerView"
