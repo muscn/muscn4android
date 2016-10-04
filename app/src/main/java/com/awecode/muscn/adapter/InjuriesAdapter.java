@@ -54,7 +54,7 @@ public class InjuriesAdapter extends RecyclerView.Adapter<InjuriesAdapter.Injuri
         }
         holder.injury.setText(type);
         returnDate = injuredResult.getReturnDate();
-        returnDate = Util.dateFormatter(returnDate);//formating date in format "28 Sep., 2016"
+        returnDate = Util.dateFormatter(returnDate);//formating date in format "28 Sep, 2016"
         holder.returnDate.setText(returnDate);
     }
 

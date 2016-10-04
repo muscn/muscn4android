@@ -31,7 +31,7 @@ public class Util {
 
     public static String dateFormatter(String date) {
         DateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-        DateFormat targetFormat = new SimpleDateFormat("dd MMM., yyyy", Locale.ENGLISH);
+        DateFormat targetFormat = new SimpleDateFormat("dd MMM, yyyy", Locale.ENGLISH);
         try {
             Date originalDate = originalFormat.parse(date);
             date = targetFormat.format(originalDate);
