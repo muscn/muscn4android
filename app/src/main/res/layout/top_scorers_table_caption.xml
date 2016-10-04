@@ -10,32 +10,25 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="@dimen/table_caption_padding"
-        android:weightSum="3">
+        android:weightSum="2">
 
         <TextView
             android:id="@+id/playersCaption"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="1.5"
             android:textAllCaps="true"
             android:text="Player"
             android:textColor="@color/white" />
 
         <TextView
-            android:id="@+id/injuryCaption"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1.5"
-            android:textAllCaps="true"
-            android:text=" Injury"
-            android:textColor="@color/white" />
-        <TextView
-            android:id="@+id/returnDateCaption"
+            android:id="@+id/goalsCaption"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
             android:textAllCaps="true"
-            android:text="Return"
+            android:gravity="right"
+            android:text="Goals"
             android:textColor="@color/white" />
 
     </LinearLayout>

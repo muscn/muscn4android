@@ -21,7 +21,7 @@
             android:textColor="@color/white" />
 
         <TextView
-            android:id="@+id/club"
+            android:id="@+id/clubCaption"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="4"
@@ -30,7 +30,7 @@
             android:textColor="@color/white" />
 
         <TextView
-            android:id="@+id/p"
+            android:id="@+id/pCaption"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -38,7 +38,7 @@
             android:textColor="@color/white" />
 
         <TextView
-            android:id="@+id/gd"
+            android:id="@+id/gdCaption"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -46,7 +46,7 @@
             android:textColor="@color/white" />
 
         <TextView
-            android:id="@+id/pts"
+            android:id="@+id/ptsCaption"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
