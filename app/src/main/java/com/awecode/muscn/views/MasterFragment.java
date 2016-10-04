@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
 
+import com.awecode.muscn.R;
 import com.awecode.muscn.util.Util;
 import com.awecode.muscn.util.retrofit.MuscnApiInterface;
 
@@ -33,7 +34,7 @@ public abstract class MasterFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-
+        changeRandomParallaxImage();
     }
 
 
@@ -50,8 +51,28 @@ public abstract class MasterFragment extends Fragment {
         mApiInterface = ((BaseActivity) mContext).mApiInterface;
         return mApiInterface;
     }
-    public void showProgressView(String message){
+
+    public void showProgressView(String message) {
         ((BaseActivity) mContext).showProgressView(message);
     }
 
+    public void changeParallaxImage(int drawableId) {
+        ((HomeActivity) getActivity()).setParallaxImageBackground(drawableId);
+    }
+
+    public void changeRandomParallaxImage() {
+        try {
+            int drawables[] = {R.drawable.background_1,
+                    R.drawable.background_2,
+                    R.drawable.background_3,
+                    R.drawable.background_4,
+                    R.drawable.background_5,
+                    R.drawable.background_6,
+                    R.drawable.background_7};
+            changeParallaxImage(drawables[(int) Math.floor(Math.random() * (6 - 0 + 1)) + 0]);
+        } catch (Exception e) {
+            e.printStackTrace();
+            changeParallaxImage(R.drawable.background_2);
+        }
+    }
 }

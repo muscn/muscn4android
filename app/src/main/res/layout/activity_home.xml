@@ -1,13 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:fab="http://schemas.android.com/apk/res-auto"
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/background_one"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:src="@drawable/background_2" />
+
+    <ImageView
+        android:id="@+id/background_two"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:src="@drawable/background_2" />
+
     <com.awecode.muscn.util.stateLayout.StateLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/stateLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorPrimary"
+        android:background="@color/view_bg_transparent"
         android:paddingBottom="@dimen/activity_vertical_margin"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin">
@@ -57,90 +72,102 @@
 
         </RelativeLayout>
     </com.awecode.muscn.util.stateLayout.StateLayout>
-    <View
-        android:id="@+id/transparentView"
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:fab="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorTransparent" />
-    <com.github.clans.fab.FloatingActionMenu
-        android:id="@+id/menu2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
-        fab:menu_fab_show_animation="@anim/show_from_bottom"
-        fab:menu_fab_hide_animation="@anim/hide_to_bottom"
-        fab:menu_animationDelayPerItem="0"
-        fab:menu_colorNormal="@color/white"
-        fab:menu_colorPressed="@color/colorPrimaryDark"
-        fab:menu_colorRipple="@color/colorRipple"
-        fab:menu_icon="@drawable/ic_fab_menu"
-        fab:menu_labels_hideAnimation="@anim/jump_to_down"
-        fab:menu_labels_showAnimation="@anim/jump_from_down"
-        fab:menu_labels_style="@style/MenuLabelsStyle"
-        fab:menu_shadowColor="#444">
+        android:layout_height="match_parent">
 
-        <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/fabFixtures"
-            style="@style/MenuButtonsStyle"
+        <View
+            android:id="@+id/transparentView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorTransparent" />
+
+        <com.github.clans.fab.FloatingActionMenu
+            android:id="@+id/menu2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_fab_fixtures"
-            fab:fab_label="Fixtures" />
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            fab:menu_animationDelayPerItem="0"
+            fab:menu_colorNormal="@color/white"
+            fab:menu_colorPressed="@color/colorPrimaryDark"
+            fab:menu_colorRipple="@color/colorRipple"
+            fab:menu_fab_hide_animation="@anim/hide_to_bottom"
+            fab:menu_fab_show_animation="@anim/show_from_bottom"
+            fab:menu_icon="@drawable/ic_fab_menu"
+            fab:menu_labels_hideAnimation="@anim/jump_to_down"
+            fab:menu_labels_showAnimation="@anim/jump_from_down"
+            fab:menu_labels_style="@style/MenuLabelsStyle"
+            fab:menu_shadowColor="#444">
+
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/fabFixtures"
+                style="@style/MenuButtonsStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_fab_fixtures"
+                fab:fab_label="Fixtures" />
 
 
-        <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/fabLeagueTable"
-            style="@style/MenuButtonsStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_fab_league_table"
-            fab:fab_label="League Table" />
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/fabLeagueTable"
+                style="@style/MenuButtonsStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_fab_league_table"
+                fab:fab_label="League Table" />
 
-        <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/fabInjuries"
-            style="@style/MenuButtonsStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_fab_injuries"
-            fab:fab_label="Injuries" />
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/fabInjuries"
+                style="@style/MenuButtonsStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_fab_injuries"
+                fab:fab_label="Injuries" />
 
-        <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/fabTopScores"
-            style="@style/MenuButtonsStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_fab_top_score"
-            fab:fab_label="Top Scores" />
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/fabTopScores"
+                style="@style/MenuButtonsStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_fab_top_score"
+                fab:fab_label="Top Scores" />
 
-        <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/fabEplMatchWeek"
-            style="@style/MenuButtonsStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_fab_epl_matchweek"
-            fab:fab_label="EPL Matchweek" />
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/fabEplMatchWeek"
+                style="@style/MenuButtonsStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_fab_epl_matchweek"
+                fab:fab_label="EPL Matchweek" />
 
-        <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/fabRecentResults"
-            style="@style/MenuButtonsStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_fab_recent_result"
-            fab:fab_label="Recent Results" />
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/fabRecentResults"
+                style="@style/MenuButtonsStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_fab_recent_result"
+                fab:fab_label="Recent Results" />
 
-        <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/fabHome"
-            style="@style/MenuButtonsStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_home"
-            fab:fab_label="Home" />
+            <com.github.clans.fab.FloatingActionButton
+                android:id="@+id/fabHome"
+                style="@style/MenuButtonsStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_home"
+                fab:fab_label="Home" />
 
-    </com.github.clans.fab.FloatingActionMenu>
+        </com.github.clans.fab.FloatingActionMenu>
 
-</RelativeLayout>
+    </RelativeLayout>
+</FrameLayout>
+
+
+
+

@@ -16,6 +16,7 @@ import com.awecode.muscn.model.listener.FixturesApiListener;
 import com.awecode.muscn.util.Util;
 import com.awecode.muscn.util.countdown_timer.CountDownTimer;
 import com.awecode.muscn.util.retrofit.MuscnApiInterface;
+import com.awecode.muscn.views.HomeActivity;
 import com.awecode.muscn.views.MasterFragment;
 import com.squareup.picasso.Picasso;
 
@@ -90,7 +91,10 @@ public class HomeFragment extends MasterFragment {
         showProgressView(getString(R.string.loading_fixtures));
         initializeCountDownTimer();
         requestFixturesList();
+
+
     }
+
 
     /**
      * fetch manutd upcoming fixture list
