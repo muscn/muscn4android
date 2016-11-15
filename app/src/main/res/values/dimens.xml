@@ -14,4 +14,5 @@
     <dimen name="table_caption_padding">10dp</dimen>
     <dimen name="fragment_table_margin_top">10dp</dimen>
     <dimen name="fragment_table_margin_bottom">10dp</dimen>
+    <dimen name="header_caption_text_size">12sp</dimen>
 </resources>

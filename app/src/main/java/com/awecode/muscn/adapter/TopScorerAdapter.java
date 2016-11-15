@@ -22,6 +22,7 @@ import butterknife.ButterKnife;
 public class TopScorerAdapter extends RecyclerView.Adapter<TopScorerAdapter.TopScorersViewHolder> {
     Context mContext;
     List<TopScorersResponse> topScorersList;
+    String players, goals;
 
 
     public TopScorerAdapter(Context mContext, List<TopScorersResponse> topScorersList) {
@@ -39,13 +40,26 @@ public class TopScorerAdapter extends RecyclerView.Adapter<TopScorerAdapter.TopS
     public void onBindViewHolder(TopScorersViewHolder holder, int position) {
         final TopScorersResponse topScorersResponse = topScorersList.get(position);
 //       White divider line is hide if the table item is last
-        if (position == getItemCount() - 1)
-            holder.tableRowDivider.setVisibility(View.GONE);
-        else
-            holder.tableRowDivider.setVisibility(View.VISIBLE);
+        if (topScorersResponse != null) {
+            if (position == getItemCount() - 1)
+                holder.tableRowDivider.setVisibility(View.GONE);
+            else
+                holder.tableRowDivider.setVisibility(View.VISIBLE);
+            players = topScorersResponse.getName();
+            goals = topScorersResponse.getScore().toString();
 
-        holder.players.setText(topScorersResponse.getName());
-        holder.goals.setText(topScorersResponse.getScore().toString());
+            if (players != null)
+                holder.players.setText(players);
+            else
+                holder.players.setText(R.string.no_data_string);
+
+            if (goals != null)
+                holder.goals.setText(goals);
+            else
+                holder.goals.setText(R.string.no_data_string);
+
+        } else
+            return;
     }
 
     @Override
