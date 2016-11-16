@@ -21,7 +21,7 @@ public class CustomSpannable extends ClickableSpan {
     public void updateDrawState(TextPaint ds) {
 
         ds.setUnderlineText(isUnderline);
-        ds.setColor(Color.parseColor("#4888F3"));    }
+        ds.setColor(Color.parseColor("#000000"));    }
 
     @Override
     public void onClick(View widget) {

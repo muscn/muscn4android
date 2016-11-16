@@ -1,12 +1,24 @@
 package com.awecode.muscn.util;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.support.v7.app.AlertDialog;
-import android.util.Log;
+import android.os.Build;
+import android.text.Html;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.TextPaint;
+import android.text.method.LinkMovementMethod;
+import android.text.style.URLSpan;
+import android.text.style.UnderlineSpan;
+import android.view.View;
+import android.view.ViewTreeObserver;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.awecode.muscn.views.aboutus.CustomSpannable;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -59,6 +71,124 @@ public class Util {
                 = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
+    /**
+     * This is function to make paragraph with read more and read less option
+     *
+     * @param tv         textview to show text
+     * @param maxLine    number of lines to show initially
+     * @param expandText
+     * @param viewMore
+     */
+    public static void makeTextViewResizable(final TextView tv, final int maxLine, final String expandText, final boolean viewMore) {
+        if (tv.getTag() == null) {
+            tv.setTag(tv.getText());
+        }
+        ViewTreeObserver vto = tv.getViewTreeObserver();
+        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+
+            @SuppressWarnings("deprecation")
+            @Override
+            public void onGlobalLayout() {
+                ViewTreeObserver obs = tv.getViewTreeObserver();
+                obs.removeGlobalOnLayoutListener(this);
+                if (maxLine == 0) {
+                    int lineEndIndex = tv.getLayout().getLineEnd(0);
+                    String text = tv.getText().subSequence(0,
+                            lineEndIndex - expandText.length() + 1)
+                            + " " + expandText;
+                    tv.setText(text);
+                    tv.setMovementMethod(LinkMovementMethod.getInstance());
+                    tv.setText(
+                            addClickablePartTextViewResizable(tv.getText()
+                                            .toString(), tv, maxLine, expandText,
+                                    viewMore), TextView.BufferType.SPANNABLE);
+                } else if (maxLine > 0 && tv.getLineCount() >= maxLine) {
+                    int lineEndIndex = tv.getLayout().getLineEnd(maxLine - 1);
+                    String text = tv.getText().subSequence(0,
+                            lineEndIndex - expandText.length() + 1)
+                            + " " + expandText;
+                    tv.setText(text);
+                    tv.setMovementMethod(LinkMovementMethod.getInstance());
+                    tv.setText(
+                            addClickablePartTextViewResizable(tv.getText()
+                                            .toString(), tv, maxLine, expandText,
+                                    viewMore), TextView.BufferType.SPANNABLE);
+                } else {
+                    int lineEndIndex = tv.getLayout().getLineEnd(
+                            tv.getLayout().getLineCount() - 1);
+                    String text = tv.getText().subSequence(0, lineEndIndex)
+                            + " " + expandText;
+                    tv.setText(text);
+                    tv.setMovementMethod(LinkMovementMethod.getInstance());
+                    tv.setText(
+                            addClickablePartTextViewResizable(tv.getText()
+                                            .toString(), tv, lineEndIndex, expandText,
+                                    viewMore), TextView.BufferType.SPANNABLE);
+                }
+            }
+        });
+
+    }
+
+    private static SpannableStringBuilder addClickablePartTextViewResizable(
+            final String strSpanned, final TextView tv, final int maxLine,
+            final String spanableText, final boolean viewMore) {
+        SpannableStringBuilder ssb = new SpannableStringBuilder(strSpanned);
+
+        if (strSpanned.contains(spanableText)) {
+            ssb.setSpan(
+                    new CustomSpannable(true) {
+
+                        @Override
+                        public void onClick(View widget) {
+
+                            if (viewMore) {
+                                tv.setLayoutParams(tv.getLayoutParams());
+                                tv.setText(tv.getTag().toString(),
+                                        TextView.BufferType.SPANNABLE);
+                                tv.invalidate();
+                                makeTextViewResizable(tv, -3, "...Read Less",
+                                        false);
+                            } else {
+                                tv.setLayoutParams(tv.getLayoutParams());
+                                tv.setText(tv.getTag().toString(),
+                                        TextView.BufferType.SPANNABLE);
+                                tv.invalidate();
+                                makeTextViewResizable(tv, 3, "...Read More",
+                                        true);
+                            }
+
+                        }
+                    }, strSpanned.indexOf(spanableText),
+                    strSpanned.indexOf(spanableText) + spanableText.length(), 0);
+        }
+        return ssb;
+    }
+
+    public static Spannable getHtmlText(String string) {
+        Spanned spanned;
+        Spannable spannable;
+        if (Build.VERSION.SDK_INT >= 24) {
+            spanned = Html.fromHtml(string, Html.FROM_HTML_MODE_LEGACY);// for 24 api and more
+        } else {
+            spanned = Html.fromHtml(string); // or for older api
+        }
+        spannable = new SpannableString(spanned);
+        return spannable;
+    }
+
+    public static Spannable removeUnderline(String string) {
+        Spannable s = getHtmlText(string);
+        for (URLSpan u : s.getSpans(0, s.length(), URLSpan.class)) {
+            s.setSpan(new UnderlineSpan() {
+                public void updateDrawState(TextPaint tp) {
+                    tp.setUnderlineText(false);
+                }
+            }, s.getSpanStart(u), s.getSpanEnd(u), 0);
+        }
+        return s;
     }
 
 }

@@ -112,6 +112,7 @@
                 android:src="@drawable/aboutus_url" />
 
             <TextView
+                android:id="@+id/textViewOfficial_website"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2.5"
@@ -140,10 +141,13 @@
                 android:src="@drawable/aboutus_mail" />
 
             <TextView
+                android:id="@+id/textViewEmail"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2.5"
                 android:paddingLeft="4dp"
+                android:autoLink="web|email"
+                android:linksClickable="true"
                 android:text="info@manutd.org.np"
                 android:textColor="@color/white"
                 android:textSize="@dimen/labels_text_size"
@@ -169,6 +173,7 @@
                 android:src="@drawable/aboutus_fb" />
 
             <TextView
+                android:id="@+id/textViewFacebook"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2.5"
@@ -197,6 +202,7 @@
                 android:src="@drawable/aboutus_twitter" />
 
             <TextView
+                android:id="@+id/textViewTwitter"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2.5"
@@ -225,6 +231,7 @@
                 android:src="@drawable/aboutus_insta" />
 
             <TextView
+                android:id="@+id/textViewInstagram"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2.5"
