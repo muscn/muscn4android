@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
+    android:orientation="vertical"
     android:padding="@dimen/activity_horizontal_margin">
 
 
@@ -11,223 +11,291 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/aboutus_muscn_logo"/>
+            android:src="@drawable/aboutus_muscn_logo" />
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="MANCHESTER UNITED"
                 android:textColor="@color/white"
-                android:textStyle="bold"
                 android:textSize="@dimen/labels_text_size"
-               />
+                android:textStyle="bold" />
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="SUPPORTERS' CLUB"
-                    android:textColor="@color/white"/>
-                    <TextView
+                    android:textColor="@color/white" />
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="NEPAL"
                     android:textColor="@color/white"
-                    android:textStyle="bold"
-                    android:textSize="@dimen/labels_text_size"/>
+                    android:textSize="@dimen/labels_text_size"
+                    android:textStyle="bold" />
             </LinearLayout>
 
         </LinearLayout>
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="8dp">
+        android:layout_marginTop="8dp"
+        android:orientation="vertical">
+
         <TextView
+            android:id="@+id/textViewDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/about_us_detail_text"
-            android:textColor="@color/white"
-           />
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/textViewMembership"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/about_us_membership_text"
+            android:textColor="@color/white" />
 
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="8dp">
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Find us at:"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white" />
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="8dp">
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="8dp"
+        android:orientation="vertical">
+
+        <!--manutd link layout-->
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:id="@+id/websiteLayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:weightSum="3">
+
             <ImageView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:src="@drawable/aboutus_url"/>
+                android:layout_gravity="center"
+                android:layout_weight="0.5"
+                android:src="@drawable/aboutus_url" />
+
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="2.5"
+                android:paddingLeft="4dp"
                 android:text="manutd.org.np"
                 android:textColor="@color/white"
-                android:textStyle="bold"
                 android:textSize="@dimen/labels_text_size"
-                android:paddingLeft="4dp"/>
+                android:textStyle="bold" />
 
 
         </LinearLayout>
-
+        <!--email layout-->
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:id="@+id/emailLayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:orientation="horizontal"
-            android:layout_marginTop="8dp">
+            android:weightSum="3">
+
             <ImageView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:src="@drawable/aboutus_mail"/>
+                android:layout_gravity="center"
+                android:layout_weight="0.5"
+                android:src="@drawable/aboutus_mail" />
+
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="2.5"
+                android:paddingLeft="4dp"
                 android:text="info@manutd.org.np"
                 android:textColor="@color/white"
-                android:textStyle="bold"
                 android:textSize="@dimen/labels_text_size"
-                android:paddingLeft="4dp"/>
+                android:textStyle="bold" />
 
 
         </LinearLayout>
-
+        <!--fb layout-->
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:id="@+id/facebookLayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:orientation="horizontal"
-            android:layout_marginTop="8dp">
+            android:weightSum="3">
+
             <ImageView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:src="@drawable/aboutus_fb"/>
+                android:layout_gravity="center"
+                android:layout_weight="0.5"
+
+                android:src="@drawable/aboutus_fb" />
+
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="2.5"
+                android:paddingLeft="4dp"
                 android:text="muscnepal"
                 android:textColor="@color/white"
-                android:textStyle="bold"
                 android:textSize="@dimen/labels_text_size"
-                android:paddingLeft="4dp"/>
+                android:textStyle="bold" />
 
 
         </LinearLayout>
+        <!--twitter layout-->
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:id="@+id/twitterLayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:orientation="horizontal"
-            android:layout_marginTop="8dp">
+            android:weightSum="3">
+
             <ImageView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:src="@drawable/aboutus_twitter"/>
+                android:layout_gravity="center"
+                android:layout_weight="0.5"
+                android:src="@drawable/aboutus_twitter" />
+
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="muscnp"
+                android:layout_weight="2.5"
+                android:paddingLeft="4dp"
+                android:text="\@muscnp"
                 android:textColor="@color/white"
-                android:textStyle="bold"
                 android:textSize="@dimen/labels_text_size"
-                android:paddingLeft="4dp"/>
+                android:textStyle="bold" />
 
 
         </LinearLayout>
+        <!--instagram layout-->
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:id="@+id/instagramLayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:orientation="horizontal"
-            android:layout_marginTop="8dp">
+            android:weightSum="3">
+
             <ImageView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:src="@drawable/aboutus_insta"/>
+                android:layout_gravity="center"
+                android:layout_weight="0.5"
+                android:src="@drawable/aboutus_insta" />
+
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="2.5"
+                android:paddingLeft="4dp"
                 android:text="muscnp"
                 android:textColor="@color/white"
-                android:textStyle="bold"
                 android:textSize="@dimen/labels_text_size"
-                android:paddingLeft="4dp"/>
+                android:textStyle="bold" />
 
 
         </LinearLayout>
 
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:orientation="vertical">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="MUSCN for android"
-            android:textColor="@color/white"
-            android:layout_marginTop="15dp"
-            />
+            android:textColor="@color/white" />
+
         <TextView
+            android:id="@+id/versionTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Version 1.0"
-            android:textColor="@color/white"
-            />
+            android:textColor="@color/white" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Powered by"
-            android:textColor="@color/white"/>
+            android:text="Powered by "
+            android:textColor="@color/white" />
+
         <TextView
+            android:id="@+id/textViewAwecode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Awecode"
             android:textColor="@color/white"
-            android:textSize="18dp"/>
+            android:textStyle="bold" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Images and Logo used in this app are copyright by their respective owners."
-            android:textColor="@color/white"/>
+            android:text="@string/copyright_owner_string"
+            android:textColor="@color/white" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
             android:text="©  2016 | MUSCN"
-            android:textColor="@color/white"
-            android:layout_gravity="center"/>
+            android:textColor="@color/white" />
     </LinearLayout>
 </LinearLayout>
