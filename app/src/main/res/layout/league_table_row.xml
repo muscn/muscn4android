@@ -52,6 +52,6 @@
             android:textColor="@color/white" />
     </LinearLayout>
     <!--table row divider white line-->
-    <include layout="@layout/white_horizontal_line"/>
+    <include layout="@layout/white_horizontal_line" />
 
 </LinearLayout>

@@ -22,6 +22,8 @@ import butterknife.ButterKnife;
 public class LeagueTableAdapter extends RecyclerView.Adapter<LeagueTableAdapter.LeagueViewHolder> {
     Context mContext;
     List<LeagueTableResponse> leagueList;
+    String serialNumber;
+    String club, p, gd, pts;
 
     public LeagueTableAdapter(Context mContext, List<LeagueTableResponse> leagueList) {
         this.mContext = mContext;
@@ -37,17 +39,44 @@ public class LeagueTableAdapter extends RecyclerView.Adapter<LeagueTableAdapter.
     @Override
     public void onBindViewHolder(LeagueViewHolder holder, int position) {
         final LeagueTableResponse leagueTableResponse = leagueList.get(position);
+        if (leagueTableResponse != null) {
+            serialNumber = leagueTableResponse.getPosition();
+            club = leagueTableResponse.getName();
+            p = leagueTableResponse.getP();
+            gd = leagueTableResponse.getGd();
+            pts = leagueTableResponse.getPts();
 //       White divider line is hide if the table item is last
-        if (position == getItemCount() - 1)
-            holder.mTableRowDividerView.setVisibility(View.GONE);
-        else
-            holder.mTableRowDividerView.setVisibility(View.VISIBLE);
+            if (position == getItemCount() - 1)
+                holder.mTableRowDividerView.setVisibility(View.GONE);
+            else
+                holder.mTableRowDividerView.setVisibility(View.VISIBLE);
 
-        holder.serialNumber.setText(leagueTableResponse.getPosition());
-        holder.club.setText(leagueTableResponse.getName());
-        holder.p.setText(leagueTableResponse.getP());
-        holder.gd.setText(leagueTableResponse.getGd());
-        holder.pts.setText(leagueTableResponse.getPts());
+            if (serialNumber != null)
+                holder.serialNumber.setText(serialNumber);
+            else
+                holder.serialNumber.setText(R.string.no_data_string);
+
+            if (club != null)
+                holder.club.setText(club);
+            else
+                holder.club.setText(R.string.no_data_string);
+
+            if (p != null)
+                holder.p.setText(p);
+            else
+                holder.p.setText(R.string.no_data_string);
+
+            if (gd != null)
+                holder.gd.setText(gd);
+            else
+                holder.gd.setText(R.string.no_data_string);
+
+            if (pts != null)
+                holder.pts.setText(pts);
+            else
+                holder.pts.setText(R.string.no_data_string);
+        } else
+            return;
 
     }
 

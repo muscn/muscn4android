@@ -71,17 +71,17 @@ public class MatchResultExpandableRecyclerviewAdapter extends RecyclerView.Adapt
                         itemController.eplMatchweekHomeTeamScore.setText("");
                     } else
                         itemController.eplMatchweekHomeTeamScore.setText(result.getMufcScore().toString());
-                    if (result.getOpponentShortName()==null||result.getOpponentShortName().isEmpty())
-                        itemController.eplMatchweekAwayTeamShortName.setText(result.getOpponentName().substring(0,3).toUpperCase());
+                    if (result.getOpponentShortName() == null || result.getOpponentShortName().isEmpty())
+                        itemController.eplMatchweekAwayTeamShortName.setText(result.getOpponentName().substring(0, 3).toUpperCase());
                     else
                         itemController.eplMatchweekAwayTeamShortName.setText(result.getOpponentShortName().toUpperCase());
-                    itemController.eplMatchweekTimeandHomeGround.setText(Util.dateFormatter(result.getDatetime(),"yyyy-MM-dd'T'hh:mm:ss'Z'","hh:mm")+",  OldTraffod");
+                    itemController.eplMatchweekTimeandHomeGround.setText(Util.dateFormatter(result.getDatetime(), "yyyy-MM-dd'T'hh:mm:ss'Z'", "hh:mm") + ",  OldTraffod");
                     if (result.getOpponentScore() == null) {
                         itemController.eplMatchweekAwayTeamScore.setText("?");
                     } else
                         itemController.eplMatchweekAwayTeamScore.setText(result.getOpponentScore().toString());
                     itemController.eplMatchweekFixtureHomeTeamLogo.setImageResource(R.drawable.logo_manutd);
-                    Picasso.with(context).load("http://manutd.org.np/"+result.getOpponentCrest()).into(itemController.eplMatchweekFixtureAwayTeamLogo);
+                    Picasso.with(context).load("http://manutd.org.np/" + result.getOpponentCrest()).into(itemController.eplMatchweekFixtureAwayTeamLogo);
 
                 } else {
                     itemController.eplMatchweekAwayTeamShortName.setText("MU");
@@ -89,8 +89,8 @@ public class MatchResultExpandableRecyclerviewAdapter extends RecyclerView.Adapt
                         itemController.eplMatchweekHomeTeamScore.setText("?");
                     } else
                         itemController.eplMatchweekHomeTeamScore.setText(result.getOpponentScore().toString());
-                    if (result.getOpponentShortName()==null||result.getOpponentShortName().isEmpty())
-                        itemController.eplMatchweekHomeTeamShortName.setText(result.getOpponentName().substring(0,3).toUpperCase());
+                    if (result.getOpponentShortName() == null || result.getOpponentShortName().isEmpty())
+                        itemController.eplMatchweekHomeTeamShortName.setText(result.getOpponentName().substring(0, 3).toUpperCase());
                     else
                         itemController.eplMatchweekHomeTeamShortName.setText(result.getOpponentShortName());
                     if (result.getMufcScore() == null) {
@@ -98,11 +98,11 @@ public class MatchResultExpandableRecyclerviewAdapter extends RecyclerView.Adapt
                     } else
                         itemController.eplMatchweekAwayTeamScore.setText(result.getMufcScore().toString());
                     if (result.getVenue().contains(","))
-                        itemController.eplMatchweekTimeandHomeGround.setText(Util.dateFormatter(result.getDatetime(),"yyyy-MM-dd'T'hh:mm:ss'Z'","hh:mm")+",  "+result.getVenue().substring(0,result.getVenue().indexOf(",")));
+                        itemController.eplMatchweekTimeandHomeGround.setText(Util.dateFormatter(result.getDatetime(), "yyyy-MM-dd'T'hh:mm:ss'Z'", "hh:mm") + ",  " + result.getVenue().substring(0, result.getVenue().indexOf(",")));
                     else
-                        itemController.eplMatchweekTimeandHomeGround.setText(Util.dateFormatter(result.getDatetime(),"yyyy-MM-dd'T'hh:mm:ss'Z'","hh:mm")+",  "+result.getVenue());
-                    Picasso.with(context).load("http://manutd.org.np/"+result.getOpponentCrest()).into(itemController.eplMatchweekFixtureHomeTeamLogo);
-                    Log.v("TEST","crest: "+result.getOpponentCrest());
+                        itemController.eplMatchweekTimeandHomeGround.setText(Util.dateFormatter(result.getDatetime(), "yyyy-MM-dd'T'hh:mm:ss'Z'", "hh:mm") + ",  " + result.getVenue());
+                    Picasso.with(context).load("http://manutd.org.np/" + result.getOpponentCrest()).into(itemController.eplMatchweekFixtureHomeTeamLogo);
+                    Log.v("TEST", "crest: " + result.getOpponentCrest());
                     itemController.eplMatchweekFixtureAwayTeamLogo.setImageResource(R.drawable.logo_manutd);
                 }
 //                if (result.getMufcScore() == result.getOpponentScore()) {
@@ -134,7 +134,9 @@ public class MatchResultExpandableRecyclerviewAdapter extends RecyclerView.Adapt
                                     itemList.get(pos).invisibleChildren.add(itemList.remove(pos + 1));
                                     count++;
                                 }
-                                notifyItemRangeRemoved(pos + 1, count);
+                                notifyItemRangeRemoved(pos + 1, itemList.size());
+//                                notifyItemRangeRemoved(pos + 1, count);
+
                             }
 
                             /**
@@ -160,6 +162,8 @@ public class MatchResultExpandableRecyclerviewAdapter extends RecyclerView.Adapt
             case CHILD:
                 final ChildViewHolder itemcontroller = (ChildViewHolder) holder;
                 itemcontroller.awayTeamExpandedDetailView.setVisibility(View.GONE);
+                itemcontroller.expandedviewHomeTeamScore.setVisibility(View.GONE);
+                itemcontroller.childViewScoreLayout.setVisibility(View.GONE);
                 itemcontroller.childRefferalItem = item;
         }
     }
@@ -236,7 +240,8 @@ public class MatchResultExpandableRecyclerviewAdapter extends RecyclerView.Adapt
         LinearLayout expandedviewAwayTeamEventHolder;
         @BindView(R.id.awayTeamExpandedDetailView)
         LinearLayout awayTeamExpandedDetailView;
-
+        @BindView(R.id.childViewScoreLayout)
+        LinearLayout childViewScoreLayout;
         public Item childRefferalItem;
 
         public ChildViewHolder(View view) {

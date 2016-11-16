@@ -2,6 +2,7 @@ package com.awecode.muscn.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,8 +24,9 @@ import butterknife.ButterKnife;
 public class InjuriesAdapter extends RecyclerView.Adapter<InjuriesAdapter.InjuriesViewHolder> {
     Context mContext;
     InjuriesResponse injuriesResponse;
-    String type;
-    String returnDate;
+    private String type;
+    private String returnDate;
+    private String playerName;
 
     public InjuriesAdapter(Context mContext, InjuriesResponse injuriesResponse) {
         this.mContext = mContext;
@@ -40,22 +42,35 @@ public class InjuriesAdapter extends RecyclerView.Adapter<InjuriesAdapter.Injuri
     @Override
     public void onBindViewHolder(InjuriesViewHolder holder, int position) {
         final Result injuredResult = injuriesResponse.getResults().get(position);
-
+        if (injuredResult != null) {
 //       White divider line is hide if the table item is last
-        if (position >= 0 && position == getItemCount() - 1)
-            holder.tableRowDivider.setVisibility(View.GONE);
-        else
-            holder.tableRowDivider.setVisibility(View.VISIBLE);
+            if (position >= 0 && position == getItemCount() - 1)
+                holder.tableRowDivider.setVisibility(View.GONE);
+            else
+                holder.tableRowDivider.setVisibility(View.VISIBLE);
 
-        holder.players.setText(injuredResult.getPlayerName());
-        type = injuredResult.getType();
-        if (injuredResult.getType() != null) {
-            type = type.replaceAll("\\s+", " ");//removing spaces
+            playerName = injuredResult.getPlayerName();
+            if (playerName != null)
+                holder.players.setText(playerName);
+            else
+                holder.players.setText(R.string.no_data_string);
+
+            type = injuredResult.getType();
+            if (type != null) {
+                type = type.replaceAll("\\s+", " ");//removing spaces
+                holder.injury.setText(type);
+            } else
+                holder.injury.setText(R.string.no_data_string);
+
+            returnDate = injuredResult.getReturnDate();
+            if (returnDate != null) {
+                returnDate = Util.dateFormatter(returnDate);//formating date in format "28 Sep, 2016"
+                holder.returnDate.setText(returnDate);
+            } else
+                holder.returnDate.setText(R.string.no_data_string);
+        } else {
+            return;
         }
-        holder.injury.setText(type);
-        returnDate = injuredResult.getReturnDate();
-        returnDate = Util.dateFormatter(returnDate);//formating date in format "28 Sep, 2016"
-        holder.returnDate.setText(returnDate);
     }
 
     @Override

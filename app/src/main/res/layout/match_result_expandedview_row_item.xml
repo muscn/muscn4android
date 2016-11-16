@@ -94,6 +94,7 @@
         <!--layout to show score in response to event occured-->
 
         <LinearLayout
+            android:id="@+id/childViewScoreLayout"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:orientation="horizontal"
