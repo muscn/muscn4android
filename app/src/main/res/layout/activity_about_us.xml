@@ -55,7 +55,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Manchester United Supporters’ Club, Nepal is the the Official Supporters’ Club registered and recognisedby Manchester United in 2016. The club is a non-profitorganization  run by the fans. It has been actively working for the  development of sports and social activites with the main objective of uniting all the Manchester Untied Fans under a common roof. Manchester Untied Supporters’ Club, Nepal (MUSCN)is registerd under Ministry of Youths and Sports as annon-profit organization. \n \n Official membership can be applied by the Nepali RedDevils from the clubs official website."
+            android:text="@string/about_us_detail_text"
             android:textColor="@color/white"
            />
 

@@ -7,6 +7,7 @@ import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -17,7 +18,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.animation.OvershootInterpolator;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.awecode.muscn.R;
 import com.awecode.muscn.model.http.fixtures.FixturesResponse;
@@ -25,6 +25,7 @@ import com.awecode.muscn.util.Util;
 import com.awecode.muscn.util.retrofit.MuscnApiInterface;
 import com.awecode.muscn.util.retrofit.ServiceGenerator;
 import com.awecode.muscn.util.stateLayout.StateLayout;
+import com.awecode.muscn.views.aboutus.AboutUsActivity;
 import com.awecode.muscn.views.home.HomeFragment;
 import com.awecode.muscn.views.injuries.InjuriesFragment;
 import com.awecode.muscn.views.league.LeagueTableFragment;
@@ -153,7 +154,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         mActionMenu.setIconToggleAnimatorSet(set);
     }
 
-    @OnClick({R.id.fabHome, R.id.fabLeagueTable, R.id.fabInjuries, R.id.fabTopScores, R.id.fabEplMatchWeek, R.id.fabRecentResults, R.id.fabFixtures})
+    @OnClick({R.id.fabAboutUs, R.id.fabHome, R.id.fabLeagueTable, R.id.fabInjuries, R.id.fabTopScores, R.id.fabEplMatchWeek, R.id.fabRecentResults, R.id.fabFixtures})
     public void onClick(View view) {
         mActionMenu.close(true);
         switch (view.getId()) {
@@ -177,6 +178,9 @@ public abstract class BaseActivity extends AppCompatActivity {
                 break;
             case R.id.fabFixtures:
                 openFragment(FixturesFragment.newInstance(fixturesResponse));
+                break;
+            case R.id.fabAboutUs:
+                startActivity(new Intent(this,AboutUsActivity.class));
                 break;
         }
     }
@@ -227,7 +231,7 @@ public abstract class BaseActivity extends AppCompatActivity {
      * @param message message to show in dialog
      */
     public void showDialog(final Context context, String title, String message) {
-        new AlertDialog.Builder(context,R.style.AppCompatAlertDialogStyle)
+        new AlertDialog.Builder(context, R.style.AppCompatAlertDialogStyle)
                 .setTitle(title)
                 .setMessage(message)
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
@@ -238,8 +242,9 @@ public abstract class BaseActivity extends AppCompatActivity {
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
     }
-    public void noInternetConnectionDialog(Context mContext){
-        showDialog(mContext,"Oops!",getString(R.string.no_internet_message));
+
+    public void noInternetConnectionDialog(Context mContext) {
+        showDialog(mContext, "Oops!", getString(R.string.no_internet_message));
 //        showErrorView();
 //        mActionMenu.hideMenu(true);
     }
