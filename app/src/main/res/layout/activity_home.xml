@@ -144,7 +144,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_fab_tops_scorer"
-                fab:fab_label="Top Scores" />
+                fab:fab_label="Top Scorers" />
 
             <com.github.clans.fab.FloatingActionButton
                 android:id="@+id/fabEplMatchWeek"

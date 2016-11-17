@@ -60,6 +60,16 @@ public class HomeFragment extends MasterFragment {
     ImageView mFirstTeamImageView;
     @BindView(R.id.secondTeamImageView)
     ImageView mSecondTeamImageView;
+    @BindView(R.id.hoursLabelTextView)
+    TextView mHoursLabelTextView;
+    @BindView(R.id.minsLabelTextView)
+    TextView mMinsLabelTextView;
+    @BindView(R.id.secsLabelTextView)
+    TextView mSecsLabelTextView;
+    @BindView(R.id.daysLabelTextView)
+    TextView mDaysLabelTextView;
+
+
     private CountDownTimer mCountDownTimer;
 
     public FixturesResponse fixturesResponse;
@@ -195,7 +205,7 @@ public class HomeFragment extends MasterFragment {
      */
     private void configureDateTime_CountDownTimer(String dateStr) {
 //        dateStr = "2016-09-26T23:45:00Z";
-        Log.v("test","date utc "+dateStr);
+        Log.v("test", "date utc " + dateStr);
         try {
             SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
             myFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
@@ -245,10 +255,13 @@ public class HomeFragment extends MasterFragment {
         mCountDownTimer.setOnTimerListener(new CountDownTimer.TimerListener() {
             @Override
             public void onTick(long millisUntilFinished, CountDownTime countDownTime) {
+
                 mDaysTextView.setText(Util.getTwoDigitNumber(countDownTime.getDays()));
                 mHoursTextView.setText(Util.getTwoDigitNumber(countDownTime.getHours()));
                 mMinsTextView.setText(Util.getTwoDigitNumber(countDownTime.getMinutes()));
                 mSecsTextView.setText(Util.getTwoDigitNumber(countDownTime.getSeconds()));
+
+                setup_time_label(countDownTime);
             }
 
             @Override
@@ -256,5 +269,32 @@ public class HomeFragment extends MasterFragment {
             }
         });
     }
+
+
+    private void setup_time_label(CountDownTime time) {
+        if (time.getDays() <= 1)
+            mDaysLabelTextView.setText("day");
+        else
+            mDaysLabelTextView.setText("days");
+
+        if (time.getHours() <= 1)
+            mHoursLabelTextView.setText("hour");
+        else
+            mHoursLabelTextView.setText("hours");
+
+        if (time.getMinutes() <= 1)
+            mMinsLabelTextView.setText("min");
+        else
+            mMinsLabelTextView.setText("mins");
+
+
+        if (time.getSeconds() <= 1)
+            mSecsLabelTextView.setText("sec");
+        else
+            mSecsLabelTextView.setText("secs");
+
+
+    }
+
 
 }
