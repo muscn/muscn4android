@@ -1,10 +1,14 @@
 package com.awecode.muscn.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.awecode.muscn.R;
@@ -41,10 +45,20 @@ public class LeagueTableAdapter extends RecyclerView.Adapter<LeagueTableAdapter.
         final LeagueTableResponse leagueTableResponse = leagueList.get(position);
         if (leagueTableResponse != null) {
             serialNumber = leagueTableResponse.getPosition();
-            club = leagueTableResponse.getName();
+            club = leagueTableResponse.getName().toString();
             p = leagueTableResponse.getP();
             gd = leagueTableResponse.getGd();
             pts = leagueTableResponse.getPts();
+
+            if (club.equalsIgnoreCase("Manchester United")) {
+                holder.rowLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.colorPrimaryDark));
+//                holder.club.setTypeface(null, Typeface.BOLD);
+            } else {
+                holder.rowLayout.setBackgroundColor(Color.TRANSPARENT);
+//                holder.club.setTypeface(null, Typeface.NORMAL);
+            }
+
+
 //       White divider line is hide if the table item is last
             if (position == getItemCount() - 1)
                 holder.mTableRowDividerView.setVisibility(View.GONE);
@@ -99,6 +113,9 @@ public class LeagueTableAdapter extends RecyclerView.Adapter<LeagueTableAdapter.
         TextView pts;
         @BindView(R.id.table_row_divider)
         View mTableRowDividerView;
+        @BindView(R.id.rowLayout)
+        LinearLayout rowLayout;
+
 
         public LeagueViewHolder(View itemView) {
             super(itemView);
