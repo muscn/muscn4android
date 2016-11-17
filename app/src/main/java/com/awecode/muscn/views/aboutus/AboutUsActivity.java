@@ -55,7 +55,7 @@ public class AboutUsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_us);
         ButterKnife.bind(this);
-        Util.makeTextViewResizable(textViewDescription, 3, "...Read More", true);
+//        Util.makeTextViewResizable(textViewDescription, 3, "...Read More", true);
 
         manutd = getResources().getString(R.string.official_website_link_text);
         facebook = getResources().getString(R.string.facebook_link_text);
