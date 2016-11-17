@@ -15,6 +15,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.TimeZone;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -49,13 +50,14 @@ public class MatchFixutreRecyclerviewAdapter extends RecyclerView.Adapter<MatchF
          */
         String strCurrentDate = data.getKickoff();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");
+
         Date newDate = null;
         try {
             newDate = format.parse(strCurrentDate);
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        format = new SimpleDateFormat("hh:mm");
+        format = new SimpleDateFormat("hh:mm a");
         String time = format.format(newDate);
 
         /**

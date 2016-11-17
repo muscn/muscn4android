@@ -2,6 +2,7 @@ package com.awecode.muscn.views.home;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -193,8 +195,10 @@ public class HomeFragment extends MasterFragment {
      */
     private void configureDateTime_CountDownTimer(String dateStr) {
 //        dateStr = "2016-09-26T23:45:00Z";
+        Log.v("test","date utc "+dateStr);
         try {
             SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+            myFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
 
             //set time for countdown
             Date date = myFormat.parse(dateStr);

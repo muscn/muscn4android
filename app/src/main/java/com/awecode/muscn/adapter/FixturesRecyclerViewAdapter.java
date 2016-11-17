@@ -54,7 +54,7 @@ public class FixturesRecyclerViewAdapter extends RecyclerView.Adapter<FixturesRe
                 holder.eplMatchweekAwayTeamShortName.setText(result.getOpponent().getName().substring(0,3).toUpperCase());
             else
                 holder.eplMatchweekAwayTeamShortName.setText(result.getOpponent().getShortName().toUpperCase());
-            holder.eplMatchweekTimeandHomeGround.setText(Util.dateFormatter(result.getDatetime(),"yyyy-MM-dd'T'hh:mm:ss'Z'","hh:mm")+", "+context.getString(R.string.manutd_home_stadium));
+            holder.eplMatchweekTimeandHomeGround.setText(Util.dateFormatter(result.getDatetime(),"yyyy-MM-dd'T'hh:mm:ss'Z'","hh:mm a")+", "+context.getString(R.string.manutd_home_stadium));
         }
         /**
          * Populate data for Away Game

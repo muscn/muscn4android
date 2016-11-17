@@ -25,6 +25,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * Created by munnadroid on 9/21/16.
@@ -55,6 +56,7 @@ public class Util {
 
     public static String dateFormatter(String date, String obtainedFormat, String requiredFormat) {
         SimpleDateFormat format = new SimpleDateFormat(obtainedFormat);
+        format.setTimeZone(TimeZone.getTimeZone("UTC"));
         Date newDate = null;
         try {
             newDate = format.parse(date);
