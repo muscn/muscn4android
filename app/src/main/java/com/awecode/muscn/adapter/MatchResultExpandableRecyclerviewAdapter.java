@@ -113,50 +113,55 @@ public class MatchResultExpandableRecyclerviewAdapter extends RecyclerView.Adapt
 //                    itemController.matchResultView.setBackgroundColor(ContextCompat.getColor(context, R.color.colorLose));
 //                else
 //                    itemController.matchResultView.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimaryDark));
-                itemController.matchResultRowLayout.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        itemController.headerRefferalItem = item;
 
 
-                        for (int i = 0; i < itemList.size(); i++) {
-                            Item _item = itemList.get(i);
 
-                            /**
-                             * collapse the child view
-                             */
-                            if (_item.invisibleChildren == null) {
 
-                                _item.invisibleChildren = new ArrayList<Item>();
-                                int count = 0;
-                                int pos = itemList.indexOf(_item);
-                                while (itemList.size() > pos + 1 && itemList.get(pos + 1).type == CHILD) {
-                                    itemList.get(pos).invisibleChildren.add(itemList.remove(pos + 1));
-                                    count++;
-                                }
-                                notifyItemRangeRemoved(pos + 1, itemList.size());
-//                                notifyItemRangeRemoved(pos + 1, count);
 
-                            }
-
-                            /**
-                             * expands the child view
-                             */
-                            else if (i == position) {
-                                int pos = itemList.indexOf(_item);
-                                int index = pos + 1;
-                                for (Item item1 : _item.invisibleChildren) {
-                                    itemList.add(index, item1);
-                                    index++;
-                                }
-                                notifyItemRangeInserted(pos + 1, index - pos - 1);
-                                _item.invisibleChildren = null;
-                            }
-
-                        }
-                    }
-
-                });
+//                itemController.matchResultRowLayout.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        itemController.headerRefferalItem = item;
+//
+//
+//                        for (int i = 0; i < itemList.size(); i++) {
+//                            Item _item = itemList.get(i);
+//
+//                            /**
+//                             * collapse the child view
+//                             */
+//                            if (_item.invisibleChildren == null) {
+//
+//                                _item.invisibleChildren = new ArrayList<Item>();
+//                                int count = 0;
+//                                int pos = itemList.indexOf(_item);
+//                                while (itemList.size() > pos + 1 && itemList.get(pos + 1).type == CHILD) {
+//                                    itemList.get(pos).invisibleChildren.add(itemList.remove(pos + 1));
+//                                    count++;
+//                                }
+//                                notifyItemRangeRemoved(pos + 1, itemList.size());
+////                                notifyItemRangeRemoved(pos + 1, count);
+//
+//                            }
+//
+//                            /**
+//                             * expands the child view
+//                             */
+//                            else if (i == position) {
+//                                int pos = itemList.indexOf(_item);
+//                                int index = pos + 1;
+//                                for (Item item1 : _item.invisibleChildren) {
+//                                    itemList.add(index, item1);
+//                                    index++;
+//                                }
+//                                notifyItemRangeInserted(pos + 1, index - pos - 1);
+//                                _item.invisibleChildren = null;
+//                            }
+//
+//                        }
+//                    }
+//
+//                });
 
                 break;
             case CHILD:
