@@ -54,7 +54,7 @@ public class FixturesRecyclerViewAdapter extends RecyclerView.Adapter<FixturesRe
                 holder.eplMatchweekAwayTeamShortName.setText(result.getOpponent().getName().substring(0,3).toUpperCase());
             else
                 holder.eplMatchweekAwayTeamShortName.setText(result.getOpponent().getShortName().toUpperCase());
-            holder.eplMatchweekTimeandHomeGround.setText(Util.dateFormatter(result.getDatetime(),"yyyy-MM-dd'T'hh:mm:ss'Z'","hh:mm a")+", "+context.getString(R.string.manutd_home_stadium));
+            holder.eplMatchweekTimeandHomeGround.setText(Util.dateFormatter(result.getDatetime(),"yyyy-MM-dd'T'hh:mm:ss'Z'","dd MMM, yyyy, hh:mm a")+"\n"+context.getString(R.string.manutd_home_stadium));
         }
         /**
          * Populate data for Away Game
@@ -67,7 +67,7 @@ public class FixturesRecyclerViewAdapter extends RecyclerView.Adapter<FixturesRe
                 holder.eplMatchweekHomeTeamShortName.setText(result.getOpponent().getName().substring(0,3).toUpperCase());
             else
                 holder.eplMatchweekHomeTeamShortName.setText(result.getOpponent().getShortName().toUpperCase());
-            holder.eplMatchweekTimeandHomeGround.setText(Util.dateFormatter(result.getDatetime(),"yyyy-MM-dd'T'hh:mm:ss'Z'","hh:mm")+",  "+result.getVenue().substring(0,result.getVenue().indexOf(",")));
+            holder.eplMatchweekTimeandHomeGround.setText(Util.dateFormatter(result.getDatetime(),"yyyy-MM-dd'T'hh:mm:ss'Z'","dd MMM, yyyy, hh:mm a")+"\n"+result.getVenue().substring(0,result.getVenue().indexOf(",")));
         }
 
         holder.eplMatchweekMatchStatus.setText(result.getCompetitionYear().getCompetition().getName());

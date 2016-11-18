@@ -57,7 +57,7 @@ public class MatchFixutreRecyclerviewAdapter extends RecyclerView.Adapter<MatchF
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        format = new SimpleDateFormat("dd MMM, yyyy, hh:mm a");
+        format = new SimpleDateFormat("dd MMM, yyyy\nhh:mm a");
         String time = format.format(newDate);
 
         /**
@@ -73,10 +73,10 @@ public class MatchFixutreRecyclerviewAdapter extends RecyclerView.Adapter<MatchF
             holder.eplMatchweekAwayTeamScore.setText(awayTeamScore);
             holder.eplMatchweekHomeTeamScore.setText(homeTeamScore);
         }
-        if (data.getMinute().equalsIgnoreCase("FT")) {
-            holder.eplMatchweekMatchStatus.setText("FullTime");
-        } else
-            holder.eplMatchweekMatchStatus.setText("");
+//        if (data.getMinute().equalsIgnoreCase("FT")) {
+//            holder.eplMatchweekMatchStatus.setText("FullTime");
+//        } else
+//            holder.eplMatchweekMatchStatus.setText("");
 //        holder.eplMatchweekMatchStatus.setText("PreMatch");
 
         holder.eplMatchweekTimeandHomeGround.setText(time);
@@ -104,8 +104,8 @@ public class MatchFixutreRecyclerviewAdapter extends RecyclerView.Adapter<MatchF
         TextView eplMatchweekHomeTeam;
         @BindView(R.id.eplMatchweekHomeTeamScore)
         TextView eplMatchweekHomeTeamScore;
-        @BindView(R.id.eplMatchweekMatchStatus)
-        TextView eplMatchweekMatchStatus;
+//        @BindView(R.id.eplMatchweekMatchStatus)
+//        TextView eplMatchweekMatchStatus;
         @BindView(R.id.eplMatchweekTimeandHomeGround)
         TextView eplMatchweekTimeandHomeGround;
         @BindView(R.id.eplMatchweekAwayTeamScore)
