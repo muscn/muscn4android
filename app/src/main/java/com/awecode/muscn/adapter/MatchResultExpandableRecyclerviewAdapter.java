@@ -75,7 +75,7 @@ public class MatchResultExpandableRecyclerviewAdapter extends RecyclerView.Adapt
                         itemController.eplMatchweekAwayTeamShortName.setText(result.getOpponentName().substring(0, 3).toUpperCase());
                     else
                         itemController.eplMatchweekAwayTeamShortName.setText(result.getOpponentShortName().toUpperCase());
-                    itemController.eplMatchweekTimeandHomeGround.setText(Util.dateFormatter(result.getDatetime(), "yyyy-MM-dd'T'hh:mm:ss'Z'", "hh:mm") + ",  OldTraffod");
+                    itemController.eplMatchweekTimeandHomeGround.setText(Util.dateFormatter(result.getDatetime(), "yyyy-MM-dd'T'hh:mm:ss'Z'", "dd MMM, yyyy, hh:mm a") + ",  OldTraffod");
                     if (result.getOpponentScore() == null) {
                         itemController.eplMatchweekAwayTeamScore.setText("?");
                     } else
@@ -98,9 +98,9 @@ public class MatchResultExpandableRecyclerviewAdapter extends RecyclerView.Adapt
                     } else
                         itemController.eplMatchweekAwayTeamScore.setText(result.getMufcScore().toString());
                     if (result.getVenue().contains(","))
-                        itemController.eplMatchweekTimeandHomeGround.setText(Util.dateFormatter(result.getDatetime(), "yyyy-MM-dd'T'hh:mm:ss'Z'", "hh:mm") + ",  " + result.getVenue().substring(0, result.getVenue().indexOf(",")));
+                        itemController.eplMatchweekTimeandHomeGround.setText(Util.dateFormatter(result.getDatetime(), "yyyy-MM-dd'T'hh:mm:ss'Z'", "dd MMM, yyyy, hh:mm a") + ",  " + result.getVenue().substring(0, result.getVenue().indexOf(",")));
                     else
-                        itemController.eplMatchweekTimeandHomeGround.setText(Util.dateFormatter(result.getDatetime(), "yyyy-MM-dd'T'hh:mm:ss'Z'", "hh:mm") + ",  " + result.getVenue());
+                        itemController.eplMatchweekTimeandHomeGround.setText(Util.dateFormatter(result.getDatetime(), "yyyy-MM-dd'T'hh:mm:ss'Z'", "dd MMM, yyyy, hh:mm a") + ",  " + result.getVenue());
                     Picasso.with(context).load("http://manutd.org.np/" + result.getOpponentCrest()).into(itemController.eplMatchweekFixtureHomeTeamLogo);
                     Log.v("TEST", "crest: " + result.getOpponentCrest());
                     itemController.eplMatchweekFixtureAwayTeamLogo.setImageResource(R.drawable.logo_manutd);

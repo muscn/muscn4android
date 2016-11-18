@@ -57,7 +57,7 @@ public class MatchFixutreRecyclerviewAdapter extends RecyclerView.Adapter<MatchF
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        format = new SimpleDateFormat("hh:mm a");
+        format = new SimpleDateFormat("dd MMM, yyyy, hh:mm a");
         String time = format.format(newDate);
 
         /**
@@ -76,10 +76,12 @@ public class MatchFixutreRecyclerviewAdapter extends RecyclerView.Adapter<MatchF
         if (data.getMinute().equalsIgnoreCase("FT")) {
             holder.eplMatchweekMatchStatus.setText("FullTime");
         } else
-            holder.eplMatchweekMatchStatus.setText("PreMatch");
+            holder.eplMatchweekMatchStatus.setText("");
+//        holder.eplMatchweekMatchStatus.setText("PreMatch");
+
         holder.eplMatchweekTimeandHomeGround.setText(time);
-        String homeTeamShortName = data.getHomeTeam().substring(0,3).toUpperCase();
-        String awayTeamShortName = data.getAwayTeam().substring(0,3).toUpperCase();
+        String homeTeamShortName = data.getHomeTeam().substring(0, 3).toUpperCase();
+        String awayTeamShortName = data.getAwayTeam().substring(0, 3).toUpperCase();
         holder.eplMatchweekHomeTeam.setText(homeTeamShortName);
         holder.eplMatchweekAwayTeam.setText(awayTeamShortName);
 
