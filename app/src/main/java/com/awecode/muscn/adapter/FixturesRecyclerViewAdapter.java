@@ -2,6 +2,7 @@ package com.awecode.muscn.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,11 +11,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.awecode.muscn.R;
-import com.awecode.muscn.model.http.fixtures.Competition;
 import com.awecode.muscn.model.http.fixtures.FixturesResponse;
 import com.awecode.muscn.model.http.fixtures.Result;
 import com.awecode.muscn.util.Util;
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,10 +30,12 @@ public class FixturesRecyclerViewAdapter extends RecyclerView.Adapter<FixturesRe
 
     private Context context;
     private FixturesResponse fixturesResponse;
+    private List<Result> mDataList;
 
     public FixturesRecyclerViewAdapter(Context context, FixturesResponse fixturesResponse) {
         this.context = context;
         this.fixturesResponse = fixturesResponse;
+        this.mDataList = fixturesResponse.getResults();
     }
 
     @Override
@@ -42,40 +47,45 @@ public class FixturesRecyclerViewAdapter extends RecyclerView.Adapter<FixturesRe
 
     @Override
     public void onBindViewHolder(FixtureViewHolder holder, int position) {
-        Result result = fixturesResponse.getResults().get(position);
-        /**
-         * Populate data for Home Game
-         */
-        if (result.getIsHomeGame()){
-            holder.eplMatchweekFixtureHomeTeamLogo.setImageResource(R.drawable.logo_manutd);
-            Picasso.with(context).load(result.getOpponent().getCrest()).into(holder.eplMatchweekFixtureAwayTeamLogo);
-            holder.eplMatchweekHomeTeamShortName.setText(R.string.manutd_shortname);
-            if (result.getOpponent().getShortName()==null||result.getOpponent().getShortName().isEmpty())
-                holder.eplMatchweekAwayTeamShortName.setText(result.getOpponent().getName().substring(0,3).toUpperCase());
-            else
-                holder.eplMatchweekAwayTeamShortName.setText(result.getOpponent().getShortName().toUpperCase());
-            holder.eplMatchweekTimeandHomeGround.setText(Util.dateFormatter(result.getDatetime(),"yyyy-MM-dd'T'hh:mm:ss'Z'","dd MMM, yyyy, hh:mm a")+"\n"+context.getString(R.string.manutd_home_stadium));
-        }
-        /**
-         * Populate data for Away Game
-         */
-        else {
-            holder.eplMatchweekFixtureAwayTeamLogo.setImageResource(R.drawable.logo_manutd);
-            Picasso.with(context).load(result.getOpponent().getCrest()).into(holder.eplMatchweekFixtureHomeTeamLogo);
-            holder.eplMatchweekAwayTeamShortName.setText(R.string.manutd_shortname);
-            if (result.getOpponent().getShortName()==null||result.getOpponent().getShortName().isEmpty())
-                holder.eplMatchweekHomeTeamShortName.setText(result.getOpponent().getName().substring(0,3).toUpperCase());
-            else
-                holder.eplMatchweekHomeTeamShortName.setText(result.getOpponent().getShortName().toUpperCase());
-            holder.eplMatchweekTimeandHomeGround.setText(Util.dateFormatter(result.getDatetime(),"yyyy-MM-dd'T'hh:mm:ss'Z'","dd MMM, yyyy, hh:mm a")+"\n"+result.getVenue().substring(0,result.getVenue().indexOf(",")));
-        }
 
-        holder.eplMatchweekMatchStatus.setText(result.getCompetitionYear().getCompetition().getName());
+        try {
+            Result result = mDataList.get(position);
+            Log.v("TAG", "away venu name is: " + new Gson().toJson(result).toString());
+            /**
+             * Populate data for Home Game
+             */
+            if (result.getIsHomeGame()) {
+                holder.eplMatchweekFixtureHomeTeamLogo.setImageResource(R.drawable.logo_manutd);
+                Picasso.with(context).load(result.getOpponent().getCrest()).into(holder.eplMatchweekFixtureAwayTeamLogo);
+                holder.eplMatchweekHomeTeamShortName.setText(R.string.manutd_shortname);
+                if (result.getOpponent().getShortName() == null || result.getOpponent().getShortName().isEmpty())
+                    holder.eplMatchweekAwayTeamShortName.setText(result.getOpponent().getName().substring(0, 3).toUpperCase());
+                else
+                    holder.eplMatchweekAwayTeamShortName.setText(result.getOpponent().getShortName().toUpperCase());
+                holder.eplMatchweekTimeandHomeGround.setText(Util.dateFormatter(result.getDatetime(), "yyyy-MM-dd'T'hh:mm:ss'Z'", "dd MMM, yyyy, hh:mm a") + "\n" + result.getVenue());
+            } else if (!result.getIsHomeGame()) {
+                holder.eplMatchweekFixtureAwayTeamLogo.setImageResource(R.drawable.logo_manutd);
+                Picasso.with(context).load(result.getOpponent().getCrest()).into(holder.eplMatchweekFixtureHomeTeamLogo);
+                holder.eplMatchweekAwayTeamShortName.setText(R.string.manutd_shortname);
+                if (result.getOpponent().getShortName() == null || result.getOpponent().getShortName().isEmpty())
+                    holder.eplMatchweekHomeTeamShortName.setText(result.getOpponent().getName().substring(0, 3).toUpperCase());
+                else
+                    holder.eplMatchweekHomeTeamShortName.setText(result.getOpponent().getShortName().toUpperCase());
+
+
+                String venue = result.getVenue();
+                holder.eplMatchweekTimeandHomeGround.setText(Util.dateFormatter(result.getDatetime(), "yyyy-MM-dd'T'hh:mm:ss'Z'", "dd MMM, yyyy, hh:mm a") + "\n" + venue);
+            }
+
+            holder.eplMatchweekMatchStatus.setText(result.getCompetitionYear().getCompetition().getName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public int getItemCount() {
-        return fixturesResponse.getResults().size();
+        return mDataList.size();
     }
 
     public static class FixtureViewHolder extends RecyclerView.ViewHolder {
