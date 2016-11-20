@@ -76,7 +76,7 @@ public class TopScorersFragment extends MasterFragment {
         }
     }
 
-    private void requestTopScorers() {
+    public void requestTopScorers() {
         MuscnApiInterface mApiInterface = getApiInterface();
         Observable<List<TopScorersResponse>> call = mApiInterface.getTopScorers();
         call.subscribeOn(Schedulers.io())

@@ -56,6 +56,16 @@ public abstract class BaseActivity extends AppCompatActivity {
     public FloatingActionMenu mActionMenu;
     private static final int TIME_INTERVAL = 2000; // # milliseconds, desired time passed between two back presses.
     private long mBackPressed;
+    public HomeFragment mHomeFragment;
+    public LeagueTableFragment mLeagueTableFragment;
+    public FixturesFragment mFixturesFragment;
+    public MatchResultFragment mMatchResultFragment;
+    public EplMatchWeekFixtureFragment mEplMatchWeekFixtureFragment;
+    public InjuriesFragment mInjuriesFragment;
+    public TopScorersFragment mTopScorersFragment;
+
+
+    public abstract void onErrorViewClicked();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,6 +74,15 @@ public abstract class BaseActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         mContext = this;
         mActivity = this;
+    }
+
+    public void setup_onErrorClickListener() {
+        mStateLayout.setErrorAction(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onErrorViewClicked();
+            }
+        });
     }
 
     protected int getDimen(int id) {
@@ -85,11 +104,11 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     public void showErrorView(String message) {
-        mStateLayout.showEmptyView(message);
+        mStateLayout.showErrorView(message);
     }
 
     protected void showErrorView() {
-        mStateLayout.showEmptyView();
+        mStateLayout.showErrorView();
     }
 
     public void showContentView() {
@@ -159,28 +178,35 @@ public abstract class BaseActivity extends AppCompatActivity {
         mActionMenu.close(true);
         switch (view.getId()) {
             case R.id.fabHome:
-                openFragment(HomeFragment.newInstance());
+                mHomeFragment = HomeFragment.newInstance();
+                openFragment(mHomeFragment);
                 break;
             case R.id.fabLeagueTable:
-                openFragment(LeagueTableFragment.newInstance());
+                mLeagueTableFragment = LeagueTableFragment.newInstance();
+                openFragment(mLeagueTableFragment);
                 break;
             case R.id.fabInjuries:
-                openFragment(InjuriesFragment.newInstance());
+                mInjuriesFragment = InjuriesFragment.newInstance();
+                openFragment(mInjuriesFragment);
                 break;
             case R.id.fabTopScores:
-                openFragment(TopScorersFragment.newInstance());
+                mTopScorersFragment = TopScorersFragment.newInstance();
+                openFragment(mTopScorersFragment);
                 break;
             case R.id.fabEplMatchWeek:
-                openFragment(new EplMatchWeekFixtureFragment());
+                mEplMatchWeekFixtureFragment = new EplMatchWeekFixtureFragment();
+                openFragment(mEplMatchWeekFixtureFragment);
                 break;
             case R.id.fabRecentResults:
-                openFragment(new MatchResultFragment());
+                mMatchResultFragment = new MatchResultFragment();
+                openFragment(mMatchResultFragment);
                 break;
             case R.id.fabFixtures:
-                openFragment(FixturesFragment.newInstance(fixturesResponse));
+                mFixturesFragment = FixturesFragment.newInstance(fixturesResponse);
+                openFragment(mFixturesFragment);
                 break;
             case R.id.fabAboutUs:
-                startActivity(new Intent(this,AboutUsActivity.class));
+                startActivity(new Intent(this, AboutUsActivity.class));
                 break;
         }
     }
@@ -236,7 +262,9 @@ public abstract class BaseActivity extends AppCompatActivity {
                 .setMessage(message)
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        finish();
+//                        finish();
+                        dialog.dismiss();
+                        showErrorView();
                     }
                 })
                 .setIcon(android.R.drawable.ic_dialog_alert)

@@ -48,7 +48,6 @@ public class InjuriesFragment extends MasterFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        showProgressView(getString(R.string.loading_injuries));
         mRecyclerViewScrollListener = (RecyclerViewScrollListener) this.getContext();
     }
 
@@ -73,7 +72,8 @@ public class InjuriesFragment extends MasterFragment {
         }
     }
 
-    private void requestInjuries() {
+    public void requestInjuries() {
+        showProgressView(getString(R.string.loading_injuries));
         MuscnApiInterface mApiInterface = getApiInterface();
         Observable<InjuriesResponse> call = mApiInterface.getInjuredPlayers();
         call.subscribeOn(Schedulers.io())

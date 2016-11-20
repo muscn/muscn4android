@@ -61,7 +61,6 @@ public class MatchResultFragment extends MasterFragment {
         super.onViewCreated(view, savedInstanceState);
         data = new ArrayList<Item>();
         mActivity.setCustomTitle(R.string.recent_results);
-        showProgressView(getString(R.string.loading_recent_results));
         if (Util.checkInternetConnection(mContext))
             requestMatchResults();
         else {
@@ -72,10 +71,10 @@ public class MatchResultFragment extends MasterFragment {
     /**
      * populate match result, opponent name and match score
      */
-    public void setupMatchResultRecyclerview(){
+    public void setupMatchResultRecyclerview() {
         mMatchResultRecyclerview.setHasFixedSize(true);
         mMatchResultRecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mMatchResultExpandableRecyclerviewAdapter = new MatchResultExpandableRecyclerviewAdapter(getActivity(),data);
+        mMatchResultExpandableRecyclerviewAdapter = new MatchResultExpandableRecyclerviewAdapter(getActivity(), data);
         mMatchResultRecyclerview.setAdapter(mMatchResultExpandableRecyclerviewAdapter);
         recyclerViewScrollListener.onRecyclerViewScrolled(mMatchResultRecyclerview);
     }
@@ -84,7 +83,8 @@ public class MatchResultFragment extends MasterFragment {
     /**
      * fetch manutd recent match results list
      */
-    public void requestMatchResults(){
+    public void requestMatchResults() {
+        showProgressView(getString(R.string.loading_recent_results));
         mApiInterface = ServiceGenerator.createService(MuscnApiInterface.class);
         Observable<RecentResultsResponse> call = mApiInterface.getResults();
         call.subscribeOn(Schedulers.io())
@@ -103,7 +103,7 @@ public class MatchResultFragment extends MasterFragment {
 
                     @Override
                     public void onNext(RecentResultsResponse fixturesResponse) {
-                        for (int i=0;i<fixturesResponse.getResults().size();i++) {
+                        for (int i = 0; i < fixturesResponse.getResults().size(); i++) {
                             Item demand = new Item(getActivity(), MatchResultExpandableRecyclerviewAdapter.HEADER, fixturesResponse);
                             demand.invisibleChildren = new ArrayList<>();
                             demand.invisibleChildren.add(new Item(getActivity(), MatchResultExpandableRecyclerviewAdapter.CHILD));

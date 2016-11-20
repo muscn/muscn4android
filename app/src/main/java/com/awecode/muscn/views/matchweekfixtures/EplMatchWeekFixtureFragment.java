@@ -66,7 +66,6 @@ public class EplMatchWeekFixtureFragment extends MasterFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mActivity.setCustomTitle(R.string.epl_matchweek);
-        showProgressView(getString(R.string.loading_fixtures));
         if (Util.checkInternetConnection(mContext))
             requestEplMatchResults();
         else {
@@ -89,6 +88,7 @@ public class EplMatchWeekFixtureFragment extends MasterFragment {
      * fetch manutd recent match results list
      */
     public void requestEplMatchResults() {
+        showProgressView(getString(R.string.loading_fixtures));
         mApiInterface = ServiceGenerator.createService(MuscnApiInterface.class);
         Observable<ResponseBody> call = mApiInterface.getEplMatchweekFixtures();
         call.subscribeOn(Schedulers.io())

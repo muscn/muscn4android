@@ -7,17 +7,20 @@ import android.view.View;
 import android.support.v4.content.ContextCompat;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
+
 import com.awecode.muscn.R;
 import com.awecode.muscn.model.http.fixtures.FixturesResponse;
 import com.awecode.muscn.model.listener.FixturesApiListener;
 import com.awecode.muscn.model.listener.RecyclerViewScrollListener;
+import com.awecode.muscn.util.Util;
 import com.awecode.muscn.views.home.HomeFragment;
 import com.github.clans.fab.FloatingActionMenu;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 
-public class HomeActivity extends BaseActivity implements FixturesApiListener ,RecyclerViewScrollListener{
+public class HomeActivity extends BaseActivity implements FixturesApiListener, RecyclerViewScrollListener {
 
     private static final String TAG = HomeActivity.class.getSimpleName();
     HomeFragment homeFragment;
@@ -28,8 +31,34 @@ public class HomeActivity extends BaseActivity implements FixturesApiListener ,R
 
 
     @Override
+    public void onErrorViewClicked() {
+        if (Util.checkInternetConnection(mContext)) {
+            if (mHomeFragment != null && mHomeFragment.isVisible() && mHomeFragment.isMenuVisible()) {
+                mHomeFragment.requestFixturesList();
+            } else if (mLeagueTableFragment != null && mLeagueTableFragment.isVisible() && mLeagueTableFragment.isMenuVisible()) {
+                mLeagueTableFragment.requestLeagueTable();
+            } else if (mInjuriesFragment != null && mInjuriesFragment.isVisible() && mInjuriesFragment.isMenuVisible()) {
+                mInjuriesFragment.requestInjuries();
+            } else if (mTopScorersFragment != null && mTopScorersFragment.isVisible() && mTopScorersFragment.isMenuVisible()) {
+                mTopScorersFragment.requestTopScorers();
+
+            } else if (mMatchResultFragment != null && mMatchResultFragment.isVisible() && mMatchResultFragment.isMenuVisible()) {
+                mMatchResultFragment.requestMatchResults();
+
+            } else if (mEplMatchWeekFixtureFragment != null && mEplMatchWeekFixtureFragment.isVisible() && mEplMatchWeekFixtureFragment.isMenuVisible()) {
+                mEplMatchWeekFixtureFragment.requestEplMatchResults();
+
+            }
+        } else {
+            noInternetConnectionDialog(mContext);
+        }
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         homeFragment = new HomeFragment();
         homeFragment.fixturesApiListener = this;
         openFragmentNoHistory(HomeFragment.newInstance());
@@ -45,7 +74,9 @@ public class HomeActivity extends BaseActivity implements FixturesApiListener ,R
             }
         });
         configureParallaxBackgroundEffect();
+        setup_onErrorClickListener();
     }
+
 
     public void setParallaxImageBackground(int drawableId) {
         mBackgroundOne.setImageDrawable(null);
@@ -91,4 +122,5 @@ public class HomeActivity extends BaseActivity implements FixturesApiListener ,R
     public void onRecyclerViewScrolled(RecyclerView recyclerView) {
         setScrollAnimation(recyclerView);
     }
+
 }

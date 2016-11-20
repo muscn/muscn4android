@@ -60,6 +60,7 @@ public abstract class MasterFragment extends Fragment {
         ((HomeActivity) getActivity()).setParallaxImageBackground(drawableId);
     }
 
+
     public void changeRandomParallaxImage() {
         try {
             int drawables[] = {R.drawable.background_1,
@@ -74,5 +75,9 @@ public abstract class MasterFragment extends Fragment {
             e.printStackTrace();
             changeParallaxImage(R.drawable.background_2);
         }
+    }
+
+    protected void showErrorView() {
+        ((BaseActivity) mContext).showErrorView();
     }
 }

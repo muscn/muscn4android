@@ -51,7 +51,6 @@ public class LeagueTableFragment extends MasterFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        showProgressView(getString(R.string.loading_league_table));
         recyclerViewScrollListener = (RecyclerViewScrollListener) this.getContext();
 
     }
@@ -77,7 +76,8 @@ public class LeagueTableFragment extends MasterFragment {
         }
     }
 
-    private void requestLeagueTable() {
+    public void requestLeagueTable() {
+        showProgressView(getString(R.string.loading_league_table));
         MuscnApiInterface mApiInterface = getApiInterface();
         Observable<List<LeagueTableResponse>> call = mApiInterface.getLeague();
         call.subscribeOn(Schedulers.io())
@@ -100,7 +100,8 @@ public class LeagueTableFragment extends MasterFragment {
                     }
                 });
     }
-    private void setUpAdapter(List<LeagueTableResponse> leagueTableResponses){
+
+    private void setUpAdapter(List<LeagueTableResponse> leagueTableResponses) {
         mAdapter = new LeagueTableAdapter(mContext, leagueTableResponses);
         mRecyclerView.setAdapter(mAdapter);
         recyclerViewScrollListener.onRecyclerViewScrolled(mRecyclerView);

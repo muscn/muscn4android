@@ -100,7 +100,7 @@ public class HomeFragment extends MasterFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        showProgressView(getString(R.string.loading_fixtures));
+
         initializeCountDownTimer();
         if (Util.checkInternetConnection(mContext))
             requestFixturesList();
@@ -113,7 +113,8 @@ public class HomeFragment extends MasterFragment {
     /**
      * fetch manutd upcoming fixture list
      */
-    private void requestFixturesList() {
+    public void requestFixturesList() {
+        showProgressView(getString(R.string.loading_fixtures));
         MuscnApiInterface mApiInterface = getApiInterface();
         Observable<FixturesResponse> call = mApiInterface.getFixtures();
         call.subscribeOn(Schedulers.io())
