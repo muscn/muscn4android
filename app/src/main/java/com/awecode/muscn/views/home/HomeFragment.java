@@ -50,8 +50,10 @@ public class HomeFragment extends MasterFragment {
     TextView mFirstTeamNameTextView;
     @BindView(R.id.secondTeamNameTextView)
     TextView mSecondTeamNameTextView;
-    @BindView(R.id.competitionNameVenueTextView)
-    TextView mCompetitionNameVenueTextView;
+    @BindView(R.id.competitionVenueTextView)
+    TextView mCompetitionVenueTextView;
+    @BindView(R.id.competitionNameTextView)
+    TextView mCompetitionNameTextView;
     @BindView(R.id.broadCastChannelTextView)
     TextView mBroadCastChannelTextView;
     @BindView(R.id.dateTimeTextView)
@@ -185,9 +187,9 @@ public class HomeFragment extends MasterFragment {
                         .resize(getDimen(R.dimen.team_logo_size), getDimen(R.dimen.team_logo_size))
                         .into(mSecondTeamImageView);
             }
-
-            //configure venue name
-            mCompetitionNameVenueTextView.setText("English Premier League\n" + result.getVenue());
+            //configure  name and venue
+            mCompetitionNameTextView.setText(result.getCompetitionYear().getCompetition().getName());
+            mCompetitionVenueTextView.setText(result.getVenue());
 
 
         } catch (Exception e) {

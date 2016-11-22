@@ -162,8 +162,8 @@
         android:layout_height="@dimen/team_logo_size"
         android:layout_gravity="center"
         android:layout_marginTop="5dp"
-        android:visibility="gone"
-        android:src="@mipmap/ic_launcher" />
+        android:src="@mipmap/ic_launcher"
+        android:visibility="gone" />
 
     <TextView
         android:layout_width="match_parent"
@@ -179,9 +179,9 @@
         android:layout_width="@dimen/team_logo_size"
         android:layout_height="@dimen/team_logo_size"
         android:layout_gravity="center"
-        android:visibility="gone"
         android:layout_marginTop="5dp"
-        android:src="@mipmap/ic_launcher" />
+        android:src="@mipmap/ic_launcher"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/secondTeamNameTextView"
@@ -196,13 +196,23 @@
 
     <!--competition name-->
     <TextView
-        android:id="@+id/competitionNameVenueTextView"
+        android:id="@+id/competitionNameTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/home_view_margin_top_large"
         android:gravity="center"
         android:lineSpacingExtra="5dp"
-        android:text="English League Cup\nSixfields Stadium, Northamption"
+        android:text="English League Cup"
+        android:textColor="@color/white"
+        android:textSize="@dimen/competition_txt_size" />
+
+    <TextView
+        android:id="@+id/competitionVenueTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:lineSpacingExtra="5dp"
+        android:text="Sixfields Stadium, Northamption"
         android:textColor="@color/white"
         android:textSize="@dimen/competition_txt_size" />
 
@@ -218,10 +228,10 @@
             android:id="@+id/liveOnTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:textColor="@color/white"
             android:layout_gravity="center_vertical"
+            android:padding="5dp"
             android:text="live On"
+            android:textColor="@color/white"
             android:textSize="10sp" />
 
         <TextView
