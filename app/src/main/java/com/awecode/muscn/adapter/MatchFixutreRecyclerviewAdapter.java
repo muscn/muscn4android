@@ -80,10 +80,10 @@ public class MatchFixutreRecyclerviewAdapter extends RecyclerView.Adapter<MatchF
 //        holder.eplMatchweekMatchStatus.setText("PreMatch");
 
         holder.eplMatchweekTimeandHomeGround.setText(time);
-        String homeTeamShortName = data.getHomeTeam().substring(0, 3).toUpperCase();
-        String awayTeamShortName = data.getAwayTeam().substring(0, 3).toUpperCase();
-        holder.eplMatchweekHomeTeam.setText(homeTeamShortName);
-        holder.eplMatchweekAwayTeam.setText(awayTeamShortName);
+//        String homeTeamShortName = data.getHomeTeam().substring(0, 3).toUpperCase();
+//        String awayTeamShortName = data.getAwayTeam().substring(0, 3).toUpperCase();
+        holder.eplMatchweekHomeTeam.setText( data.getHomeTeam());
+        holder.eplMatchweekAwayTeam.setText(data.getAwayTeam());
 
 
     }
