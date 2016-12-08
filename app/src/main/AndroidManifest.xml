@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.awecode.muscn">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -18,19 +21,26 @@
         </activity>
         <activity
             android:name=".views.aboutus.AboutUsActivity"
-            android:theme="@style/AppTheme"></activity>
-        <service
-            android:name=".fcm.MyFirebaseMessagingService">
+            android:theme="@style/AppTheme" />
+
+        <service android:name=".fcm.MyFirebaseMessagingService">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <service
+            android:name=".fcm.MyFirebaseInstanceIdService"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
 
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="3b0ba9bfd27040ea249cbc5f52a9d591a3eb8e7c" />
+
+        <activity android:name=".views.notification.NotificationActivity"></activity>
     </application>
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 </manifest>
