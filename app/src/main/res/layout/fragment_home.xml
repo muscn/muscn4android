@@ -261,7 +261,7 @@
         android:layout_marginTop="@dimen/home_view_margin_top_large"
         android:gravity="center"
         android:lineSpacingExtra="5dp"
-        android:text="22 September, Thursday\n 12:30AM NPT"
+        android:textAllCaps="true"
         android:textColor="@color/white"
         android:textSize="@dimen/competition_txt_size" />
 </LinearLayout>

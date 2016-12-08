@@ -22,7 +22,9 @@ import com.awecode.muscn.views.MasterFragment;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.TimeZone;
 
 import butterknife.BindView;
@@ -227,7 +229,7 @@ public class HomeFragment extends MasterFragment {
                 SimpleDateFormat timeFormatter = new SimpleDateFormat("h:mm a");
                 String displayValue = timeFormatter.format(date);
 
-                mDateTimeTextView.setText(newDateFormat + "\n" + displayValue + " NPT");
+                mDateTimeTextView.setText(newDateFormat + "\n" + displayValue);
             } catch (Exception e) {
                 e.printStackTrace();
             }
