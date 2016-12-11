@@ -2,9 +2,9 @@ package com.awecode.muscn.views;
 
 import android.animation.ValueAnimator;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.support.v4.content.ContextCompat;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 
@@ -17,7 +17,6 @@ import com.awecode.muscn.views.home.HomeFragment;
 import com.github.clans.fab.FloatingActionMenu;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 
 
 public class HomeActivity extends BaseActivity implements FixturesApiListener, RecyclerViewScrollListener {
@@ -73,7 +72,7 @@ public class HomeActivity extends BaseActivity implements FixturesApiListener, R
                     transparentView.setVisibility(View.GONE);
             }
         });
-        configureParallaxBackgroundEffect();
+//        configureParallaxBackgroundEffect();
         setup_onErrorClickListener();
     }
 
