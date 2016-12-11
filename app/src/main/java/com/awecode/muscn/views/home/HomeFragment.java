@@ -19,12 +19,11 @@ import com.awecode.muscn.util.countdown_timer.CountDownTimer;
 import com.awecode.muscn.util.retrofit.MuscnApiInterface;
 import com.awecode.muscn.views.HomeActivity;
 import com.awecode.muscn.views.MasterFragment;
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 import java.util.TimeZone;
 
 import butterknife.BindView;

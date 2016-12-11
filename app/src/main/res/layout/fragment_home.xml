@@ -162,8 +162,7 @@
         android:layout_height="@dimen/team_logo_size"
         android:layout_gravity="center"
         android:layout_marginTop="5dp"
-        android:src="@mipmap/ic_launcher"
-        android:visibility="gone" />
+        android:src="@mipmap/ic_launcher" />
 
     <TextView
         android:layout_width="match_parent"
@@ -180,8 +179,7 @@
         android:layout_height="@dimen/team_logo_size"
         android:layout_gravity="center"
         android:layout_marginTop="5dp"
-        android:src="@mipmap/ic_launcher"
-        android:visibility="gone" />
+        android:src="@mipmap/ic_launcher" />
 
     <TextView
         android:id="@+id/secondTeamNameTextView"
