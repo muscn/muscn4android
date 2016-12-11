@@ -19,13 +19,6 @@ public class NotificationData implements Parcelable {
     }
 
 
-    protected NotificationData(Parcel in) {
-        title = in.readString();
-        message = in.readString();
-        image = in.readString();
-    }
-
-
     public String getTitle() {
         return title;
     }
@@ -50,18 +43,6 @@ public class NotificationData implements Parcelable {
         this.image = image;
     }
 
-    public static final Creator<NotificationData> CREATOR = new Creator<NotificationData>() {
-        @Override
-        public NotificationData createFromParcel(Parcel in) {
-            return new NotificationData(in);
-        }
-
-        @Override
-        public NotificationData[] newArray(int size) {
-            return new NotificationData[size];
-        }
-    };
-
     @Override
     public int describeContents() {
         return 0;
@@ -69,8 +50,26 @@ public class NotificationData implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(title);
-        dest.writeString(message);
-        dest.writeString(image);
+        dest.writeString(this.title);
+        dest.writeString(this.message);
+        dest.writeString(this.image);
     }
+
+    protected NotificationData(Parcel in) {
+        this.title = in.readString();
+        this.message = in.readString();
+        this.image = in.readString();
+    }
+
+    public static final Creator<NotificationData> CREATOR = new Creator<NotificationData>() {
+        @Override
+        public NotificationData createFromParcel(Parcel source) {
+            return new NotificationData(source);
+        }
+
+        @Override
+        public NotificationData[] newArray(int size) {
+            return new NotificationData[size];
+        }
+    };
 }
