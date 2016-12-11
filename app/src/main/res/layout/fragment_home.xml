@@ -241,17 +241,7 @@
             android:textColor="@color/white"
             android:textSize="@dimen/competition_txt_size" />
     </LinearLayout>
-    <!--<TextView-->
-    <!--android:id="@+id/broadCastChannelTextView"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_marginTop="@dimen/activity_horizontal_margin"-->
-    <!--android:gravity="center"-->
-    <!--android:lineSpacingExtra="5dp"-->
-    <!--android:text="Ten 1"-->
-    <!--android:textColor="@color/white"-->
-    <!--android:textSize="@dimen/competition_txt_size" />-->
-    <!--date/time-->
+
     <TextView
         android:id="@+id/dateTimeTextView"
         android:layout_width="match_parent"
