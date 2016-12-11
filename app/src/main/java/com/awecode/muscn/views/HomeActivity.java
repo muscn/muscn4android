@@ -30,6 +30,31 @@ public class HomeActivity extends BaseActivity implements FixturesApiListener, R
 
 
     @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+
+        homeFragment = new HomeFragment();
+        homeFragment.fixturesApiListener = this;
+        openFragmentNoHistory(HomeFragment.newInstance());
+        setupFloatingActionButton();
+        transparentView.setVisibility(View.GONE);
+        mActionMenu.setOnMenuToggleListener(new FloatingActionMenu.OnMenuToggleListener() {
+            @Override
+            public void onMenuToggle(boolean opened) {
+                if (opened)
+                    transparentView.setVisibility(View.VISIBLE);
+                else
+                    transparentView.setVisibility(View.GONE);
+            }
+        });
+
+        //TODO add new image animation
+//        configureParallaxBackgroundEffect();
+        setup_onErrorClickListener();
+    }
+
+    @Override
     public void onErrorViewClicked() {
         if (Util.checkInternetConnection(mContext)) {
             if (mHomeFragment != null && mHomeFragment.isVisible() && mHomeFragment.isMenuVisible()) {
@@ -53,28 +78,7 @@ public class HomeActivity extends BaseActivity implements FixturesApiListener, R
         }
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
 
-
-        homeFragment = new HomeFragment();
-        homeFragment.fixturesApiListener = this;
-        openFragmentNoHistory(HomeFragment.newInstance());
-        setupFloatingActionButton();
-        transparentView.setVisibility(View.GONE);
-        mActionMenu.setOnMenuToggleListener(new FloatingActionMenu.OnMenuToggleListener() {
-            @Override
-            public void onMenuToggle(boolean opened) {
-                if (opened)
-                    transparentView.setVisibility(View.VISIBLE);
-                else
-                    transparentView.setVisibility(View.GONE);
-            }
-        });
-//        configureParallaxBackgroundEffect();
-        setup_onErrorClickListener();
-    }
 
 
     public void setParallaxImageBackground(int drawableId) {
