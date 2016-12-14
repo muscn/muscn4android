@@ -26,7 +26,6 @@
                 android:layout_width="@dimen/fixture_team_logo"
                 android:layout_height="@dimen/fixture_team_logo"
                 android:layout_gravity="center"
-                android:src="@drawable/logo_manutd"
                 android:visibility="visible" />
 
             <TextView
@@ -114,7 +113,6 @@
                 android:id="@+id/eplMatchweekFixtureAwayTeamLogo"
                 android:layout_width="@dimen/fixture_team_logo"
                 android:layout_height="@dimen/fixture_team_logo"
-                android:src="@drawable/logo_manutd"
                 android:layout_gravity="center"
                 android:visibility="visible" />
 
