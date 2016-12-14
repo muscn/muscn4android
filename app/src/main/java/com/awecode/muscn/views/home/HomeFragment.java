@@ -20,7 +20,6 @@ import com.awecode.muscn.util.countdown_timer.CountDownTimer;
 import com.awecode.muscn.util.prefs.Prefs;
 import com.awecode.muscn.util.retrofit.MuscnApiInterface;
 import com.awecode.muscn.views.MasterFragment;
-import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
@@ -72,6 +71,8 @@ public class HomeFragment extends MasterFragment {
     TextView mSecsLabelTextView;
     @BindView(R.id.daysLabelTextView)
     TextView mDaysLabelTextView;
+    @BindView(R.id.liveOnTextView)
+    TextView liveOnTextView;
 
 
     private CountDownTimer mCountDownTimer;
@@ -189,11 +190,14 @@ public class HomeFragment extends MasterFragment {
     private void configureFixtureView(Result result) {
         try {
             mActivity.setCustomTitle(R.string.app_name);
-            Log.v(TAG, "opponame name is: " + new Gson().toJson(result).toString());
+
             String opponentName = result.getOpponent().getName();
             Boolean isHomeGame = result.getHomeGame();
             //configure broadcast channel name
             configureBroadCastChannelView(result.getBroadcastOn());
+            if (TextUtils.isEmpty(result.getBroadcastOn()))
+                liveOnTextView.setVisibility(View.GONE);
+
             //configure countdown timer
             configureDateTime_CountDownTimer(result.getDatetime());
 
@@ -209,7 +213,8 @@ public class HomeFragment extends MasterFragment {
                         .into(mSecondTeamImageView);
 
                 Picasso.with(mContext)
-                        .load(R.drawable.ic_placeholder_team)
+                        .load(R.drawable.logo_manutd)
+                        .placeholder(R.drawable.logo_manutd)
                         .resize(getDimen(R.dimen.team_logo_size), getDimen(R.dimen.team_logo_size))
                         .into(mFirstTeamImageView);
             } else {
@@ -223,7 +228,8 @@ public class HomeFragment extends MasterFragment {
                         .into(mFirstTeamImageView);
 
                 Picasso.with(mContext)
-                        .load(R.drawable.ic_placeholder_team)
+                        .load(R.drawable.logo_manutd)
+                        .placeholder(R.drawable.logo_manutd)
                         .resize(getDimen(R.dimen.team_logo_size), getDimen(R.dimen.team_logo_size))
                         .into(mSecondTeamImageView);
             }
