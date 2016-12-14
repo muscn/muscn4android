@@ -55,6 +55,7 @@ public class FixturesRecyclerViewAdapter extends RecyclerView.Adapter<FixturesRe
                 holder.eplMatchweekFixtureHomeTeamLogo.setImageResource(R.drawable.logo_manutd);
                 Picasso.with(context).load(result.getOpponent().getCrest())
                         .placeholder(R.drawable.ic_placeholder_team)
+                        .resize(R.dimen.fixture_team_logo, R.dimen.fixture_team_logo)
                         .into(holder.eplMatchweekFixtureAwayTeamLogo);
 
                 holder.eplMatchweekHomeTeamShortName.setText(R.string.manutd_shortname);
@@ -68,6 +69,7 @@ public class FixturesRecyclerViewAdapter extends RecyclerView.Adapter<FixturesRe
                 Picasso.with(context)
                         .load(result.getOpponent().getCrest())
                         .placeholder(R.drawable.ic_placeholder_team)
+                        .resize(R.dimen.fixture_team_logo, R.dimen.fixture_team_logo)
                         .into(holder.eplMatchweekFixtureHomeTeamLogo);
                 holder.eplMatchweekAwayTeamShortName.setText(R.string.manutd_shortname);
                 if (result.getOpponent().getShortName() == null || result.getOpponent().getShortName().isEmpty())

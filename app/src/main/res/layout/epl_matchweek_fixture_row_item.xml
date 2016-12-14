@@ -23,8 +23,8 @@
 
             <ImageView
                 android:id="@+id/eplMatchweekFixtureHomeTeamLogo"
-                android:layout_width="wrap_content"
-                android:layout_height="25dp"
+                android:layout_width="@dimen/fixture_team_logo"
+                android:layout_height="@dimen/fixture_team_logo"
                 android:layout_gravity="center"
                 android:src="@drawable/logo_manutd"
                 android:visibility="visible" />
@@ -112,9 +112,10 @@
 
             <ImageView
                 android:id="@+id/eplMatchweekFixtureAwayTeamLogo"
-                android:layout_width="wrap_content"
-                android:layout_height="25dp"
+                android:layout_width="@dimen/fixture_team_logo"
+                android:layout_height="@dimen/fixture_team_logo"
                 android:src="@drawable/logo_manutd"
+                android:layout_gravity="center"
                 android:visibility="visible" />
 
             <TextView
