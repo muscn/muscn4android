@@ -8,4 +8,5 @@ public class Constants {
     public static final String NONE = "none";
     public static final String INTENT_NOTIFICATION_DATA = "intent_notification_data";
     public static final String PREFS_FIXTURES = "prefs_fixtures";
+    public static final String URL_MANUTD_LOGO="http://manutd.org.np/media/crests/manchester-united.png";
 }

@@ -213,7 +213,7 @@ public class HomeFragment extends MasterFragment {
                         .into(mSecondTeamImageView);
 
                 Picasso.with(mContext)
-                        .load(R.drawable.logo_manutd)
+                        .load(Constants.URL_MANUTD_LOGO)
                         .placeholder(R.drawable.logo_manutd)
                         .resize(getDimen(R.dimen.team_logo_size), getDimen(R.dimen.team_logo_size))
                         .into(mFirstTeamImageView);
@@ -228,7 +228,7 @@ public class HomeFragment extends MasterFragment {
                         .into(mFirstTeamImageView);
 
                 Picasso.with(mContext)
-                        .load(R.drawable.logo_manutd)
+                        .load(Constants.URL_MANUTD_LOGO)
                         .placeholder(R.drawable.logo_manutd)
                         .resize(getDimen(R.dimen.team_logo_size), getDimen(R.dimen.team_logo_size))
                         .into(mSecondTeamImageView);
