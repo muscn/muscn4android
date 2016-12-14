@@ -12,7 +12,6 @@ import com.awecode.muscn.R;
 import com.awecode.muscn.adapter.FixturesRecyclerViewAdapter;
 import com.awecode.muscn.model.http.fixtures.FixturesResponse;
 import com.awecode.muscn.model.listener.RecyclerViewScrollListener;
-import com.awecode.muscn.util.Util;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -57,19 +56,25 @@ public class FixturesFragment extends MasterFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if (Util.checkInternetConnection(mContext))
-            setupFixturesRecyclerview();
-        else {
-            ((HomeActivity) mContext).noInternetConnectionDialog(mContext);
-        }
+        setupFixturesRecyclerview();
+
     }
 
     public void setupFixturesRecyclerview() {
-        matchFixtures.setHasFixedSize(true);
-        matchFixtures.setLayoutManager(new LinearLayoutManager(getActivity()));
-        fixturesRecyclerViewAdapter = new FixturesRecyclerViewAdapter(getActivity(), fixturesResponse);
-        matchFixtures.setAdapter(fixturesRecyclerViewAdapter);
-        mRecyclerViewScrollListener.onRecyclerViewScrolled(matchFixtures);
+        try {
+            if (fixturesResponse == null)
+                fixturesResponse = FixturesResponse.get_results();
+
+            if (fixturesResponse == null)
+                return;
+            matchFixtures.setHasFixedSize(true);
+            matchFixtures.setLayoutManager(new LinearLayoutManager(getActivity()));
+            fixturesRecyclerViewAdapter = new FixturesRecyclerViewAdapter(getActivity(), fixturesResponse);
+            matchFixtures.setAdapter(fixturesRecyclerViewAdapter);
+            mRecyclerViewScrollListener.onRecyclerViewScrolled(matchFixtures);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }
