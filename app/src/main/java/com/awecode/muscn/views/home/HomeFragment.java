@@ -146,11 +146,12 @@ public class HomeFragment extends MasterFragment {
 
                         @Override
                         public void onError(Throwable e) {
-                            mActivity.noInternetConnectionDialog(mContext);
+                            mActivity.showContentView();
                         }
 
                         @Override
                         public void onNext(FixturesResponse fixturesResponse) {
+                            mActivity.showContentView();
                             fixturesApiListener.onCallFixtures(fixturesResponse);
                             save_fixtures(fixturesResponse);
                         }

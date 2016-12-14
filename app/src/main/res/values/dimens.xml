@@ -17,4 +17,5 @@
     <dimen name="header_caption_text_size">12sp</dimen>
     <dimen name="labels_text_size">18sp</dimen>
     <dimen name="about_us_body_text_size">14sp</dimen>
+    <dimen name="fixture_team_name">18sp</dimen>
 </resources>
