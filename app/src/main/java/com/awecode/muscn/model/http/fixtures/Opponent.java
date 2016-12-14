@@ -3,9 +3,8 @@ package com.awecode.muscn.model.http.fixtures;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.orm.SugarRecord;
 
-public class Opponent extends SugarRecord{
+public class Opponent {
 
     @SerializedName("opponentId")
     @Expose

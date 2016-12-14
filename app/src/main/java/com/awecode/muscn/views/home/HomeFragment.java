@@ -14,15 +14,17 @@ import com.awecode.muscn.model.CountDownTime;
 import com.awecode.muscn.model.http.fixtures.FixturesResponse;
 import com.awecode.muscn.model.http.fixtures.Result;
 import com.awecode.muscn.model.listener.FixturesApiListener;
+import com.awecode.muscn.util.Constants;
 import com.awecode.muscn.util.Util;
 import com.awecode.muscn.util.countdown_timer.CountDownTimer;
+import com.awecode.muscn.util.prefs.Prefs;
 import com.awecode.muscn.util.retrofit.MuscnApiInterface;
 import com.awecode.muscn.views.MasterFragment;
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.TimeZone;
 
 import butterknife.BindView;
@@ -105,8 +107,8 @@ public class HomeFragment extends MasterFragment {
 
         initializeCountDownTimer();
         setup_fixutres();
-//        if (Util.checkInternetConnection(mContext))
-//            requestFixturesList();
+        if (Util.checkInternetConnection(mContext))
+            requestFixturesList();
     }
 
 
@@ -115,12 +117,9 @@ public class HomeFragment extends MasterFragment {
      */
     private void setup_fixutres() {
         try {
-            List<Result> results = Result.getAll();
-            if (results != null && results.size() > 0) {
-                Log.v(TAG,"result is notttt empty null");
-                configureFixtureView(results.get(0));
-            }else
-                Log.v(TAG,"result is empty null");
+            FixturesResponse fixturesResponse = FixturesResponse.get_results();
+            if (fixturesResponse != null)
+                configureFixtureView(fixturesResponse.getResults().get(0));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -162,27 +161,16 @@ public class HomeFragment extends MasterFragment {
 
     private void save_fixtures(FixturesResponse fixturesResponse) {
         try {
-
             //first delete the all data from table
             try {
-                List<Result> results = Result.getAll();
-                if (results != null && results.size() > 0)
-                    for (Result result : results)
-                        if (result != null)
-                            result.delete();
+                Prefs.remove(Constants.PREFS_FIXTURES);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
         } finally {
             try {
-                List<Result> results = fixturesResponse.getResults();
-                if (results != null && results.size() > 0) {
-                    configureFixtureView(results.get(0));//populate in view
-                    for (Result result : results)
-                        if (result != null)
-                            result.save();
-                }
+                FixturesResponse.save_fixtures(fixturesResponse);
+                configureFixtureView(fixturesResponse.getResults().get(0));
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -201,6 +189,7 @@ public class HomeFragment extends MasterFragment {
     private void configureFixtureView(Result result) {
         try {
             mActivity.setCustomTitle(R.string.app_name);
+            Log.v(TAG, "opponame name is: " + new Gson().toJson(result).toString());
             String opponentName = result.getOpponent().getName();
             Boolean isHomeGame = result.getHomeGame();
             //configure broadcast channel name

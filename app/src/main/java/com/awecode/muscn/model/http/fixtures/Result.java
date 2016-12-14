@@ -3,11 +3,8 @@ package com.awecode.muscn.model.http.fixtures;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.orm.SugarRecord;
 
-import java.util.List;
-
-public class Result extends SugarRecord {
+public class Result {
 
     @SerializedName("resultId")
     @Expose
@@ -49,12 +46,10 @@ public class Result extends SugarRecord {
     @Expose
     private CompetitionYear competitionYear;
 
-    public static List<Result> getAll() {
-        return Result.listAll(Result.class);
-    }
 
     public Result() {
     }
+
 
     public Integer getResultId() {
         return resultId;

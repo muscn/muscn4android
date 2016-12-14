@@ -23,7 +23,7 @@
             android:name=".views.aboutus.AboutUsActivity"
             android:theme="@style/AppTheme" />
 
-        <activity android:name=".views.notification.NotificationActivity"/>
+        <activity android:name=".views.notification.NotificationActivity" />
 
 
         <!--gcm services-->
@@ -45,11 +45,6 @@
             android:name="io.fabric.ApiKey"
             android:value="3b0ba9bfd27040ea249cbc5f52a9d591a3eb8e7c" />
 
-
-        <meta-data android:name="DATABASE" android:value="muscn.db" />
-        <meta-data android:name="VERSION" android:value="1" />
-        <meta-data android:name="QUERY_LOG" android:value="true" />
-        <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="com.awecode.muscn.model.http.fixtures" />
     </application>
 
 </manifest>
