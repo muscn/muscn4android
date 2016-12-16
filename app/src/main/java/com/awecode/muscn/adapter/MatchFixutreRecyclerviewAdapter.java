@@ -15,7 +15,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.TimeZone;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -64,7 +63,8 @@ public class MatchFixutreRecyclerviewAdapter extends RecyclerView.Adapter<MatchF
          * populate data in viewholder
          */
         if (data.getScore() == null || data.getScore().equalsIgnoreCase("?-?") || data.getScore().equalsIgnoreCase("? - ?")) {
-
+            holder.eplMatchweekAwayTeamScore.setText("");
+            holder.eplMatchweekHomeTeamScore.setText("");
         } else {
             String score = data.getScore();
             int indexofDash = score.indexOf("-");
@@ -73,16 +73,8 @@ public class MatchFixutreRecyclerviewAdapter extends RecyclerView.Adapter<MatchF
             holder.eplMatchweekAwayTeamScore.setText(awayTeamScore);
             holder.eplMatchweekHomeTeamScore.setText(homeTeamScore);
         }
-//        if (data.getMinute().equalsIgnoreCase("FT")) {
-//            holder.eplMatchweekMatchStatus.setText("FullTime");
-//        } else
-//            holder.eplMatchweekMatchStatus.setText("");
-//        holder.eplMatchweekMatchStatus.setText("PreMatch");
-
         holder.eplMatchweekTimeandHomeGround.setText(time);
-//        String homeTeamShortName = data.getHomeTeam().substring(0, 3).toUpperCase();
-//        String awayTeamShortName = data.getAwayTeam().substring(0, 3).toUpperCase();
-        holder.eplMatchweekHomeTeam.setText( data.getHomeTeam());
+        holder.eplMatchweekHomeTeam.setText(data.getHomeTeam());
         holder.eplMatchweekAwayTeam.setText(data.getAwayTeam());
 
 
@@ -104,8 +96,6 @@ public class MatchFixutreRecyclerviewAdapter extends RecyclerView.Adapter<MatchF
         TextView eplMatchweekHomeTeam;
         @BindView(R.id.eplMatchweekHomeTeamScore)
         TextView eplMatchweekHomeTeamScore;
-//        @BindView(R.id.eplMatchweekMatchStatus)
-//        TextView eplMatchweekMatchStatus;
         @BindView(R.id.eplMatchweekTimeandHomeGround)
         TextView eplMatchweekTimeandHomeGround;
         @BindView(R.id.eplMatchweekAwayTeamScore)

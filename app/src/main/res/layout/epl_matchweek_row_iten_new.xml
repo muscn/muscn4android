@@ -22,16 +22,6 @@
             android:textColor="@color/white"
             android:textSize="13sp" />
 
-        <!--<TextView-->
-        <!--android:id="@+id/eplMatchweekHomeTeamScore"-->
-        <!--android:layout_width="0dp"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_weight="1"-->
-        <!--android:gravity="center"-->
-        <!--android:textColor="@color/white"-->
-        <!--android:text="1"-->
-        <!--android:textSize="22sp" />-->
-
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -42,8 +32,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:weightSum="7"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:weightSum="7">
 
                 <TextView
                     android:id="@+id/eplMatchweekHomeTeamScore"
@@ -57,12 +47,12 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:text="-"
-                    android:textSize="22sp"
-                    android:gravity="center"
-
                     android:layout_weight="5"
-                    android:textColor="@color/white" />
+                    android:gravity="center"
+                    android:text="-"
+
+                    android:textColor="@color/white"
+                    android:textSize="22sp" />
 
                 <TextView
                     android:id="@+id/eplMatchweekAwayTeamScore"
@@ -74,16 +64,6 @@
                     android:textSize="14sp" />
 
             </LinearLayout>
-            <!--<TextView-->
-            <!--android:id="@+id/eplMatchweekMatchStatus"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:paddingBottom="5dp"-->
-            <!--android:paddingTop="5dp"-->
-            <!--android:gravity="center"-->
-            <!--android:text="FullTime"-->
-            <!--android:textColor="@color/white"-->
-            <!--android:textSize="13sp" />-->
 
             <TextView
                 android:id="@+id/eplMatchweekTimeandHomeGround"
@@ -96,16 +76,6 @@
                 android:textSize="13sp" />
         </LinearLayout>
 
-
-        <!--<TextView-->
-        <!--android:id="@+id/eplMatchweekAwayTeamScore"-->
-        <!--android:layout_width="0dp"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_weight="1"-->
-        <!--android:gravity="center"-->
-        <!--android:text="3"-->
-        <!--android:textColor="@color/white"-->
-        <!--android:textSize="22sp" />-->
 
         <TextView
             android:id="@+id/eplMatchweekAwayTeam"
