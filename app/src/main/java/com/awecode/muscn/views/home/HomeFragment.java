@@ -19,6 +19,7 @@ import com.awecode.muscn.util.Util;
 import com.awecode.muscn.util.countdown_timer.CountDownTimer;
 import com.awecode.muscn.util.prefs.Prefs;
 import com.awecode.muscn.util.retrofit.MuscnApiInterface;
+import com.awecode.muscn.util.retrofit.ServiceGenerator;
 import com.awecode.muscn.views.MasterFragment;
 import com.squareup.picasso.Picasso;
 
@@ -132,9 +133,9 @@ public class HomeFragment extends MasterFragment {
      */
     public void requestFixturesList() {
         try {
-            showProgressView(getString(R.string.loading_fixtures));
-            MuscnApiInterface mApiInterface = getApiInterface();
-            Observable<FixturesResponse> call = mApiInterface.getFixtures();
+            if (FixturesResponse.get_results() == null)
+                showProgressView(getString(R.string.loading_fixtures));
+            Observable<FixturesResponse> call = ServiceGenerator.createService(MuscnApiInterface.class).getFixtures();
             call.subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Observer<FixturesResponse>() {
