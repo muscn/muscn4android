@@ -75,10 +75,7 @@ public class HomeFragment extends MasterFragment {
     @BindView(R.id.liveOnTextView)
     TextView liveOnTextView;
 
-
     private CountDownTimer mCountDownTimer;
-
-    public FixturesResponse fixturesResponse;
     public FixturesApiListener fixturesApiListener;
 
     public static HomeFragment newInstance() {

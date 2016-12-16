@@ -21,7 +21,6 @@
                 android:id="@+id/daysTextView"
                 style="@style/countdown_timer_text_style"
                 android:layout_gravity="center"
-                android:text="0"
                 android:textStyle="bold" />
 
             <TextView
