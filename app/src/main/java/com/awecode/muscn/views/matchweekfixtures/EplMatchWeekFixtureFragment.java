@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 
 import com.awecode.muscn.R;
 import com.awecode.muscn.adapter.MatchFixutreRecyclerviewAdapter;
-import com.awecode.muscn.model.http.eplmatchweek.EplMatchweekFixturesResponse;
 import com.awecode.muscn.model.http.eplmatchweek._20161001;
 import com.awecode.muscn.model.listener.RecyclerViewScrollListener;
 import com.awecode.muscn.util.Util;
@@ -23,8 +22,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -101,7 +98,6 @@ public class EplMatchWeekFixtureFragment extends MasterFragment {
 
                     @Override
                     public void onError(Throwable e) {
-//                        mActivity.showErrorView(e.getMessage() + ". Try again");
                         mActivity.noInternetConnectionDialog(mContext);
 
                     }
