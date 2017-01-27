@@ -112,7 +112,11 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     public void showContentView() {
-        mStateLayout.showContentView();
+        try {
+            mStateLayout.showContentView();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void setCustomTitle(int id) {

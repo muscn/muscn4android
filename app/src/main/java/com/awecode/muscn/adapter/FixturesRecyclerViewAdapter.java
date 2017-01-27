@@ -2,7 +2,6 @@ package com.awecode.muscn.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +13,6 @@ import com.awecode.muscn.R;
 import com.awecode.muscn.model.http.fixtures.FixturesResponse;
 import com.awecode.muscn.model.http.fixtures.Result;
 import com.awecode.muscn.util.Util;
-import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -50,22 +48,25 @@ public class FixturesRecyclerViewAdapter extends RecyclerView.Adapter<FixturesRe
 
         try {
             Result result = mDataList.get(position);
-            Log.v("TAG", "away venu name is: " + new Gson().toJson(result).toString());
             /**
              * Populate data for Home Game
              */
-            if (result.getIsHomeGame()) {
+            if (result.getHomeGame()) {
                 holder.eplMatchweekFixtureHomeTeamLogo.setImageResource(R.drawable.logo_manutd);
-                Picasso.with(context).load(result.getOpponent().getCrest()).into(holder.eplMatchweekFixtureAwayTeamLogo);
+                Picasso.with(context).load(result.getOpponent().getCrest())
+                        .into(holder.eplMatchweekFixtureAwayTeamLogo);
+
                 holder.eplMatchweekHomeTeamShortName.setText(R.string.manutd_shortname);
                 if (result.getOpponent().getShortName() == null || result.getOpponent().getShortName().isEmpty())
                     holder.eplMatchweekAwayTeamShortName.setText(result.getOpponent().getName().substring(0, 3).toUpperCase());
                 else
                     holder.eplMatchweekAwayTeamShortName.setText(result.getOpponent().getShortName().toUpperCase());
                 holder.eplMatchweekTimeandHomeGround.setText(Util.dateFormatter(result.getDatetime(), "yyyy-MM-dd'T'hh:mm:ss'Z'", "dd MMM, yyyy, hh:mm a") + "\n" + result.getVenue());
-            } else if (!result.getIsHomeGame()) {
+            } else if (!result.getHomeGame()) {
                 holder.eplMatchweekFixtureAwayTeamLogo.setImageResource(R.drawable.logo_manutd);
-                Picasso.with(context).load(result.getOpponent().getCrest()).into(holder.eplMatchweekFixtureHomeTeamLogo);
+                Picasso.with(context)
+                        .load(result.getOpponent().getCrest())
+                        .into(holder.eplMatchweekFixtureHomeTeamLogo);
                 holder.eplMatchweekAwayTeamShortName.setText(R.string.manutd_shortname);
                 if (result.getOpponent().getShortName() == null || result.getOpponent().getShortName().isEmpty())
                     holder.eplMatchweekHomeTeamShortName.setText(result.getOpponent().getName().substring(0, 3).toUpperCase());

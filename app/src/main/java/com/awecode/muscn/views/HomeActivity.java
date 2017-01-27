@@ -2,9 +2,9 @@ package com.awecode.muscn.views;
 
 import android.animation.ValueAnimator;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.support.v4.content.ContextCompat;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 
@@ -17,7 +17,6 @@ import com.awecode.muscn.views.home.HomeFragment;
 import com.github.clans.fab.FloatingActionMenu;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 
 
 public class HomeActivity extends BaseActivity implements FixturesApiListener, RecyclerViewScrollListener {
@@ -29,6 +28,31 @@ public class HomeActivity extends BaseActivity implements FixturesApiListener, R
     @BindView(R.id.background_two)
     ImageView mBackgroundTwo;
 
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+
+        homeFragment = new HomeFragment();
+        homeFragment.fixturesApiListener = this;
+        openFragmentNoHistory(HomeFragment.newInstance());
+        setupFloatingActionButton();
+        transparentView.setVisibility(View.GONE);
+        mActionMenu.setOnMenuToggleListener(new FloatingActionMenu.OnMenuToggleListener() {
+            @Override
+            public void onMenuToggle(boolean opened) {
+                if (opened)
+                    transparentView.setVisibility(View.VISIBLE);
+                else
+                    transparentView.setVisibility(View.GONE);
+            }
+        });
+
+        //TODO add new image animation
+//        configureParallaxBackgroundEffect();
+        setup_onErrorClickListener();
+    }
 
     @Override
     public void onErrorViewClicked() {
@@ -54,28 +78,7 @@ public class HomeActivity extends BaseActivity implements FixturesApiListener, R
         }
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
 
-
-        homeFragment = new HomeFragment();
-        homeFragment.fixturesApiListener = this;
-        openFragmentNoHistory(HomeFragment.newInstance());
-        setupFloatingActionButton();
-        transparentView.setVisibility(View.GONE);
-        mActionMenu.setOnMenuToggleListener(new FloatingActionMenu.OnMenuToggleListener() {
-            @Override
-            public void onMenuToggle(boolean opened) {
-                if (opened)
-                    transparentView.setVisibility(View.VISIBLE);
-                else
-                    transparentView.setVisibility(View.GONE);
-            }
-        });
-        configureParallaxBackgroundEffect();
-        setup_onErrorClickListener();
-    }
 
 
     public void setParallaxImageBackground(int drawableId) {

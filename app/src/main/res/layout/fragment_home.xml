@@ -56,7 +56,6 @@
                 android:id="@+id/hoursTextView"
                 style="@style/countdown_timer_text_style"
                 android:layout_gravity="center"
-                android:text="55"
                 android:textStyle="bold" />
 
             <TextView
@@ -91,7 +90,6 @@
                 android:id="@+id/minsTextView"
                 style="@style/countdown_timer_text_style"
                 android:layout_gravity="center"
-                android:text="55"
                 android:textStyle="bold" />
 
             <TextView
@@ -126,7 +124,6 @@
                 android:id="@+id/secsTextView"
                 style="@style/countdown_timer_text_style"
                 android:layout_gravity="center"
-                android:text="55"
                 android:textStyle="bold" />
 
             <TextView
@@ -152,7 +149,6 @@
         android:layout_marginTop="@dimen/home_view_margin_top_large"
         android:gravity="center"
         android:lineSpacingExtra="8dp"
-        android:text="Northamption Town"
         android:textColor="@color/white"
         android:textSize="@dimen/match_between_txt_size" />
 
@@ -162,8 +158,7 @@
         android:layout_height="@dimen/team_logo_size"
         android:layout_gravity="center"
         android:layout_marginTop="5dp"
-        android:src="@mipmap/ic_launcher"
-        android:visibility="gone" />
+        android:src="@drawable/ic_placeholder_team" />
 
     <TextView
         android:layout_width="match_parent"
@@ -180,8 +175,7 @@
         android:layout_height="@dimen/team_logo_size"
         android:layout_gravity="center"
         android:layout_marginTop="5dp"
-        android:src="@mipmap/ic_launcher"
-        android:visibility="gone" />
+        android:src="@drawable/ic_placeholder_team" />
 
     <TextView
         android:id="@+id/secondTeamNameTextView"
@@ -189,7 +183,6 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:lineSpacingExtra="8dp"
-        android:text="Manchester United"
         android:textColor="@color/white"
         android:textSize="@dimen/match_between_txt_size" />
 
@@ -202,7 +195,6 @@
         android:layout_marginTop="@dimen/home_view_margin_top_large"
         android:gravity="center"
         android:lineSpacingExtra="5dp"
-        android:text="English League Cup"
         android:textColor="@color/white"
         android:textSize="@dimen/competition_txt_size" />
 
@@ -212,7 +204,6 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:lineSpacingExtra="5dp"
-        android:text="Sixfields Stadium, Northamption"
         android:textColor="@color/white"
         android:textSize="@dimen/competition_txt_size" />
 
@@ -239,21 +230,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:lineSpacingExtra="5dp"
-            android:text="Ten 1"
             android:textColor="@color/white"
             android:textSize="@dimen/competition_txt_size" />
     </LinearLayout>
-    <!--<TextView-->
-    <!--android:id="@+id/broadCastChannelTextView"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_marginTop="@dimen/activity_horizontal_margin"-->
-    <!--android:gravity="center"-->
-    <!--android:lineSpacingExtra="5dp"-->
-    <!--android:text="Ten 1"-->
-    <!--android:textColor="@color/white"-->
-    <!--android:textSize="@dimen/competition_txt_size" />-->
-    <!--date/time-->
+
     <TextView
         android:id="@+id/dateTimeTextView"
         android:layout_width="match_parent"

@@ -14,17 +14,16 @@ import com.awecode.muscn.model.CountDownTime;
 import com.awecode.muscn.model.http.fixtures.FixturesResponse;
 import com.awecode.muscn.model.http.fixtures.Result;
 import com.awecode.muscn.model.listener.FixturesApiListener;
+import com.awecode.muscn.util.Constants;
 import com.awecode.muscn.util.Util;
 import com.awecode.muscn.util.countdown_timer.CountDownTimer;
+import com.awecode.muscn.util.prefs.Prefs;
 import com.awecode.muscn.util.retrofit.MuscnApiInterface;
-import com.awecode.muscn.views.HomeActivity;
 import com.awecode.muscn.views.MasterFragment;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 import java.util.TimeZone;
 
 import butterknife.BindView;
@@ -72,6 +71,8 @@ public class HomeFragment extends MasterFragment {
     TextView mSecsLabelTextView;
     @BindView(R.id.daysLabelTextView)
     TextView mDaysLabelTextView;
+    @BindView(R.id.liveOnTextView)
+    TextView liveOnTextView;
 
 
     private CountDownTimer mCountDownTimer;
@@ -106,10 +107,22 @@ public class HomeFragment extends MasterFragment {
         super.onViewCreated(view, savedInstanceState);
 
         initializeCountDownTimer();
+        setup_fixutres();
         if (Util.checkInternetConnection(mContext))
             requestFixturesList();
-        else {
-            ((HomeActivity) mContext).noInternetConnectionDialog(mContext);
+    }
+
+
+    /**
+     * Load fixtures from db and show in view
+     */
+    private void setup_fixutres() {
+        try {
+            FixturesResponse fixturesResponse = FixturesResponse.get_results();
+            if (fixturesResponse != null)
+                configureFixtureView(fixturesResponse.getResults().get(0));
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -118,30 +131,54 @@ public class HomeFragment extends MasterFragment {
      * fetch manutd upcoming fixture list
      */
     public void requestFixturesList() {
-        showProgressView(getString(R.string.loading_fixtures));
-        MuscnApiInterface mApiInterface = getApiInterface();
-        Observable<FixturesResponse> call = mApiInterface.getFixtures();
-        call.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<FixturesResponse>() {
-                    @Override
-                    public void onCompleted() {
-                        mActivity.showContentView();
+        try {
+            showProgressView(getString(R.string.loading_fixtures));
+            MuscnApiInterface mApiInterface = getApiInterface();
+            Observable<FixturesResponse> call = mApiInterface.getFixtures();
+            call.subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Observer<FixturesResponse>() {
+                        @Override
+                        public void onCompleted() {
+                            mActivity.showContentView();
 
-                    }
+                        }
 
-                    @Override
-                    public void onError(Throwable e) {
-//                        mActivity.showErrorView(e.getMessage() + ". Try again");
-                        mActivity.noInternetConnectionDialog(mContext);
-                    }
+                        @Override
+                        public void onError(Throwable e) {
+                            mActivity.showContentView();
+                        }
 
-                    @Override
-                    public void onNext(FixturesResponse fixturesResponse) {
-                        fixturesApiListener.onCallFixtures(fixturesResponse);
-                        configureFixtureView(fixturesResponse.getResults().get(0));
-                    }
-                });
+                        @Override
+                        public void onNext(FixturesResponse fixturesResponse) {
+                            mActivity.showContentView();
+                            fixturesApiListener.onCallFixtures(fixturesResponse);
+                            save_fixtures(fixturesResponse);
+                        }
+                    });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void save_fixtures(FixturesResponse fixturesResponse) {
+        try {
+            //first delete the all data from table
+            try {
+                Prefs.remove(Constants.PREFS_FIXTURES);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } finally {
+            try {
+                FixturesResponse.save_fixtures(fixturesResponse);
+                configureFixtureView(fixturesResponse.getResults().get(0));
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
     /**
@@ -154,10 +191,14 @@ public class HomeFragment extends MasterFragment {
     private void configureFixtureView(Result result) {
         try {
             mActivity.setCustomTitle(R.string.app_name);
+
             String opponentName = result.getOpponent().getName();
-            Boolean isHomeGame = result.getIsHomeGame();
+            Boolean isHomeGame = result.getHomeGame();
             //configure broadcast channel name
             configureBroadCastChannelView(result.getBroadcastOn());
+            if (TextUtils.isEmpty(result.getBroadcastOn()))
+                liveOnTextView.setVisibility(View.GONE);
+
             //configure countdown timer
             configureDateTime_CountDownTimer(result.getDatetime());
 
@@ -168,11 +209,13 @@ public class HomeFragment extends MasterFragment {
                 //populate imageview
                 Picasso.with(mContext)
                         .load((String) result.getOpponent().getCrest())
+                        .placeholder(R.drawable.ic_placeholder_team)
                         .resize(getDimen(R.dimen.team_logo_size), getDimen(R.dimen.team_logo_size))
                         .into(mSecondTeamImageView);
 
                 Picasso.with(mContext)
-                        .load(R.drawable.logo_manutd)
+                        .load(Constants.URL_MANUTD_LOGO)
+                        .placeholder(R.drawable.logo_manutd)
                         .resize(getDimen(R.dimen.team_logo_size), getDimen(R.dimen.team_logo_size))
                         .into(mFirstTeamImageView);
             } else {
@@ -181,11 +224,13 @@ public class HomeFragment extends MasterFragment {
                 //populate imageview
                 Picasso.with(mContext)
                         .load((String) result.getOpponent().getCrest())
+                        .placeholder(R.drawable.ic_placeholder_team)
                         .resize(getDimen(R.dimen.team_logo_size), getDimen(R.dimen.team_logo_size))
                         .into(mFirstTeamImageView);
 
                 Picasso.with(mContext)
-                        .load(R.drawable.logo_manutd)
+                        .load(Constants.URL_MANUTD_LOGO)
+                        .placeholder(R.drawable.logo_manutd)
                         .resize(getDimen(R.dimen.team_logo_size), getDimen(R.dimen.team_logo_size))
                         .into(mSecondTeamImageView);
             }

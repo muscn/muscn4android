@@ -23,6 +23,11 @@
             android:name=".views.aboutus.AboutUsActivity"
             android:theme="@style/AppTheme" />
 
+        <activity android:name=".views.notification.NotificationActivity" />
+
+
+        <!--gcm services-->
+
         <service android:name=".fcm.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
@@ -40,7 +45,6 @@
             android:name="io.fabric.ApiKey"
             android:value="3b0ba9bfd27040ea249cbc5f52a9d591a3eb8e7c" />
 
-        <activity android:name=".views.notification.NotificationActivity"></activity>
     </application>
 
 </manifest>

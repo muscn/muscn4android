@@ -3,7 +3,7 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="drawable_size">76dp</dimen>
-    <dimen name="home_view_margin_top_large">30dp</dimen>
+    <dimen name="home_view_margin_top_large">22dp</dimen>
     <dimen name="titlee_logo_size">30dp</dimen>
     <dimen name="match_between_txt_size">25sp</dimen>
     <dimen name="competition_txt_size">19sp</dimen>
@@ -17,4 +17,6 @@
     <dimen name="header_caption_text_size">12sp</dimen>
     <dimen name="labels_text_size">18sp</dimen>
     <dimen name="about_us_body_text_size">14sp</dimen>
+    <dimen name="fixture_team_name">18sp</dimen>
+    <dimen name="fixture_team_logo">25dp</dimen>
 </resources>

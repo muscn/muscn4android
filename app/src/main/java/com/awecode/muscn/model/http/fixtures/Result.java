@@ -6,9 +6,9 @@ import com.google.gson.annotations.SerializedName;
 
 public class Result {
 
-    @SerializedName("id")
+    @SerializedName("resultId")
     @Expose
-    private Integer id;
+    private Integer resultId;
     @SerializedName("is_today")
     @Expose
     private Boolean isToday;
@@ -20,25 +20,25 @@ public class Result {
     private String datetime;
     @SerializedName("round")
     @Expose
-    private Object round;
+    private String round;
     @SerializedName("venue")
     @Expose
     private String venue;
     @SerializedName("broadcast_on")
     @Expose
-    private Object broadcastOn;
+    private String broadcastOn;
     @SerializedName("mufc_score")
     @Expose
-    private Object mufcScore;
+    private String mufcScore;
     @SerializedName("opponent_score")
     @Expose
-    private Object opponentScore;
+    private String opponentScore;
     @SerializedName("remarks")
     @Expose
-    private Object remarks;
+    private String remarks;
     @SerializedName("data")
     @Expose
-    private Object data;
+    private String data;
     @SerializedName("opponent")
     @Expose
     private Opponent opponent;
@@ -46,186 +46,112 @@ public class Result {
     @Expose
     private CompetitionYear competitionYear;
 
-    /**
-     * @return The id
-     */
-    public Integer getId() {
-        return id;
+
+    public Result() {
     }
 
-    /**
-     * @param id The id
-     */
-    public void setId(Integer id) {
-        this.id = id;
+
+    public Integer getResultId() {
+        return resultId;
     }
 
-    /**
-     * @return The isToday
-     */
-    public Boolean getIsToday() {
+    public void setResultId(Integer resultId) {
+        this.resultId = resultId;
+    }
+
+    public Boolean getToday() {
         return isToday;
     }
 
-    /**
-     * @param isToday The is_today
-     */
-    public void setIsToday(Boolean isToday) {
-        this.isToday = isToday;
+    public void setToday(Boolean today) {
+        isToday = today;
     }
 
-    /**
-     * @return The isHomeGame
-     */
-    public Boolean getIsHomeGame() {
+    public Boolean getHomeGame() {
         return isHomeGame;
     }
 
-    /**
-     * @param isHomeGame The is_home_game
-     */
-    public void setIsHomeGame(Boolean isHomeGame) {
-        this.isHomeGame = isHomeGame;
+    public void setHomeGame(Boolean homeGame) {
+        isHomeGame = homeGame;
     }
 
-    /**
-     * @return The datetime
-     */
     public String getDatetime() {
         return datetime;
     }
 
-    /**
-     * @param datetime The datetime
-     */
     public void setDatetime(String datetime) {
         this.datetime = datetime;
     }
 
-    /**
-     * @return The round
-     */
-    public Object getRound() {
+    public String getRound() {
         return round;
     }
 
-    /**
-     * @param round The round
-     */
-    public void setRound(Object round) {
+    public void setRound(String round) {
         this.round = round;
     }
 
-    /**
-     * @return The venue
-     */
     public String getVenue() {
         return venue;
     }
 
-    /**
-     * @param venue The venue
-     */
     public void setVenue(String venue) {
         this.venue = venue;
     }
 
-    /**
-     * @return The broadcastOn
-     */
-    public Object getBroadcastOn() {
+    public String getBroadcastOn() {
         return broadcastOn;
     }
 
-    /**
-     * @param broadcastOn The broadcast_on
-     */
-    public void setBroadcastOn(Object broadcastOn) {
+    public void setBroadcastOn(String broadcastOn) {
         this.broadcastOn = broadcastOn;
     }
 
-    /**
-     * @return The mufcScore
-     */
-    public Object getMufcScore() {
+    public String getMufcScore() {
         return mufcScore;
     }
 
-    /**
-     * @param mufcScore The mufc_score
-     */
-    public void setMufcScore(Object mufcScore) {
+    public void setMufcScore(String mufcScore) {
         this.mufcScore = mufcScore;
     }
 
-    /**
-     * @return The opponentScore
-     */
-    public Object getOpponentScore() {
+    public String getOpponentScore() {
         return opponentScore;
     }
 
-    /**
-     * @param opponentScore The opponent_score
-     */
-    public void setOpponentScore(Object opponentScore) {
+    public void setOpponentScore(String opponentScore) {
         this.opponentScore = opponentScore;
     }
 
-    /**
-     * @return The remarks
-     */
-    public Object getRemarks() {
+    public String getRemarks() {
         return remarks;
     }
 
-    /**
-     * @param remarks The remarks
-     */
-    public void setRemarks(Object remarks) {
+    public void setRemarks(String remarks) {
         this.remarks = remarks;
     }
 
-    /**
-     * @return The data
-     */
-    public Object getData() {
+    public String getData() {
         return data;
     }
 
-    /**
-     * @param data The data
-     */
-    public void setData(Object data) {
+    public void setData(String data) {
         this.data = data;
     }
 
-    /**
-     * @return The opponent
-     */
     public Opponent getOpponent() {
         return opponent;
     }
 
-    /**
-     * @param opponent The opponent
-     */
     public void setOpponent(Opponent opponent) {
         this.opponent = opponent;
     }
 
-    /**
-     * @return The competitionYear
-     */
     public CompetitionYear getCompetitionYear() {
         return competitionYear;
     }
 
-    /**
-     * @param competitionYear The competition_year
-     */
     public void setCompetitionYear(CompetitionYear competitionYear) {
         this.competitionYear = competitionYear;
     }
-
 }
