@@ -17,6 +17,9 @@ import rx.schedulers.Schedulers;
 /**
  * Created by munnadroid on 1/28/16.
  */
+//demo url http://192.168.0.120:8000
+//liveurl http://manutd.org.np/
+
 public class ServiceGenerator {
     private static final String TAG = ServiceGenerator.class.getSimpleName();
 

@@ -12,6 +12,7 @@
     tools:context="com.awecode.muscn.views.notification.NotificationActivity">
 
     <TextView
+        android:id="@+id/notificationTitle"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
         android:gravity="center"
@@ -23,8 +24,7 @@
     <ImageView
         android:id="@+id/notificationImageView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/background_2" />
+        android:layout_height="wrap_content" />
 
     <TextView
         android:id="@+id/notificationMessageTextView"

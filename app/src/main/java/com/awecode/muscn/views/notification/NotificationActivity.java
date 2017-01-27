@@ -15,6 +15,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class NotificationActivity extends Activity {
+    @BindView(R.id.notificationTitle)
+    TextView mNotificationTitleTextView;
     @BindView(R.id.notificationImageView)
     ImageView mNotificationImageView;
     @BindView(R.id.notificationMessageTextView)
@@ -24,6 +26,7 @@ public class NotificationActivity extends Activity {
     DisplayMetrics metrics;
     int width = 0, height = 0;
     int requiredImageWidth, requiredImageHeight;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,16 +38,19 @@ public class NotificationActivity extends Activity {
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
         height = metrics.heightPixels;
         width = metrics.widthPixels;
-        requiredImageHeight = height/2;
+        requiredImageHeight = height / 2;
         requiredImageWidth = width;
 
 
         mNotificationData = (NotificationData) getIntent().getExtras().getParcelable(Constants.INTENT_NOTIFICATION_DATA);
         imageURl = mNotificationData.getImage();
         message = mNotificationData.getMessage();
+        title = mNotificationData.getTitle();
         if (message != null)
             mNotificationMessageTextView.setText(message);
         if (imageURl != null)
-            Picasso.with(getApplicationContext()).load(imageURl).resize(requiredImageWidth,requiredImageHeight).into(mNotificationImageView);
+            Picasso.with(getApplicationContext()).load(imageURl).resize(requiredImageWidth, requiredImageHeight).into(mNotificationImageView);
+        if(title !=null)
+            mNotificationTitleTextView.setText(title);
     }
 }

@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -18,10 +19,12 @@ import com.awecode.muscn.views.HomeActivity;
 import com.awecode.muscn.views.notification.NotificationActivity;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
-import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Map;
 
 /**
@@ -32,6 +35,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private static final String TAG = MyFirebaseMessagingService.class.getSimpleName();
 
     String title, message, image, type;
+    private NotificationData notificationData;
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
@@ -41,9 +45,19 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             try {
                 Map<String, String> maps = remoteMessage.getData();
                 JSONObject object = new JSONObject(maps);
-                message = object.getString("message");
-                image = object.getString("image");
-                NotificationData notificationData = new NotificationData(image,message);
+                if (object.has("message"))
+                    message = object.getString("message");
+                if (object.has("image"))
+                    image = object.getString("image");
+                if (object.has("title"))
+                    title = object.getString("title");
+
+                if (title != null && message != null && image != null)
+                    notificationData = new NotificationData(title, message, image);
+                else
+                    notificationData = new NotificationData(title, message);
+
+//                NotificationData notificationData = new NotificationData(image, message);
                 createNotification(notificationData);
 
             } catch (Exception e) {
@@ -51,8 +65,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 Log.v(TAG, "data not found, json exception" + e.getLocalizedMessage());
 
             }
-        } else
-            sendNotification(remoteMessage.getNotification().getBody());
+        }
+//        else
+//            sendNotification(remoteMessage.getNotification().getBody());
     }
 
     //This method is only generating push notification
@@ -78,7 +93,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         notificationManager.notify(0, notificationBuilder.build());
     }
 
-    // Creates notification based on title and body received
+    /**
+     * creates notification
+     *
+     * @param notificationData is data to create notification, notification may be either title and message or title, message and image
+     */
     private void createNotification(NotificationData notificationData) {
         try {
             Context context = getBaseContext();
@@ -107,6 +126,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     .setLargeIcon(BitmapFactory.decodeResource(res, R.mipmap.ic_launcher))
                     .setAutoCancel(false);
 
+            if (notificationData.getImage() != null)
+                mBuilder.setStyle(new NotificationCompat.BigPictureStyle()
+                        .bigPicture(getBitmapfromUrl(image)))/*Notification with Image*/
+                        .setContentText(notificationData.getMessage());
+
+
             // Hide the notification after its selected
             mBuilder.setAutoCancel(true);
 
@@ -116,6 +141,27 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             mNotificationManager.notify(requestID, mBuilder.build());
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    /*
+  *To get a Bitmap image from the URL received
+  * */
+    public Bitmap getBitmapfromUrl(String imageUrl) {
+        try {
+            URL url = new URL(imageUrl);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setDoInput(true);
+            connection.connect();
+            InputStream input = connection.getInputStream();
+            Bitmap bitmap = BitmapFactory.decodeStream(input);
+            return bitmap;
+
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return null;
+
         }
     }
 }
