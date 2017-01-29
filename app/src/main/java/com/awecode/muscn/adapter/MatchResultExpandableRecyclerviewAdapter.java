@@ -66,7 +66,7 @@ public class MatchResultExpandableRecyclerviewAdapter extends RecyclerView.Adapt
                 Result result = itemList.get(position).getMatchResultResponse().getResults().get(position);
                 final HeaderViewHolder itemController = (HeaderViewHolder) holder;
                 if (result.getIsHomeGame()) {
-                    itemController.eplMatchweekHomeTeamShortName.setText("MU");
+                    itemController.eplMatchweekHomeTeamShortName.setText(R.string.manutd_shortname);
                     if (result.getMufcScore() == null) {
                         itemController.eplMatchweekHomeTeamScore.setText("");
                     } else
@@ -84,7 +84,7 @@ public class MatchResultExpandableRecyclerviewAdapter extends RecyclerView.Adapt
                     Picasso.with(context).load("http://manutd.org.np/" + result.getOpponentCrest()).into(itemController.eplMatchweekFixtureAwayTeamLogo);
 
                 } else {
-                    itemController.eplMatchweekAwayTeamShortName.setText("MU");
+                    itemController.eplMatchweekAwayTeamShortName.setText(R.string.manutd_shortname);
                     if (result.getOpponentScore() == null) {
                         itemController.eplMatchweekHomeTeamScore.setText("?");
                     } else
