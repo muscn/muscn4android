@@ -22,7 +22,9 @@ import com.awecode.muscn.util.retrofit.MuscnApiInterface;
 import com.awecode.muscn.views.MasterFragment;
 import com.squareup.picasso.Picasso;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
@@ -119,8 +121,14 @@ public class HomeFragment extends MasterFragment {
     private void setup_fixutres() {
         try {
             FixturesResponse fixturesResponse = FixturesResponse.get_results();
-            if (fixturesResponse != null)
-                configureFixtureView(fixturesResponse.getResults().get(0));
+            if (fixturesResponse != null) {
+                if (matchDateIsBeforeToday(fixturesResponse.getResults().get(0).getDatetime())) {
+                    configureFixtureView(fixturesResponse.getResults().get(1));
+                } else {
+                    configureFixtureView(fixturesResponse.getResults().get(0));
+                }
+//                configureFixtureView(fixturesResponse.getResults().get(0));
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -172,7 +180,11 @@ public class HomeFragment extends MasterFragment {
         } finally {
             try {
                 FixturesResponse.save_fixtures(fixturesResponse);
-                configureFixtureView(fixturesResponse.getResults().get(0));
+                if (matchDateIsBeforeToday(fixturesResponse.getResults().get(0).getDatetime()))
+                    configureFixtureView(fixturesResponse.getResults().get(1));
+                else
+                    configureFixtureView(fixturesResponse.getResults().get(0));
+
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -346,5 +358,32 @@ public class HomeFragment extends MasterFragment {
 
     }
 
+    /**
+     * compare whether the match date is before todays date or not, if match date is before today then returns true showing data in index 1 else returns false showing data in index 0 for upcoming match
+     *
+     * @param matchDate date of upcoming match
+     * @return
+     */
+    private Boolean matchDateIsBeforeToday(String matchDate) {
+
+        Calendar c = Calendar.getInstance();
+        Date today = c.getTime();
+
+        SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+        myFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+
+        //set time for countdown
+        Date match_date = null;
+        try {
+            match_date = myFormat.parse(matchDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        if (match_date.before(today)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 }
