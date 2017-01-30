@@ -1,11 +1,12 @@
 package com.awecode.muscn.widget;
 
+import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
-import android.text.TextUtils;
+import android.os.SystemClock;
 import android.util.Log;
 import android.widget.RemoteViews;
 
@@ -13,11 +14,8 @@ import com.awecode.muscn.R;
 import com.awecode.muscn.model.CountDownTime;
 import com.awecode.muscn.model.http.fixtures.FixturesResponse;
 import com.awecode.muscn.model.http.fixtures.Result;
-import com.awecode.muscn.util.Constants;
 import com.awecode.muscn.util.Util;
 import com.awecode.muscn.util.countdown_timer.CountDownTimer;
-import com.awecode.muscn.util.prefs.Prefs;
-import com.google.gson.Gson;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -35,6 +33,7 @@ public class FixtureWidgetProvider extends AppWidgetProvider {
     Context mContext;
     AppWidgetManager mAppWidgetManager;
     int[] mAppWidgetIds;
+
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         mContext = context;
@@ -46,11 +45,22 @@ public class FixtureWidgetProvider extends AppWidgetProvider {
         initializeCountDownTimer();
         setup_fixutres();
 
-//        Intent intent = new Intent(context, FixtureWidgetProvider.class);
-//        intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-//        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
-//        PendingIntent pendingIntent = PendingIntent.getBroadcast(context,
-//                0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        Intent intent = new Intent(context, FixtureWidgetProvider.class);
+        intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context,
+                0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime(), 1000, pendingIntent);
+//        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+//        Calendar calendar = Calendar.getInstance();
+//        calendar.setTimeInMillis(System.currentTimeMillis());
+//        calendar.add(Calendar.SECOND, 1);
+//        alarmManager.setRepeating(AlarmManager.RTC,calendar.getTimeInMillis(),1000,pendingIntent);
+
+
+
+//        remoteViews.
 //        remoteViews.setOnClickPendingIntent(R.id.actionButton, pendingIntent);
 //        appWidgetManager.updateAppWidget(widgetId, remoteViews);
     }
@@ -61,7 +71,7 @@ public class FixtureWidgetProvider extends AppWidgetProvider {
     private void setup_fixutres() {
         try {
             FixturesResponse fixturesResponse = FixturesResponse.get_results();
-            Log.v("test","fixturesResponse "+fixturesResponse.getResults().get(0).getOpponent().getName());
+            Log.v("test", "fixturesResponse " + fixturesResponse.getResults().get(0).getOpponent().getName());
 
             if (fixturesResponse != null) {
                 if (matchDateIsBeforeToday(fixturesResponse.getResults().get(0).getDatetime())) {
@@ -202,6 +212,8 @@ public class FixtureWidgetProvider extends AppWidgetProvider {
 //                mSecsTextView.setText(Util.getTwoDigitNumber(countDownTime.getSeconds()));
 
                 setup_time_label(countDownTime);
+
+                Log.v("time","second"+countDownTime.getSeconds());
             }
 
             @Override

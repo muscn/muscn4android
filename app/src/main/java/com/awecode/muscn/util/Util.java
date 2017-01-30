@@ -23,6 +23,7 @@ import com.awecode.muscn.views.aboutus.CustomSpannable;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -191,6 +192,33 @@ public class Util {
             }, s.getSpanStart(u), s.getSpanEnd(u), 0);
         }
         return s;
+    }
+    /**
+     * compare whether the match date is before todays date or not, if match date is before today then returns true showing data in index 1 else returns false showing data in index 0 for upcoming match
+     *
+     * @param matchDate date of upcoming match
+     * @return
+     */
+    public static Boolean matchDateIsBeforeToday(String matchDate) {
+
+        Calendar c = Calendar.getInstance();
+        Date today = c.getTime();
+
+        SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+        myFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+
+        //set time for countdown
+        Date match_date = null;
+        try {
+            match_date = myFormat.parse(matchDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        if (match_date.before(today)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }

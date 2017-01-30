@@ -65,8 +65,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
             }
         }
-//        else
-//            sendNotification(remoteMessage.getNotification().getBody());
+        else
+            sendNotification(remoteMessage.getNotification().getBody());
     }
 
     //This method is only generating push notification
@@ -100,8 +100,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private void createNotification(NotificationData notificationData) {
         try {
             Context context = getBaseContext();
+            Intent intent = new Intent(this, HomeActivity.class);
 
-            Intent intent = new Intent(this, NotificationActivity.class);
+//            Intent intent = new Intent(this, NotificationActivity.class);
             intent.putExtra(Constants.INTENT_NOTIFICATION_DATA, notificationData);
 
             // Next, let's turn this into a PendingIntent using

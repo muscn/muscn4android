@@ -11,7 +11,12 @@ import android.view.ViewGroup;
 import com.awecode.muscn.R;
 import com.awecode.muscn.adapter.FixturesRecyclerViewAdapter;
 import com.awecode.muscn.model.http.fixtures.FixturesResponse;
+import com.awecode.muscn.model.http.fixtures.Result;
 import com.awecode.muscn.model.listener.RecyclerViewScrollListener;
+import com.awecode.muscn.util.Util;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -56,6 +61,7 @@ public class FixturesFragment extends MasterFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         setupFixturesRecyclerview();
 
     }
@@ -63,7 +69,9 @@ public class FixturesFragment extends MasterFragment {
     public void setupFixturesRecyclerview() {
         try {
             if (fixturesResponse == null)
-                fixturesResponse = FixturesResponse.get_results();
+                 fixturesResponse = filterPastDateFromFixture(FixturesResponse.get_results());
+
+//            fixturesResponse = FixturesResponse.get_results();
 
             if (fixturesResponse == null)
                 return;
@@ -77,4 +85,14 @@ public class FixturesFragment extends MasterFragment {
         }
     }
 
+    private FixturesResponse filterPastDateFromFixture(FixturesResponse fixturesResponse) {
+        List<Result> filteredResults = new ArrayList<>();
+        for (Result fixture : fixturesResponse.getResults())
+            if (!Util.matchDateIsBeforeToday(fixture.getDatetime()))
+                filteredResults.add(fixture);
+
+
+        fixturesResponse.setResults(filteredResults);
+        return fixturesResponse;
+    }
 }

@@ -25,8 +25,10 @@ import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.TimeZone;
 
 import butterknife.BindView;
@@ -118,15 +120,8 @@ public class HomeFragment extends MasterFragment {
      */
     private void setup_fixutres() {
         try {
-            FixturesResponse fixturesResponse = FixturesResponse.get_results();
-            if (fixturesResponse != null) {
-                if (matchDateIsBeforeToday(fixturesResponse.getResults().get(0).getDatetime())) {
-                    configureFixtureView(fixturesResponse.getResults().get(1));
-                } else {
-                    configureFixtureView(fixturesResponse.getResults().get(0));
-                }
-//                configureFixtureView(fixturesResponse.getResults().get(0));
-            }
+            FixturesResponse fixturesResponse = filterPastDateFromFixture(FixturesResponse.get_results());
+            configureFixtureView(fixturesResponse.getResults().get(0));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -158,7 +153,7 @@ public class HomeFragment extends MasterFragment {
                         @Override
                         public void onNext(FixturesResponse fixturesResponse) {
                             mActivity.showContentView();
-                            fixturesApiListener.onCallFixtures(fixturesResponse);
+                            fixturesApiListener.onCallFixtures(filterPastDateFromFixture(fixturesResponse));
                             save_fixtures(fixturesResponse);
                         }
                     });
@@ -166,6 +161,9 @@ public class HomeFragment extends MasterFragment {
             e.printStackTrace();
         }
     }
+
+
+    List<Result> fixtureList = new ArrayList<>();
 
     private void save_fixtures(FixturesResponse fixturesResponse) {
         try {
@@ -177,11 +175,13 @@ public class HomeFragment extends MasterFragment {
             }
         } finally {
             try {
+                fixturesResponse = filterPastDateFromFixture(fixturesResponse);
                 FixturesResponse.save_fixtures(fixturesResponse);
-                if (matchDateIsBeforeToday(fixturesResponse.getResults().get(0).getDatetime()))
-                    configureFixtureView(fixturesResponse.getResults().get(1));
-                else
-                    configureFixtureView(fixturesResponse.getResults().get(0));
+                configureFixtureView(fixturesResponse.getResults().get(0));
+//                if (matchDateIsBeforeToday(fixturesResponse.getResults().get(0).getDatetime()))
+//                    configureFixtureView(fixturesResponse.getResults().get(1));
+//                else
+//                    configureFixtureView(fixturesResponse.getResults().get(0));
 
 
             } catch (Exception e) {
@@ -189,6 +189,17 @@ public class HomeFragment extends MasterFragment {
             }
         }
 
+    }
+
+    private FixturesResponse filterPastDateFromFixture(FixturesResponse fixturesResponse) {
+        List<Result> filteredResults = new ArrayList<>();
+        for (Result fixture : fixturesResponse.getResults())
+            if (!Util.matchDateIsBeforeToday(fixture.getDatetime()))
+                filteredResults.add(fixture);
+
+
+        fixturesResponse.setResults(filteredResults);
+        return fixturesResponse;
     }
 
     /**

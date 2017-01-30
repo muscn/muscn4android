@@ -25,7 +25,7 @@ public class MyFirebaseInstanceIdService extends FirebaseInstanceIdService {
         super.onTokenRefresh();
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();
         Log.d("token", "Refreshed token: " + refreshedToken);
-        //token is dyvEWeAE34U:APA91bHLbxAJK95SU1opJAN_gtdk2J4qB2x_F1sbNxv4WkUAuyluzGBgavojC-IX-hoaePZlTXafLW4WFPWkflSEXbiwNo94vyw4Dr428zYK_ilfhe9u0dSs608oDe69BWfEJVeW2lc1
+        //token is dzgtBrUy8ww:APA91bHJtiUeaooRQjtpRWkx3VTsZtC8Chz9ax4IeTUaA6btNS6hm7Sd54BPUeT-SGgnTXDlWvK7d3Wf64wt7QKaU7tfHS6_YsTkyzsKUW5880SnWQrFAdhR2mQTHcSrl5qF-ygqUpmZ
 //       s3 token :   cFZHq_00ylE:APA91bESPGb4f_vqFrdZFjfPhS6eLufa8xphpzFVZeiyi5LsIFm0ABDQJm4j-UH2zgHj-1ihJ3cgS3XMqOWO7DSe-r6mRYPaauLD48mS7QkAxUshkVn4-uuYvsTZjPmX5Ci13ZYWkDtg
 
         // If you want to send messages to this application instance or
