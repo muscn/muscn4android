@@ -12,7 +12,12 @@ public class NotificationData implements Parcelable {
     String message;
     String image;
 
-    public NotificationData(String image, String message) {
+    public NotificationData(String title, String message) {
+        this.title = title;
+        this.message = message;
+    }
+
+    public NotificationData(String title, String message, String image) {
         this.image = image;
         this.title = title;
         this.message = message;
