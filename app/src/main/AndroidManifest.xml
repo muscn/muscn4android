@@ -45,6 +45,13 @@
             android:name="io.fabric.ApiKey"
             android:value="3b0ba9bfd27040ea249cbc5f52a9d591a3eb8e7c" />
 
+        <receiver android:name=".widget.FixtureWidgetProvider" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data android:name="android.appwidget.provider"
+                android:resource="@xml/fixture_widget_info" />
+        </receiver>
     </application>
 
 </manifest>
