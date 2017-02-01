@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.SystemClock;
 import android.util.Log;
+import android.view.View;
 import android.widget.RemoteViews;
 
 import com.awecode.muscn.R;
@@ -19,8 +20,10 @@ import com.awecode.muscn.util.countdown_timer.CountDownTimer;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.TimeZone;
 
 /**
@@ -52,40 +55,30 @@ public class FixtureWidgetProvider extends AppWidgetProvider {
                 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime(), 1000, pendingIntent);
-//        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-//        Calendar calendar = Calendar.getInstance();
-//        calendar.setTimeInMillis(System.currentTimeMillis());
-//        calendar.add(Calendar.SECOND, 1);
-//        alarmManager.setRepeating(AlarmManager.RTC,calendar.getTimeInMillis(),1000,pendingIntent);
 
-
-
-//        remoteViews.
-//        remoteViews.setOnClickPendingIntent(R.id.actionButton, pendingIntent);
-//        appWidgetManager.updateAppWidget(widgetId, remoteViews);
     }
 
     /**
      * Load fixtures from db and show in view
      */
     private void setup_fixutres() {
-        try {
-            FixturesResponse fixturesResponse = FixturesResponse.get_results();
-            Log.v("test", "fixturesResponse " + fixturesResponse.getResults().get(0).getOpponent().getName());
-
-            if (fixturesResponse != null) {
-                if (matchDateIsBeforeToday(fixturesResponse.getResults().get(0).getDatetime())) {
-                    configureFixtureView(fixturesResponse.getResults().get(1));
-                } else {
-                    configureFixtureView(fixturesResponse.getResults().get(0));
-                }
-//                configureFixtureView(fixturesResponse.getResults().get(0));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (FixturesResponse.get_results() != null) {
+            FixturesResponse fixturesResponse = filterPastDateFromFixture(FixturesResponse.get_results());
+            configureFixtureView(fixturesResponse.getResults().get(0));
         }
+
     }
 
+    private FixturesResponse filterPastDateFromFixture(FixturesResponse fixturesResponse) {
+        List<Result> filteredResults = new ArrayList<>();
+        for (Result fixture : fixturesResponse.getResults())
+            if (!Util.matchDateIsBeforeToday(fixture.getDatetime()))
+                filteredResults.add(fixture);
+
+
+        fixturesResponse.setResults(filteredResults);
+        return fixturesResponse;
+    }
 
     /**
      * compare whether the match date is before todays date or not, if match date is before today then returns true showing data in index 1 else returns false showing data in index 0 for upcoming match
@@ -128,22 +121,24 @@ public class FixtureWidgetProvider extends AppWidgetProvider {
             String opponentName = result.getOpponent().getName();
             Boolean isHomeGame = result.getHomeGame();
             //configure broadcast channel name
-            if (result.getBroadcastOn() != null)
+            if (result.getBroadcastOn() != null) {
                 remoteViews.setTextViewText(R.id.liveTextView, "Live on " + result.getBroadcastOn());
+                remoteViews.setViewVisibility(R.id.dateLiveDividerImageView, View.VISIBLE);
+            } else {
+                remoteViews.setTextViewText(R.id.liveTextView, "");
+                remoteViews.setViewVisibility(R.id.dateLiveDividerImageView, View.GONE);
+            }
+
 
             //configure countdown timer
             configureDateTime_CountDownTimer(result.getDatetime());
 
             //configure game between team names
-            if (isHomeGame) {
-                remoteViews.setTextViewText(R.id.ftTextView, mContext.getString(R.string.manchester_united));
-                remoteViews.setTextViewText(R.id.stNameTextView, opponentName);
+            if (isHomeGame)
+                remoteViews.setTextViewText(R.id.ftTextView, mContext.getString(R.string.manchester_united) + " V " + opponentName);
+            else
+                remoteViews.setTextViewText(R.id.ftTextView, mContext.getString(R.string.manchester_united) + " V " + opponentName);
 
-            } else {
-                remoteViews.setTextViewText(R.id.ftTextView, opponentName);
-                remoteViews.setTextViewText(R.id.stNameTextView, mContext.getString(R.string.manchester_united));
-
-            }
             //configurevenue
             remoteViews.setTextViewText(R.id.gameVenueTextView, result.getVenue());
             mAppWidgetManager.updateAppWidget(mAppWidgetIds, remoteViews);
@@ -175,14 +170,9 @@ public class FixtureWidgetProvider extends AppWidgetProvider {
 
             try {
                 //format new date format
-                SimpleDateFormat targetDateFormat = new SimpleDateFormat("dd MMMM, EEEE");
+                SimpleDateFormat targetDateFormat = new SimpleDateFormat("kk:mm EEE, dd MMM");
                 String newDateFormat = targetDateFormat.format(date);
-
-                //format for hr min
-                SimpleDateFormat timeFormatter = new SimpleDateFormat("h:mm a");
-                String displayValue = timeFormatter.format(date);
-
-                remoteViews.setTextViewText(R.id.dateTimeValueTextView, newDateFormat + "\n" + displayValue);
+                remoteViews.setTextViewText(R.id.dateTimeValueTextView,/* displayValue + "\n" + */newDateFormat);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -205,45 +195,40 @@ public class FixtureWidgetProvider extends AppWidgetProvider {
                 remoteViews.setTextViewText(R.id.hoursValueTextView, Util.getTwoDigitNumber(countDownTime.getHours()));
                 remoteViews.setTextViewText(R.id.minsValueTextView, Util.getTwoDigitNumber(countDownTime.getMinutes()));
                 remoteViews.setTextViewText(R.id.secsValueTextView, Util.getTwoDigitNumber(countDownTime.getSeconds()));
-
-//                mDaysTextView.setText(Util.getTwoDigitNumber(countDownTime.getDays()));
-//                mHoursTextView.setText(Util.getTwoDigitNumber(countDownTime.getHours()));
-//                mMinsTextView.setText(Util.getTwoDigitNumber(countDownTime.getMinutes()));
-//                mSecsTextView.setText(Util.getTwoDigitNumber(countDownTime.getSeconds()));
+                mAppWidgetManager.updateAppWidget(mAppWidgetIds, remoteViews);
 
                 setup_time_label(countDownTime);
 
-                Log.v("time","second"+countDownTime.getSeconds());
+                Log.v("time", "second" + countDownTime.getSeconds());
             }
 
             @Override
             public void onFinish() {
+                setup_fixutres();
             }
         });
     }
 
     private void setup_time_label(CountDownTime time) {
-        if (time.getDays() <= 1)
+        if (time.getDays() == 1)
             remoteViews.setTextViewText(R.id.daysLabelNameTextView, "day");
         else
             remoteViews.setTextViewText(R.id.daysLabelNameTextView, "days");
 
-        if (time.getHours() <= 1)
+        if (time.getHours() == 1)
             remoteViews.setTextViewText(R.id.hoursLabelNameTextView, "hour");
         else
             remoteViews.setTextViewText(R.id.hoursLabelNameTextView, "hours");
 
-        if (time.getMinutes() <= 1)
+        if (time.getMinutes() == 1)
             remoteViews.setTextViewText(R.id.minsLabelNameTextView, "min");
         else
             remoteViews.setTextViewText(R.id.minsLabelNameTextView, "mins");
 
-        if (time.getSeconds() <= 1)
+        if (time.getSeconds() == 1)
             remoteViews.setTextViewText(R.id.secsLabelNameTextView, "sec");
         else
             remoteViews.setTextViewText(R.id.secsLabelNameTextView, "secs");
-
-
     }
 
 }

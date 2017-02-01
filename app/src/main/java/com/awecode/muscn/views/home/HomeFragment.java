@@ -1,6 +1,7 @@
 package com.awecode.muscn.views.home;
 
 import android.os.Bundle;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -95,6 +96,10 @@ public class HomeFragment extends MasterFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         fixturesApiListener = (FixturesApiListener) this.getContext();
+        String deviceId = Settings.Secure.getString(getActivity().getContentResolver(),
+                Settings.Secure.ANDROID_ID);
+        Log.v("teste","id "+deviceId);
+
     }
 
     @Override
@@ -120,11 +125,14 @@ public class HomeFragment extends MasterFragment {
      */
     private void setup_fixutres() {
         try {
-            FixturesResponse fixturesResponse = filterPastDateFromFixture(FixturesResponse.get_results());
-            configureFixtureView(fixturesResponse.getResults().get(0));
+            if (FixturesResponse.get_results() != null) {
+                FixturesResponse fixturesResponse = filterPastDateFromFixture(FixturesResponse.get_results());
+                configureFixtureView(fixturesResponse.getResults().get(0));
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 
 
@@ -337,29 +345,30 @@ public class HomeFragment extends MasterFragment {
 
             @Override
             public void onFinish() {
+                setup_fixutres();
             }
         });
     }
 
 
     private void setup_time_label(CountDownTime time) {
-        if (time.getDays() <= 1)
+        if (time.getDays() == 1)
             mDaysLabelTextView.setText("day");
         else
             mDaysLabelTextView.setText("days");
 
-        if (time.getHours() <= 1)
+        if (time.getHours() == 1)
             mHoursLabelTextView.setText("hour");
         else
             mHoursLabelTextView.setText("hours");
 
-        if (time.getMinutes() <= 1)
+        if (time.getMinutes() == 1)
             mMinsLabelTextView.setText("min");
         else
             mMinsLabelTextView.setText("mins");
 
 
-        if (time.getSeconds() <= 1)
+        if (time.getSeconds() == 1)
             mSecsLabelTextView.setText("sec");
         else
             mSecsLabelTextView.setText("secs");
