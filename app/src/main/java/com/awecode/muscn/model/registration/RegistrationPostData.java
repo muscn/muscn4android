@@ -1,4 +1,3 @@
-
 package com.awecode.muscn.model.registration;
 
 import com.google.gson.annotations.Expose;
@@ -15,30 +14,27 @@ public class RegistrationPostData {
     @SerializedName("name")
     @Expose
     private String name;
-    @SerializedName("is_active")
-    @Expose
-    private Boolean isActive;
+
+    private String type;
 
     /**
      * No args constructor for use in serialization
-     * 
      */
     public RegistrationPostData() {
     }
 
     /**
-     * 
-     * @param isActive
+     * @param type
      * @param name
      * @param devId
      * @param regId
      */
-    public RegistrationPostData(String devId, String regId, String name, Boolean isActive) {
+    public RegistrationPostData(String devId, String regId, String name, String type) {
         super();
         this.devId = devId;
         this.regId = regId;
         this.name = name;
-        this.isActive = isActive;
+        this.type = type;
     }
 
     public String getDevId() {
@@ -65,12 +61,12 @@ public class RegistrationPostData {
         this.name = name;
     }
 
-    public Boolean getIsActive() {
-        return isActive;
+    public String getType() {
+        return type;
     }
 
-    public void setIsActive(Boolean isActive) {
-        this.isActive = isActive;
+    public void setType(String type) {
+        this.type = type;
     }
 
 }

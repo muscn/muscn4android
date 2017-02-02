@@ -5,10 +5,13 @@ import android.provider.Settings;
 import android.util.Log;
 
 import com.awecode.muscn.model.registration.RegistrationPostData;
+import com.awecode.muscn.model.registration.RegistrationResponse;
+import com.awecode.muscn.util.Constants;
 import com.awecode.muscn.util.retrofit.MuscnApiInterface;
 import com.awecode.muscn.util.retrofit.ServiceGenerator;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
+import com.google.gson.Gson;
 
 import rx.Observable;
 import rx.Observer;
@@ -31,33 +34,35 @@ public class MyFirebaseInstanceIdService extends FirebaseInstanceIdService {
         // If you want to send messages to this application instance or
         // manage this apps subscriptions on the server side, send the
         // Instance ID token to your app server.
-//        sendRegistrationToServer(refreshedToken);
+        sendRegistrationToServer(refreshedToken);
     }
 
     public void sendRegistrationToServer(String refreshedToken) {
         String deviceId = Settings.Secure.getString(getApplicationContext().getContentResolver(),
                 Settings.Secure.ANDROID_ID);
 
-        RegistrationPostData mRegistrationPostData = new RegistrationPostData(deviceId, refreshedToken, Build.MODEL, true);
+        RegistrationPostData mRegistrationPostData = new RegistrationPostData(deviceId, refreshedToken, Build.MODEL, Constants.DEVICE_TYPE);
 
         MuscnApiInterface mApiInterface = ServiceGenerator.createService(MuscnApiInterface.class);
-        Observable<Void> call = mApiInterface.postRegistrationData(mRegistrationPostData);
+        Observable<RegistrationResponse> call = mApiInterface.postRegistrationData(mRegistrationPostData);
         call.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Void>() {
+                .subscribe(new Observer<RegistrationResponse>() {
                     @Override
                     public void onCompleted() {
+                        Log.v("response", "data com");
 
                     }
 
                     @Override
                     public void onError(Throwable e) {
+                        Log.v("response", "error" + e.getLocalizedMessage());
 
                     }
 
                     @Override
-                    public void onNext(Void aVoid) {
-
+                    public void onNext(RegistrationResponse registrationResponse) {
+                        Log.v("response", "data succcess" + new Gson().toJson(registrationResponse).toString());
                     }
                 });
 

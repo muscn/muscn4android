@@ -45,7 +45,7 @@ public interface MuscnApiInterface {
     @GET("api/v1/injuries")
     Observable<InjuriesResponse> getInjuredPlayers();
 
-    @POST("fcm/v1/devices/")
-    Observable<Void> postRegistrationData(@Body RegistrationPostData registrationPostData);
+    @POST("api/v1/user_device/")
+    Observable<RegistrationPostData> postRegistrationData(@Body RegistrationPostData registrationPostData);
 
 }
