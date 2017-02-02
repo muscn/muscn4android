@@ -120,7 +120,7 @@ public class FixtureWidgetProvider extends AppWidgetProvider {
 
             String opponentName = result.getOpponent().getName();
             Boolean isHomeGame = result.getHomeGame();
-            //configure broadcast channel name
+            //configure broadcast channel namemContext
             if (result.getBroadcastOn() != null) {
                 remoteViews.setTextViewText(R.id.liveTextView, "Live on " + result.getBroadcastOn());
                 remoteViews.setViewVisibility(R.id.dateLiveDividerImageView, View.VISIBLE);
@@ -137,7 +137,7 @@ public class FixtureWidgetProvider extends AppWidgetProvider {
             if (isHomeGame)
                 remoteViews.setTextViewText(R.id.ftTextView, mContext.getString(R.string.manchester_united) + " V " + opponentName);
             else
-                remoteViews.setTextViewText(R.id.ftTextView, mContext.getString(R.string.manchester_united) + " V " + opponentName);
+                remoteViews.setTextViewText(R.id.ftTextView, opponentName + " V " + mContext.getString(R.string.manchester_united));
 
             //configurevenue
             remoteViews.setTextViewText(R.id.gameVenueTextView, result.getVenue());
