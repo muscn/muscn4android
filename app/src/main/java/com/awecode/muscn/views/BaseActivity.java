@@ -133,6 +133,15 @@ public abstract class BaseActivity extends AppCompatActivity {
         ft.commitAllowingStateLoss();
     }
 
+    public void openFragmentNoHistory(Fragment fragment, String tag) {
+        FragmentTransaction ft = getSupportFragmentManager()
+                .beginTransaction();
+        ft.replace(R.id.container,
+                fragment, tag);
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        ft.commitAllowingStateLoss();
+    }
+
     public void openFragmentNoHistory(Fragment fragment) {
         FragmentTransaction ft = getSupportFragmentManager()
                 .beginTransaction();
@@ -183,7 +192,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.fabHome:
                 mHomeFragment = HomeFragment.newInstance();
-                openFragment(mHomeFragment);
+                openFragmentNoHistory(mHomeFragment, "HOME");
                 break;
             case R.id.fabLeagueTable:
                 mLeagueTableFragment = LeagueTableFragment.newInstance();
@@ -217,19 +226,33 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        Fragment homeFragment = getSupportFragmentManager().findFragmentByTag("HOME");
+
         if (mActionMenu.isOpened())
-            mActionMenu.close(true);
-
+            mActionMenu.close(true);    //if fab menu is open, then close it
         else {
-            if (mBackPressed + TIME_INTERVAL > System.currentTimeMillis()) {
-                super.onBackPressed();
-                mActivity.finish();
-            } else {
-                Util.toast(mContext, getString(R.string.tapExitMessage));
-            }
-
-            mBackPressed = System.currentTimeMillis();
+            if (homeFragment.isVisible()) {
+                //if home fragment is visible do nothing
+                finish();
+            } else
+                openFragmentNoHistory(HomeFragment.newInstance(), "HOME");
         }
+
+//        openFragment(HomeFragment.newInstance());
+//        super.onBackPressed();
+//        if (mActionMenu.isOpened())
+//            mActionMenu.close(true);
+//
+//        else {
+//            if (mBackPressed + TIME_INTERVAL > System.currentTimeMillis()) {
+//                super.onBackPressed();
+//                mActivity.finish();
+//            } else {
+//                Util.toast(mContext, getString(R.string.tapExitMessage));
+//            }
+//
+//            mBackPressed = System.currentTimeMillis();
+//        }
     }
 
     public void setFixtureResponse(FixturesResponse fixtureResponse) {

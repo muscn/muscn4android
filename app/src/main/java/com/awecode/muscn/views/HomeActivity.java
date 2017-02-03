@@ -36,7 +36,9 @@ public class HomeActivity extends BaseActivity implements FixturesApiListener, R
 
         homeFragment = new HomeFragment();
         homeFragment.fixturesApiListener = this;
-        openFragmentNoHistory(HomeFragment.newInstance());
+        openFragmentNoHistory(HomeFragment.newInstance(),"HOME");
+//        openFragmentNoHistory(HomeFragment.newInstance());
+
         setupFloatingActionButton();
         transparentView.setVisibility(View.GONE);
         mActionMenu.setOnMenuToggleListener(new FloatingActionMenu.OnMenuToggleListener() {

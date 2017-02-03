@@ -1,12 +1,12 @@
 package com.awecode.muscn.widget;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
+import android.app.Service;
 import android.appwidget.AppWidgetManager;
-import android.appwidget.AppWidgetProvider;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.os.SystemClock;
+import android.os.IBinder;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
@@ -18,7 +18,6 @@ import com.awecode.muscn.model.http.fixtures.Result;
 import com.awecode.muscn.util.Util;
 import com.awecode.muscn.util.countdown_timer.CountDownTimer;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -26,90 +25,49 @@ import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
-import static android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE;
-
 /**
- * Created by surensth on 1/29/17.
+ * Created by surensth on 2/2/17.
  */
 
-public class FixtureWidgetProvider extends AppWidgetProvider {
+public class UpdateWidgetService extends Service {
+    RemoteViews remoteViews;
+//    Context mContext = this;
     private CountDownTimer mCountDownTimer;
-    private RemoteViews remoteViews;
-    Context mContext;
-    AppWidgetManager mAppWidgetManager;
+    AppWidgetManager manager;
+    ComponentName widget;
     int[] mAppWidgetIds;
-
-
-    public static final String FIXTURE_WIDGET_UPDATE = "com.awecode.muscn.widget.FixtureWidgetProvider.FIXTURE_WIDGET_UPDATE";
-
-    private PendingIntent createUpdateIntent(Context context) {
-        Intent intent = new Intent();
-        intent.setAction(FIXTURE_WIDGET_UPDATE);
-//        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, mAppWidgetIds);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context,
-                0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        return pendingIntent;
+    @Nullable
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
     }
 
     @Override
-    public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        mContext = context;
-        mAppWidgetManager = appWidgetManager;
-        mAppWidgetIds = appWidgetIds;
-        Log.v("tee","app ids"+appWidgetIds[0]);
-//        remoteViews = new RemoteViews(context.getPackageName(),
-//                R.layout.fixture_widget);
-//
-//        initializeCountDownTimer();
-//        setup_fixutres();
-
-//        Intent intent = new Intent(context, FixtureWidgetProvider.class);
-//        intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-//        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
-//        PendingIntent pendingIntent = PendingIntent.getBroadcast(context,
-//                0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-//        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-//        alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime(), 1000, pendingIntent);
-
-
-//new code
-//        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-//        alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime(), 1000,  createUpdateIntent(context));
-
-        super.onUpdate(context, appWidgetManager, appWidgetIds);
-        context.startService(new Intent(context, UpdateWidgetService.class));
-
-
+    public void onStart(Intent intent, int startId) {
+        super.onStart(intent, startId);
+         remoteViews = buildUpdate(this);
+         widget = new ComponentName(this, FixtureWidgetProvider.class);
+         manager = AppWidgetManager.getInstance(this);
+        manager.updateAppWidget(widget, remoteViews);
+        mAppWidgetIds = manager.getAppWidgetIds(widget);
+        Log.v("ids","app widget ids "+mAppWidgetIds[0]);
     }
 
-    @Override
-    public void onEnabled(Context context) {
-        super.onEnabled(context);
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime(), 1000, createUpdateIntent(context));
-        Log.v("onEnabled","inside onEnabled");
+    private RemoteViews buildUpdate(Context context) {
+         remoteViews = new RemoteViews(context.getPackageName(), R.layout.fixture_widget);
+        //clock data
+//        Calendar calendar = Calendar.getInstance();
+//        calendar.setTime(new Date());
+//        remoteViews.setTextViewText(R.id.hourTextView,String.valueOf(calendar.get(Calendar.HOUR_OF_DAY)));
+//        remoteViews.setTextViewText(R.id.minuteTextView,String.valueOf(calendar.get(Calendar.MINUTE)));
+//        remoteViews.setTextViewText(R.id.secondTextView,String.valueOf(calendar.get(Calendar.SECOND)));
+
+        initializeCountDownTimer();
+        setup_fixutres();
+
+        return remoteViews;
     }
 
-    @Override
-    public void onDisabled(Context context) {
-        super.onDisabled(context);
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.cancel(createUpdateIntent(context));
-    }
-
-    @Override
-    public void onReceive(Context context, Intent intent) {
-        super.onReceive(context, intent);
-        Log.v("dd", "value update" + intent.toString());
-        Log.v("dd", "actikon received" + intent.getAction());
-
-        //start service if clock update is received
-        if (FIXTURE_WIDGET_UPDATE.equals(intent.getAction())) {
-            Log.v("dd", "inside onreceive" + intent.toString());
-
-            context.startService(new Intent(context, UpdateWidgetService.class));
-        }
-    }
 
     /**
      * Load fixtures from db and show in view
@@ -132,35 +90,6 @@ public class FixtureWidgetProvider extends AppWidgetProvider {
         fixturesResponse.setResults(filteredResults);
         return fixturesResponse;
     }
-
-    /**
-     * compare whether the match date is before todays date or not, if match date is before today then returns true showing data in index 1 else returns false showing data in index 0 for upcoming match
-     *
-     * @param matchDate date of upcoming match
-     * @return
-     */
-    private Boolean matchDateIsBeforeToday(String matchDate) {
-
-        Calendar c = Calendar.getInstance();
-        Date today = c.getTime();
-
-        SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-        myFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-
-        //set time for countdown
-        Date match_date = null;
-        try {
-            match_date = myFormat.parse(matchDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        if (match_date.before(today)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     /**
      * populate opponent name, date time
      * broadcast tv channel name,
@@ -188,13 +117,13 @@ public class FixtureWidgetProvider extends AppWidgetProvider {
 
             //configure game between team names
             if (isHomeGame)
-                remoteViews.setTextViewText(R.id.ftTextView, mContext.getString(R.string.manchester_united) + " V " + opponentName);
+                remoteViews.setTextViewText(R.id.ftTextView, this.getString(R.string.manchester_united) + " V " + opponentName);
             else
-                remoteViews.setTextViewText(R.id.ftTextView, opponentName + " V " + mContext.getString(R.string.manchester_united));
+                remoteViews.setTextViewText(R.id.ftTextView, opponentName + " V " + this.getString(R.string.manchester_united));
 
             //configurevenue
             remoteViews.setTextViewText(R.id.gameVenueTextView, result.getVenue());
-            mAppWidgetManager.updateAppWidget(mAppWidgetIds, remoteViews);
+//            mAppWidgetManager.updateAppWidget(mAppWidgetIds, remoteViews);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -248,11 +177,11 @@ public class FixtureWidgetProvider extends AppWidgetProvider {
                 remoteViews.setTextViewText(R.id.hoursValueTextView, Util.getTwoDigitNumber(countDownTime.getHours()));
                 remoteViews.setTextViewText(R.id.minsValueTextView, Util.getTwoDigitNumber(countDownTime.getMinutes()));
                 remoteViews.setTextViewText(R.id.secsValueTextView, Util.getTwoDigitNumber(countDownTime.getSeconds()));
-                mAppWidgetManager.updateAppWidget(mAppWidgetIds, remoteViews);
+                manager.updateAppWidget(mAppWidgetIds,remoteViews);
 
                 setup_time_label(countDownTime);
 
-                Log.v("time", "second" + countDownTime.getSeconds());
+                Log.v("time in service ", "current sec" + countDownTime.getSeconds());
             }
 
             @Override

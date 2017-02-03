@@ -6,6 +6,7 @@ import com.awecode.muscn.model.http.leaguetable.LeagueTableResponse;
 import com.awecode.muscn.model.http.recentresults.RecentResultsResponse;
 import com.awecode.muscn.model.http.topscorers.TopScorersResponse;
 import com.awecode.muscn.model.registration.RegistrationPostData;
+import com.awecode.muscn.model.registration.RegistrationResponse;
 
 import java.util.List;
 
@@ -46,6 +47,6 @@ public interface MuscnApiInterface {
     Observable<InjuriesResponse> getInjuredPlayers();
 
     @POST("api/v1/user_device/")
-    Observable<RegistrationPostData> postRegistrationData(@Body RegistrationPostData registrationPostData);
+    Observable<RegistrationResponse> postRegistrationData(@Body RegistrationPostData registrationPostData);
 
 }
