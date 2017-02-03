@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.awecode.muscn.R;
 import com.awecode.muscn.model.http.eplmatchweek._20161001;
+import com.awecode.muscn.util.Util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -44,20 +45,20 @@ public class MatchFixutreRecyclerviewAdapter extends RecyclerView.Adapter<MatchF
     public void onBindViewHolder(FixtureViewHolder holder, int position) {
         _20161001 data = mCategoryList.get(position);
 
-        /**
-         * fetch kickoff date and format it into hours and minutes
-         */
+//        /**
+//         * fetch kickoff date and format it into hours and minutes
+//         */
         String strCurrentDate = data.getKickoff();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");
-
-        Date newDate = null;
-        try {
-            newDate = format.parse(strCurrentDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        format = new SimpleDateFormat("dd MMM, yyyy\nhh:mm a");
-        String time = format.format(newDate);
+//        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");
+//
+//        Date newDate = null;
+//        try {
+//            newDate = format.parse(strCurrentDate);
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//        format = new SimpleDateFormat("EEE dd MMM, yyyy\nhh:mm a");
+//        String time = format.format(newDate);
 
         /**
          * populate data in viewholder
@@ -73,7 +74,7 @@ public class MatchFixutreRecyclerviewAdapter extends RecyclerView.Adapter<MatchF
             holder.eplMatchweekAwayTeamScore.setText(awayTeamScore);
             holder.eplMatchweekHomeTeamScore.setText(homeTeamScore);
         }
-        holder.eplMatchweekTimeandHomeGround.setText(time);
+        holder.eplMatchweekTimeandHomeGround.setText(Util.commonDateFormatter(strCurrentDate,"yyyy-MM-dd'T'hh:mm:ss"));
         holder.eplMatchweekHomeTeam.setText(data.getHomeTeam());
         holder.eplMatchweekAwayTeam.setText(data.getAwayTeam());
 

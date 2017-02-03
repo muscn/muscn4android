@@ -61,7 +61,8 @@ public class FixturesRecyclerViewAdapter extends RecyclerView.Adapter<FixturesRe
                     holder.eplMatchweekAwayTeamShortName.setText(result.getOpponent().getName().substring(0, 3).toUpperCase());
                 else
                     holder.eplMatchweekAwayTeamShortName.setText(result.getOpponent().getShortName().toUpperCase());
-                holder.eplMatchweekTimeandHomeGround.setText(Util.dateFormatter(result.getDatetime(), "yyyy-MM-dd'T'hh:mm:ss'Z'", "dd MMM, yyyy, hh:mm a") + "\n" + result.getVenue());
+                holder.eplMatchweekTimeandHomeGround.setText(Util.commonDateFormatter(result.getDatetime(), "yyyy-MM-dd'T'hh:mm:ss'Z'") + "\n" + result.getVenue());
+
             } else if (!result.getHomeGame()) {
                 holder.eplMatchweekFixtureAwayTeamLogo.setImageResource(R.drawable.logo_manutd);
                 Picasso.with(context)
@@ -75,7 +76,8 @@ public class FixturesRecyclerViewAdapter extends RecyclerView.Adapter<FixturesRe
 
 
                 String venue = result.getVenue();
-                holder.eplMatchweekTimeandHomeGround.setText(Util.dateFormatter(result.getDatetime(), "yyyy-MM-dd'T'hh:mm:ss'Z'", "dd MMM, yyyy, hh:mm a") + "\n" + venue);
+                holder.eplMatchweekTimeandHomeGround.setText(Util.commonDateFormatter(result.getDatetime(), "yyyy-MM-dd'T'hh:mm:ss'Z'") + "\n" + venue);
+
             }
 
             holder.eplMatchweekMatchStatus.setText(result.getCompetitionYear().getCompetition().getName());

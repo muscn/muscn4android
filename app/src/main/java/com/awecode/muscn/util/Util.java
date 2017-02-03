@@ -45,7 +45,8 @@ public class Util {
 
     public static String dateFormatter(String date) {
         DateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-        DateFormat targetFormat = new SimpleDateFormat("dd MMM, yyyy", Locale.ENGLISH);
+        originalFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+        DateFormat targetFormat = new SimpleDateFormat("EEE dd MMM ''yy", Locale.ENGLISH);
         try {
             Date originalDate = originalFormat.parse(date);
             date = targetFormat.format(originalDate);
@@ -55,6 +56,20 @@ public class Util {
         return date;
     }
 
+    public static String commonDateFormatter(String date, String obtainedFormat) {
+        String requiredFormat = "HH:mm EEE dd MMM ''yy";
+        SimpleDateFormat format = new SimpleDateFormat(obtainedFormat);
+        format.setTimeZone(TimeZone.getTimeZone("UTC"));
+        Date newDate = null;
+        try {
+            newDate = format.parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        format = new SimpleDateFormat(requiredFormat);
+        String time = format.format(newDate);
+        return time;
+    }
     public static String dateFormatter(String date, String obtainedFormat, String requiredFormat) {
         SimpleDateFormat format = new SimpleDateFormat(obtainedFormat);
         format.setTimeZone(TimeZone.getTimeZone("UTC"));
