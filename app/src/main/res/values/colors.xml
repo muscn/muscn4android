@@ -11,4 +11,8 @@
     <color name="colorGrey">#A4A4A4</color>
     <color name="colorTransparent">#d00a0909</color>
     <color name="view_bg_transparent">#99e54d36</color>
+    <color name="colorGradientStart">#762316</color>
+    <color name="colorGradientEnd">#ff000000</color>
+
+
 </resources>

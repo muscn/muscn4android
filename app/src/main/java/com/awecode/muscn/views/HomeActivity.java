@@ -1,25 +1,40 @@
 package com.awecode.muscn.views;
 
 import android.animation.ValueAnimator;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 
 import com.awecode.muscn.R;
+import com.awecode.muscn.model.enumType.MenuType;
 import com.awecode.muscn.model.http.fixtures.FixturesResponse;
 import com.awecode.muscn.model.listener.FixturesApiListener;
 import com.awecode.muscn.model.listener.RecyclerViewScrollListener;
 import com.awecode.muscn.util.Util;
+import com.awecode.muscn.views.aboutus.AboutUsActivity;
 import com.awecode.muscn.views.home.HomeFragment;
+import com.awecode.muscn.views.injuries.InjuriesFragment;
+import com.awecode.muscn.views.league.LeagueTableFragment;
+import com.awecode.muscn.views.matchweekfixtures.EplMatchWeekFixtureFragment;
+import com.awecode.muscn.views.nav.NavigationDrawerCallbacks;
+import com.awecode.muscn.views.nav.NavigationDrawerFragment;
+import com.awecode.muscn.views.nav.NavigationItem;
+import com.awecode.muscn.views.recentresults.MatchResultFragment;
+import com.awecode.muscn.views.topscorer.TopScorersFragment;
 import com.github.clans.fab.FloatingActionMenu;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 
-public class HomeActivity extends BaseActivity implements FixturesApiListener, RecyclerViewScrollListener {
+public class HomeActivity extends BaseActivity implements FixturesApiListener, RecyclerViewScrollListener, NavigationDrawerCallbacks {
 
     private static final String TAG = HomeActivity.class.getSimpleName();
     HomeFragment homeFragment;
@@ -27,7 +42,10 @@ public class HomeActivity extends BaseActivity implements FixturesApiListener, R
     ImageView mBackgroundOne;
     @BindView(R.id.background_two)
     ImageView mBackgroundTwo;
-
+    private DrawerLayout mDrawerLayout;
+    private Toolbar mToolbar;
+//    @BindView(R.id.titleBarTextView)
+//    TextView titleBarTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +54,7 @@ public class HomeActivity extends BaseActivity implements FixturesApiListener, R
 
         homeFragment = new HomeFragment();
         homeFragment.fixturesApiListener = this;
-        openFragmentNoHistory(HomeFragment.newInstance(),"HOME");
+        openFragmentNoHistory(HomeFragment.newInstance(), "HOME");
 //        openFragmentNoHistory(HomeFragment.newInstance());
 
         setupFloatingActionButton();
@@ -54,6 +72,8 @@ public class HomeActivity extends BaseActivity implements FixturesApiListener, R
         //TODO add new image animation
 //        configureParallaxBackgroundEffect();
         setup_onErrorClickListener();
+        setupNavigationDrawerView();
+
     }
 
     @Override
@@ -79,8 +99,6 @@ public class HomeActivity extends BaseActivity implements FixturesApiListener, R
             noInternetConnectionDialog(mContext);
         }
     }
-
-
 
 
     public void setParallaxImageBackground(int drawableId) {
@@ -128,4 +146,58 @@ public class HomeActivity extends BaseActivity implements FixturesApiListener, R
         setScrollAnimation(recyclerView);
     }
 
+    /**
+     * intialize navigation drawer layout and fragment
+     */
+    private void setupNavigationDrawerView() {
+//        mToolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
+//        setSupportActionBar(mToolbar);
+//        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
+        mNavigationDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_drawer);
+        mNavigationDrawerFragment.setup(R.id.fragment_drawer, mDrawerLayout/*, mToolbar*/);
+        mDrawerLayout.closeDrawer(Gravity.LEFT);
+
+    }
+
+    @Override
+    public void onNavigationDrawerItemSelected(int position, NavigationItem navigationItem) {
+        MenuType menuType = navigationItem.getMenuType();
+        if (menuType != null) {
+            if (menuType == MenuType.HOME) {
+                mHomeFragment = HomeFragment.newInstance();
+                openFragmentNoHistory(mHomeFragment, "HOME");
+            }
+//                openNewSaleFragment();//open new sale view
+            else if (menuType == MenuType.FIXTURES) {
+                mFixturesFragment = FixturesFragment.newInstance(fixturesResponse);
+                openFragment(mFixturesFragment);
+            } else if (menuType == MenuType.LEAGUE_TABLE) {
+                mLeagueTableFragment = LeagueTableFragment.newInstance();
+                openFragment(mLeagueTableFragment);
+            } else if (menuType == MenuType.INJURIES) {
+                mInjuriesFragment = InjuriesFragment.newInstance();
+                openFragment(mInjuriesFragment);
+            } else if (menuType == MenuType.TOPSCORERS) {
+                mTopScorersFragment = TopScorersFragment.newInstance();
+                openFragment(mTopScorersFragment);
+            } else if (menuType == MenuType.EPL_MATCH_WEEK) {
+                mEplMatchWeekFixtureFragment = new EplMatchWeekFixtureFragment();
+                openFragment(mEplMatchWeekFixtureFragment);
+            } else if (menuType == MenuType.RECENT_RESULTS) {
+                mMatchResultFragment = new MatchResultFragment();
+                openFragment(mMatchResultFragment);
+            } else if (menuType == MenuType.ABOUT_US) {
+                startActivity(new Intent(this, AboutUsActivity.class));
+            } else {
+                mHomeFragment = HomeFragment.newInstance();
+                openFragmentNoHistory(mHomeFragment, "HOME");
+            }
+        }
+    }
+    @OnClick(R.id.muscnLogo)
+    public void onClickLogo(){
+        mNavigationDrawerFragment.openDrawer();
+    }
 }

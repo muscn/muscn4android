@@ -98,7 +98,7 @@ public class HomeFragment extends MasterFragment {
         fixturesApiListener = (FixturesApiListener) this.getContext();
         String deviceId = Settings.Secure.getString(getActivity().getContentResolver(),
                 Settings.Secure.ANDROID_ID);
-        Log.v("teste","id "+deviceId);
+        Log.v("teste", "id " + deviceId);
 
     }
 
@@ -126,6 +126,7 @@ public class HomeFragment extends MasterFragment {
     private void setup_fixutres() {
         try {
             if (FixturesResponse.get_results() != null) {
+                mActivity.showContentView(); //added to remove the error view when no internet connection
                 FixturesResponse fixturesResponse = filterPastDateFromFixture(FixturesResponse.get_results());
                 configureFixtureView(fixturesResponse.getResults().get(0));
             }
@@ -218,6 +219,7 @@ public class HomeFragment extends MasterFragment {
      * @param result
      */
     private void configureFixtureView(Result result) {
+
         try {
             mActivity.setCustomTitle(R.string.app_name);
 

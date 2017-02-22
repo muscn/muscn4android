@@ -57,7 +57,7 @@ public abstract class MasterFragment extends Fragment {
     }
 
     public void changeParallaxImage(int drawableId) {
-        ((HomeActivity) getActivity()).setParallaxImageBackground(drawableId);
+//        ((HomeActivity) getActivity()).setParallaxImageBackground(drawableId);
     }
 
 

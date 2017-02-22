@@ -17,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.animation.OvershootInterpolator;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.awecode.muscn.R;
@@ -30,6 +31,7 @@ import com.awecode.muscn.views.home.HomeFragment;
 import com.awecode.muscn.views.injuries.InjuriesFragment;
 import com.awecode.muscn.views.league.LeagueTableFragment;
 import com.awecode.muscn.views.matchweekfixtures.EplMatchWeekFixtureFragment;
+import com.awecode.muscn.views.nav.NavigationDrawerFragment;
 import com.awecode.muscn.views.recentresults.MatchResultFragment;
 import com.awecode.muscn.views.topscorer.TopScorersFragment;
 import com.github.clans.fab.FloatingActionMenu;
@@ -47,10 +49,13 @@ public abstract class BaseActivity extends AppCompatActivity {
     StateLayout mStateLayout;
     @BindView(R.id.title)
     TextView titleTextView;
+    @BindView(R.id.muscnLogo)
+    ImageView muscnLogoImageView;
     @BindView(R.id.transparentView)
     View transparentView;
+    NavigationDrawerFragment mNavigationDrawerFragment;
 
-    private FixturesResponse fixturesResponse;
+    public FixturesResponse fixturesResponse;
     protected Context mContext;
     protected Activity mActivity;
     public FloatingActionMenu mActionMenu;
@@ -230,6 +235,8 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         if (mActionMenu.isOpened())
             mActionMenu.close(true);    //if fab menu is open, then close it
+        else if (mNavigationDrawerFragment.isDrawerOpen())
+            mNavigationDrawerFragment.closeDrawer(); //close navigation bar on back pressed if opened
         else {
             if (homeFragment.isVisible()) {
                 //if home fragment is visible do nothing

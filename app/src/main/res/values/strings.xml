@@ -35,4 +35,6 @@
     <string name="email_link_text">&lt;a href="mailto:info@manutd.org.np">info@manutd.org.np&lt;/a></string>
     <string name="instagram_link_text">&lt;a href="http://instagram.com/muscnp">muscnp&lt;/a></string>
     <string name="awecode_link_text">&lt;a href="http://awecode.com">Awecode&lt;/a></string>
+    <string name="drawer_open">Menu opened</string>
+    <string name="drawer_close">Menu closed</string>
 </resources>
