@@ -73,7 +73,6 @@ public class FixturesRecyclerViewAdapter extends RecyclerView.Adapter<FixturesRe
 
             //new
 
-            Log.v("ttt", "jhj" + result.getDatetime());
             mCalendar = Calendar.getInstance();
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'Z'");
             format.setTimeZone(TimeZone.getTimeZone("UTC"));
@@ -91,8 +90,13 @@ public class FixturesRecyclerViewAdapter extends RecyclerView.Adapter<FixturesRe
             holder.mWeekTextView.setText(mCalendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault()));
             holder.mMonthYearTextView.setText(month + " " +String.valueOf(mCalendar.get(Calendar.YEAR)));
 
-            holder.mHomeVsAwayTeamTextView.setText(context.getString(R.string.manchester_united) + " vs " + result.getOpponent().getName() + " - " + result.getCompetitionYear().getCompetition().getName());
             holder.mStadiumTimeTextView.setText(result.getVenue() + " at " + String.valueOf(mCalendar.get(Calendar.HOUR))+":"+ String.valueOf(mCalendar.get(Calendar.MINUTE))+mCalendar.getDisplayName(Calendar.AM_PM, Calendar.LONG, Locale.getDefault()));
+
+            if(result.getHomeGame())
+            holder.mHomeVsAwayTeamTextView.setText(context.getString(R.string.manchester_united) + " vs " + result.getOpponent().getName() + " - " + result.getCompetitionYear().getCompetition().getName());
+            else if(result.getHomeGame())
+                holder.mHomeVsAwayTeamTextView.setText(result.getOpponent().getName() + " vs " + context.getString(R.string.manchester_united)  + " - " + result.getCompetitionYear().getCompetition().getName());
+
 
 
 //            }
