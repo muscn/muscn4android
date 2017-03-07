@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/matchResultRowLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <!--main layout-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/dayTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="11"
+                android:textColor="@color/white"
+                android:textSize="60sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="15dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/weekTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Saturday"
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/monthYearTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="March 2017"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/ic_calendar" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="20dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/homeVsAwayTeamTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Southampton vs Manchester United - English Premier League"
+                    android:textColor="@color/white"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/stadiumTimeTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="St. Mary's Stadium, Southampton at 8:45PM"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <include layout="@layout/white_horizontal_line" />
+
+    </LinearLayout>
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:orientation="horizontal"-->
+    <!--android:padding="8dp"-->
+    <!--android:weightSum="4">-->
+    <!--&lt;!&ndash;1st layout&ndash;&gt;-->
+    <!--<LinearLayout-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_gravity="center_vertical"-->
+    <!--android:layout_weight="0.7"-->
+    <!--android:orientation="vertical">-->
+
+    <!--<ImageView-->
+    <!--android:id="@+id/eplMatchweekFixtureHomeTeamLogo"-->
+    <!--android:layout_width="@dimen/fixture_team_logo"-->
+    <!--android:layout_height="@dimen/fixture_team_logo"-->
+    <!--android:src="@drawable/logo_manutd"-->
+    <!--android:layout_gravity="center"-->
+    <!--android:visibility="visible" />-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/eplMatchweekHomeTeamShortName"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_gravity="center"-->
+    <!--android:text="MUN"-->
+    <!--android:textColor="@color/white"-->
+    <!--android:textSize="@dimen/fixture_team_name" />-->
+
+    <!--</LinearLayout>-->
+    <!--&lt;!&ndash;home score layout&ndash;&gt;-->
+    <!--<LinearLayout-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:gravity="center"-->
+    <!--android:layout_gravity="center_vertical"-->
+    <!--android:layout_weight="0.2">-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/eplMatchweekHomeTeamScore"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:gravity="center"-->
+    <!--android:textColor="@color/white"-->
+    <!--android:textSize="16sp" />-->
+
+    <!--</LinearLayout>-->
+    <!--&lt;!&ndash;middle layout&ndash;&gt;-->
+    <!--<LinearLayout-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_weight="2.2"-->
+    <!--android:gravity="center"-->
+    <!--android:layout_gravity="center_vertical"-->
+    <!--android:orientation="vertical">-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/eplMatchweekMatchStatus"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:gravity="center"-->
+    <!--android:text="FullTime"-->
+    <!--android:textColor="@color/white"-->
+    <!--android:textSize="13sp" />-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/eplMatchweekTimeandHomeGround"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:gravity="center"-->
+    <!--android:text="19Nov, 2016\nOld Traffford, Manchester"-->
+    <!--android:textColor="@color/white"-->
+    <!--android:textSize="13sp" />-->
+
+
+    <!--</LinearLayout>-->
+
+    <!--&lt;!&ndash;away score layout&ndash;&gt;-->
+    <!--<LinearLayout-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_gravity="center_vertical"-->
+    <!--android:gravity="center"-->
+    <!--android:layout_weight="0.2">-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/eplMatchweekAwayTeamScore"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:gravity="center"-->
+    <!--android:textColor="@color/white"-->
+    <!--android:textSize="16sp" />-->
+    <!--</LinearLayout>-->
+    <!--&lt;!&ndash;last layout&ndash;&gt;-->
+    <!--<LinearLayout-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_gravity="center_vertical"-->
+    <!--android:layout_weight="0.7"-->
+    <!--android:orientation="vertical">-->
+
+    <!--<ImageView-->
+    <!--android:id="@+id/eplMatchweekFixtureAwayTeamLogo"-->
+    <!--android:layout_width="@dimen/fixture_team_logo"-->
+    <!--android:layout_height="@dimen/fixture_team_logo"-->
+    <!--android:layout_gravity="center"-->
+    <!--android:visibility="visible" />-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/eplMatchweekAwayTeamShortName"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_gravity="center"-->
+    <!--android:text="WBA"-->
+    <!--android:textColor="@color/white"-->
+    <!--android:textSize="@dimen/fixture_team_name" />-->
+    <!--</LinearLayout>-->
+
+
+    <!--</LinearLayout>-->
+</LinearLayout>
