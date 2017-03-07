@@ -57,17 +57,17 @@ public class HomeActivity extends BaseActivity implements FixturesApiListener, R
         openFragmentNoHistory(HomeFragment.newInstance(), "HOME");
 //        openFragmentNoHistory(HomeFragment.newInstance());
 
-        setupFloatingActionButton();
-        transparentView.setVisibility(View.GONE);
-        mActionMenu.setOnMenuToggleListener(new FloatingActionMenu.OnMenuToggleListener() {
-            @Override
-            public void onMenuToggle(boolean opened) {
-                if (opened)
-                    transparentView.setVisibility(View.VISIBLE);
-                else
-                    transparentView.setVisibility(View.GONE);
-            }
-        });
+//        setupFloatingActionButton();
+//        transparentView.setVisibility(View.GONE);
+//        mActionMenu.setOnMenuToggleListener(new FloatingActionMenu.OnMenuToggleListener() {
+//            @Override
+//            public void onMenuToggle(boolean opened) {
+//                if (opened)
+//                    transparentView.setVisibility(View.VISIBLE);
+//                else
+//                    transparentView.setVisibility(View.GONE);
+//            }
+//        });
 
         //TODO add new image animation
 //        configureParallaxBackgroundEffect();
@@ -143,7 +143,7 @@ public class HomeActivity extends BaseActivity implements FixturesApiListener, R
 
     @Override
     public void onRecyclerViewScrolled(RecyclerView recyclerView) {
-        setScrollAnimation(recyclerView);
+//        setScrollAnimation(recyclerView);
     }
 
     /**

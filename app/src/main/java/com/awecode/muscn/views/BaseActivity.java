@@ -51,14 +51,14 @@ public abstract class BaseActivity extends AppCompatActivity {
     TextView titleTextView;
     @BindView(R.id.muscnLogo)
     ImageView muscnLogoImageView;
-    @BindView(R.id.transparentView)
-    View transparentView;
+//    @BindView(R.id.transparentView)
+//    View transparentView;
     NavigationDrawerFragment mNavigationDrawerFragment;
 
     public FixturesResponse fixturesResponse;
     protected Context mContext;
     protected Activity mActivity;
-    public FloatingActionMenu mActionMenu;
+//    public FloatingActionMenu mActionMenu;
     private static final int TIME_INTERVAL = 2000; // # milliseconds, desired time passed between two back presses.
     private long mBackPressed;
     public HomeFragment mHomeFragment;
@@ -156,86 +156,87 @@ public abstract class BaseActivity extends AppCompatActivity {
         ft.commitAllowingStateLoss();
     }
 
-    public void setupFloatingActionButton() {
-        mActionMenu = (FloatingActionMenu) findViewById(R.id.menu2);
-        createCustomAnimation();
+//    public void setupFloatingActionButton() {
+//        mActionMenu = (FloatingActionMenu) findViewById(R.id.menu2);
+//        createCustomAnimation();
+//
+//    }
 
-    }
+//    private void createCustomAnimation() {
+//        AnimatorSet set = new AnimatorSet();
+//        ObjectAnimator scaleOutX = ObjectAnimator.ofFloat(mActionMenu.getMenuIconView(), "scaleX", 1.0f, 0.2f);
+//        ObjectAnimator scaleOutY = ObjectAnimator.ofFloat(mActionMenu.getMenuIconView(), "scaleY", 1.0f, 0.2f);
+//
+//        ObjectAnimator scaleInX = ObjectAnimator.ofFloat(mActionMenu.getMenuIconView(), "scaleX", 0.2f, 1.0f);
+//        ObjectAnimator scaleInY = ObjectAnimator.ofFloat(mActionMenu.getMenuIconView(), "scaleY", 0.2f, 1.0f);
+//
+//        scaleOutX.setDuration(50);
+//        scaleOutY.setDuration(50);
+//
+//        scaleInX.setDuration(150);
+//        scaleInY.setDuration(150);
+//
+//        scaleInX.addListener(new AnimatorListenerAdapter() {
+//            @Override
+//            public void onAnimationStart(Animator animation) {
+//                mActionMenu.getMenuIconView().setImageResource(mActionMenu.isOpened()
+//                        ? R.drawable.ic_fab_close_menu : R.drawable.ic_fab_menu);
+//            }
+//        });
+//
+//        set.play(scaleOutX).with(scaleOutY);
+//        set.play(scaleInX).with(scaleInY).after(scaleOutX);
+//        set.setInterpolator(new OvershootInterpolator(2));
+//
+//        mActionMenu.setIconToggleAnimatorSet(set);
+//    }
 
-    private void createCustomAnimation() {
-        AnimatorSet set = new AnimatorSet();
-        ObjectAnimator scaleOutX = ObjectAnimator.ofFloat(mActionMenu.getMenuIconView(), "scaleX", 1.0f, 0.2f);
-        ObjectAnimator scaleOutY = ObjectAnimator.ofFloat(mActionMenu.getMenuIconView(), "scaleY", 1.0f, 0.2f);
-
-        ObjectAnimator scaleInX = ObjectAnimator.ofFloat(mActionMenu.getMenuIconView(), "scaleX", 0.2f, 1.0f);
-        ObjectAnimator scaleInY = ObjectAnimator.ofFloat(mActionMenu.getMenuIconView(), "scaleY", 0.2f, 1.0f);
-
-        scaleOutX.setDuration(50);
-        scaleOutY.setDuration(50);
-
-        scaleInX.setDuration(150);
-        scaleInY.setDuration(150);
-
-        scaleInX.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-                mActionMenu.getMenuIconView().setImageResource(mActionMenu.isOpened()
-                        ? R.drawable.ic_fab_close_menu : R.drawable.ic_fab_menu);
-            }
-        });
-
-        set.play(scaleOutX).with(scaleOutY);
-        set.play(scaleInX).with(scaleInY).after(scaleOutX);
-        set.setInterpolator(new OvershootInterpolator(2));
-
-        mActionMenu.setIconToggleAnimatorSet(set);
-    }
-
-    @OnClick({R.id.fabAboutUs, R.id.fabHome, R.id.fabLeagueTable, R.id.fabInjuries, R.id.fabTopScores, R.id.fabEplMatchWeek, R.id.fabRecentResults, R.id.fabFixtures})
-    public void onClick(View view) {
-        mActionMenu.close(true);
-        switch (view.getId()) {
-            case R.id.fabHome:
-                mHomeFragment = HomeFragment.newInstance();
-                openFragmentNoHistory(mHomeFragment, "HOME");
-                break;
-            case R.id.fabLeagueTable:
-                mLeagueTableFragment = LeagueTableFragment.newInstance();
-                openFragment(mLeagueTableFragment);
-                break;
-            case R.id.fabInjuries:
-                mInjuriesFragment = InjuriesFragment.newInstance();
-                openFragment(mInjuriesFragment);
-                break;
-            case R.id.fabTopScores:
-                mTopScorersFragment = TopScorersFragment.newInstance();
-                openFragment(mTopScorersFragment);
-                break;
-            case R.id.fabEplMatchWeek:
-                mEplMatchWeekFixtureFragment = new EplMatchWeekFixtureFragment();
-                openFragment(mEplMatchWeekFixtureFragment);
-                break;
-            case R.id.fabRecentResults:
-                mMatchResultFragment = new MatchResultFragment();
-                openFragment(mMatchResultFragment);
-                break;
-            case R.id.fabFixtures:
-                mFixturesFragment = FixturesFragment.newInstance(fixturesResponse);
-                openFragment(mFixturesFragment);
-                break;
-            case R.id.fabAboutUs:
-                startActivity(new Intent(this, AboutUsActivity.class));
-                break;
-        }
-    }
+//    @OnClick({R.id.fabAboutUs, R.id.fabHome, R.id.fabLeagueTable, R.id.fabInjuries, R.id.fabTopScores, R.id.fabEplMatchWeek, R.id.fabRecentResults, R.id.fabFixtures})
+//    public void onClick(View view) {
+//        mActionMenu.close(true);
+//        switch (view.getId()) {
+//            case R.id.fabHome:
+//                mHomeFragment = HomeFragment.newInstance();
+//                openFragmentNoHistory(mHomeFragment, "HOME");
+//                break;
+//            case R.id.fabLeagueTable:
+//                mLeagueTableFragment = LeagueTableFragment.newInstance();
+//                openFragment(mLeagueTableFragment);
+//                break;
+//            case R.id.fabInjuries:
+//                mInjuriesFragment = InjuriesFragment.newInstance();
+//                openFragment(mInjuriesFragment);
+//                break;
+//            case R.id.fabTopScores:
+//                mTopScorersFragment = TopScorersFragment.newInstance();
+//                openFragment(mTopScorersFragment);
+//                break;
+//            case R.id.fabEplMatchWeek:
+//                mEplMatchWeekFixtureFragment = new EplMatchWeekFixtureFragment();
+//                openFragment(mEplMatchWeekFixtureFragment);
+//                break;
+//            case R.id.fabRecentResults:
+//                mMatchResultFragment = new MatchResultFragment();
+//                openFragment(mMatchResultFragment);
+//                break;
+//            case R.id.fabFixtures:
+//                mFixturesFragment = FixturesFragment.newInstance(fixturesResponse);
+//                openFragment(mFixturesFragment);
+//                break;
+//            case R.id.fabAboutUs:
+//                startActivity(new Intent(this, AboutUsActivity.class));
+//                break;
+//        }
+//    }
 
     @Override
     public void onBackPressed() {
         Fragment homeFragment = getSupportFragmentManager().findFragmentByTag("HOME");
 
-        if (mActionMenu.isOpened())
-            mActionMenu.close(true);    //if fab menu is open, then close it
-        else if (mNavigationDrawerFragment.isDrawerOpen())
+//        if (mActionMenu.isOpened())
+//            mActionMenu.close(true);    //if fab menu is open, then close it
+//        else
+        if (mNavigationDrawerFragment.isDrawerOpen())
             mNavigationDrawerFragment.closeDrawer(); //close navigation bar on back pressed if opened
         else {
             if (homeFragment.isVisible()) {
@@ -271,17 +272,17 @@ public abstract class BaseActivity extends AppCompatActivity {
      *
      * @param recyclerView recyclerview with scroll enabled
      */
-    public void setScrollAnimation(RecyclerView recyclerView) {
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                if (dy > 0)
-                    mActionMenu.hideMenu(true);
-                else if (dy < 0)
-                    mActionMenu.showMenu(true);
-            }
-        });
-    }
+//    public void setScrollAnimation(RecyclerView recyclerView) {
+//        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//            @Override
+//            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+//                if (dy > 0)
+//                    mActionMenu.hideMenu(true);
+//                else if (dy < 0)
+//                    mActionMenu.showMenu(true);
+//            }
+//        });
+//    }
 
     /**
      * dialog to show message
