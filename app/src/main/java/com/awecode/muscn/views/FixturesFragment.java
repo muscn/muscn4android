@@ -69,12 +69,14 @@ public class FixturesFragment extends MasterFragment {
     public void setupFixturesRecyclerview() {
         try {
             if (fixturesResponse == null)
-                 fixturesResponse = filterPastDateFromFixture(FixturesResponse.get_results());
+                fixturesResponse = filterPastDateFromFixture(FixturesResponse.get_results());
 
 //            fixturesResponse = FixturesResponse.get_results();
 
             if (fixturesResponse == null)
                 return;
+            else
+                showContentView();
             matchFixtures.setHasFixedSize(true);
             matchFixtures.setLayoutManager(new LinearLayoutManager(getActivity()));
             fixturesRecyclerViewAdapter = new FixturesRecyclerViewAdapter(getActivity(), fixturesResponse);
@@ -95,4 +97,5 @@ public class FixturesFragment extends MasterFragment {
         fixturesResponse.setResults(filteredResults);
         return fixturesResponse;
     }
+
 }

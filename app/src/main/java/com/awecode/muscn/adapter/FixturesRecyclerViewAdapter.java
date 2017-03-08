@@ -94,7 +94,7 @@ public class FixturesRecyclerViewAdapter extends RecyclerView.Adapter<FixturesRe
 
             if(result.getHomeGame())
             holder.mHomeVsAwayTeamTextView.setText(context.getString(R.string.manchester_united) + " vs " + result.getOpponent().getName() + " - " + result.getCompetitionYear().getCompetition().getName());
-            else if(result.getHomeGame())
+            else if(!result.getHomeGame())
                 holder.mHomeVsAwayTeamTextView.setText(result.getOpponent().getName() + " vs " + context.getString(R.string.manchester_united)  + " - " + result.getCompetitionYear().getCompetition().getName());
 
 

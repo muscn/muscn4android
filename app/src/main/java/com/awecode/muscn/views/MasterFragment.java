@@ -80,4 +80,7 @@ public abstract class MasterFragment extends Fragment {
     protected void showErrorView() {
         ((BaseActivity) mContext).showErrorView();
     }
+    protected void showContentView() {
+        ((BaseActivity) mContext).showContentView();
+    }
 }
