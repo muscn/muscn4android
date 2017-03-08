@@ -2,6 +2,11 @@ package com.awecode.muscn.views;
 
 import android.animation.ValueAnimator;
 import android.content.Intent;
+import android.graphics.LinearGradient;
+import android.graphics.Shader;
+import android.graphics.drawable.PaintDrawable;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.RectShape;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -11,6 +16,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.awecode.muscn.R;
 import com.awecode.muscn.model.enumType.MenuType;
@@ -42,6 +48,8 @@ public class HomeActivity extends BaseActivity implements FixturesApiListener, R
     ImageView mBackgroundOne;
     @BindView(R.id.background_two)
     ImageView mBackgroundTwo;
+    @BindView(R.id.fragment_drawer)
+    View mNavLayout;
     private DrawerLayout mDrawerLayout;
     private Toolbar mToolbar;
 //    @BindView(R.id.titleBarTextView)
@@ -73,6 +81,7 @@ public class HomeActivity extends BaseActivity implements FixturesApiListener, R
 //        configureParallaxBackgroundEffect();
         setup_onErrorClickListener();
         setupNavigationDrawerView();
+
 
     }
 
@@ -159,6 +168,30 @@ public class HomeActivity extends BaseActivity implements FixturesApiListener, R
         mNavigationDrawerFragment.setup(R.id.fragment_drawer, mDrawerLayout/*, mToolbar*/);
         mDrawerLayout.closeDrawer(Gravity.LEFT);
 
+//        paintNavBackground();
+    }
+
+    private void paintNavBackground() {
+        ShapeDrawable.ShaderFactory shaderFactory = new ShapeDrawable.ShaderFactory() {
+            @Override
+            public Shader resize(int width, int height) {
+                LinearGradient linearGradient = new LinearGradient(0, 0, width, height,
+                        new int[] {
+
+                                0xff000000,
+                                0xff762316,
+                                0xff762316,
+                                0xff000000 }, //substitute the correct colors for these
+                        new float[] {
+                                0, 0.40f, 0, 1 },
+                        Shader.TileMode.CLAMP);
+                return linearGradient;
+            }
+        };
+        PaintDrawable paint = new PaintDrawable();
+        paint.setShape(new RectShape());
+        paint.setShaderFactory(shaderFactory);
+        mNavLayout.setBackground(paint);
     }
 
     @Override

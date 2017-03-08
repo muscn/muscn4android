@@ -13,6 +13,7 @@
     <color name="view_bg_transparent">#99e54d36</color>
     <color name="colorGradientStart">#762316</color>
     <color name="colorGradientEnd">#ff000000</color>
+    <color name="colorNavGradient">#87281a</color>
 
 
 </resources>

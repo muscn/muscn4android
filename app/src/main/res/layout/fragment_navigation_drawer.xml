@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+   android:id="@+id/nav_main_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorGradientStart"
     android:clickable="true"
+    android:background="@drawable/nav_background_red_black"
     android:orientation="vertical">
 
     <ImageView
@@ -58,6 +59,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:paddingBottom="20dp"
             android:orientation="horizontal">
 
             <ImageView
@@ -68,6 +70,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+
                 android:text="www.manutd.org.np"
                 android:textColor="@color/white"
                 android:textSize="12sp" />
@@ -79,7 +82,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/muscnTextLayout"
-        android:background="@android:color/transparent"
-        android:paddingTop="30dp" />
+        android:paddingTop="25dp" />
 
 </RelativeLayout>
