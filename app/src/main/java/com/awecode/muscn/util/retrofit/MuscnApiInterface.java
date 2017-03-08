@@ -1,5 +1,6 @@
 package com.awecode.muscn.util.retrofit;
 
+import com.awecode.muscn.model.http.eplmatchweekdetails.EplMatchWeekFixtureDetailResponse;
 import com.awecode.muscn.model.http.fixtures.FixturesResponse;
 import com.awecode.muscn.model.http.injuries.InjuriesResponse;
 import com.awecode.muscn.model.http.leaguetable.LeagueTableResponse;
@@ -13,8 +14,10 @@ import java.util.List;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.Field;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 import rx.Observable;
 
 /**
@@ -48,5 +51,8 @@ public interface MuscnApiInterface {
 
     @POST("api/v1/user_device/")
     Observable<RegistrationResponse> postRegistrationData(@Body RegistrationPostData registrationPostData);
+
+    @GET("api/v1/fixture_detail/{fixture_id}/")
+    Observable<EplMatchWeekFixtureDetailResponse> getEplMatchweekFixtureDetails(@Path("fixture_id") String fixtureId);
 
 }

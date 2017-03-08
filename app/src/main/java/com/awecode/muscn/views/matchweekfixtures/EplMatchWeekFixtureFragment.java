@@ -3,6 +3,7 @@ package com.awecode.muscn.views.matchweekfixtures;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import com.awecode.muscn.R;
 import com.awecode.muscn.adapter.MatchFixutreRecyclerviewAdapter;
 import com.awecode.muscn.model.http.eplmatchweek._20161001;
+import com.awecode.muscn.model.listener.EplMatchweekClickListener;
 import com.awecode.muscn.model.listener.RecyclerViewScrollListener;
 import com.awecode.muscn.util.Util;
 import com.awecode.muscn.util.retrofit.MuscnApiInterface;
@@ -37,7 +39,7 @@ import rx.schedulers.Schedulers;
  * Created by suresh on 9/28/16.
  */
 
-public class EplMatchWeekFixtureFragment extends MasterFragment {
+public class EplMatchWeekFixtureFragment extends MasterFragment implements EplMatchweekClickListener {
 
     @BindView(R.id.matchFixtures)
     RecyclerView matchFixtures;
@@ -79,6 +81,7 @@ public class EplMatchWeekFixtureFragment extends MasterFragment {
         mMatchFixutreRecyclerviewAdapter = new MatchFixutreRecyclerviewAdapter(getActivity(), mCategoryList);
         matchFixtures.setAdapter(mMatchFixutreRecyclerviewAdapter);
         mRecyclerViewScrollListener.onRecyclerViewScrolled(matchFixtures);
+        mMatchFixutreRecyclerviewAdapter.mEplMatchweekClickListener = this;
     }
 
     /**
@@ -134,6 +137,7 @@ public class EplMatchWeekFixtureFragment extends MasterFragment {
                                     mCategory.setLive(dynamicValue.getJSONObject(i).get("live").toString());
                                     mCategory.setMinute(dynamicValue.getJSONObject(i).get("minute").toString());
                                     mCategory.setScore(dynamicValue.getJSONObject(i).get("score").toString());
+                                    mCategory.setFixtureId(dynamicValue.getJSONObject(i).get("fixture_id").toString());
                                     mCategoryList.add(mCategory);
                                 }
                                 //Add Into Hashmap
@@ -148,4 +152,8 @@ public class EplMatchWeekFixtureFragment extends MasterFragment {
                 });
     }
 
+    @Override
+    public void onEplMatchWeekClicked(String fixtureId) {
+//        openFragment(EplMatchWeekFixtureDetailsFragment.newInstance(fixtureId));
+    }
 }

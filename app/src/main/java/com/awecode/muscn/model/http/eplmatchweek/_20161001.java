@@ -28,6 +28,18 @@ public class _20161001 implements Comparable<_20161001> {
     @Expose
     private String minute;
 
+    public String getFixtureId() {
+        return fixtureId;
+    }
+
+    public void setFixtureId(String fixtureId) {
+        this.fixtureId = fixtureId;
+    }
+
+    @SerializedName("fixture_id")
+    @Expose
+    private String fixtureId;
+
     /**
      * 
      * @return

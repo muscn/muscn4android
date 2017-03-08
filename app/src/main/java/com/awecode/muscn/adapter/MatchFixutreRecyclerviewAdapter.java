@@ -2,6 +2,7 @@ package com.awecode.muscn.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,12 +11,10 @@ import android.widget.TextView;
 
 import com.awecode.muscn.R;
 import com.awecode.muscn.model.http.eplmatchweek._20161001;
+import com.awecode.muscn.model.listener.EplMatchweekClickListener;
 import com.awecode.muscn.util.Util;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,6 +27,7 @@ public class MatchFixutreRecyclerviewAdapter extends RecyclerView.Adapter<MatchF
 
     private Context context;
     private ArrayList<_20161001> mCategoryList;
+    public EplMatchweekClickListener mEplMatchweekClickListener;
 
     public MatchFixutreRecyclerviewAdapter(Context context, ArrayList<_20161001> mCategoryList) {
         this.context = context;
@@ -43,7 +43,7 @@ public class MatchFixutreRecyclerviewAdapter extends RecyclerView.Adapter<MatchF
 
     @Override
     public void onBindViewHolder(FixtureViewHolder holder, int position) {
-        _20161001 data = mCategoryList.get(position);
+        final _20161001 data = mCategoryList.get(position);
 
 //        /**
 //         * fetch kickoff date and format it into hours and minutes
@@ -74,9 +74,18 @@ public class MatchFixutreRecyclerviewAdapter extends RecyclerView.Adapter<MatchF
             holder.eplMatchweekAwayTeamScore.setText(awayTeamScore);
             holder.eplMatchweekHomeTeamScore.setText(homeTeamScore);
         }
-        holder.eplMatchweekTimeandHomeGround.setText(Util.commonDateFormatter(strCurrentDate,"yyyy-MM-dd'T'hh:mm:ss"));
+        holder.eplMatchweekTimeandHomeGround.setText(Util.commonDateFormatter(strCurrentDate, "yyyy-MM-dd'T'hh:mm:ss"));
         holder.eplMatchweekHomeTeam.setText(data.getHomeTeam());
         holder.eplMatchweekAwayTeam.setText(data.getAwayTeam());
+
+        holder.matchResultRowLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (data.getFixtureId() != "null") {
+                    mEplMatchweekClickListener.onEplMatchWeekClicked(data.getFixtureId());
+                }
+            }
+        });
 
 
     }
