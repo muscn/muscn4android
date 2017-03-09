@@ -1,22 +1,22 @@
 package com.awecode.muscn.views;
 
 import android.animation.ValueAnimator;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.LinearGradient;
-import android.graphics.Shader;
-import android.graphics.drawable.PaintDrawable;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.RectShape;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
+import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.awecode.muscn.R;
 import com.awecode.muscn.model.enumType.MenuType;
@@ -34,7 +34,9 @@ import com.awecode.muscn.views.nav.NavigationDrawerFragment;
 import com.awecode.muscn.views.nav.NavigationItem;
 import com.awecode.muscn.views.recentresults.MatchResultFragment;
 import com.awecode.muscn.views.topscorer.TopScorersFragment;
-import com.github.clans.fab.FloatingActionMenu;
+import com.robohorse.gpversionchecker.GPVersionChecker;
+import com.robohorse.gpversionchecker.base.VersionInfoListener;
+import com.robohorse.gpversionchecker.domain.Version;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -52,14 +54,15 @@ public class HomeActivity extends BaseActivity implements FixturesApiListener, R
     View mNavLayout;
     private DrawerLayout mDrawerLayout;
     private Toolbar mToolbar;
-//    @BindView(R.id.titleBarTextView)
+    //    @BindView(R.id.titleBarTextView)
 //    TextView titleBarTextView;
+
+    protected AlertDialog updateAlertDialog;
+    protected Version mVersion = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
         homeFragment = new HomeFragment();
         homeFragment.fixturesApiListener = this;
         openFragmentNoHistory(HomeFragment.newInstance(), "HOME");
@@ -168,30 +171,6 @@ public class HomeActivity extends BaseActivity implements FixturesApiListener, R
         mNavigationDrawerFragment.setup(R.id.fragment_drawer, mDrawerLayout/*, mToolbar*/);
         mDrawerLayout.closeDrawer(Gravity.LEFT);
 
-//        paintNavBackground();
-    }
-
-    private void paintNavBackground() {
-        ShapeDrawable.ShaderFactory shaderFactory = new ShapeDrawable.ShaderFactory() {
-            @Override
-            public Shader resize(int width, int height) {
-                LinearGradient linearGradient = new LinearGradient(0, 0, width, height,
-                        new int[] {
-
-                                0xff000000,
-                                0xff762316,
-                                0xff762316,
-                                0xff000000 }, //substitute the correct colors for these
-                        new float[] {
-                                0, 0.40f, 0, 1 },
-                        Shader.TileMode.CLAMP);
-                return linearGradient;
-            }
-        };
-        PaintDrawable paint = new PaintDrawable();
-        paint.setShape(new RectShape());
-        paint.setShaderFactory(shaderFactory);
-        mNavLayout.setBackground(paint);
     }
 
     @Override
@@ -229,8 +208,73 @@ public class HomeActivity extends BaseActivity implements FixturesApiListener, R
             }
         }
     }
+
     @OnClick(R.id.muscnLogo)
-    public void onClickLogo(){
+    public void onClickLogo() {
         mNavigationDrawerFragment.openDrawer();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        checkForNewAppVersion();
+    }
+
+    /**
+     * get app versioncode, update status
+     */
+    protected void checkForNewAppVersion() {
+        new GPVersionChecker.Builder(HomeActivity.this).setVersionInfoListener(new VersionInfoListener() {
+            @Override
+            public void onResulted(Version version) {
+                mVersion = version;
+                prepareUpdateDialog();
+            }
+        }).create();
+
+    }
+
+    private void prepareUpdateDialog() {
+        if (mVersion != null && updateAlertDialog == null && mVersion.isNeedToUpdate())
+            showAppUpdateDialog();
+    }
+
+    /**
+     * display App update alert dialog
+     */
+    protected void showAppUpdateDialog() {
+        LayoutInflater layoutInflater = LayoutInflater.from(HomeActivity.this);
+        final View promtView = layoutInflater.inflate(R.layout.update_dialog_layout, null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        builder.setView(promtView);
+
+        TextView versionName = (TextView) promtView.findViewById(R.id.versionNameTextView);
+        TextView versionChanges = (TextView) promtView.findViewById(R.id.versionChangesTextView);
+
+        versionName.setText(": " + mVersion.getNewVersionCode());
+        versionChanges.setText(mVersion.getChanges());
+
+        builder.setTitle(com.robohorse.gpversionchecker.R.string.gpvch_header)
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .setPositiveButton(R.string.update, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.awecode.muscn"));
+                        startActivity(intent);
+                        updateAlertDialog = null;
+                    }
+                });
+        updateAlertDialog = builder.create();
+        updateAlertDialog.show();
+        //change the text color of button
+        Button nButton = updateAlertDialog.getButton(DialogInterface.BUTTON_NEGATIVE);
+        nButton.setTextColor(ContextCompat.getColor(mContext, R.color.colorPrimary));
+        Button pButton = updateAlertDialog.getButton(DialogInterface.BUTTON_POSITIVE);
+        pButton.setTextColor(ContextCompat.getColor(mContext, R.color.colorPrimary));
     }
 }

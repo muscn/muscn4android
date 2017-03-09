@@ -21,4 +21,6 @@
     <dimen name="fixture_team_logo">25dp</dimen>
     <dimen name="widget_margin">8dp</dimen>
     <dimen name="fixture_text_size">15sp</dimen>
+    <dimen name="update_dialog_text_size">18sp</dimen>
+
 </resources>

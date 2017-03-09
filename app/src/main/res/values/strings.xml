@@ -37,4 +37,6 @@
     <string name="awecode_link_text">&lt;a href="http://awecode.com">Awecode&lt;/a></string>
     <string name="drawer_open">Menu opened</string>
     <string name="drawer_close">Menu closed</string>
+    <string name="cancel">CANCEL</string>
+    <string name="update">UPDATE</string>
 </resources>

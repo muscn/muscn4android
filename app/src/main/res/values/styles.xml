@@ -45,4 +45,14 @@
         <item name="android:textColorPrimary">#FFFFFF</item>
         <item name="android:background">@color/colorPrimaryDark</item>
     </style>
+
+    <style name="update_dialog_textview_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/update_dialog_text_size</item>
+        <item name="android:textColor">@color/gpvch_black</item>
+        <item name="colorAccent">@color/colorPrimaryDark</item>
+
+    </style>
+
 </resources>
