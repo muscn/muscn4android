@@ -4,6 +4,7 @@ import android.animation.ValueAnimator;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -23,7 +24,9 @@ import com.awecode.muscn.model.enumType.MenuType;
 import com.awecode.muscn.model.http.fixtures.FixturesResponse;
 import com.awecode.muscn.model.listener.FixturesApiListener;
 import com.awecode.muscn.model.listener.RecyclerViewScrollListener;
+import com.awecode.muscn.util.Constants;
 import com.awecode.muscn.util.Util;
+import com.awecode.muscn.util.prefs.Prefs;
 import com.awecode.muscn.views.aboutus.AboutUsActivity;
 import com.awecode.muscn.views.home.HomeFragment;
 import com.awecode.muscn.views.injuries.InjuriesFragment;
@@ -34,6 +37,8 @@ import com.awecode.muscn.views.nav.NavigationDrawerFragment;
 import com.awecode.muscn.views.nav.NavigationItem;
 import com.awecode.muscn.views.recentresults.MatchResultFragment;
 import com.awecode.muscn.views.topscorer.TopScorersFragment;
+import com.getkeepsafe.taptargetview.TapTarget;
+import com.getkeepsafe.taptargetview.TapTargetView;
 import com.robohorse.gpversionchecker.GPVersionChecker;
 import com.robohorse.gpversionchecker.base.VersionInfoListener;
 import com.robohorse.gpversionchecker.domain.Version;
@@ -85,7 +90,43 @@ public class HomeActivity extends BaseActivity implements FixturesApiListener, R
         setup_onErrorClickListener();
         setupNavigationDrawerView();
 
+        //create tap guidence of navigation drawer for first time of installation
+        if (Prefs.getBoolean(Constants.PREFS_TAP_STATUS, false) != true)
+            createTapTarget();
 
+    }
+
+    private void createTapTarget() {
+        TapTargetView.showFor(this,                 // `this` is an Activity
+                TapTarget.forView(findViewById(R.id.muscnLogo), getString(R.string.tap_title), getString(R.string.tap_description))
+                        // All options below are optional
+                        .outerCircleColor(R.color.colorPrimary)      // Specify a color for the outer circle
+                        .targetCircleColor(R.color.white)   // Specify a color for the target circle
+                        .titleTextSize(25)                  // Specify the size (in sp) of the title text
+                        .titleTextColor(R.color.white)      // Specify the color of the title text
+                        .descriptionTextSize(20)            // Specify the size (in sp) of the description text
+                        .descriptionTextColor(R.color.white)  // Specify the color of the description text
+//                        .textColor(R.color.gpvch_black)            // Specify a color for both the title and description text
+                        .textTypeface(Typeface.SANS_SERIF)  // Specify a typeface for the text
+                        .dimColor(R.color.white)            // If set, will dim behind the view with 30% opacity of the given color
+                        .drawShadow(true)                   // Whether to draw a drop shadow or not
+                        .cancelable(false)                  // Whether tapping outside the outer circle dismisses the view
+                        .tintTarget(true)                   // Whether to tint the target view's color
+                        .transparentTarget(false)           // Specify whether the target is transparent (displays the content underneath)
+                        .icon(ContextCompat.getDrawable(mContext, R.drawable.logo_white_muscn_new), false)                     // Specify a custom drawable to draw as the target
+                        .targetRadius(60),                  // Specify the target radius (in dp)
+                new TapTargetView.Listener() {          // The listener can listen for regular clicks, long clicks or cancels
+                    @Override
+                    public void onTargetClick(TapTargetView view) {
+                        super.onTargetClick(view);      // This call is optional
+                        mNavigationDrawerFragment.openDrawer();
+                        saveClickStatus();
+                    }
+                });
+    }
+
+    private void saveClickStatus() {
+        Prefs.putBoolean(Constants.PREFS_TAP_STATUS, true);
     }
 
     @Override

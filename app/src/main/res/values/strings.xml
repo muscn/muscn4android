@@ -39,4 +39,6 @@
     <string name="drawer_close">Menu closed</string>
     <string name="cancel">CANCEL</string>
     <string name="update">UPDATE</string>
+    <string name="tap_title">Access Side Menu</string>
+    <string name="tap_description">Click on the logo to open navigation menu.</string>
 </resources>
