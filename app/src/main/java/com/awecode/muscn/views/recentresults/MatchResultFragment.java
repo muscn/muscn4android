@@ -75,7 +75,7 @@ public class MatchResultFragment extends MasterFragment {
         mMatchResultRecyclerview.setHasFixedSize(true);
         mMatchResultRecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
         mMatchResultExpandableRecyclerviewAdapter = new MatchResultExpandableRecyclerviewAdapter(getActivity(), data);
-        mMatchResultRecyclerview.setAdapter(mMatchResultExpandableRecyclerviewAdapter);
+        mMatchResultRecyclerview.setAdapter(Util.getAnimationAdapter(mMatchResultExpandableRecyclerviewAdapter));
         recyclerViewScrollListener.onRecyclerViewScrolled(mMatchResultRecyclerview);
     }
 

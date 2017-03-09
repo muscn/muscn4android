@@ -101,7 +101,7 @@ public class TopScorersFragment extends MasterFragment {
     }
     private void setUpAdapter(List<TopScorersResponse> topScorersResponses){
         mAdapter = new TopScorerAdapter(mContext, topScorersResponses);
-        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setAdapter(Util.getAnimationAdapter(mAdapter));
         mRecyclerViewScrollListener.onRecyclerViewScrolled(mRecyclerView);
     }
 }

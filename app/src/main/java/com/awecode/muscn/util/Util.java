@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
+import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -15,6 +16,7 @@ import android.text.style.URLSpan;
 import android.text.style.UnderlineSpan;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.view.animation.OvershootInterpolator;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +29,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
+
+import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
+import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
+import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter;
+import jp.wasabeef.recyclerview.adapters.SlideInRightAnimationAdapter;
 
 /**
  * Created by munnadroid on 9/21/16.
@@ -70,6 +77,7 @@ public class Util {
         String time = format.format(newDate);
         return time;
     }
+
     public static String dateFormatter(String date, String obtainedFormat, String requiredFormat) {
         SimpleDateFormat format = new SimpleDateFormat(obtainedFormat);
         format.setTimeZone(TimeZone.getTimeZone("UTC"));
@@ -208,6 +216,7 @@ public class Util {
         }
         return s;
     }
+
     /**
      * compare whether the match date is before todays date or not, if match date is before today then returns true showing data in index 1 else returns false showing data in index 0 for upcoming match
      *
@@ -234,6 +243,13 @@ public class Util {
         } else {
             return false;
         }
+    }
+
+    public static ScaleInAnimationAdapter getAnimationAdapter(RecyclerView.Adapter<?> adapter) {
+        AlphaInAnimationAdapter alphaAdapter = new AlphaInAnimationAdapter(adapter);
+        alphaAdapter.setDuration(1000);
+        alphaAdapter.setInterpolator(new OvershootInterpolator());
+        return new ScaleInAnimationAdapter(alphaAdapter);
     }
 
 }

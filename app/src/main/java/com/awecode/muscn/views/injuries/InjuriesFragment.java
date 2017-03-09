@@ -99,7 +99,7 @@ public class InjuriesFragment extends MasterFragment {
 
     private void setUpAdapter(InjuriesResponse injuriesResponse) {
         mAdapter = new InjuriesAdapter(mContext, injuriesResponse);
-        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setAdapter(Util.getAnimationAdapter(mAdapter));
         mRecyclerViewScrollListener.onRecyclerViewScrolled(mRecyclerView);
     }
 

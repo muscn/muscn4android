@@ -103,7 +103,7 @@ public class LeagueTableFragment extends MasterFragment {
 
     private void setUpAdapter(List<LeagueTableResponse> leagueTableResponses) {
         mAdapter = new LeagueTableAdapter(mContext, leagueTableResponses);
-        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setAdapter(Util.getAnimationAdapter(mAdapter));
         recyclerViewScrollListener.onRecyclerViewScrolled(mRecyclerView);
     }
 }

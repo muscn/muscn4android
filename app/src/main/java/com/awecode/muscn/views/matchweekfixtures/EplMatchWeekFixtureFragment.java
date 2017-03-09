@@ -79,7 +79,7 @@ public class EplMatchWeekFixtureFragment extends MasterFragment implements EplMa
         matchFixtures.setHasFixedSize(true);
         matchFixtures.setLayoutManager(new LinearLayoutManager(getActivity()));
         mMatchFixutreRecyclerviewAdapter = new MatchFixutreRecyclerviewAdapter(getActivity(), mCategoryList);
-        matchFixtures.setAdapter(mMatchFixutreRecyclerviewAdapter);
+        matchFixtures.setAdapter(Util.getAnimationAdapter(mMatchFixutreRecyclerviewAdapter));
         mRecyclerViewScrollListener.onRecyclerViewScrolled(matchFixtures);
         mMatchFixutreRecyclerviewAdapter.mEplMatchweekClickListener = this;
     }

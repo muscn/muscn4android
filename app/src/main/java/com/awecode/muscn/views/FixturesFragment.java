@@ -80,7 +80,7 @@ public class FixturesFragment extends MasterFragment {
             matchFixtures.setHasFixedSize(true);
             matchFixtures.setLayoutManager(new LinearLayoutManager(getActivity()));
             fixturesRecyclerViewAdapter = new FixturesRecyclerViewAdapter(getActivity(), fixturesResponse);
-            matchFixtures.setAdapter(fixturesRecyclerViewAdapter);
+            matchFixtures.setAdapter(Util.getAnimationAdapter(fixturesRecyclerViewAdapter));
             mRecyclerViewScrollListener.onRecyclerViewScrolled(matchFixtures);
         } catch (Exception e) {
             e.printStackTrace();
