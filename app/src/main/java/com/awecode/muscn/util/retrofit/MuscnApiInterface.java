@@ -5,6 +5,7 @@ import com.awecode.muscn.model.http.fixtures.FixturesResponse;
 import com.awecode.muscn.model.http.injuries.InjuriesResponse;
 import com.awecode.muscn.model.http.leaguetable.LeagueTableResponse;
 import com.awecode.muscn.model.http.recentresults.RecentResultsResponse;
+import com.awecode.muscn.model.http.resultdetails.ResultDetailsResponse;
 import com.awecode.muscn.model.http.topscorers.TopScorersResponse;
 import com.awecode.muscn.model.registration.RegistrationPostData;
 import com.awecode.muscn.model.registration.RegistrationResponse;
@@ -52,7 +53,7 @@ public interface MuscnApiInterface {
     @POST("api/v1/user_device/")
     Observable<RegistrationResponse> postRegistrationData(@Body RegistrationPostData registrationPostData);
 
-    @GET("api/v1/fixture_detail/{fixture_id}/")
-    Observable<EplMatchWeekFixtureDetailResponse> getEplMatchweekFixtureDetails(@Path("fixture_id") String fixtureId);
+    @GET("api/v1/fixture_detail/{result_id}/")
+    Observable<ResultDetailsResponse> getResultDetails(@Path("result_id") int resultId);
 
 }

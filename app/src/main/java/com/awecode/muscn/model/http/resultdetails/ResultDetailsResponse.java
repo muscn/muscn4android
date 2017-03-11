@@ -1,17 +1,11 @@
 
-package com.awecode.muscn.model.http.recentresults;
+package com.awecode.muscn.model.http.resultdetails;
 
+import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Result {
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
+public class ResultDetailsResponse {
 
     @SerializedName("id")
     @Expose
@@ -43,167 +37,158 @@ public class Result {
     @SerializedName("datetime")
     @Expose
     private String datetime;
+    @SerializedName("data")
+    @Expose
+    private Data data;
+    @SerializedName("broadcast_on")
+    @Expose
+    private String broadcastOn;
+    @SerializedName("goals")
+    @Expose
+    private List<Goal> goals = null;
 
     /**
+     * No args constructor for use in serialization
      * 
-     * @return
-     *     The isHomeGame
      */
-    public Boolean getIsHomeGame() {
-        return isHomeGame;
-    }
-
-    /**
-     * 
-     * @param isHomeGame
-     *     The is_home_game
-     */
-    public void setIsHomeGame(Boolean isHomeGame) {
-        this.isHomeGame = isHomeGame;
-    }
-
-    /**
-     * 
-     * @return
-     *     The opponentName
-     */
-    public String getOpponentName() {
-        return opponentName;
-    }
-
-    /**
-     * 
-     * @param opponentName
-     *     The opponent_name
-     */
-    public void setOpponentName(String opponentName) {
-        this.opponentName = opponentName;
-    }
-
-    /**
-     * 
-     * @return
-     *     The mufcScore
-     */
-    public Integer getMufcScore() {
-        return mufcScore;
-    }
-
-    /**
-     * 
-     * @param mufcScore
-     *     The mufc_score
-     */
-    public void setMufcScore(Integer mufcScore) {
-        this.mufcScore = mufcScore;
-    }
-
-    /**
-     * 
-     * @return
-     *     The venue
-     */
-    public String getVenue() {
-        return venue;
-    }
-
-    /**
-     * 
-     * @param venue
-     *     The venue
-     */
-    public void setVenue(String venue) {
-        this.venue = venue;
-    }
-
-    /**
-     * 
-     * @return
-     *     The opponentScore
-     */
-    public Integer getOpponentScore() {
-        return opponentScore;
-    }
-
-    /**
-     * 
-     * @param opponentScore
-     *     The opponent_score
-     */
-    public void setOpponentScore(Integer opponentScore) {
-        this.opponentScore = opponentScore;
-    }
-
-    /**
-     * 
-     * @return
-     *     The opponentCrest
-     */
-    public String getOpponentCrest() {
-        return opponentCrest;
+    public ResultDetailsResponse() {
     }
 
     /**
      * 
      * @param opponentCrest
-     *     The opponent_crest
+     * @param broadcastOn
+     * @param data
+     * @param competitionName
+     * @param isHomeGame
+     * @param venue
+     * @param opponentScore
+     * @param id
+     * @param goals
+     * @param mufcScore
+     * @param opponentShortName
+     * @param datetime
+     * @param opponentName
      */
+    public ResultDetailsResponse(Integer id, Boolean isHomeGame, String opponentName, Integer mufcScore, String venue, Integer opponentScore, String opponentCrest, String opponentShortName, String competitionName, String datetime, Data data, String broadcastOn, List<Goal> goals) {
+        super();
+        this.id = id;
+        this.isHomeGame = isHomeGame;
+        this.opponentName = opponentName;
+        this.mufcScore = mufcScore;
+        this.venue = venue;
+        this.opponentScore = opponentScore;
+        this.opponentCrest = opponentCrest;
+        this.opponentShortName = opponentShortName;
+        this.competitionName = competitionName;
+        this.datetime = datetime;
+        this.data = data;
+        this.broadcastOn = broadcastOn;
+        this.goals = goals;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Boolean getIsHomeGame() {
+        return isHomeGame;
+    }
+
+    public void setIsHomeGame(Boolean isHomeGame) {
+        this.isHomeGame = isHomeGame;
+    }
+
+    public String getOpponentName() {
+        return opponentName;
+    }
+
+    public void setOpponentName(String opponentName) {
+        this.opponentName = opponentName;
+    }
+
+    public Integer getMufcScore() {
+        return mufcScore;
+    }
+
+    public void setMufcScore(Integer mufcScore) {
+        this.mufcScore = mufcScore;
+    }
+
+    public String getVenue() {
+        return venue;
+    }
+
+    public void setVenue(String venue) {
+        this.venue = venue;
+    }
+
+    public Integer getOpponentScore() {
+        return opponentScore;
+    }
+
+    public void setOpponentScore(Integer opponentScore) {
+        this.opponentScore = opponentScore;
+    }
+
+    public String getOpponentCrest() {
+        return opponentCrest;
+    }
+
     public void setOpponentCrest(String opponentCrest) {
         this.opponentCrest = opponentCrest;
     }
 
-    /**
-     * 
-     * @return
-     *     The opponentShortName
-     */
     public String getOpponentShortName() {
         return opponentShortName;
     }
 
-    /**
-     * 
-     * @param opponentShortName
-     *     The opponent_short_name
-     */
     public void setOpponentShortName(String opponentShortName) {
         this.opponentShortName = opponentShortName;
     }
 
-    /**
-     * 
-     * @return
-     *     The competitionName
-     */
     public String getCompetitionName() {
         return competitionName;
     }
 
-    /**
-     * 
-     * @param competitionName
-     *     The competition_name
-     */
     public void setCompetitionName(String competitionName) {
         this.competitionName = competitionName;
     }
 
-    /**
-     * 
-     * @return
-     *     The datetime
-     */
     public String getDatetime() {
         return datetime;
     }
 
-    /**
-     * 
-     * @param datetime
-     *     The datetime
-     */
     public void setDatetime(String datetime) {
         this.datetime = datetime;
+    }
+
+    public Data getData() {
+        return data;
+    }
+
+    public void setData(Data data) {
+        this.data = data;
+    }
+
+    public String getBroadcastOn() {
+        return broadcastOn;
+    }
+
+    public void setBroadcastOn(String broadcastOn) {
+        this.broadcastOn = broadcastOn;
+    }
+
+    public List<Goal> getGoals() {
+        return goals;
+    }
+
+    public void setGoals(List<Goal> goals) {
+        this.goals = goals;
     }
 
 }

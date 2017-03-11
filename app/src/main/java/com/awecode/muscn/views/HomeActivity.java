@@ -35,7 +35,7 @@ import com.awecode.muscn.views.matchweekfixtures.EplMatchWeekFixtureFragment;
 import com.awecode.muscn.views.nav.NavigationDrawerCallbacks;
 import com.awecode.muscn.views.nav.NavigationDrawerFragment;
 import com.awecode.muscn.views.nav.NavigationItem;
-import com.awecode.muscn.views.recentresults.MatchResultFragment;
+import com.awecode.muscn.views.recentresults.ResultFragment;
 import com.awecode.muscn.views.topscorer.TopScorersFragment;
 import com.getkeepsafe.taptargetview.TapTarget;
 import com.getkeepsafe.taptargetview.TapTargetView;
@@ -141,8 +141,8 @@ public class HomeActivity extends BaseActivity implements FixturesApiListener, R
             } else if (mTopScorersFragment != null && mTopScorersFragment.isVisible() && mTopScorersFragment.isMenuVisible()) {
                 mTopScorersFragment.requestTopScorers();
 
-            } else if (mMatchResultFragment != null && mMatchResultFragment.isVisible() && mMatchResultFragment.isMenuVisible()) {
-                mMatchResultFragment.requestMatchResults();
+            } else if (mResultFragment != null && mResultFragment.isVisible() && mResultFragment.isMenuVisible()) {
+                mResultFragment.requestMatchResults();
 
             } else if (mEplMatchWeekFixtureFragment != null && mEplMatchWeekFixtureFragment.isVisible() && mEplMatchWeekFixtureFragment.isMenuVisible()) {
                 mEplMatchWeekFixtureFragment.requestEplMatchResults();
@@ -239,8 +239,8 @@ public class HomeActivity extends BaseActivity implements FixturesApiListener, R
                 mEplMatchWeekFixtureFragment = new EplMatchWeekFixtureFragment();
                 openFragment(mEplMatchWeekFixtureFragment);
             } else if (menuType == MenuType.RECENT_RESULTS) {
-                mMatchResultFragment = new MatchResultFragment();
-                openFragment(mMatchResultFragment);
+                mResultFragment = new ResultFragment();
+                openFragment(mResultFragment);
             } else if (menuType == MenuType.ABOUT_US) {
                 startActivity(new Intent(this, AboutUsActivity.class));
             } else {

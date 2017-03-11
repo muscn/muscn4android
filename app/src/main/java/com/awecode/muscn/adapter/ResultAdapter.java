@@ -1,7 +1,6 @@
 package com.awecode.muscn.adapter;
 
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,11 +13,11 @@ import android.widget.TextView;
 import com.awecode.muscn.R;
 import com.awecode.muscn.model.Item;
 import com.awecode.muscn.model.http.recentresults.Result;
+import com.awecode.muscn.model.listener.ResultItemClickListener;
 import com.awecode.muscn.util.Util;
 import com.awecode.muscn.views.HomeActivity;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -27,15 +26,15 @@ import butterknife.ButterKnife;
 /**
  * Created by suresh on 3/28/16.
  */
-public class MatchResultExpandableRecyclerviewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class ResultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public static final int HEADER = 0;
     public static final int CHILD = 1;
     public static final String TAG = HomeActivity.class.getSimpleName();
     private Context context;
     private List<Item> itemList;
+    public ResultItemClickListener mResultItemClickListener;
 
-
-    public MatchResultExpandableRecyclerviewAdapter(Context context, List<Item> item) {
+    public ResultAdapter(Context context, List<Item> item) {
         this.context = context;
         this.itemList = item;
     }
@@ -63,7 +62,7 @@ public class MatchResultExpandableRecyclerviewAdapter extends RecyclerView.Adapt
         final Item item = itemList.get(position);
         switch (item.type) {
             case HEADER:
-                Result result = itemList.get(position).getMatchResultResponse().getResults().get(position);
+                final Result result = itemList.get(position).getMatchResultResponse().getResults().get(position);
                 final HeaderViewHolder itemController = (HeaderViewHolder) holder;
                 if (result.getIsHomeGame()) {
                     itemController.eplMatchweekHomeTeamShortName.setText(R.string.manutd_shortname);
@@ -105,63 +104,12 @@ public class MatchResultExpandableRecyclerviewAdapter extends RecyclerView.Adapt
                     Log.v("TEST", "crest: " + result.getOpponentCrest());
                     itemController.eplMatchweekFixtureAwayTeamLogo.setImageResource(R.drawable.logo_manutd);
                 }
-//                if (result.getMufcScore() == result.getOpponentScore()) {
-//                    itemController.matchResultView.setBackgroundColor(ContextCompat.getColor(context, R.color.colorDraw));
-//                } else if (result.getMufcScore() > result.getOpponentScore())
-//                    itemController.matchResultView.setBackgroundColor(ContextCompat.getColor(context, R.color.colorWin));
-//                else if (result.getMufcScore() < result.getOpponentScore())
-//                    itemController.matchResultView.setBackgroundColor(ContextCompat.getColor(context, R.color.colorLose));
-//                else
-//                    itemController.matchResultView.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimaryDark));
-
-
-
-
-
-//                itemController.matchResultRowLayout.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        itemController.headerRefferalItem = item;
-//
-//
-//                        for (int i = 0; i < itemList.size(); i++) {
-//                            Item _item = itemList.get(i);
-//
-//                            /**
-//                             * collapse the child view
-//                             */
-//                            if (_item.invisibleChildren == null) {
-//
-//                                _item.invisibleChildren = new ArrayList<Item>();
-//                                int count = 0;
-//                                int pos = itemList.indexOf(_item);
-//                                while (itemList.size() > pos + 1 && itemList.get(pos + 1).type == CHILD) {
-//                                    itemList.get(pos).invisibleChildren.add(itemList.remove(pos + 1));
-//                                    count++;
-//                                }
-//                                notifyItemRangeRemoved(pos + 1, itemList.size());
-////                                notifyItemRangeRemoved(pos + 1, count);
-//
-//                            }
-//
-//                            /**
-//                             * expands the child view
-//                             */
-//                            else if (i == position) {
-//                                int pos = itemList.indexOf(_item);
-//                                int index = pos + 1;
-//                                for (Item item1 : _item.invisibleChildren) {
-//                                    itemList.add(index, item1);
-//                                    index++;
-//                                }
-//                                notifyItemRangeInserted(pos + 1, index - pos - 1);
-//                                _item.invisibleChildren = null;
-//                            }
-//
-//                        }
-//                    }
-//
-//                });
+                itemController.matchResultRowLayout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mResultItemClickListener.onRecentResultClicked(result.getId());
+                    }
+                });
 
                 break;
             case CHILD:
@@ -170,6 +118,7 @@ public class MatchResultExpandableRecyclerviewAdapter extends RecyclerView.Adapt
                 itemcontroller.expandedviewHomeTeamScore.setVisibility(View.GONE);
                 itemcontroller.childViewScoreLayout.setVisibility(View.GONE);
                 itemcontroller.childRefferalItem = item;
+                break;
         }
     }
 

@@ -74,6 +74,7 @@ dependencies {
     compile 'com.robohorse.gpversionchecker:gpversionchecker:1.1.0'
     compile 'com.getkeepsafe.taptargetview:taptargetview:1.8.0'
     compile 'jp.wasabeef:recyclerview-animators:2.2.5'
+    compile 'com.android.support:design:24.1.1'
 
 }
 apply plugin: 'com.google.gms.google-services'

@@ -4,14 +4,16 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.awecode.muscn.R;
-import com.awecode.muscn.adapter.MatchResultExpandableRecyclerviewAdapter;
+import com.awecode.muscn.adapter.ResultAdapter;
 import com.awecode.muscn.model.Item;
 import com.awecode.muscn.model.http.recentresults.RecentResultsResponse;
+import com.awecode.muscn.model.listener.ResultItemClickListener;
 import com.awecode.muscn.model.listener.RecyclerViewScrollListener;
 import com.awecode.muscn.util.Util;
 import com.awecode.muscn.util.retrofit.MuscnApiInterface;
@@ -33,12 +35,12 @@ import rx.schedulers.Schedulers;
  * Created by suresh on 9/26/16.
  */
 
-public class MatchResultFragment extends MasterFragment {
+public class ResultFragment extends MasterFragment implements ResultItemClickListener {
     @BindView(R.id.matchResultRecyclerview)
     RecyclerView mMatchResultRecyclerview;
 
     private List<Item> data;
-    private MatchResultExpandableRecyclerviewAdapter mMatchResultExpandableRecyclerviewAdapter;
+    private ResultAdapter mResultAdapter;
     private MuscnApiInterface mApiInterface;
     public RecyclerViewScrollListener recyclerViewScrollListener;
 
@@ -74,9 +76,11 @@ public class MatchResultFragment extends MasterFragment {
     public void setupMatchResultRecyclerview() {
         mMatchResultRecyclerview.setHasFixedSize(true);
         mMatchResultRecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mMatchResultExpandableRecyclerviewAdapter = new MatchResultExpandableRecyclerviewAdapter(getActivity(), data);
-        mMatchResultRecyclerview.setAdapter(Util.getAnimationAdapter(mMatchResultExpandableRecyclerviewAdapter));
+        mResultAdapter = new ResultAdapter(getActivity(), data);
+        mMatchResultRecyclerview.setAdapter(mResultAdapter);
         recyclerViewScrollListener.onRecyclerViewScrolled(mMatchResultRecyclerview);
+        mResultAdapter.mResultItemClickListener = this;
+
     }
 
 
@@ -104,9 +108,9 @@ public class MatchResultFragment extends MasterFragment {
                     @Override
                     public void onNext(RecentResultsResponse fixturesResponse) {
                         for (int i = 0; i < fixturesResponse.getResults().size(); i++) {
-                            Item demand = new Item(getActivity(), MatchResultExpandableRecyclerviewAdapter.HEADER, fixturesResponse);
+                            Item demand = new Item(getActivity(), ResultAdapter.HEADER, fixturesResponse);
                             demand.invisibleChildren = new ArrayList<>();
-                            demand.invisibleChildren.add(new Item(getActivity(), MatchResultExpandableRecyclerviewAdapter.CHILD));
+                            demand.invisibleChildren.add(new Item(getActivity(), ResultAdapter.CHILD));
                             data.add(demand);
                         }
                         setupMatchResultRecyclerview();
@@ -118,4 +122,12 @@ public class MatchResultFragment extends MasterFragment {
     public void onDestroyView() {
         super.onDestroyView();
     }
+
+
+    @Override
+    public void onRecentResultClicked(int resultId) {
+        Log.v("tess","id is "+resultId);
+        openFragment(ResultDetailsFragment.newInstance(resultId));
+    }
+
 }

@@ -1,22 +1,15 @@
 package com.awecode.muscn.views;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,19 +19,16 @@ import com.awecode.muscn.util.Util;
 import com.awecode.muscn.util.retrofit.MuscnApiInterface;
 import com.awecode.muscn.util.retrofit.ServiceGenerator;
 import com.awecode.muscn.util.stateLayout.StateLayout;
-import com.awecode.muscn.views.aboutus.AboutUsActivity;
 import com.awecode.muscn.views.home.HomeFragment;
 import com.awecode.muscn.views.injuries.InjuriesFragment;
 import com.awecode.muscn.views.league.LeagueTableFragment;
 import com.awecode.muscn.views.matchweekfixtures.EplMatchWeekFixtureFragment;
 import com.awecode.muscn.views.nav.NavigationDrawerFragment;
-import com.awecode.muscn.views.recentresults.MatchResultFragment;
+import com.awecode.muscn.views.recentresults.ResultFragment;
 import com.awecode.muscn.views.topscorer.TopScorersFragment;
-import com.github.clans.fab.FloatingActionMenu;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * Created by munnadroid on 9/21/16.
@@ -64,7 +54,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     public HomeFragment mHomeFragment;
     public LeagueTableFragment mLeagueTableFragment;
     public FixturesFragment mFixturesFragment;
-    public MatchResultFragment mMatchResultFragment;
+    public ResultFragment mResultFragment;
     public EplMatchWeekFixtureFragment mEplMatchWeekFixtureFragment;
     public InjuriesFragment mInjuriesFragment;
     public TopScorersFragment mTopScorersFragment;
@@ -216,8 +206,8 @@ public abstract class BaseActivity extends AppCompatActivity {
 //                openFragment(mEplMatchWeekFixtureFragment);
 //                break;
 //            case R.id.fabRecentResults:
-//                mMatchResultFragment = new MatchResultFragment();
-//                openFragment(mMatchResultFragment);
+//                mResultFragment = new ResultFragment();
+//                openFragment(mResultFragment);
 //                break;
 //            case R.id.fabFixtures:
 //                mFixturesFragment = FixturesFragment.newInstance(fixturesResponse);

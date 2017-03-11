@@ -2,7 +2,6 @@ package com.awecode.muscn.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +10,7 @@ import android.widget.TextView;
 
 import com.awecode.muscn.R;
 import com.awecode.muscn.model.http.eplmatchweek._20161001;
-import com.awecode.muscn.model.listener.EplMatchweekClickListener;
+import com.awecode.muscn.model.listener.MatchweekItemClickListener;
 import com.awecode.muscn.util.Util;
 
 import java.util.ArrayList;
@@ -27,7 +26,7 @@ public class MatchFixutreRecyclerviewAdapter extends RecyclerView.Adapter<MatchF
 
     private Context context;
     private ArrayList<_20161001> mCategoryList;
-    public EplMatchweekClickListener mEplMatchweekClickListener;
+    public MatchweekItemClickListener mMatchweekItemClickListener;
 
     public MatchFixutreRecyclerviewAdapter(Context context, ArrayList<_20161001> mCategoryList) {
         this.context = context;
@@ -82,7 +81,7 @@ public class MatchFixutreRecyclerviewAdapter extends RecyclerView.Adapter<MatchF
             @Override
             public void onClick(View v) {
                 if (data.getFixtureId() != "null") {
-                    mEplMatchweekClickListener.onEplMatchWeekClicked(data.getFixtureId());
+                    mMatchweekItemClickListener.onEplMatchWeekClicked(data.getFixtureId());
                 }
             }
         });

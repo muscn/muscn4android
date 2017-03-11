@@ -3,7 +3,6 @@ package com.awecode.muscn.views.matchweekfixtures;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +10,7 @@ import android.view.ViewGroup;
 import com.awecode.muscn.R;
 import com.awecode.muscn.adapter.MatchFixutreRecyclerviewAdapter;
 import com.awecode.muscn.model.http.eplmatchweek._20161001;
-import com.awecode.muscn.model.listener.EplMatchweekClickListener;
+import com.awecode.muscn.model.listener.MatchweekItemClickListener;
 import com.awecode.muscn.model.listener.RecyclerViewScrollListener;
 import com.awecode.muscn.util.Util;
 import com.awecode.muscn.util.retrofit.MuscnApiInterface;
@@ -39,7 +38,7 @@ import rx.schedulers.Schedulers;
  * Created by suresh on 9/28/16.
  */
 
-public class EplMatchWeekFixtureFragment extends MasterFragment implements EplMatchweekClickListener {
+public class EplMatchWeekFixtureFragment extends MasterFragment implements MatchweekItemClickListener {
 
     @BindView(R.id.matchFixtures)
     RecyclerView matchFixtures;
@@ -81,7 +80,7 @@ public class EplMatchWeekFixtureFragment extends MasterFragment implements EplMa
         mMatchFixutreRecyclerviewAdapter = new MatchFixutreRecyclerviewAdapter(getActivity(), mCategoryList);
         matchFixtures.setAdapter(Util.getAnimationAdapter(mMatchFixutreRecyclerviewAdapter));
         mRecyclerViewScrollListener.onRecyclerViewScrolled(matchFixtures);
-        mMatchFixutreRecyclerviewAdapter.mEplMatchweekClickListener = this;
+        mMatchFixutreRecyclerviewAdapter.mMatchweekItemClickListener = this;
     }
 
     /**
