@@ -20,10 +20,10 @@ public class Goal {
     private String time;
     @SerializedName("scorer")
     @Expose
-    private Integer scorer;
+    private String scorer;
     @SerializedName("assist_by")
     @Expose
-    private Integer assistBy;
+    private String assistBy;
     @SerializedName("match")
     @Expose
     private Integer match;
@@ -45,7 +45,7 @@ public class Goal {
      * @param match
      * @param penalty
      */
-    public Goal(Integer id, Boolean penalty, Boolean ownGoal, String time, Integer scorer, Integer assistBy, Integer match) {
+    public Goal(Integer id, Boolean penalty, Boolean ownGoal, String time, String scorer, String assistBy, Integer match) {
         super();
         this.id = id;
         this.penalty = penalty;
@@ -88,19 +88,19 @@ public class Goal {
         this.time = time;
     }
 
-    public Integer getScorer() {
+    public String getScorer() {
         return scorer;
     }
 
-    public void setScorer(Integer scorer) {
+    public void setScorer(String scorer) {
         this.scorer = scorer;
     }
 
-    public Integer getAssistBy() {
+    public String getAssistBy() {
         return assistBy;
     }
 
-    public void setAssistBy(Integer assistBy) {
+    public void setAssistBy(String assistBy) {
         this.assistBy = assistBy;
     }
 

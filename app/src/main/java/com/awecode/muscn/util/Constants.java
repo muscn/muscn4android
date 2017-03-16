@@ -11,5 +11,6 @@ public class Constants {
     public static final String URL_MANUTD_LOGO="http://manutd.org.np/media/crests/manchester-united.png";
     public static final String DEVICE_TYPE = "ANDROID";
     public static final String PREFS_TAP_STATUS = "prefs_tap_status";
+    public static final String ID = "id";
 
 }

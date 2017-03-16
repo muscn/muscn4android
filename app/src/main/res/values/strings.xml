@@ -41,4 +41,6 @@
     <string name="update">UPDATE</string>
     <string name="tap_title">Access Side Menu</string>
     <string name="tap_description">Click on the logo to open navigation menu.</string>
+    <string name="loading_results">Loading results...</string>
+
 </resources>

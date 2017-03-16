@@ -1,5 +1,6 @@
 package com.awecode.muscn.views.recentresults;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,13 +14,15 @@ import com.awecode.muscn.R;
 import com.awecode.muscn.adapter.ResultAdapter;
 import com.awecode.muscn.model.Item;
 import com.awecode.muscn.model.http.recentresults.RecentResultsResponse;
-import com.awecode.muscn.model.listener.ResultItemClickListener;
 import com.awecode.muscn.model.listener.RecyclerViewScrollListener;
+import com.awecode.muscn.model.listener.ResultItemClickListener;
+import com.awecode.muscn.util.Constants;
 import com.awecode.muscn.util.Util;
 import com.awecode.muscn.util.retrofit.MuscnApiInterface;
 import com.awecode.muscn.util.retrofit.ServiceGenerator;
 import com.awecode.muscn.views.HomeActivity;
 import com.awecode.muscn.views.MasterFragment;
+import com.awecode.muscn.views.resultdetails.ResultDetailsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -126,8 +129,9 @@ public class ResultFragment extends MasterFragment implements ResultItemClickLis
 
     @Override
     public void onRecentResultClicked(int resultId) {
-        Log.v("tess","id is "+resultId);
-        openFragment(ResultDetailsFragment.newInstance(resultId));
+        Log.v("tess", "id is " + resultId);
+        Intent intent = new Intent(mContext, ResultDetailsActivity.class);
+        intent.putExtra(Constants.ID, resultId);
+        startActivity(intent);
     }
-
 }

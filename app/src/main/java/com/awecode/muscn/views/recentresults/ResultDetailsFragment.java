@@ -2,68 +2,61 @@ package com.awecode.muscn.views.recentresults;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.AppBarLayout;
+import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.awecode.muscn.R;
+import com.awecode.muscn.adapter.ScorersAdapter;
 import com.awecode.muscn.model.http.resultdetails.ResultDetailsResponse;
 import com.awecode.muscn.util.Util;
-import com.awecode.muscn.util.retrofit.MuscnApiInterface;
-import com.awecode.muscn.util.retrofit.ServiceGenerator;
-import com.awecode.muscn.views.HomeActivity;
-import com.awecode.muscn.views.MasterFragment;
-import com.google.gson.Gson;
-import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import rx.Observable;
-import rx.Observer;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by surensth on 3/9/17.
  */
 
-public class ResultDetailsFragment extends MasterFragment {
+public class ResultDetailsFragment extends Fragment {
 
-    @BindView(R.id.firstTeamImageView)
-    ImageView firstTeamImageView;
-    @BindView(R.id.firstTeamNameTextView)
-    TextView firstTeamNameTextView;
-    @BindView(R.id.firstTeamScoreTextView)
-    TextView firstTeamScoreTextView;
-    @BindView(R.id.secondTeamImageView)
-    ImageView secondTeamImageView;
-    @BindView(R.id.secondTeamNameTextView)
-    TextView secondTeamNameTextView;
-    @BindView(R.id.secondTeamScoreTextView)
-    TextView secondTeamScoreTextView;
-    @BindView(R.id.toolbarFirstTeamImageView)
-    ImageView toolbarFirstTeamImageView;
-    @BindView(R.id.toolbarFirstTeamScore)
-    TextView toolbarFirstTeamScore;
-    @BindView(R.id.toolbarSecondTeamScore)
-    TextView toolbarSecondTeamScore;
-    @BindView(R.id.toolbarSecondTeamImageView)
-    ImageView toolbarSecondTeamImageView;
-    private int resultId = 0;
-    @BindView(R.id.app_bar)
-    AppBarLayout mAppBarLayout;
 
-    @BindView(R.id.toolbar_layout)
-    LinearLayout nToolbarLayout;
+    ResultDetailsResponse response;
+    @BindView(R.id.leagueNameTextView)
+    TextView leagueNameTextView;
+    @BindView(R.id.venueTextView)
+    TextView venueTextView;
+    @BindView(R.id.liveOnTextView)
+    TextView liveOnTextView;
+    @BindView(R.id.dateTextView)
+    TextView dateTextView;
+    @BindView(R.id.halfTimeScoreTextView)
+    TextView halfTimeScoreTextView;
+    @BindView(R.id.goalsTextView)
+    TextView goalsTextView;
+    @BindView(R.id.goalFirstTeamName)
+    TextView goalFirstTeamName;
+    @BindView(R.id.firstTeamRecyclerView)
+    RecyclerView firstTeamRecyclerView;
+    @BindView(R.id.goalSecondTeamName)
+    TextView goalSecondTeamName;
+    @BindView(R.id.secondTeamRecyclerView)
+    RecyclerView secondTeamRecyclerView;
+    @BindView(R.id.goals_main_layout)
+    LinearLayout goalsMainLayout;
 
-    public static ResultDetailsFragment newInstance(int resultId) {
+    LinearLayoutManager mLinearLayoutManager;
+    ScorersAdapter mAdapter;
+
+    public static ResultDetailsFragment newInstance(ResultDetailsResponse response) {
         ResultDetailsFragment fragment = new ResultDetailsFragment();
-        fragment.setData(resultId);
+        fragment.setData(response);
         return fragment;
     }
 
@@ -74,123 +67,64 @@ public class ResultDetailsFragment extends MasterFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_result_details, container, false);
+        View view = inflater.inflate(R.layout.fragment_result_details_description, container, false);
         ButterKnife.bind(this, view);
         return view;
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
+        setUpData(response);
+    }
 
-        mAppBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-            boolean isShow = false;
-            int scrollRange = -1;
+    private void setUpData(ResultDetailsResponse response) {
+        if (response.getCompetitionName() != null) {
+            leagueNameTextView.setText("League : " + response.getCompetitionName());
+            Log.v("hehe", "league name " + response.getCompetitionName());
+        }
+        if (response.getVenue() != null)
+            venueTextView.setText("Venue : " + response.getVenue());
+        if (response.getBroadcastOn() != null || response.getBroadcastOn() != "")
+            liveOnTextView.setText("Live on " + response.getBroadcastOn());
+        else
+            liveOnTextView.setText("");
 
-            @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                if (scrollRange == -1) {
-                    scrollRange = appBarLayout.getTotalScrollRange();
-                }
-                if (scrollRange + verticalOffset == 0) {
-                    nToolbarLayout.setVisibility(View.VISIBLE);
-                    isShow = true;
-                } else if (isShow) {
-                    nToolbarLayout.setVisibility(View.GONE);
+        if (response.getDatetime() != null)
+            dateTextView.setText("Date : " + Util.commonDateFormatter(response.getDatetime(), "yyyy-MM-dd'T'hh:mm:ss'Z'"));
 
-//                    collapsingToolbarLayout.setTitle(" ");//carefull there should a space between double quote otherwise it wont work
-                    isShow = false;
-                }
+        if (response.getData() != null) {
+            Log.v("hehe", "data present " + response.getData());
+            if (response.getData().getHtScore() != null)
+                halfTimeScoreTextView.setText("Half Time Score: " + response.getData().getHtScore());
+        }
+//setting goal scored by which player
+        if (response.getGoals() != null) {
+            if (response.getIsHomeGame()) {
+                setUpRecyclerView(firstTeamRecyclerView, response);
+                goalFirstTeamName.setText(getString(R.string.manchester_united));
+                goalSecondTeamName.setText(response.getOpponentName());
+            } else {
+                setUpRecyclerView(secondTeamRecyclerView, response);
+                goalSecondTeamName.setText(getString(R.string.manchester_united));
+                goalFirstTeamName.setText(response.getOpponentName());
             }
-        });
-
-
-//        mAppBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-//
-//            @Override
-//            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-//
-//                nToolbarLayout.setAlpha(Math.abs(verticalOffset / (float)
-//                        appBarLayout.getTotalScrollRange()));
-//            }
-//        });
-
-        if (Util.checkInternetConnection(mContext)){
-//            if (resultId != 0)
-                requestResultDetails();
-//            else {
-//                //no detail
-            }
-        else {
-            ((HomeActivity) mContext).noInternetConnectionDialog(mContext);
-        }
-    }
-
-    private void requestResultDetails() {
-        showProgressView(getString(R.string.loading_fixtures));
-        mApiInterface = ServiceGenerator.createService(MuscnApiInterface.class);
-        Observable<ResultDetailsResponse> call = mApiInterface.getResultDetails(resultId);
-        call.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<ResultDetailsResponse>() {
-                    @Override
-                    public void onCompleted() {
-                        mActivity.showContentView();
-
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.v("tei","id sss"+e.getMessage());
-                        Log.v("tei","id sss"+e.getStackTrace());
-
-                        mActivity.noInternetConnectionDialog(mContext);
-
-                    }
-
-                    @Override
-                    public void onNext(ResultDetailsResponse response) {
-                        Log.v("tei","id sss"+new Gson().toJson(response).toString());
-
-
-                        populateUI(response);
-                    }
-                });
-    }
-
-    private void populateUI(ResultDetailsResponse response) {
-        if (response.getIsHomeGame()) {
-            firstTeamNameTextView.setText(getString(R.string.manchester_united));
-            firstTeamScoreTextView.setText(response.getMufcScore().toString());
-            toolbarFirstTeamScore.setText(response.getMufcScore().toString());
-            Picasso.with(mContext).load(R.drawable.logo_manutd).into(firstTeamImageView);
-            Picasso.with(mContext).load(R.drawable.logo_manutd).into(toolbarFirstTeamImageView);
-
-            secondTeamNameTextView.setText(response.getOpponentName());
-            secondTeamScoreTextView.setText(response.getOpponentScore().toString());
-            toolbarSecondTeamScore.setText(response.getOpponentScore().toString());
-            Picasso.with(mContext).load("http://manutd.org.np/" + response.getOpponentCrest()).into(secondTeamImageView);
-            Picasso.with(mContext).load("http://manutd.org.np/" + response.getOpponentCrest()).into(toolbarSecondTeamImageView);
-
-
-        }
-        else{
-            secondTeamNameTextView.setText(getString(R.string.manchester_united));
-            secondTeamScoreTextView.setText(response.getMufcScore().toString());
-            toolbarSecondTeamScore.setText(response.getMufcScore().toString());
-            Picasso.with(mContext).load(R.drawable.logo_manutd).into(secondTeamImageView);
-            Picasso.with(mContext).load(R.drawable.logo_manutd).into(toolbarSecondTeamImageView);
-
-            firstTeamNameTextView.setText(response.getOpponentName());
-            firstTeamScoreTextView.setText(response.getOpponentScore().toString());
-            toolbarFirstTeamScore.setText(response.getOpponentScore().toString());
-            Picasso.with(mContext).load("http://manutd.org.np/" + response.getOpponentCrest()).into(firstTeamImageView);
-            Picasso.with(mContext).load("http://manutd.org.np/" + response.getOpponentCrest()).into(toolbarFirstTeamImageView);
 
         }
     }
 
+    private void setUpRecyclerView(RecyclerView mRecyclerView, ResultDetailsResponse mResultDetailsResponse) {
+        mLinearLayoutManager = new LinearLayoutManager(getActivity());
+        mRecyclerView.setLayoutManager(mLinearLayoutManager);
+        mRecyclerView.setHasFixedSize(true);
+        mAdapter = new ScorersAdapter(getActivity(), mResultDetailsResponse);
+        mRecyclerView.setAdapter(mAdapter);
+//        mRecyclerView.setNestedScrollingEnabled(false);
 
-    private void setData(int resultId) {
-        this.resultId = resultId;
+    }
+
+
+    private void setData(ResultDetailsResponse response) {
+        this.response = response;
     }
 
 }

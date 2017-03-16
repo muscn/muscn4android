@@ -4,6 +4,7 @@ import android.animation.ValueAnimator;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
@@ -57,6 +58,9 @@ public class HomeActivity extends BaseActivity implements FixturesApiListener, R
     ImageView mBackgroundTwo;
     @BindView(R.id.fragment_drawer)
     View mNavLayout;
+    @BindView(R.id.versionNavTextView)
+    TextView mVersionTextView;
+
     private DrawerLayout mDrawerLayout;
     private Toolbar mToolbar;
     //    @BindView(R.id.titleBarTextView)
@@ -68,6 +72,7 @@ public class HomeActivity extends BaseActivity implements FixturesApiListener, R
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setAppVersion();
         homeFragment = new HomeFragment();
         homeFragment.fixturesApiListener = this;
         openFragmentNoHistory(HomeFragment.newInstance(), "HOME");
@@ -317,5 +322,16 @@ public class HomeActivity extends BaseActivity implements FixturesApiListener, R
         nButton.setTextColor(ContextCompat.getColor(mContext, R.color.colorPrimary));
         Button pButton = updateAlertDialog.getButton(DialogInterface.BUTTON_POSITIVE);
         pButton.setTextColor(ContextCompat.getColor(mContext, R.color.colorPrimary));
+    }
+    public String setAppVersion() {
+        String versionCode = "0.0";
+        try {
+            versionCode = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+            mVersionTextView.setText("v"+versionCode);
+        } catch (PackageManager.NameNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return versionCode;
     }
 }

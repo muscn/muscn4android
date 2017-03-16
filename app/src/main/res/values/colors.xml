@@ -14,6 +14,10 @@
     <color name="colorGradientStart">#762316</color>
     <color name="colorGradientEnd">#ff000000</color>
     <color name="colorNavGradient">#87281a</color>
+    <color name="colorCollapsingToolbar">#cb762316</color>
+    <color name="colorDarkGray">#413e3e</color>
+
+
 
 
 </resources>

@@ -25,11 +25,9 @@
             android:name=".views.aboutus.AboutUsActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
-
         <activity android:name=".views.notification.NotificationActivity" />
 
-
-        <!--gcm services-->
+        <!-- gcm services -->
 
         <service android:name=".fcm.MyFirebaseMessagingService">
             <intent-filter>
@@ -48,18 +46,23 @@
             android:name="io.fabric.ApiKey"
             android:value="3b0ba9bfd27040ea249cbc5f52a9d591a3eb8e7c" />
 
-        <receiver android:name=".widget.FixtureWidgetProvider" >
+        <receiver android:name=".widget.FixtureWidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="com.awecode.muscn.widget.FixtureWidgetProvider.FIXTURE_WIDGET_UPDATE" />
-
             </intent-filter>
-            <meta-data android:name="android.appwidget.provider"
+
+            <meta-data
+                android:name="android.appwidget.provider"
                 android:resource="@xml/fixture_widget_info" />
         </receiver>
-        <!--declare widget update service-->
+        <!-- declare widget update service -->
         <service android:name=".widget.UpdateWidgetService" />
 
+        <activity android:name=".views.resultdetails.ResultDetailsActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
     </application>
 
 </manifest>
