@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:orientation="horizontal">
+
+    <com.github.vipulasri.timelineview.TimelineView
+        android:id="@+id/timelineView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        app:line="@color/colorPrimary"
+        app:lineSize="3dp"
+        app:markerSize="20dp" />
+
+    <!--<android.support.v7.widget.CardView-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--app:cardBackgroundColor="@color/colorPrimary"-->
+    <!--android:layout_gravity="center_vertical"-->
+    <!--android:layout_marginBottom="15dp"-->
+    <!--android:layout_marginLeft="10dp"-->
+    <!--android:layout_marginTop="15dp"-->
+    <!--app:cardElevation="3dp"-->
+    <!--app:contentPadding="15dp"-->
+    <!--&gt;-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorGrey"
+                android:textSize="12sp"
+                tools:text="24 JAN" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/scorer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorGrey"
+                android:textStyle="bold"
+                tools:text="scorer" />
+        </LinearLayout>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/assistedBy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/colorGrey"
+            tools:text="Order Successfully Completed" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/team"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/colorGrey"
+            tools:text="Order Successfully Completed" />
+
+    </LinearLayout>
+
+    <!--</android.support.v7.widget.CardView>-->
+
+</LinearLayout>

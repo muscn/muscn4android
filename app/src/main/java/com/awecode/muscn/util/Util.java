@@ -32,8 +32,6 @@ import java.util.TimeZone;
 
 import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
-import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter;
-import jp.wasabeef.recyclerview.adapters.SlideInRightAnimationAdapter;
 
 /**
  * Created by munnadroid on 9/21/16.
@@ -250,6 +248,31 @@ public class Util {
         alphaAdapter.setDuration(1000);
         alphaAdapter.setInterpolator(new OvershootInterpolator());
         return new ScaleInAnimationAdapter(alphaAdapter);
+    }
+
+    /**
+     * if game is home and event has team home then player is from manutd
+     * but if game is away and event has team away then player is from manutd
+     *
+     * @param isHomeGame home game or not
+     * @param team team in event score 
+     * @return
+     */
+    public static String getPlayerTeamName(Boolean isHomeGame, String team) {
+        if (isHomeGame) {
+            if (team.equalsIgnoreCase("home")) {
+                return "manchester united";
+            } else {
+                return "away";
+            }
+        } else {
+            if (team.equalsIgnoreCase("away")) {
+                return "manchester united";
+            } else {
+                return "away";
+            }
+        }
+
     }
 
 }

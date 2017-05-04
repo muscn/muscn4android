@@ -137,14 +137,14 @@ public abstract class BaseActivity extends AppCompatActivity {
         ft.commitAllowingStateLoss();
     }
 
-    public void openFragmentNoHistory(Fragment fragment) {
-        FragmentTransaction ft = getSupportFragmentManager()
-                .beginTransaction();
-        ft.replace(R.id.container,
-                fragment);
-        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-        ft.commitAllowingStateLoss();
-    }
+        public void openFragmentNoHistory(Fragment fragment) {
+            FragmentTransaction ft = getSupportFragmentManager()
+                    .beginTransaction();
+            ft.replace(R.id.container,
+                    fragment);
+            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+            ft.commitAllowingStateLoss();
+        }
 
 //    public void setupFloatingActionButton() {
 //        mActionMenu = (FloatingActionMenu) findViewById(R.id.menu2);

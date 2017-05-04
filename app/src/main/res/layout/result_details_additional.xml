@@ -1,40 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <TextView
         android:id="@+id/leagueNameTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="English Premier League"
-        android:textColor="@color/colorDarkGray" />
+        android:text=""
+        android:textColor="@color/colorDarkGray"
+        android:textSize="15sp"
+        android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/venueTextView"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text=""
-        android:textColor="@color/colorDarkGray" />
-    <TextView
-        android:id="@+id/liveOnTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:textColor="@color/colorDarkGray" />
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:weightSum="3">
 
-    <TextView
-        android:id="@+id/dateTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:textColor="@color/colorDarkGray" />
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="15dp"
+            android:layout_weight="0.2"
+            android:src="@drawable/ic_venue" />
 
-    <TextView
-        android:id="@+id/halfTimeScoreTextView"
+        <TextView
+            android:id="@+id/venueTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="2.8"
+            android:text="old stanford"
+            android:textColor="@color/colorDarkGray" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/liveOnLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text=""
-        android:textColor="@color/colorDarkGray" />
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:weightSum="3">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="15dp"
+            android:layout_weight="0.2"
+            android:src="@drawable/ic_tv" />
+
+        <TextView
+            android:id="@+id/liveOnTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="2.8"
+            android:text=""
+
+            android:textColor="@color/colorDarkGray" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:weightSum="3">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="15dp"
+            android:layout_weight="0.2"
+            android:src="@drawable/ic_fab_fixtures" />
+
+        <TextView
+            android:id="@+id/dateTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="2.8"
+            android:text=""
+
+            android:textColor="@color/colorDarkGray" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/halfTimeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:weightSum="3">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="15dp"
+            android:layout_weight="0.2"
+            android:src="@drawable/ic_whistle" />
+
+        <TextView
+            android:id="@+id/halfTimeScoreTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="2.8"
+            android:text=""
+            android:textColor="@color/colorDarkGray" />
+    </LinearLayout>
 </LinearLayout>

@@ -13,7 +13,16 @@
         android:orientation="vertical">
         <include layout="@layout/result_details_additional" />
 
-        <include layout="@layout/result_details_goal_layout" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/timelineRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:layout_marginTop="15dp"
+            android:paddingBottom="10dp"
+            android:scrollbars="none" />
+        <!--<include layout="@layout/result_details_goal_layout" />-->
+
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>
 
