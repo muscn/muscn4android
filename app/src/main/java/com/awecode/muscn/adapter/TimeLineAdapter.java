@@ -1,18 +1,21 @@
 package com.awecode.muscn.adapter;
 
 import android.content.Context;
+import android.media.Image;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.awecode.muscn.R;
 import com.awecode.muscn.model.http.resultdetails.Event;
 import com.awecode.muscn.model.http.resultdetails.ResultDetailsResponse;
 import com.awecode.muscn.util.Util;
 import com.github.vipulasri.timelineview.TimelineView;
+import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -72,18 +75,16 @@ public class TimeLineAdapter extends RecyclerView.Adapter<TimeLineAdapter.TimeLi
         } else
             holder.assistedBy.setVisibility(View.GONE);
 
-//        if (event.getTeam().equalsIgnoreCase("home"))
-//            holder.team.setText("Manchester United");
-//        else if (event.getTeam().equalsIgnoreCase("away"))
-//            holder.team.setText(mResponse.getOpponentName());
-
-
         String playerTeam = Util.getPlayerTeamName(mResponse.getIsHomeGame(), event.getTeam());
         if (playerTeam.equalsIgnoreCase("manchester united")) {
             holder.team.setText("Manchester United");
+            Picasso.with(mContext).load(R.drawable.logo_manutd).into(holder.scorerTeamLogo);
+
         } else {
             holder.team.setText(mResponse.getOpponentName());
+            Picasso.with(mContext).load("http://manutd.org.np/" + mResponse.getOpponentCrest()).into(holder.scorerTeamLogo);
         }
+
 
     }
 
@@ -105,6 +106,8 @@ public class TimeLineAdapter extends RecyclerView.Adapter<TimeLineAdapter.TimeLi
         AppCompatTextView assistedBy;
         @BindView(R.id.team)
         AppCompatTextView team;
+        @BindView(R.id.scorerTeamLogo)
+        ImageView scorerTeamLogo;
 
         public TimeLineViewHolder(View itemView, int viewType) {
             super(itemView);
