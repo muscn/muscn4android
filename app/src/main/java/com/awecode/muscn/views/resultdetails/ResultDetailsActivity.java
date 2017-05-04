@@ -190,7 +190,12 @@ public class ResultDetailsActivity extends BaseActivity {
     }
 
     @OnClick(R.id.backArrowImageView)
-    public void onClick() {
+    public void onArrowClick() {
         finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        onArrowClick();
     }
 }

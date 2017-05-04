@@ -255,7 +255,7 @@ public class Util {
      * but if game is away and event has team away then player is from manutd
      *
      * @param isHomeGame home game or not
-     * @param team team in event score 
+     * @param team team in event score
      * @return
      */
     public static String getPlayerTeamName(Boolean isHomeGame, String team) {
