@@ -9,6 +9,7 @@ import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -32,30 +33,38 @@ public class ServiceGenerator {
                     .baseUrl(API_BASE_URL)
                     .addCallAdapterFactory(RxJavaCallAdapterFactory.createWithScheduler(Schedulers.io()))
                     .addConverterFactory(GsonConverterFactory.create());
+    private static MyInterceptor interceptor;
 
     public static <S> S createService(Class<S> serviceClass) {
 
-        httpClient.interceptors().add(new Interceptor() {
-            @Override
-            public Response intercept(Interceptor.Chain chain) throws IOException {
-                Request original = chain.request();
-                Request.Builder requestBuilder;
-                requestBuilder = original.newBuilder()
-                        .header("key", Constants.DISTRIBUTION_KEY);
+        if (interceptor == null)
+            interceptor = new MyInterceptor();
+        httpClient.interceptors().add(interceptor);
 
-                Request request = requestBuilder.build();
-                Response response = chain.proceed(request);
-                return response;
-            }
-        });
-
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         httpClient.connectTimeout(TIME_OUT, TimeUnit.SECONDS);
         httpClient.readTimeout(TIME_OUT, TimeUnit.SECONDS);
         httpClient.writeTimeout(TIME_OUT, TimeUnit.SECONDS);
 
 
-        retrofit = builder.client(httpClient.build()).build();
+        retrofit = builder.client(httpClient.addInterceptor(loggingInterceptor).build()).build();
         return retrofit.create(serviceClass);
+    }
+
+    private static class MyInterceptor implements Interceptor {
+
+        @Override
+        public Response intercept(Chain chain) throws IOException {
+            Request original = chain.request();
+            Request.Builder requestBuilder;
+            requestBuilder = original.newBuilder()
+                    .header("key", Constants.DISTRIBUTION_KEY);
+
+            Request request = requestBuilder.build();
+            Response response = chain.proceed(request);
+            return response;
+        }
     }
 
 }
