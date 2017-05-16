@@ -1,9 +1,7 @@
 package com.awecode.muscn.views.home;
 
 import android.os.Bundle;
-import android.provider.Settings;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,7 +41,8 @@ import rx.schedulers.Schedulers;
  * Created by surensth on 9/23/16.
  */
 
-public class HomeFragment extends MasterFragment {
+public class
+HomeFragment extends MasterFragment {
     private static final String TAG = HomeFragment.class.getSimpleName();
     @BindView(R.id.daysTextView)
     TextView mDaysTextView;
@@ -96,9 +95,6 @@ public class HomeFragment extends MasterFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         fixturesApiListener = (FixturesApiListener) this.getContext();
-        String deviceId = Settings.Secure.getString(getActivity().getContentResolver(),
-                Settings.Secure.ANDROID_ID);
-        Log.v("teste", "id " + deviceId);
 
     }
 
@@ -172,8 +168,6 @@ public class HomeFragment extends MasterFragment {
     }
 
 
-    List<Result> fixtureList = new ArrayList<>();
-
     private void save_fixtures(FixturesResponse fixturesResponse) {
         try {
             //first delete the all data from table
@@ -187,12 +181,6 @@ public class HomeFragment extends MasterFragment {
                 fixturesResponse = filterPastDateFromFixture(fixturesResponse);
                 FixturesResponse.save_fixtures(fixturesResponse);
                 configureFixtureView(fixturesResponse.getResults().get(0));
-//                if (matchDateIsBeforeToday(fixturesResponse.getResults().get(0).getDatetime()))
-//                    configureFixtureView(fixturesResponse.getResults().get(1));
-//                else
-//                    configureFixtureView(fixturesResponse.getResults().get(0));
-
-
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -286,7 +274,6 @@ public class HomeFragment extends MasterFragment {
      */
     private void configureDateTime_CountDownTimer(String dateStr) {
 //        dateStr = "2016-09-26T23:45:00Z";
-        Log.v("test", "date utc " + dateStr);
         try {
             SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
             myFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
