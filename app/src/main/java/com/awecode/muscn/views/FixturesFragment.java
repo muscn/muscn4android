@@ -64,12 +64,13 @@ public class FixturesFragment extends MasterFragment {
 
     public void setupFixturesRecyclerview() {
         try {
+            //delete past fixtures from db
             List<Result> results = deletePastFixtureTable();
             if (results != null
                     && results.size() > 0) {
                 matchFixtures.setHasFixedSize(true);
                 matchFixtures.setLayoutManager(new LinearLayoutManager(getActivity()));
-                fixturesRecyclerViewAdapter = new FixturesRecyclerViewAdapter(getActivity(), );
+                fixturesRecyclerViewAdapter = new FixturesRecyclerViewAdapter(getActivity(), results);
                 matchFixtures.setAdapter(Util.getAnimationAdapter(fixturesRecyclerViewAdapter));
                 mRecyclerViewScrollListener.onRecyclerViewScrolled(matchFixtures);
             }
