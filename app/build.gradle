@@ -15,7 +15,6 @@ repositories {
     maven { url 'https://maven.fabric.io/public' }
 }
 
-apply plugin: 'android-apt'
 
 android {
     compileSdkVersion 25
@@ -60,7 +59,7 @@ dependencies {
 
     //butterknife
     compile 'com.jakewharton:butterknife:8.4.0'
-    apt 'com.jakewharton:butterknife-compiler:8.4.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
     //RxAndroid
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'io.reactivex:rxjava:1.1.6'
@@ -80,7 +79,11 @@ dependencies {
     compile 'jp.wasabeef:recyclerview-animators:2.2.5'
     compile 'com.github.vipulasri:timelineview:1.0.5'
 
-    provided 'org.projectlombok:lombok:1.16.6'
-    apt "org.projectlombok:lombok:1.16.16"
+    //lombok
+    provided 'org.projectlombok:lombok:1.16.8'
+    annotationProcessor "org.projectlombok:lombok:1.16.8"
+
+    //glassfish annotation
+    provided 'org.glassfish:javax.annotation:10.0-b28'
 }
 apply plugin: 'com.google.gms.google-services'

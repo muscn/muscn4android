@@ -17,7 +17,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class FixturesResponse {
+public class FixturesResponse{
 
     @SerializedName("count")
     @Expose
@@ -27,7 +27,7 @@ public class FixturesResponse {
     private String next;
     @SerializedName("previous")
     @Expose
-    private Object previous;
+    private String previous;
     @SerializedName("results")
     @Expose
     private List<Result> results = new ArrayList<Result>();

@@ -4,7 +4,13 @@ package com.awecode.muscn.model.http.fixtures;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Opponent {
+import io.realm.RealmObject;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class Opponent extends RealmObject {
 
     @SerializedName("opponentId")
     @Expose
@@ -37,87 +43,4 @@ public class Opponent {
     @Expose
     private String stadium;
 
-
-    public Opponent() {
-    }
-
-    public Integer getOpponentId() {
-        return opponentId;
-    }
-
-    public void setOpponentId(Integer opponentId) {
-        this.opponentId = opponentId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getShortName() {
-        return shortName;
-    }
-
-    public void setShortName(String shortName) {
-        this.shortName = shortName;
-    }
-
-    public String getAlternativeNames() {
-        return alternativeNames;
-    }
-
-    public void setAlternativeNames(String alternativeNames) {
-        this.alternativeNames = alternativeNames;
-    }
-
-    public String getNickName() {
-        return nickName;
-    }
-
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
-    }
-
-    public String getFoundationDate() {
-        return foundationDate;
-    }
-
-    public void setFoundationDate(String foundationDate) {
-        this.foundationDate = foundationDate;
-    }
-
-    public String getCrest() {
-        return crest;
-    }
-
-    public void setCrest(String crest) {
-        this.crest = crest;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
-
-    public String getWiki() {
-        return wiki;
-    }
-
-    public void setWiki(String wiki) {
-        this.wiki = wiki;
-    }
-
-    public String getStadium() {
-        return stadium;
-    }
-
-    public void setStadium(String stadium) {
-        this.stadium = stadium;
-    }
 }

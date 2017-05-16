@@ -20,7 +20,6 @@ import com.awecode.muscn.util.countdown_timer.CountDownTimer;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
@@ -101,7 +100,7 @@ public class UpdateWidgetService extends Service {
         try {
 
             String opponentName = result.getOpponent().getName();
-            Boolean isHomeGame = result.getHomeGame();
+            Boolean isHomeGame = result.getIsHomeGame();
             //configure broadcast channel namemContext
             if (result.getBroadcastOn() != null) {
                 remoteViews.setTextViewText(R.id.liveTextView, "Live on " + result.getBroadcastOn());

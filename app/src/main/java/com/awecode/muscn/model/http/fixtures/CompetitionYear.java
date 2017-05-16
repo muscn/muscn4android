@@ -4,8 +4,14 @@ package com.awecode.muscn.model.http.fixtures;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import io.realm.RealmObject;
+import lombok.Getter;
+import lombok.Setter;
 
-public class CompetitionYear {
+
+@Setter
+@Getter
+public class CompetitionYear extends RealmObject {
 
     @SerializedName("year")
     @Expose
@@ -15,22 +21,4 @@ public class CompetitionYear {
     @Expose
     private Competition competition;
 
-    public CompetitionYear() {
-    }
-
-    public Integer getYear() {
-        return year;
-    }
-
-    public void setYear(Integer year) {
-        this.year = year;
-    }
-
-    public Competition getCompetition() {
-        return competition;
-    }
-
-    public void setCompetition(Competition competition) {
-        this.competition = competition;
-    }
 }

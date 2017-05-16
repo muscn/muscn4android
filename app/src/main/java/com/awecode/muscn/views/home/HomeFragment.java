@@ -16,7 +16,6 @@ import com.awecode.muscn.model.listener.FixturesApiListener;
 import com.awecode.muscn.util.Constants;
 import com.awecode.muscn.util.Util;
 import com.awecode.muscn.util.countdown_timer.CountDownTimer;
-import com.awecode.muscn.util.prefs.Prefs;
 import com.awecode.muscn.util.retrofit.MuscnApiInterface;
 import com.awecode.muscn.util.retrofit.ServiceGenerator;
 import com.awecode.muscn.views.MasterFragment;
@@ -26,12 +25,16 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.Realm;
+import io.realm.RealmAsyncTask;
+import io.realm.RealmResults;
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -81,6 +84,8 @@ HomeFragment extends MasterFragment {
 
     private CountDownTimer mCountDownTimer;
     public FixturesApiListener fixturesApiListener;
+    private RealmAsyncTask mTransaction;
+    private Collection<Result> realmFixtures = null;
 
     public static HomeFragment newInstance() {
         HomeFragment fragment = new HomeFragment();
@@ -159,7 +164,7 @@ HomeFragment extends MasterFragment {
                         public void onNext(FixturesResponse fixturesResponse) {
                             mActivity.showContentView();
                             fixturesApiListener.onCallFixtures(filterPastDateFromFixture(fixturesResponse));
-                            save_fixtures(fixturesResponse);
+                            deleteFixturesAndSave(fixturesResponse);
                         }
                     });
         } catch (Exception e) {
@@ -168,23 +173,61 @@ HomeFragment extends MasterFragment {
     }
 
 
-    private void save_fixtures(FixturesResponse fixturesResponse) {
+    /**
+     * //configureFixtureView(fixturesResponse.getResults().get(0));
+     * <p>
+     * First delete current existing fixture data
+     * then save new data in realm table
+     */
+    private void deleteFixturesAndSave(final FixturesResponse fixturesResponse) {
         try {
-            //first delete the all data from table
-            try {
-                Prefs.remove(Constants.PREFS_FIXTURES);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } finally {
-            try {
-                fixturesResponse = filterPastDateFromFixture(fixturesResponse);
-                FixturesResponse.save_fixtures(fixturesResponse);
-                configureFixtureView(fixturesResponse.getResults().get(0));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            //delete fixture results first
+            mTransaction = mRealm.executeTransactionAsync(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+                    RealmResults<Result> results = realm.where(Result.class).findAll();
+                    if (results != null
+                            && results.size() > 0)
+                        results.deleteAllFromRealm();
+
+                }
+            }, new Realm.Transaction.OnSuccess() {
+                @Override
+                public void onSuccess() {
+                    //now save fixture data
+                    List<Result> results = saveFixtures(fixturesResponse);
+                    if (results != null && results.size() > 0)
+                        configureFixtureView(mRealm.where(Result.class).findAll().get(0));
+
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+    }
+
+    /**
+     * save all fixtures
+     *
+     * @param fixturesResponse
+     */
+    private List<Result> saveFixtures(final FixturesResponse fixturesResponse) {
+
+        List<Result> results = fixturesResponse.getResults();
+        if (results != null && results.size() > 0) {
+            mRealm.beginTransaction();
+            realmFixtures = mRealm.copyToRealm(results);
+            mRealm.commitTransaction();
+        }
+        return new ArrayList<Result>(realmFixtures);
+
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mTransaction != null && !mTransaction.isCancelled())
+            mTransaction.cancel();
 
     }
 
@@ -212,7 +255,7 @@ HomeFragment extends MasterFragment {
             mActivity.setCustomTitle(R.string.app_name);
 
             String opponentName = result.getOpponent().getName();
-            Boolean isHomeGame = result.getHomeGame();
+            Boolean isHomeGame = result.getIsHomeGame();
             //configure broadcast channel name
             configureBroadCastChannelView(result.getBroadcastOn());
             if (TextUtils.isEmpty(result.getBroadcastOn()))
@@ -239,7 +282,7 @@ HomeFragment extends MasterFragment {
                         .into(mFirstTeamImageView);
             } else {
                 mFirstTeamNameTextView.setText(opponentName);
-                mSecondTeamNameTextView.setText(getString(R.string.manchester_united));
+                mSecondTeamNameTextView.setText(mContext.getString(R.string.manchester_united));
                 //populate imageview
                 Picasso.with(mContext)
                         .load((String) result.getOpponent().getCrest())

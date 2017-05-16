@@ -11,6 +11,8 @@ import com.awecode.muscn.util.Util;
 import com.awecode.muscn.util.retrofit.MuscnApiInterface;
 
 import butterknife.ButterKnife;
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 
 /**
  * Created by surensth on 9/23/16.
@@ -21,6 +23,7 @@ public abstract class MasterFragment extends Fragment {
     public Context mContext;
     public HomeActivity mActivity;
     public FragmentManager mFragmentManager;
+    protected Realm mRealm;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -35,6 +38,12 @@ public abstract class MasterFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
         changeRandomParallaxImage();
+        initializedRealm();
+    }
+
+    private void initializedRealm() {
+        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder().build();
+        mRealm = Realm.getInstance(realmConfiguration);
     }
 
 

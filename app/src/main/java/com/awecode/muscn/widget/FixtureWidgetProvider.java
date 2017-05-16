@@ -26,8 +26,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
-import static android.appwidget.AppWidgetManager.ACTION_APPWIDGET_UPDATE;
-
 /**
  * Created by surensth on 1/29/17.
  */
@@ -172,7 +170,7 @@ public class FixtureWidgetProvider extends AppWidgetProvider {
         try {
 
             String opponentName = result.getOpponent().getName();
-            Boolean isHomeGame = result.getHomeGame();
+            Boolean isHomeGame = result.getIsHomeGame();
             //configure broadcast channel namemContext
             if (result.getBroadcastOn() != null) {
                 remoteViews.setTextViewText(R.id.liveTextView, "Live on " + result.getBroadcastOn());

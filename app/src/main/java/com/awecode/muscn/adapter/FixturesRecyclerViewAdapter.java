@@ -2,7 +2,6 @@ package com.awecode.muscn.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -92,9 +91,9 @@ public class FixturesRecyclerViewAdapter extends RecyclerView.Adapter<FixturesRe
 
             holder.mStadiumTimeTextView.setText(result.getVenue() + " at " + String.valueOf(mCalendar.get(Calendar.HOUR))+":"+ String.valueOf(mCalendar.get(Calendar.MINUTE))+mCalendar.getDisplayName(Calendar.AM_PM, Calendar.LONG, Locale.getDefault()));
 
-            if(result.getHomeGame())
+            if(result.getIsHomeGame())
             holder.mHomeVsAwayTeamTextView.setText(context.getString(R.string.manchester_united) + " vs " + result.getOpponent().getName() + " - " + result.getCompetitionYear().getCompetition().getName());
-            else if(!result.getHomeGame())
+            else if(!result.getIsHomeGame())
                 holder.mHomeVsAwayTeamTextView.setText(result.getOpponent().getName() + " vs " + context.getString(R.string.manchester_united)  + " - " + result.getCompetitionYear().getCompetition().getName());
 
 

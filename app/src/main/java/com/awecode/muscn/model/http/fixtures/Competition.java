@@ -4,7 +4,11 @@ package com.awecode.muscn.model.http.fixtures;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Competition {
+import io.realm.RealmObject;
+import lombok.Getter;
+
+@Getter
+public class Competition extends RealmObject{
 
 
     @SerializedName("name")
@@ -20,38 +24,4 @@ public class Competition {
     @Expose
     private Integer order;
 
-    public Competition() {
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getShortName() {
-        return shortName;
-    }
-
-    public void setShortName(String shortName) {
-        this.shortName = shortName;
-    }
-
-    public String getSlug() {
-        return slug;
-    }
-
-    public void setSlug(String slug) {
-        this.slug = slug;
-    }
-
-    public Integer getOrder() {
-        return order;
-    }
-
-    public void setOrder(Integer order) {
-        this.order = order;
-    }
 }
