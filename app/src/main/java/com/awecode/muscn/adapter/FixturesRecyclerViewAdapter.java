@@ -52,22 +52,6 @@ public class FixturesRecyclerViewAdapter extends RecyclerView.Adapter<FixturesRe
 
         try {
             Result result = mDataList.get(position);
-            /**
-             * Populate data for Home Game
-             */
-//            if (result.getHomeGame()) {
-//                holder.eplMatchweekFixtureHomeTeamLogo.setImageResource(R.drawable.logo_manutd);
-//                Picasso.with(context).load(result.getOpponent().getCrest())
-//                        .into(holder.eplMatchweekFixtureAwayTeamLogo);
-//
-//                holder.eplMatchweekHomeTeamShortName.setText(R.string.manutd_shortname);
-//                if (result.getOpponent().getShortName() == null || result.getOpponent().getShortName().isEmpty())
-//                    holder.eplMatchweekAwayTeamShortName.setText(result.getOpponent().getName().substring(0, 3).toUpperCase());
-//                else
-//                    holder.eplMatchweekAwayTeamShortName.setText(result.getOpponent().getShortName().toUpperCase());
-//                holder.eplMatchweekTimeandHomeGround.setText(Util.commonDateFormatter(result.getDatetime(), "yyyy-MM-dd'T'hh:mm:ss'Z'") + "\n" + result.getVenue());
-
-            //new
 
             mCalendar = Calendar.getInstance();
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'Z'");
@@ -93,26 +77,6 @@ public class FixturesRecyclerViewAdapter extends RecyclerView.Adapter<FixturesRe
             else if (!result.getIsHomeGame())
                 holder.mHomeVsAwayTeamTextView.setText(result.getOpponent().getName() + " vs " + context.getString(R.string.manchester_united) + " - " + result.getCompetitionYear().getCompetition().getName());
 
-
-//            }
-//            else if (!result.getHomeGame()) {
-//                holder.eplMatchweekFixtureAwayTeamLogo.setImageResource(R.drawable.logo_manutd);
-//                Picasso.with(context)
-//                        .load(result.getOpponent().getCrest())
-//                        .into(holder.eplMatchweekFixtureHomeTeamLogo);
-//                holder.eplMatchweekAwayTeamShortName.setText(R.string.manutd_shortname);
-//                if (result.getOpponent().getShortName() == null || result.getOpponent().getShortName().isEmpty())
-//                    holder.eplMatchweekHomeTeamShortName.setText(result.getOpponent().getName().substring(0, 3).toUpperCase());
-//                else
-//                    holder.eplMatchweekHomeTeamShortName.setText(result.getOpponent().getShortName().toUpperCase());
-//
-//
-//                String venue = result.getVenue();
-//                holder.eplMatchweekTimeandHomeGround.setText(Util.commonDateFormatter(result.getDatetime(), "yyyy-MM-dd'T'hh:mm:ss'Z'") + "\n" + venue);
-//
-//            }
-
-//            holder.eplMatchweekMatchStatus.setText(result.getCompetitionYear().getCompetition().getName());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -126,25 +90,8 @@ public class FixturesRecyclerViewAdapter extends RecyclerView.Adapter<FixturesRe
     public static class FixtureViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.table_row_divider)
         View tableRowDivider;
-        //        @BindView(R.id.eplMatchweekFixtureHomeTeamLogo)
-//        ImageView eplMatchweekFixtureHomeTeamLogo;
-//        @BindView(R.id.eplMatchweekHomeTeamScore)
-//        TextView eplMatchweekHomeTeamScore;
-//        @BindView(R.id.eplMatchweekMatchStatus)
-//        TextView eplMatchweekMatchStatus;
-//        @BindView(R.id.eplMatchweekAwayTeamScore)
-//        TextView eplMatchweekAwayTeamScore;
-//        @BindView(R.id.eplMatchweekFixtureAwayTeamLogo)
-//        ImageView eplMatchweekFixtureAwayTeamLogo;
-//        @BindView(R.id.eplMatchweekHomeTeamShortName)
-//        TextView eplMatchweekHomeTeamShortName;
-//        @BindView(R.id.eplMatchweekTimeandHomeGround)
-//        TextView eplMatchweekTimeandHomeGround;
-//        @BindView(R.id.eplMatchweekAwayTeamShortName)
-//        TextView eplMatchweekAwayTeamShortName;
         @BindView(R.id.matchResultRowLayout)
         LinearLayout matchResultRowLayout;
-
         @BindView(R.id.homeVsAwayTeamTextView)
         TextView mHomeVsAwayTeamTextView;
         @BindView(R.id.stadiumTimeTextView)
