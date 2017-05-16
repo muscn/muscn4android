@@ -1,6 +1,5 @@
 package com.awecode.muscn.views;
 
-import android.animation.ValueAnimator;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,11 +10,9 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -62,10 +59,6 @@ public class HomeActivity extends BaseActivity implements FixturesApiListener, R
     TextView mVersionTextView;
 
     private DrawerLayout mDrawerLayout;
-    private Toolbar mToolbar;
-    //    @BindView(R.id.titleBarTextView)
-//    TextView titleBarTextView;
-
     protected AlertDialog updateAlertDialog;
     protected Version mVersion = null;
 
@@ -76,22 +69,6 @@ public class HomeActivity extends BaseActivity implements FixturesApiListener, R
         homeFragment = new HomeFragment();
         homeFragment.fixturesApiListener = this;
         openFragmentNoHistory(HomeFragment.newInstance(), "HOME");
-//        openFragmentNoHistory(HomeFragment.newInstance());
-
-//        setupFloatingActionButton();
-//        transparentView.setVisibility(View.GONE);
-//        mActionMenu.setOnMenuToggleListener(new FloatingActionMenu.OnMenuToggleListener() {
-//            @Override
-//            public void onMenuToggle(boolean opened) {
-//                if (opened)
-//                    transparentView.setVisibility(View.VISIBLE);
-//                else
-//                    transparentView.setVisibility(View.GONE);
-//            }
-//        });
-
-        //TODO add new image animation
-//        configureParallaxBackgroundEffect();
         setup_onErrorClickListener();
         setupNavigationDrawerView();
 
@@ -101,6 +78,9 @@ public class HomeActivity extends BaseActivity implements FixturesApiListener, R
 
     }
 
+    /**
+     * create tap target view for first time
+     */
     private void createTapTarget() {
         TapTargetView.showFor(this,                 // `this` is an Activity
                 TapTarget.forView(findViewById(R.id.muscnLogo), getString(R.string.tap_title), getString(R.string.tap_description))
@@ -111,7 +91,6 @@ public class HomeActivity extends BaseActivity implements FixturesApiListener, R
                         .titleTextColor(R.color.white)      // Specify the color of the title text
                         .descriptionTextSize(20)            // Specify the size (in sp) of the description text
                         .descriptionTextColor(R.color.white)  // Specify the color of the description text
-//                        .textColor(R.color.gpvch_black)            // Specify a color for both the title and description text
                         .textTypeface(Typeface.SANS_SERIF)  // Specify a typeface for the text
                         .dimColor(R.color.white)            // If set, will dim behind the view with 30% opacity of the given color
                         .drawShadow(true)                   // Whether to draw a drop shadow or not
@@ -158,36 +137,6 @@ public class HomeActivity extends BaseActivity implements FixturesApiListener, R
         }
     }
 
-
-    public void setParallaxImageBackground(int drawableId) {
-        mBackgroundOne.setImageDrawable(null);
-        mBackgroundTwo.setImageDrawable(null);
-        mBackgroundOne.setImageDrawable(ContextCompat.getDrawable(mContext, drawableId));
-        mBackgroundTwo.setImageDrawable(ContextCompat.getDrawable(mContext, drawableId));
-    }
-
-    private void configureParallaxBackgroundEffect() {
-        try {
-            final ValueAnimator animator = ValueAnimator.ofFloat(0.0f, 1.0f);
-            animator.setRepeatCount(ValueAnimator.INFINITE);
-            animator.setInterpolator(new LinearInterpolator());
-            animator.setDuration(80000L);
-            animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                @Override
-                public void onAnimationUpdate(ValueAnimator animation) {
-                    final float progress = (float) animation.getAnimatedValue();
-                    final float width = mBackgroundOne.getWidth();
-                    final float translationX = width * progress;
-                    mBackgroundOne.setTranslationX(translationX);
-                    mBackgroundTwo.setTranslationX(translationX - width);
-                }
-            });
-            animator.start();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     @Override
     protected int getLayoutResourceId() {
         return R.layout.activity_home;
@@ -201,17 +150,12 @@ public class HomeActivity extends BaseActivity implements FixturesApiListener, R
 
     @Override
     public void onRecyclerViewScrolled(RecyclerView recyclerView) {
-//        setScrollAnimation(recyclerView);
     }
 
     /**
      * intialize navigation drawer layout and fragment
      */
     private void setupNavigationDrawerView() {
-//        mToolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
-//        setSupportActionBar(mToolbar);
-//        getSupportActionBar().setDisplayShowHomeEnabled(true);
-
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer);
         mNavigationDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_drawer);
         mNavigationDrawerFragment.setup(R.id.fragment_drawer, mDrawerLayout/*, mToolbar*/);
@@ -226,9 +170,7 @@ public class HomeActivity extends BaseActivity implements FixturesApiListener, R
             if (menuType == MenuType.HOME) {
                 mHomeFragment = HomeFragment.newInstance();
                 openFragmentNoHistory(mHomeFragment, "HOME");
-            }
-//                openNewSaleFragment();//open new sale view
-            else if (menuType == MenuType.FIXTURES) {
+            } else if (menuType == MenuType.FIXTURES) {
                 mFixturesFragment = FixturesFragment.newInstance(fixturesResponse);
                 openFragment(mFixturesFragment);
             } else if (menuType == MenuType.LEAGUE_TABLE) {
@@ -323,11 +265,12 @@ public class HomeActivity extends BaseActivity implements FixturesApiListener, R
         Button pButton = updateAlertDialog.getButton(DialogInterface.BUTTON_POSITIVE);
         pButton.setTextColor(ContextCompat.getColor(mContext, R.color.colorPrimary));
     }
+
     public String setAppVersion() {
         String versionCode = "0.0";
         try {
             versionCode = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
-            mVersionTextView.setText("v"+versionCode);
+            mVersionTextView.setText("v" + versionCode);
         } catch (PackageManager.NameNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
