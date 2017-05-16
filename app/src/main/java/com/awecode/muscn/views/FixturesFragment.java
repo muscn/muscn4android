@@ -10,8 +10,11 @@ import android.view.ViewGroup;
 
 import com.awecode.muscn.R;
 import com.awecode.muscn.adapter.FixturesRecyclerViewAdapter;
+import com.awecode.muscn.model.http.fixtures.Result;
 import com.awecode.muscn.model.listener.RecyclerViewScrollListener;
 import com.awecode.muscn.util.Util;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -61,11 +64,15 @@ public class FixturesFragment extends MasterFragment {
 
     public void setupFixturesRecyclerview() {
         try {
-            matchFixtures.setHasFixedSize(true);
-            matchFixtures.setLayoutManager(new LinearLayoutManager(getActivity()));
-            fixturesRecyclerViewAdapter = new FixturesRecyclerViewAdapter(getActivity(), deletePastFixtureTable());
-            matchFixtures.setAdapter(Util.getAnimationAdapter(fixturesRecyclerViewAdapter));
-            mRecyclerViewScrollListener.onRecyclerViewScrolled(matchFixtures);
+            List<Result> results = deletePastFixtureTable();
+            if (results != null
+                    && results.size() > 0) {
+                matchFixtures.setHasFixedSize(true);
+                matchFixtures.setLayoutManager(new LinearLayoutManager(getActivity()));
+                fixturesRecyclerViewAdapter = new FixturesRecyclerViewAdapter(getActivity(), );
+                matchFixtures.setAdapter(Util.getAnimationAdapter(fixturesRecyclerViewAdapter));
+                mRecyclerViewScrollListener.onRecyclerViewScrolled(matchFixtures);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
