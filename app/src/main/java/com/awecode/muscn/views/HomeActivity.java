@@ -19,8 +19,6 @@ import android.widget.TextView;
 
 import com.awecode.muscn.R;
 import com.awecode.muscn.model.enumType.MenuType;
-import com.awecode.muscn.model.http.fixtures.FixturesResponse;
-import com.awecode.muscn.model.listener.FixturesApiListener;
 import com.awecode.muscn.model.listener.RecyclerViewScrollListener;
 import com.awecode.muscn.util.Constants;
 import com.awecode.muscn.util.Util;
@@ -45,10 +43,9 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 
-public class HomeActivity extends BaseActivity implements FixturesApiListener, RecyclerViewScrollListener, NavigationDrawerCallbacks {
+public class HomeActivity extends BaseActivity implements RecyclerViewScrollListener, NavigationDrawerCallbacks {
 
     private static final String TAG = HomeActivity.class.getSimpleName();
-    HomeFragment homeFragment;
     @BindView(R.id.background_one)
     ImageView mBackgroundOne;
     @BindView(R.id.background_two)
@@ -65,10 +62,9 @@ public class HomeActivity extends BaseActivity implements FixturesApiListener, R
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mHomeFragment = HomeFragment.newInstance();
         setAppVersion();
-        homeFragment = new HomeFragment();
-        homeFragment.fixturesApiListener = this;
-        openFragmentNoHistory(HomeFragment.newInstance(), "HOME");
         setup_onErrorClickListener();
         setupNavigationDrawerView();
 
@@ -144,11 +140,6 @@ public class HomeActivity extends BaseActivity implements FixturesApiListener, R
 
 
     @Override
-    public void onCallFixtures(FixturesResponse fixturesResponse) {
-        setFixtureResponse(fixturesResponse);
-    }
-
-    @Override
     public void onRecyclerViewScrolled(RecyclerView recyclerView) {
     }
 
@@ -171,7 +162,7 @@ public class HomeActivity extends BaseActivity implements FixturesApiListener, R
                 mHomeFragment = HomeFragment.newInstance();
                 openFragmentNoHistory(mHomeFragment, "HOME");
             } else if (menuType == MenuType.FIXTURES) {
-                mFixturesFragment = FixturesFragment.newInstance(fixturesResponse);
+                mFixturesFragment = FixturesFragment.newInstance();
                 openFragment(mFixturesFragment);
             } else if (menuType == MenuType.LEAGUE_TABLE) {
                 mLeagueTableFragment = LeagueTableFragment.newInstance();

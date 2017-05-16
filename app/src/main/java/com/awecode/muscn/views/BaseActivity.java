@@ -14,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.awecode.muscn.R;
-import com.awecode.muscn.model.http.fixtures.FixturesResponse;
 import com.awecode.muscn.util.Util;
 import com.awecode.muscn.util.retrofit.MuscnApiInterface;
 import com.awecode.muscn.util.retrofit.ServiceGenerator;
@@ -41,16 +40,10 @@ public abstract class BaseActivity extends AppCompatActivity {
     TextView titleTextView;
     @BindView(R.id.muscnLogo)
     ImageView muscnLogoImageView;
-//    @BindView(R.id.transparentView)
-//    View transparentView;
     NavigationDrawerFragment mNavigationDrawerFragment;
 
-    public FixturesResponse fixturesResponse;
     protected Context mContext;
     protected Activity mActivity;
-//    public FloatingActionMenu mActionMenu;
-    private static final int TIME_INTERVAL = 2000; // # milliseconds, desired time passed between two back presses.
-    private long mBackPressed;
     public HomeFragment mHomeFragment;
     public LeagueTableFragment mLeagueTableFragment;
     public FixturesFragment mFixturesFragment;
@@ -253,9 +246,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 //        }
     }
 
-    public void setFixtureResponse(FixturesResponse fixtureResponse) {
-        this.fixturesResponse = fixtureResponse;
-    }
+
 
     /**
      * when recycler view is scrolled, floating action button hide/show

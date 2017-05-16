@@ -10,9 +10,11 @@ import android.widget.TextView;
 
 import com.awecode.muscn.R;
 import com.awecode.muscn.model.CountDownTime;
+import com.awecode.muscn.model.http.fixtures.Competition;
+import com.awecode.muscn.model.http.fixtures.CompetitionYear;
 import com.awecode.muscn.model.http.fixtures.FixturesResponse;
+import com.awecode.muscn.model.http.fixtures.Opponent;
 import com.awecode.muscn.model.http.fixtures.Result;
-import com.awecode.muscn.model.listener.FixturesApiListener;
 import com.awecode.muscn.util.Constants;
 import com.awecode.muscn.util.Util;
 import com.awecode.muscn.util.countdown_timer.CountDownTimer;
@@ -83,7 +85,6 @@ HomeFragment extends MasterFragment {
     TextView liveOnTextView;
 
     private CountDownTimer mCountDownTimer;
-    public FixturesApiListener fixturesApiListener;
     private RealmAsyncTask mTransaction;
     private Collection<Result> realmFixtures = null;
 
@@ -96,12 +97,6 @@ HomeFragment extends MasterFragment {
 
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        fixturesApiListener = (FixturesApiListener) this.getContext();
-
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -126,10 +121,12 @@ HomeFragment extends MasterFragment {
      */
     private void setup_fixutres() {
         try {
-            if (FixturesResponse.get_results() != null) {
-                mActivity.showContentView(); //added to remove the error view when no internet connection
-                FixturesResponse fixturesResponse = filterPastDateFromFixture(FixturesResponse.get_results());
-                configureFixtureView(fixturesResponse.getResults().get(0));
+            RealmResults<Result> results = mRealm.where(Result.class).findAll();
+            if (results != null
+                    && results.size() > 0) {
+                mActivity.showContentView();
+                //convert realms results into arraylist and show first index data in view
+                configureFixtureView();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -143,8 +140,6 @@ HomeFragment extends MasterFragment {
      */
     public void requestFixturesList() {
         try {
-            if (FixturesResponse.get_results() == null)
-                showProgressView(getString(R.string.loading_fixtures));
             Observable<FixturesResponse> call = ServiceGenerator.createService(MuscnApiInterface.class).getFixtures();
             call.subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -163,7 +158,7 @@ HomeFragment extends MasterFragment {
                         @Override
                         public void onNext(FixturesResponse fixturesResponse) {
                             mActivity.showContentView();
-                            fixturesApiListener.onCallFixtures(filterPastDateFromFixture(fixturesResponse));
+                            //delete previous saved data and save new fixtures
                             deleteFixturesAndSave(fixturesResponse);
                         }
                     });
@@ -185,10 +180,10 @@ HomeFragment extends MasterFragment {
             mTransaction = mRealm.executeTransactionAsync(new Realm.Transaction() {
                 @Override
                 public void execute(Realm realm) {
-                    RealmResults<Result> results = realm.where(Result.class).findAll();
-                    if (results != null
-                            && results.size() > 0)
-                        results.deleteAllFromRealm();
+                    realm.delete(Result.class);
+                    realm.delete(Opponent.class);
+                    realm.delete(CompetitionYear.class);
+                    realm.delete(Competition.class);
 
                 }
             }, new Realm.Transaction.OnSuccess() {
@@ -197,7 +192,7 @@ HomeFragment extends MasterFragment {
                     //now save fixture data
                     List<Result> results = saveFixtures(fixturesResponse);
                     if (results != null && results.size() > 0)
-                        configureFixtureView(mRealm.where(Result.class).findAll().get(0));
+                        configureFixtureView();
 
                 }
             });
@@ -207,20 +202,48 @@ HomeFragment extends MasterFragment {
     }
 
     /**
+     * delete Result, competition, competition year, opponent
+     */
+
+    private List<Result> deletePastFixtureTable() {
+        RealmResults<Result> results = mRealm.where(Result.class).findAll();
+        for (Result data : results) {
+            try {
+                if (matchDateIsBeforeToday(data.getDatetime())) {
+                    //delete opponent
+                    data.getOpponent().deleteFromRealm();
+                    //delete competition
+                    data.getCompetitionYear().getCompetition().deleteFromRealm();
+                    //delete competition year
+                    data.getCompetitionYear().deleteFromRealm();
+                    //delete result
+                    data.deleteFromRealm();
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return new ArrayList<Result>(mRealm.where(Result.class).findAll());
+
+    }
+
+
+    /**
      * save all fixtures
      *
      * @param fixturesResponse
      */
     private List<Result> saveFixtures(final FixturesResponse fixturesResponse) {
-
         List<Result> results = fixturesResponse.getResults();
         if (results != null && results.size() > 0) {
+            List<Result> arrangedResults = filterPastDateFromFixture(results);
             mRealm.beginTransaction();
-            realmFixtures = mRealm.copyToRealm(results);
+            realmFixtures = mRealm.copyToRealm(arrangedResults);
             mRealm.commitTransaction();
         }
         return new ArrayList<Result>(realmFixtures);
-
     }
 
     @Override
@@ -231,75 +254,76 @@ HomeFragment extends MasterFragment {
 
     }
 
-    private FixturesResponse filterPastDateFromFixture(FixturesResponse fixturesResponse) {
+    private List<Result> filterPastDateFromFixture(List<Result> results) {
         List<Result> filteredResults = new ArrayList<>();
-        for (Result fixture : fixturesResponse.getResults())
+        for (Result fixture : results)
             if (!Util.matchDateIsBeforeToday(fixture.getDatetime()))
                 filteredResults.add(fixture);
 
-
-        fixturesResponse.setResults(filteredResults);
-        return fixturesResponse;
+        return filteredResults;
     }
 
     /**
      * populate opponent name, date time
      * broadcast tv channel name,
      * start countdown timer
-     *
-     * @param result
      */
-    private void configureFixtureView(Result result) {
+    private void configureFixtureView() {
 
         try {
-            mActivity.setCustomTitle(R.string.app_name);
+            List<Result> results = deletePastFixtureTable();
+            if (results != null
+                    && results.size() > 0) {
+                Result result = results.get(0);
 
-            String opponentName = result.getOpponent().getName();
-            Boolean isHomeGame = result.getIsHomeGame();
-            //configure broadcast channel name
-            configureBroadCastChannelView(result.getBroadcastOn());
-            if (TextUtils.isEmpty(result.getBroadcastOn()))
-                liveOnTextView.setVisibility(View.GONE);
+                mActivity.setCustomTitle(R.string.app_name);
 
-            //configure countdown timer
-            configureDateTime_CountDownTimer(result.getDatetime());
+                String opponentName = result.getOpponent().getName();
+                Boolean isHomeGame = result.getIsHomeGame();
+                //configure broadcast channel name
+                configureBroadCastChannelView(result.getBroadcastOn());
+                if (TextUtils.isEmpty(result.getBroadcastOn()))
+                    liveOnTextView.setVisibility(View.GONE);
 
-            //configure game between team names
-            if (isHomeGame) {
-                mFirstTeamNameTextView.setText(getString(R.string.manchester_united));
-                mSecondTeamNameTextView.setText(opponentName);
-                //populate imageview
-                Picasso.with(mContext)
-                        .load((String) result.getOpponent().getCrest())
-                        .placeholder(R.drawable.ic_placeholder_team)
-                        .resize(getDimen(R.dimen.team_logo_size), getDimen(R.dimen.team_logo_size))
-                        .into(mSecondTeamImageView);
+                //configure countdown timer
+                configureDateTime_CountDownTimer(result.getDatetime());
 
-                Picasso.with(mContext)
-                        .load(Constants.URL_MANUTD_LOGO)
-                        .placeholder(R.drawable.logo_manutd)
-                        .resize(getDimen(R.dimen.team_logo_size), getDimen(R.dimen.team_logo_size))
-                        .into(mFirstTeamImageView);
-            } else {
-                mFirstTeamNameTextView.setText(opponentName);
-                mSecondTeamNameTextView.setText(mContext.getString(R.string.manchester_united));
-                //populate imageview
-                Picasso.with(mContext)
-                        .load((String) result.getOpponent().getCrest())
-                        .placeholder(R.drawable.ic_placeholder_team)
-                        .resize(getDimen(R.dimen.team_logo_size), getDimen(R.dimen.team_logo_size))
-                        .into(mFirstTeamImageView);
+                //configure game between team names
+                if (isHomeGame) {
+                    mFirstTeamNameTextView.setText(getString(R.string.manchester_united));
+                    mSecondTeamNameTextView.setText(opponentName);
+                    //populate imageview
+                    Picasso.with(mContext)
+                            .load((String) result.getOpponent().getCrest())
+                            .placeholder(R.drawable.ic_placeholder_team)
+                            .resize(getDimen(R.dimen.team_logo_size), getDimen(R.dimen.team_logo_size))
+                            .into(mSecondTeamImageView);
 
-                Picasso.with(mContext)
-                        .load(Constants.URL_MANUTD_LOGO)
-                        .placeholder(R.drawable.logo_manutd)
-                        .resize(getDimen(R.dimen.team_logo_size), getDimen(R.dimen.team_logo_size))
-                        .into(mSecondTeamImageView);
+                    Picasso.with(mContext)
+                            .load(Constants.URL_MANUTD_LOGO)
+                            .placeholder(R.drawable.logo_manutd)
+                            .resize(getDimen(R.dimen.team_logo_size), getDimen(R.dimen.team_logo_size))
+                            .into(mFirstTeamImageView);
+                } else {
+                    mFirstTeamNameTextView.setText(opponentName);
+                    mSecondTeamNameTextView.setText(mContext.getString(R.string.manchester_united));
+                    //populate imageview
+                    Picasso.with(mContext)
+                            .load((String) result.getOpponent().getCrest())
+                            .placeholder(R.drawable.ic_placeholder_team)
+                            .resize(getDimen(R.dimen.team_logo_size), getDimen(R.dimen.team_logo_size))
+                            .into(mFirstTeamImageView);
+
+                    Picasso.with(mContext)
+                            .load(Constants.URL_MANUTD_LOGO)
+                            .placeholder(R.drawable.logo_manutd)
+                            .resize(getDimen(R.dimen.team_logo_size), getDimen(R.dimen.team_logo_size))
+                            .into(mSecondTeamImageView);
+                }
+                //configure  name and venue
+                mCompetitionNameTextView.setText(result.getCompetitionYear().getCompetition().getName());
+                mCompetitionVenueTextView.setText(result.getVenue());
             }
-            //configure  name and venue
-            mCompetitionNameTextView.setText(result.getCompetitionYear().getCompetition().getName());
-            mCompetitionVenueTextView.setText(result.getVenue());
-
 
         } catch (Exception e) {
             e.printStackTrace();

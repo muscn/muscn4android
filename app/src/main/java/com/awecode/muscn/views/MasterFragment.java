@@ -12,7 +12,6 @@ import com.awecode.muscn.util.retrofit.MuscnApiInterface;
 
 import butterknife.ButterKnife;
 import io.realm.Realm;
-import io.realm.RealmConfiguration;
 
 /**
  * Created by surensth on 9/23/16.
@@ -42,8 +41,7 @@ public abstract class MasterFragment extends Fragment {
     }
 
     private void initializedRealm() {
-        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder().build();
-        mRealm = Realm.getInstance(realmConfiguration);
+        mRealm = Realm.getDefaultInstance();
     }
 
 

@@ -33,9 +33,10 @@ public class FixturesFragment extends MasterFragment {
     private FixturesRecyclerViewAdapter fixturesRecyclerViewAdapter;
     private RecyclerViewScrollListener mRecyclerViewScrollListener;
 
-    public static FixturesFragment newInstance(FixturesResponse fixturesResponse) {
+    public static FixturesFragment newInstance() {
         FixturesFragment fixturesFragment = new FixturesFragment();
-        fixturesFragment.fixturesResponse = fixturesResponse;
+        //TODO fethe fixture from realm db
+        //fixturesFragment.fixturesResponse = fixturesResponse;
         return fixturesFragment;
     }
 
