@@ -23,10 +23,8 @@ import com.awecode.muscn.util.retrofit.ServiceGenerator;
 import com.awecode.muscn.views.MasterFragment;
 import com.squareup.picasso.Picasso;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -205,29 +203,7 @@ HomeFragment extends MasterFragment {
      * delete Result, competition, competition year, opponent
      */
 
-    private List<Result> deletePastFixtureTable() {
-        RealmResults<Result> results = mRealm.where(Result.class).findAll();
-        for (Result data : results) {
-            try {
-                if (matchDateIsBeforeToday(data.getDatetime())) {
-                    //delete opponent
-                    data.getOpponent().deleteFromRealm();
-                    //delete competition
-                    data.getCompetitionYear().getCompetition().deleteFromRealm();
-                    //delete competition year
-                    data.getCompetitionYear().deleteFromRealm();
-                    //delete result
-                    data.deleteFromRealm();
-                }
 
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-        return new ArrayList<Result>(mRealm.where(Result.class).findAll());
-
-    }
 
 
     /**
@@ -432,32 +408,5 @@ HomeFragment extends MasterFragment {
 
     }
 
-    /**
-     * compare whether the match date is before todays date or not, if match date is before today then returns true showing data in index 1 else returns false showing data in index 0 for upcoming match
-     *
-     * @param matchDate date of upcoming match
-     * @return
-     */
-    private Boolean matchDateIsBeforeToday(String matchDate) {
-
-        Calendar c = Calendar.getInstance();
-        Date today = c.getTime();
-
-        SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
-        myFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-
-        //set time for countdown
-        Date match_date = null;
-        try {
-            match_date = myFormat.parse(matchDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        if (match_date.before(today)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 
 }

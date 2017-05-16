@@ -10,13 +10,8 @@ import android.view.ViewGroup;
 
 import com.awecode.muscn.R;
 import com.awecode.muscn.adapter.FixturesRecyclerViewAdapter;
-import com.awecode.muscn.model.http.fixtures.FixturesResponse;
-import com.awecode.muscn.model.http.fixtures.Result;
 import com.awecode.muscn.model.listener.RecyclerViewScrollListener;
 import com.awecode.muscn.util.Util;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,14 +24,11 @@ public class FixturesFragment extends MasterFragment {
 
     @BindView(R.id.matchFixtures)
     RecyclerView matchFixtures;
-    private FixturesResponse fixturesResponse;
     private FixturesRecyclerViewAdapter fixturesRecyclerViewAdapter;
     private RecyclerViewScrollListener mRecyclerViewScrollListener;
 
     public static FixturesFragment newInstance() {
         FixturesFragment fixturesFragment = new FixturesFragment();
-        //TODO fethe fixture from realm db
-        //fixturesFragment.fixturesResponse = fixturesResponse;
         return fixturesFragment;
     }
 
@@ -69,18 +61,9 @@ public class FixturesFragment extends MasterFragment {
 
     public void setupFixturesRecyclerview() {
         try {
-            if (fixturesResponse == null)
-                fixturesResponse = filterPastDateFromFixture(FixturesResponse.get_results());
-
-//            fixturesResponse = FixturesResponse.get_results();
-
-            if (fixturesResponse == null)
-                return;
-            else
-                showContentView();
             matchFixtures.setHasFixedSize(true);
             matchFixtures.setLayoutManager(new LinearLayoutManager(getActivity()));
-            fixturesRecyclerViewAdapter = new FixturesRecyclerViewAdapter(getActivity(), fixturesResponse);
+            fixturesRecyclerViewAdapter = new FixturesRecyclerViewAdapter(getActivity(), deletePastFixtureTable());
             matchFixtures.setAdapter(Util.getAnimationAdapter(fixturesRecyclerViewAdapter));
             mRecyclerViewScrollListener.onRecyclerViewScrolled(matchFixtures);
         } catch (Exception e) {
@@ -88,15 +71,5 @@ public class FixturesFragment extends MasterFragment {
         }
     }
 
-    private FixturesResponse filterPastDateFromFixture(FixturesResponse fixturesResponse) {
-        List<Result> filteredResults = new ArrayList<>();
-        for (Result fixture : fixturesResponse.getResults())
-            if (!Util.matchDateIsBeforeToday(fixture.getDatetime()))
-                filteredResults.add(fixture);
-
-
-        fixturesResponse.setResults(filteredResults);
-        return fixturesResponse;
-    }
 
 }

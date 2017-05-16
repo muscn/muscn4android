@@ -9,7 +9,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.awecode.muscn.R;
-import com.awecode.muscn.model.http.fixtures.FixturesResponse;
 import com.awecode.muscn.model.http.fixtures.Result;
 import com.awecode.muscn.util.Util;
 
@@ -31,13 +30,11 @@ import butterknife.ButterKnife;
 public class FixturesRecyclerViewAdapter extends RecyclerView.Adapter<FixturesRecyclerViewAdapter.FixtureViewHolder> {
 
     private Context context;
-    private FixturesResponse fixturesResponse;
     private List<Result> mDataList;
 
-    public FixturesRecyclerViewAdapter(Context context, FixturesResponse fixturesResponse) {
+    public FixturesRecyclerViewAdapter(Context context, List<Result> results) {
         this.context = context;
-        this.fixturesResponse = fixturesResponse;
-        this.mDataList = fixturesResponse.getResults();
+        this.mDataList = results;
     }
 
     @Override
@@ -87,15 +84,14 @@ public class FixturesRecyclerViewAdapter extends RecyclerView.Adapter<FixturesRe
 
             holder.mDayTextView.setText(Util.getTwoDigitNumber(mCalendar.get(Calendar.DAY_OF_MONTH)));
             holder.mWeekTextView.setText(mCalendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault()));
-            holder.mMonthYearTextView.setText(month + " " +String.valueOf(mCalendar.get(Calendar.YEAR)));
+            holder.mMonthYearTextView.setText(month + " " + String.valueOf(mCalendar.get(Calendar.YEAR)));
 
-            holder.mStadiumTimeTextView.setText(result.getVenue() + " at " + String.valueOf(mCalendar.get(Calendar.HOUR))+":"+ String.valueOf(mCalendar.get(Calendar.MINUTE))+mCalendar.getDisplayName(Calendar.AM_PM, Calendar.LONG, Locale.getDefault()));
+            holder.mStadiumTimeTextView.setText(result.getVenue() + " at " + String.valueOf(mCalendar.get(Calendar.HOUR)) + ":" + String.valueOf(mCalendar.get(Calendar.MINUTE)) + mCalendar.getDisplayName(Calendar.AM_PM, Calendar.LONG, Locale.getDefault()));
 
-            if(result.getIsHomeGame())
-            holder.mHomeVsAwayTeamTextView.setText(context.getString(R.string.manchester_united) + " vs " + result.getOpponent().getName() + " - " + result.getCompetitionYear().getCompetition().getName());
-            else if(!result.getIsHomeGame())
-                holder.mHomeVsAwayTeamTextView.setText(result.getOpponent().getName() + " vs " + context.getString(R.string.manchester_united)  + " - " + result.getCompetitionYear().getCompetition().getName());
-
+            if (result.getIsHomeGame())
+                holder.mHomeVsAwayTeamTextView.setText(context.getString(R.string.manchester_united) + " vs " + result.getOpponent().getName() + " - " + result.getCompetitionYear().getCompetition().getName());
+            else if (!result.getIsHomeGame())
+                holder.mHomeVsAwayTeamTextView.setText(result.getOpponent().getName() + " vs " + context.getString(R.string.manchester_united) + " - " + result.getCompetitionYear().getCompetition().getName());
 
 
 //            }
