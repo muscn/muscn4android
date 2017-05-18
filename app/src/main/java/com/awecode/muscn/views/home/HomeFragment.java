@@ -84,7 +84,7 @@ HomeFragment extends MasterFragment {
 
     private CountDownTimer mCountDownTimer;
     private RealmAsyncTask mTransaction;
-    private Collection<Result> realmFixtures = null;
+
 
     public static HomeFragment newInstance() {
         HomeFragment fragment = new HomeFragment();
@@ -138,6 +138,8 @@ HomeFragment extends MasterFragment {
      */
     public void requestFixturesList() {
         try {
+            if (mRealm.where(Result.class).count() < 1)
+                showProgressView("Loading data...");
             Observable<FixturesResponse> call = ServiceGenerator.createService(MuscnApiInterface.class).getFixtures();
             call.subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -204,14 +206,13 @@ HomeFragment extends MasterFragment {
      */
 
 
-
-
     /**
      * save all fixtures
      *
      * @param fixturesResponse
      */
     private List<Result> saveFixtures(final FixturesResponse fixturesResponse) {
+        Collection<Result> realmFixtures = null;
         List<Result> results = fixturesResponse.getResults();
         if (results != null && results.size() > 0) {
             List<Result> arrangedResults = filterPastDateFromFixture(results);

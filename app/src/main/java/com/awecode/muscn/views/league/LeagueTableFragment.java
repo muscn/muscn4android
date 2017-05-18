@@ -11,14 +11,14 @@ import android.view.ViewGroup;
 import com.awecode.muscn.R;
 import com.awecode.muscn.adapter.LeagueTableAdapter;
 import com.awecode.muscn.model.http.leaguetable.LeagueTableResponse;
-import com.awecode.muscn.model.listener.FixturesApiListener;
 import com.awecode.muscn.model.listener.RecyclerViewScrollListener;
 import com.awecode.muscn.util.Util;
 import com.awecode.muscn.util.retrofit.MuscnApiInterface;
-import com.awecode.muscn.views.BaseActivity;
 import com.awecode.muscn.views.HomeActivity;
 import com.awecode.muscn.views.MasterFragment;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import butterknife.BindView;
@@ -76,8 +76,12 @@ public class LeagueTableFragment extends MasterFragment {
         }
     }
 
+    /**
+     * fetch
+     */
     public void requestLeagueTable() {
-        showProgressView(getString(R.string.loading_league_table));
+        if (mRealm.where(LeagueTableResponse.class).count() < 1)
+            showProgressView(getString(R.string.loading_league_table));
         MuscnApiInterface mApiInterface = getApiInterface();
         Observable<List<LeagueTableResponse>> call = mApiInterface.getLeague();
         call.subscribeOn(Schedulers.io())
@@ -90,15 +94,31 @@ public class LeagueTableFragment extends MasterFragment {
 
                     @Override
                     public void onError(Throwable e) {
-//                        mActivity.showErrorView(e.getMessage() + ". Try again");
                         mActivity.noInternetConnectionDialog(mContext);
                     }
 
                     @Override
                     public void onNext(List<LeagueTableResponse> leagueTableResponses) {
-                        setUpAdapter(leagueTableResponses);
+                        setUpAdapter(handleLeagueTableResponse(leagueTableResponses));
                     }
                 });
+    }
+
+    /**
+     * save data in db and return the arraylist for recyclerview adapter
+     * @param leagueTableResponses
+     * @return
+     */
+    private List<LeagueTableResponse> handleLeagueTableResponse(final List<LeagueTableResponse> leagueTableResponses) {
+
+        Collection<LeagueTableResponse> realmTableList = null;
+        if (leagueTableResponses != null && leagueTableResponses.size() > 0) {
+            mRealm.beginTransaction();
+            realmTableList = mRealm.copyToRealm(leagueTableResponses);
+            mRealm.commitTransaction();
+        }
+        return new ArrayList<LeagueTableResponse>(realmTableList);
+
     }
 
     private void setUpAdapter(List<LeagueTableResponse> leagueTableResponses) {
