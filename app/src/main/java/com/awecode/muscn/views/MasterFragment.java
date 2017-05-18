@@ -100,6 +100,7 @@ public abstract class MasterFragment extends Fragment {
     protected void openFragment(Fragment fragment) {
         ((BaseActivity) mContext).openFragment(fragment);
     }
+
     protected List<Result> deletePastFixtureTable() {
         RealmResults<Result> results = mRealm.where(Result.class).findAll();
         for (Result data : results) {
@@ -122,6 +123,10 @@ public abstract class MasterFragment extends Fragment {
 
         return new ArrayList<Result>(mRealm.where(Result.class).findAll());
 
+    }
+
+    public void noInternetConnectionDialog() {
+        ((HomeActivity) mContext).noInternetConnectionDialog(mContext);
     }
 
 }

@@ -1,4 +1,4 @@
-package com.awecode.muscn.views;
+package com.awecode.muscn.views.fixture;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,6 +13,7 @@ import com.awecode.muscn.adapter.FixturesRecyclerViewAdapter;
 import com.awecode.muscn.model.http.fixtures.Result;
 import com.awecode.muscn.model.listener.RecyclerViewScrollListener;
 import com.awecode.muscn.util.Util;
+import com.awecode.muscn.views.MasterFragment;
 
 import java.util.List;
 

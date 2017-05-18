@@ -2,7 +2,6 @@ package com.awecode.muscn.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,35 +13,35 @@ import android.widget.TextView;
 import com.awecode.muscn.R;
 import com.awecode.muscn.model.http.leaguetable.LeagueTableResponse;
 
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.OrderedRealmCollection;
+import io.realm.RealmRecyclerViewAdapter;
 
 /**
  * Created by surensth on 9/27/16.
  */
 
-public class LeagueTableAdapter extends RecyclerView.Adapter<LeagueTableAdapter.LeagueViewHolder> {
+public class RealmLeagueTableAdapter extends RealmRecyclerViewAdapter<LeagueTableResponse, RealmLeagueTableAdapter.LeagueViewHolder> {
     Context mContext;
-    List<LeagueTableResponse> leagueList;
     String serialNumber;
     String club, p, gd, pts;
 
-    public LeagueTableAdapter(Context mContext, List<LeagueTableResponse> leagueList) {
-        this.mContext = mContext;
-        this.leagueList = leagueList;
+    public RealmLeagueTableAdapter(OrderedRealmCollection<LeagueTableResponse> data) {
+        super(data, true);
     }
+
 
     @Override
     public LeagueViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        mContext = parent.getContext();
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.league_table_row, parent, false);
         return new LeagueViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(LeagueViewHolder holder, int position) {
-        final LeagueTableResponse leagueTableResponse = leagueList.get(position);
+        final LeagueTableResponse leagueTableResponse = getItem(position);
         if (leagueTableResponse != null) {
             serialNumber = leagueTableResponse.getPosition();
             club = leagueTableResponse.getName().toString();
@@ -50,13 +49,10 @@ public class LeagueTableAdapter extends RecyclerView.Adapter<LeagueTableAdapter.
             gd = leagueTableResponse.getGd();
             pts = leagueTableResponse.getPts();
 
-            if (club.equalsIgnoreCase("Manchester United")) {
+            if (club.equalsIgnoreCase("Manchester United"))
                 holder.rowLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.colorPrimaryDark));
-//                holder.club.setTypeface(null, Typeface.BOLD);
-            } else {
+            else
                 holder.rowLayout.setBackgroundColor(Color.TRANSPARENT);
-//                holder.club.setTypeface(null, Typeface.NORMAL);
-            }
 
 
 //       White divider line is hide if the table item is last
@@ -94,10 +90,6 @@ public class LeagueTableAdapter extends RecyclerView.Adapter<LeagueTableAdapter.
 
     }
 
-    @Override
-    public int getItemCount() {
-        return leagueList.size();
-    }
 
     public static class LeagueViewHolder extends RecyclerView.ViewHolder {
         public final View mView;

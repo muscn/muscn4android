@@ -61,15 +61,22 @@ public class InjuriesFragment extends MasterFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        mActivity.setCustomTitle(R.string.injuries);
+        initializeRecyclerView();
+
+        //start request for injuries
+        if (Util.checkInternetConnection(mContext))
+            requestInjuries();
+        else
+            ((HomeActivity) mContext).noInternetConnectionDialog(mContext);
+
+    }
+
+    private void initializeRecyclerView() {
         mLinearLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
         mRecyclerView.setHasFixedSize(true);
-        mActivity.setCustomTitle(R.string.injuries);
-        if (Util.checkInternetConnection(mContext))
-            requestInjuries();
-        else {
-            ((HomeActivity) mContext).noInternetConnectionDialog(mContext);
-        }
     }
 
     public void requestInjuries() {

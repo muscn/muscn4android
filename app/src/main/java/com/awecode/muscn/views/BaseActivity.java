@@ -18,6 +18,7 @@ import com.awecode.muscn.util.Util;
 import com.awecode.muscn.util.retrofit.MuscnApiInterface;
 import com.awecode.muscn.util.retrofit.ServiceGenerator;
 import com.awecode.muscn.util.stateLayout.StateLayout;
+import com.awecode.muscn.views.fixture.FixturesFragment;
 import com.awecode.muscn.views.home.HomeFragment;
 import com.awecode.muscn.views.injuries.InjuriesFragment;
 import com.awecode.muscn.views.league.LeagueTableFragment;
@@ -130,14 +131,14 @@ public abstract class BaseActivity extends AppCompatActivity {
         ft.commitAllowingStateLoss();
     }
 
-        public void openFragmentNoHistory(Fragment fragment) {
-            FragmentTransaction ft = getSupportFragmentManager()
-                    .beginTransaction();
-            ft.replace(R.id.container,
-                    fragment);
-            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-            ft.commitAllowingStateLoss();
-        }
+    public void openFragmentNoHistory(Fragment fragment) {
+        FragmentTransaction ft = getSupportFragmentManager()
+                .beginTransaction();
+        ft.replace(R.id.container,
+                fragment);
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        ft.commitAllowingStateLoss();
+    }
 
 //    public void setupFloatingActionButton() {
 //        mActionMenu = (FloatingActionMenu) findViewById(R.id.menu2);
@@ -247,7 +248,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
 
-
     /**
      * when recycler view is scrolled, floating action button hide/show
      *
@@ -289,7 +289,5 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public void noInternetConnectionDialog(Context mContext) {
         showDialog(mContext, "Oops!", getString(R.string.no_internet_message));
-//        showErrorView();
-//        mActionMenu.hideMenu(true);
     }
 }
