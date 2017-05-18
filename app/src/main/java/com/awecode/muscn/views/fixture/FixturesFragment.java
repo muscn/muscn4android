@@ -59,19 +59,23 @@ public class FixturesFragment extends MasterFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        setupFixturesRecyclerview();
+        initializeRecyclerview();
+        populateFixtureList();
 
     }
 
-    public void setupFixturesRecyclerview() {
+    private void initializeRecyclerview() {
+        matchFixtures.setHasFixedSize(true);
+        matchFixtures.setLayoutManager(new LinearLayoutManager(getActivity()));
+    }
+
+    public void populateFixtureList() {
         try {
             //delete past fixtures from db
             List<Result> results = deletePastFixtureTable();
             if (results != null
                     && results.size() > 0) {
-                matchFixtures.setHasFixedSize(true);
-                matchFixtures.setLayoutManager(new LinearLayoutManager(getActivity()));
-                fixturesRecyclerViewAdapter = new FixturesRecyclerViewAdapter(getActivity(), results);
+                fixturesRecyclerViewAdapter = new FixturesRecyclerViewAdapter(mRealm.where(Result.class).findAll());
                 matchFixtures.setAdapter(Util.getAnimationAdapter(fixturesRecyclerViewAdapter));
                 mRecyclerViewScrollListener.onRecyclerViewScrolled(matchFixtures);
             }

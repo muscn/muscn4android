@@ -89,5 +89,8 @@ dependencies {
 
     //glassfish annotation
     provided 'org.glassfish:javax.annotation:10.0-b28'
+
+    //realmadapter
+    compile 'io.realm:android-adapters:2.1.0'
 }
 apply plugin: 'com.google.gms.google-services'

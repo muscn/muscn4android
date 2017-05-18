@@ -16,29 +16,30 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.OrderedRealmCollection;
+import io.realm.RealmRecyclerViewAdapter;
 
 /**
  * Created by suresh on 10/2/16.
  */
 
-public class FixturesRecyclerViewAdapter extends RecyclerView.Adapter<FixturesRecyclerViewAdapter.FixtureViewHolder> {
+public class FixturesRecyclerViewAdapter extends RealmRecyclerViewAdapter<Result, FixturesRecyclerViewAdapter.FixtureViewHolder> {
 
     private Context context;
-    private List<Result> mDataList;
 
-    public FixturesRecyclerViewAdapter(Context context, List<Result> results) {
-        this.context = context;
-        this.mDataList = results;
+    public FixturesRecyclerViewAdapter(OrderedRealmCollection<Result> data) {
+        super(data, true);
     }
+
 
     @Override
     public FixtureViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        context = parent.getContext();
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fixtures_row_item, null);
         FixtureViewHolder fixtureViewHolder = new FixtureViewHolder(view);
         return fixtureViewHolder;
@@ -51,7 +52,7 @@ public class FixturesRecyclerViewAdapter extends RecyclerView.Adapter<FixturesRe
     public void onBindViewHolder(FixtureViewHolder holder, int position) {
 
         try {
-            Result result = mDataList.get(position);
+            Result result = getItem(position);
 
             mCalendar = Calendar.getInstance();
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss'Z'");
@@ -82,10 +83,6 @@ public class FixturesRecyclerViewAdapter extends RecyclerView.Adapter<FixturesRe
         }
     }
 
-    @Override
-    public int getItemCount() {
-        return mDataList.size();
-    }
 
     public static class FixtureViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.table_row_divider)
