@@ -4,6 +4,7 @@ package com.awecode.muscn.model.http.eplmatchweek;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+
 public class _20161001 implements Comparable<_20161001> {
 
     @SerializedName("home_team")
