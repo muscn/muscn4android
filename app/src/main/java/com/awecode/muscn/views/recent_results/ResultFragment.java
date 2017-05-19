@@ -1,4 +1,4 @@
-package com.awecode.muscn.views.recentresults;
+package com.awecode.muscn.views.recent_results;
 
 import android.content.Intent;
 import android.os.Bundle;

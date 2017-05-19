@@ -24,7 +24,7 @@ import com.awecode.muscn.views.injuries.InjuriesFragment;
 import com.awecode.muscn.views.league.LeagueTableFragment;
 import com.awecode.muscn.views.matchweekfixtures.EplMatchWeekFixtureFragment;
 import com.awecode.muscn.views.nav.NavigationDrawerFragment;
-import com.awecode.muscn.views.recentresults.ResultFragment;
+import com.awecode.muscn.views.recent_results.ResultFragment;
 import com.awecode.muscn.views.top_scorers.TopScorersFragment;
 
 import butterknife.BindView;
