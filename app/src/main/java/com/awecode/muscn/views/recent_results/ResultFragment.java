@@ -5,30 +5,27 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.awecode.muscn.R;
 import com.awecode.muscn.adapter.ResultAdapter;
-import com.awecode.muscn.model.Item;
+import com.awecode.muscn.model.http.recent_results.RecentResultData;
 import com.awecode.muscn.model.http.recent_results.RecentResultsResponse;
 import com.awecode.muscn.model.listener.RecyclerViewScrollListener;
 import com.awecode.muscn.model.listener.ResultItemClickListener;
 import com.awecode.muscn.util.Constants;
 import com.awecode.muscn.util.Util;
-import com.awecode.muscn.util.retrofit.MuscnApiInterface;
-import com.awecode.muscn.util.retrofit.ServiceGenerator;
-import com.awecode.muscn.views.HomeActivity;
 import com.awecode.muscn.views.MasterFragment;
 import com.awecode.muscn.views.resultdetails.ResultDetailsActivity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.Realm;
+import io.realm.RealmAsyncTask;
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -41,11 +38,9 @@ import rx.schedulers.Schedulers;
 public class ResultFragment extends MasterFragment implements ResultItemClickListener {
     @BindView(R.id.matchResultRecyclerview)
     RecyclerView mMatchResultRecyclerview;
-
-    private List<Item> data;
     private ResultAdapter mResultAdapter;
-    private MuscnApiInterface mApiInterface;
     public RecyclerViewScrollListener recyclerViewScrollListener;
+    private RealmAsyncTask mTransaction;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -64,22 +59,44 @@ public class ResultFragment extends MasterFragment implements ResultItemClickLis
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        data = new ArrayList<Item>();
         mActivity.setCustomTitle(R.string.recent_results);
+        initializeRecyclerView();
+        checkInternetConnection();
+    }
+
+    private void initializeRecyclerView() {
+        mMatchResultRecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mMatchResultRecyclerview.setHasFixedSize(true);
+    }
+
+    /**
+     * check internet, initialize request
+     * if no internet, show message incase of empty db,
+     * show saved data incase of data in db
+     */
+    private void checkInternetConnection() {
         if (Util.checkInternetConnection(mContext))
             requestMatchResults();
         else {
-            ((HomeActivity) mContext).noInternetConnectionDialog(mContext);
+            if (getTableDataCount(RecentResultData.class) < 1)
+                noInternetConnectionDialog();
+            else
+                setUpAdapter();
+
         }
     }
+
 
     /**
      * populate match result, opponent name and match score
      */
-    public void setupMatchResultRecyclerview() {
-        mMatchResultRecyclerview.setHasFixedSize(true);
-        mMatchResultRecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mResultAdapter = new ResultAdapter(getActivity(), data);
+    public void setUpAdapter() {
+        if (mResultAdapter != null) {
+            mResultAdapter.notifyDataSetChanged();
+            return;
+        }
+
+        mResultAdapter = new ResultAdapter(mRealm.where(RecentResultData.class).findAll());
         mMatchResultRecyclerview.setAdapter(mResultAdapter);
         recyclerViewScrollListener.onRecyclerViewScrolled(mMatchResultRecyclerview);
         mResultAdapter.mResultItemClickListener = this;
@@ -91,8 +108,11 @@ public class ResultFragment extends MasterFragment implements ResultItemClickLis
      * fetch manutd recent match results list
      */
     public void requestMatchResults() {
-        showProgressView(getString(R.string.loading_recent_results));
-        mApiInterface = ServiceGenerator.createService(MuscnApiInterface.class);
+        if (getTableDataCount(RecentResultData.class) < 1)
+            showProgressView(getString(R.string.loading_recent_results));
+        else
+            setUpAdapter();
+
         Observable<RecentResultsResponse> call = mApiInterface.getResults();
         call.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -104,21 +124,57 @@ public class ResultFragment extends MasterFragment implements ResultItemClickLis
 
                     @Override
                     public void onError(Throwable e) {
-//                        mActivity.showErrorView(e.getMessage() + ". Try again");
                         mActivity.noInternetConnectionDialog(mContext);
                     }
 
                     @Override
                     public void onNext(RecentResultsResponse fixturesResponse) {
-                        for (int i = 0; i < fixturesResponse.getResults().size(); i++) {
-                            Item demand = new Item(getActivity(), ResultAdapter.HEADER, fixturesResponse);
-                            demand.invisibleChildren = new ArrayList<>();
-                            demand.invisibleChildren.add(new Item(getActivity(), ResultAdapter.CHILD));
-                            data.add(demand);
-                        }
-                        setupMatchResultRecyclerview();
+                        if (fixturesResponse != null
+                                && fixturesResponse.getRecentResultDatas() != null)
+                            deleteDataFromDBAndSave(fixturesResponse.getRecentResultDatas());
                     }
                 });
+    }
+
+    /**
+     * first delete the existing  data from db
+     */
+    private void deleteDataFromDBAndSave(final List<RecentResultData> responseList) {
+        try {
+            //delete fixture results first
+            mTransaction = mRealm.executeTransactionAsync(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+                    realm.delete(RecentResultData.class);
+                }
+            }, new Realm.Transaction.OnSuccess() {
+                @Override
+                public void onSuccess() {
+                    //now save fixture data
+                    saveResponseData(responseList);
+                    setUpAdapter();
+
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    /**
+     * save data in db and return the arraylist for recyclerview adapter
+     *
+     * @param responseList
+     * @return
+     */
+    private void saveResponseData(final List<RecentResultData> responseList) {
+
+        if (responseList != null && responseList.size() > 0) {
+            mRealm.beginTransaction();
+            mRealm.copyToRealm(responseList);
+            mRealm.commitTransaction();
+        }
     }
 
     @Override
@@ -129,9 +185,17 @@ public class ResultFragment extends MasterFragment implements ResultItemClickLis
 
     @Override
     public void onRecentResultClicked(int resultId) {
-        Log.v("tess", "id is " + resultId);
         Intent intent = new Intent(mContext, ResultDetailsActivity.class);
         intent.putExtra(Constants.ID, resultId);
         startActivity(intent);
     }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mTransaction != null && !mTransaction.isCancelled())
+            mTransaction.cancel();
+
+    }
+
 }

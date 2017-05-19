@@ -1,6 +1,7 @@
 package com.awecode.muscn.adapter;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,126 +13,95 @@ import android.widget.TextView;
 
 import com.awecode.muscn.R;
 import com.awecode.muscn.model.Item;
-import com.awecode.muscn.model.http.recent_results.Result;
+import com.awecode.muscn.model.http.recent_results.RecentResultData;
 import com.awecode.muscn.model.listener.ResultItemClickListener;
 import com.awecode.muscn.util.Util;
-import com.awecode.muscn.views.HomeActivity;
 import com.squareup.picasso.Picasso;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.OrderedRealmCollection;
+import io.realm.RealmRecyclerViewAdapter;
 
 /**
  * Created by suresh on 3/28/16.
  */
-public class ResultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    public static final int HEADER = 0;
-    public static final int CHILD = 1;
-    public static final String TAG = HomeActivity.class.getSimpleName();
+public class ResultAdapter extends RealmRecyclerViewAdapter<RecentResultData, RecyclerView.ViewHolder> {
+    public static final String TAG = ResultAdapter.class.getSimpleName();
     private Context context;
-    private List<Item> itemList;
+
     public ResultItemClickListener mResultItemClickListener;
 
-    public ResultAdapter(Context context, List<Item> item) {
-        this.context = context;
-        this.itemList = item;
+    public ResultAdapter(@Nullable OrderedRealmCollection<RecentResultData> data) {
+        super(data, true);
     }
 
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view;
-        switch (viewType) {
-            case HEADER:
-                LayoutInflater inflater = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                view = inflater.inflate(R.layout.epl_matchweek_fixture_row_item, parent, false);
-                HeaderViewHolder header = new HeaderViewHolder(view);
-                return header;
-            case CHILD:
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.match_result_expandedview_row_item, parent, false);
-                return new ChildViewHolder(view);
-        }
+        context = parent.getContext();
+        LayoutInflater inflater = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = inflater.inflate(R.layout.epl_matchweek_fixture_row_item, parent, false);
+        HeaderViewHolder header = new HeaderViewHolder(view);
+        return header;
 
-        return null;
     }
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
-        final Item item = itemList.get(position);
-        switch (item.type) {
-            case HEADER:
-                final Result result = itemList.get(position).getMatchResultResponse().getResults().get(position);
-                final HeaderViewHolder itemController = (HeaderViewHolder) holder;
-                if (result.getIsHomeGame()) {
-                    itemController.eplMatchweekHomeTeamShortName.setText(R.string.manutd_shortname);
-                    if (result.getMufcScore() == null) {
-                        itemController.eplMatchweekHomeTeamScore.setText("");
-                    } else
-                        itemController.eplMatchweekHomeTeamScore.setText(result.getMufcScore().toString());
-                    if (result.getOpponentShortName() == null || result.getOpponentShortName().isEmpty())
-                        itemController.eplMatchweekAwayTeamShortName.setText(result.getOpponentName().substring(0, 3).toUpperCase());
-                    else
-                        itemController.eplMatchweekAwayTeamShortName.setText(result.getOpponentShortName().toUpperCase());
-                    itemController.eplMatchweekTimeandHomeGround.setText(Util.commonDateFormatter(result.getDatetime(), "yyyy-MM-dd'T'hh:mm:ss'Z'") + "\nOldTraffod");
-                    if (result.getOpponentScore() == null) {
-                        itemController.eplMatchweekAwayTeamScore.setText("?");
-                    } else
-                        itemController.eplMatchweekAwayTeamScore.setText(result.getOpponentScore().toString());
-                    itemController.eplMatchweekFixtureHomeTeamLogo.setImageResource(R.drawable.logo_manutd);
-                    Picasso.with(context).load("http://manutd.org.np/" + result.getOpponentCrest()).into(itemController.eplMatchweekFixtureAwayTeamLogo);
 
-                } else {
-                    itemController.eplMatchweekAwayTeamShortName.setText(R.string.manutd_shortname);
-                    if (result.getOpponentScore() == null) {
-                        itemController.eplMatchweekHomeTeamScore.setText("?");
-                    } else
-                        itemController.eplMatchweekHomeTeamScore.setText(result.getOpponentScore().toString());
-                    if (result.getOpponentShortName() == null || result.getOpponentShortName().isEmpty())
-                        itemController.eplMatchweekHomeTeamShortName.setText(result.getOpponentName().substring(0, 3).toUpperCase());
-                    else
-                        itemController.eplMatchweekHomeTeamShortName.setText(result.getOpponentShortName());
-                    if (result.getMufcScore() == null) {
-                        itemController.eplMatchweekAwayTeamScore.setText("?");
-                    } else
-                        itemController.eplMatchweekAwayTeamScore.setText(result.getMufcScore().toString());
-                    if (result.getVenue().contains(","))
-                        itemController.eplMatchweekTimeandHomeGround.setText(Util.commonDateFormatter(result.getDatetime(), "yyyy-MM-dd'T'hh:mm:ss'Z'") + "\n" + result.getVenue().substring(0, result.getVenue().indexOf(",")));
-                    else
-                        itemController.eplMatchweekTimeandHomeGround.setText(Util.commonDateFormatter(result.getDatetime(), "yyyy-MM-dd'T'hh:mm:ss'Z'") + "\n" + result.getVenue());
-                    Picasso.with(context).load("http://manutd.org.np/" + result.getOpponentCrest()).into(itemController.eplMatchweekFixtureHomeTeamLogo);
-                    Log.v("TEST", "crest: " + result.getOpponentCrest());
-                    itemController.eplMatchweekFixtureAwayTeamLogo.setImageResource(R.drawable.logo_manutd);
-                }
-                itemController.matchResultRowLayout.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mResultItemClickListener.onRecentResultClicked(result.getId());
-                    }
-                });
+        final RecentResultData recentResultData = getItem(position);
+        final HeaderViewHolder itemController = (HeaderViewHolder) holder;
+        if (recentResultData.getIsHomeGame()) {
+            itemController.eplMatchweekHomeTeamShortName.setText(R.string.manutd_shortname);
+            if (recentResultData.getMufcScore() == null) {
+                itemController.eplMatchweekHomeTeamScore.setText("");
+            } else
+                itemController.eplMatchweekHomeTeamScore.setText(recentResultData.getMufcScore().toString());
+            if (recentResultData.getOpponentShortName() == null || recentResultData.getOpponentShortName().isEmpty())
+                itemController.eplMatchweekAwayTeamShortName.setText(recentResultData.getOpponentName().substring(0, 3).toUpperCase());
+            else
+                itemController.eplMatchweekAwayTeamShortName.setText(recentResultData.getOpponentShortName().toUpperCase());
+            itemController.eplMatchweekTimeandHomeGround.setText(Util.commonDateFormatter(recentResultData.getDatetime(), "yyyy-MM-dd'T'hh:mm:ss'Z'") + "\nOldTraffod");
+            if (recentResultData.getOpponentScore() == null) {
+                itemController.eplMatchweekAwayTeamScore.setText("?");
+            } else
+                itemController.eplMatchweekAwayTeamScore.setText(recentResultData.getOpponentScore().toString());
+            itemController.eplMatchweekFixtureHomeTeamLogo.setImageResource(R.drawable.logo_manutd);
+            Picasso.with(context).load("http://manutd.org.np/" + recentResultData.getOpponentCrest()).into(itemController.eplMatchweekFixtureAwayTeamLogo);
 
-                break;
-            case CHILD:
-                final ChildViewHolder itemcontroller = (ChildViewHolder) holder;
-                itemcontroller.awayTeamExpandedDetailView.setVisibility(View.GONE);
-                itemcontroller.expandedviewHomeTeamScore.setVisibility(View.GONE);
-                itemcontroller.childViewScoreLayout.setVisibility(View.GONE);
-                itemcontroller.childRefferalItem = item;
-                break;
+        } else {
+            itemController.eplMatchweekAwayTeamShortName.setText(R.string.manutd_shortname);
+            if (recentResultData.getOpponentScore() == null) {
+                itemController.eplMatchweekHomeTeamScore.setText("?");
+            } else
+                itemController.eplMatchweekHomeTeamScore.setText(recentResultData.getOpponentScore().toString());
+            if (recentResultData.getOpponentShortName() == null || recentResultData.getOpponentShortName().isEmpty())
+                itemController.eplMatchweekHomeTeamShortName.setText(recentResultData.getOpponentName().substring(0, 3).toUpperCase());
+            else
+                itemController.eplMatchweekHomeTeamShortName.setText(recentResultData.getOpponentShortName());
+            if (recentResultData.getMufcScore() == null) {
+                itemController.eplMatchweekAwayTeamScore.setText("?");
+            } else
+                itemController.eplMatchweekAwayTeamScore.setText(recentResultData.getMufcScore().toString());
+            if (recentResultData.getVenue().contains(","))
+                itemController.eplMatchweekTimeandHomeGround.setText(Util.commonDateFormatter(recentResultData.getDatetime(), "yyyy-MM-dd'T'hh:mm:ss'Z'") + "\n" + recentResultData.getVenue().substring(0, recentResultData.getVenue().indexOf(",")));
+            else
+                itemController.eplMatchweekTimeandHomeGround.setText(Util.commonDateFormatter(recentResultData.getDatetime(), "yyyy-MM-dd'T'hh:mm:ss'Z'") + "\n" + recentResultData.getVenue());
+            Picasso.with(context).load("http://manutd.org.np/" + recentResultData.getOpponentCrest()).into(itemController.eplMatchweekFixtureHomeTeamLogo);
+            Log.v("TEST", "crest: " + recentResultData.getOpponentCrest());
+            itemController.eplMatchweekFixtureAwayTeamLogo.setImageResource(R.drawable.logo_manutd);
         }
-    }
+        itemController.matchResultRowLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mResultItemClickListener.onRecentResultClicked(recentResultData.getId());
+            }
+        });
 
 
-    @Override
-    public int getItemViewType(int position) {
-        return itemList.get(position).type;
     }
 
-    @Override
-    public int getItemCount() {
-        return itemList.size();
-    }
 
     /**
      * header view holder for recent results
@@ -162,43 +132,6 @@ public class ResultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         public Item headerRefferalItem;
 
         HeaderViewHolder(View view) {
-            super(view);
-            ButterKnife.bind(this, view);
-        }
-    }
-
-
-    /**
-     * expanded view holder for recent results
-     */
-    static class ChildViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.expandedViewEventTime)
-        TextView expandedViewEventTime;
-        @BindView(R.id.expandedEventPlayerName)
-        TextView expandedEventPlayerName;
-        @BindView(R.id.expandedEventImageview)
-        ImageView expandedEventImageview;
-        @BindView(R.id.expandedviewHomeTeamEventHolder)
-        LinearLayout expandedviewHomeTeamEventHolder;
-        @BindView(R.id.homeTeamExpandedDetailView)
-        LinearLayout homeTeamExpandedDetailView;
-        @BindView(R.id.expandedviewHomeTeamScore)
-        TextView expandedviewHomeTeamScore;
-        @BindView(R.id.expandedviewAwayTeamScore)
-        TextView expandedviewAwayTeamScore;
-        @BindView(R.id.expandedEventAwayImageview)
-        ImageView expandedEventAwayImageview;
-        @BindView(R.id.expandedEventAwayPlayerName)
-        TextView expandedEventAwayPlayerName;
-        @BindView(R.id.expandedviewAwayTeamEventHolder)
-        LinearLayout expandedviewAwayTeamEventHolder;
-        @BindView(R.id.awayTeamExpandedDetailView)
-        LinearLayout awayTeamExpandedDetailView;
-        @BindView(R.id.childViewScoreLayout)
-        LinearLayout childViewScoreLayout;
-        public Item childRefferalItem;
-
-        public ChildViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
         }
