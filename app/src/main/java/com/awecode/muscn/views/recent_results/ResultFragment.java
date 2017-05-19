@@ -26,6 +26,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.realm.Realm;
 import io.realm.RealmAsyncTask;
+import io.realm.Sort;
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -96,7 +97,7 @@ public class ResultFragment extends MasterFragment implements ResultItemClickLis
             return;
         }
 
-        mResultAdapter = new ResultAdapter(mRealm.where(RecentResultData.class).findAll());
+        mResultAdapter = new ResultAdapter(mRealm.where(RecentResultData.class).findAllSorted("datetime", Sort.DESCENDING));
         mMatchResultRecyclerview.setAdapter(mResultAdapter);
         recyclerViewScrollListener.onRecyclerViewScrolled(mMatchResultRecyclerview);
         mResultAdapter.mResultItemClickListener = this;
