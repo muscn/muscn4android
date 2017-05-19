@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.view.View;
 
+import com.awecode.muscn.MyApplication;
 import com.awecode.muscn.R;
 import com.awecode.muscn.model.http.fixtures.Result;
 import com.awecode.muscn.util.Util;
@@ -14,7 +15,6 @@ import com.awecode.muscn.util.retrofit.MuscnApiInterface;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.ButterKnife;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
@@ -40,7 +40,7 @@ public abstract class MasterFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ButterKnife.bind(this, view);
+        mApiInterface = getApiInterface();
         changeRandomParallaxImage();
         initializedRealm();
     }
@@ -60,8 +60,7 @@ public abstract class MasterFragment extends Fragment {
     }
 
     public MuscnApiInterface getApiInterface() {
-        mApiInterface = ((BaseActivity) mContext).mApiInterface;
-        return mApiInterface;
+        return mApiInterface = ((MyApplication) getActivity().getApplication()).getApiInterface();
     }
 
     public void showProgressView(String message) {
@@ -130,7 +129,7 @@ public abstract class MasterFragment extends Fragment {
     }
 
 
-    protected long getTableDataCount(Class type){
+    protected long getTableDataCount(Class type) {
         return mRealm.where(type).count();
     }
 

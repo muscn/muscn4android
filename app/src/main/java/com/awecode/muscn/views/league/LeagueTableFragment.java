@@ -13,7 +13,6 @@ import com.awecode.muscn.adapter.RealmLeagueTableAdapter;
 import com.awecode.muscn.model.http.leaguetable.LeagueTableResponse;
 import com.awecode.muscn.model.listener.RecyclerViewScrollListener;
 import com.awecode.muscn.util.Util;
-import com.awecode.muscn.util.retrofit.MuscnApiInterface;
 import com.awecode.muscn.views.MasterFragment;
 
 import java.util.Collection;
@@ -103,7 +102,8 @@ public class LeagueTableFragment extends MasterFragment {
     public void requestLeagueTable() {
         if (mRealm.where(LeagueTableResponse.class).count() < 1)
             showProgressView(getString(R.string.loading_league_table));
-        MuscnApiInterface mApiInterface = getApiInterface();
+        else
+            setUpAdapter();
         Observable<List<LeagueTableResponse>> call = mApiInterface.getLeague();
         call.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -174,6 +174,10 @@ public class LeagueTableFragment extends MasterFragment {
      * populate leaguetable list in db
      */
     private void setUpAdapter() {
+        if (mAdapter != null) {
+            mAdapter.notifyDataSetChanged();
+            return;
+        }
         mAdapter = new RealmLeagueTableAdapter(mRealm.where(LeagueTableResponse.class).findAll());
         mRecyclerView.setAdapter(Util.getAnimationAdapter(mAdapter));
         recyclerViewScrollListener.onRecyclerViewScrolled(mRecyclerView);

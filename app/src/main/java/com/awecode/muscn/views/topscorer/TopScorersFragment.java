@@ -13,7 +13,6 @@ import com.awecode.muscn.adapter.TopScorerAdapter;
 import com.awecode.muscn.model.http.topscorers.TopScorersResponse;
 import com.awecode.muscn.model.listener.RecyclerViewScrollListener;
 import com.awecode.muscn.util.Util;
-import com.awecode.muscn.util.retrofit.MuscnApiInterface;
 import com.awecode.muscn.views.HomeActivity;
 import com.awecode.muscn.views.MasterFragment;
 
@@ -77,7 +76,6 @@ public class TopScorersFragment extends MasterFragment {
     }
 
     public void requestTopScorers() {
-        MuscnApiInterface mApiInterface = getApiInterface();
         Observable<List<TopScorersResponse>> call = mApiInterface.getTopScorers();
         call.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

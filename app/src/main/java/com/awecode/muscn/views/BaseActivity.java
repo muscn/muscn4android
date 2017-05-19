@@ -13,10 +13,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.awecode.muscn.MyApplication;
 import com.awecode.muscn.R;
 import com.awecode.muscn.util.Util;
 import com.awecode.muscn.util.retrofit.MuscnApiInterface;
-import com.awecode.muscn.util.retrofit.ServiceGenerator;
 import com.awecode.muscn.util.stateLayout.StateLayout;
 import com.awecode.muscn.views.fixture.FixturesFragment;
 import com.awecode.muscn.views.home.HomeFragment;
@@ -34,7 +34,7 @@ import butterknife.ButterKnife;
  * Created by munnadroid on 9/21/16.
  */
 public abstract class BaseActivity extends AppCompatActivity {
-    protected MuscnApiInterface mApiInterface = ServiceGenerator.createService(MuscnApiInterface.class);
+    protected MuscnApiInterface mApiInterface = null;
     @BindView(R.id.stateLayout)
     StateLayout mStateLayout;
     @BindView(R.id.title)
@@ -63,6 +63,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         mContext = this;
         mActivity = this;
+        mApiInterface = ((MyApplication) getApplication()).getApiInterface();
     }
 
     public void setup_onErrorClickListener() {

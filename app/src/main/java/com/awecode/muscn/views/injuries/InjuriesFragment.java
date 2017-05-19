@@ -11,14 +11,18 @@ import android.view.ViewGroup;
 import com.awecode.muscn.R;
 import com.awecode.muscn.adapter.InjuriesAdapter;
 import com.awecode.muscn.model.http.injuries.InjuriesResponse;
+import com.awecode.muscn.model.http.injuries.InjuryResult;
 import com.awecode.muscn.model.listener.RecyclerViewScrollListener;
 import com.awecode.muscn.util.Util;
-import com.awecode.muscn.util.retrofit.MuscnApiInterface;
-import com.awecode.muscn.views.HomeActivity;
 import com.awecode.muscn.views.MasterFragment;
+
+import java.util.Collection;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.Realm;
+import io.realm.RealmAsyncTask;
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -35,6 +39,7 @@ public class InjuriesFragment extends MasterFragment {
     InjuriesAdapter mAdapter;
     LinearLayoutManager mLinearLayoutManager;
     RecyclerViewScrollListener mRecyclerViewScrollListener;
+    private RealmAsyncTask mTransaction;
 
     public static InjuriesFragment newInstance() {
         InjuriesFragment fragment = new InjuriesFragment();
@@ -64,13 +69,26 @@ public class InjuriesFragment extends MasterFragment {
 
         mActivity.setCustomTitle(R.string.injuries);
         initializeRecyclerView();
+        checkInternetConnection();
 
-        //start request for injuries
+    }
+
+
+    /**
+     * check internet, initialize request
+     * if no internet, show message incase of empty db,
+     * show saved data incase of data in db
+     */
+    private void checkInternetConnection() {
         if (Util.checkInternetConnection(mContext))
             requestInjuries();
-        else
-            ((HomeActivity) mContext).noInternetConnectionDialog(mContext);
+        else {
+            if (getTableDataCount(InjuryResult.class) < 1)
+                noInternetConnectionDialog();
+            else
+                setUpAdapter();
 
+        }
     }
 
     private void initializeRecyclerView() {
@@ -79,9 +97,16 @@ public class InjuriesFragment extends MasterFragment {
         mRecyclerView.setHasFixedSize(true);
     }
 
+    /**
+     * fetch injury data from api
+     */
     public void requestInjuries() {
-        showProgressView(getString(R.string.loading_injuries));
-        MuscnApiInterface mApiInterface = getApiInterface();
+
+        if (getTableDataCount(InjuryResult.class) < 1)
+            showProgressView(getString(R.string.loading_injuries));
+        else
+            setUpAdapter();
+
         Observable<InjuriesResponse> call = mApiInterface.getInjuredPlayers();
         call.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -93,21 +118,77 @@ public class InjuriesFragment extends MasterFragment {
 
                     @Override
                     public void onError(Throwable e) {
-//                        mActivity.showErrorView(e.getMessage() + ". Try again");
                         mActivity.noInternetConnectionDialog(mContext);
                     }
 
                     @Override
                     public void onNext(InjuriesResponse injuriesResponse) {
-                        setUpAdapter(injuriesResponse);
+                        if (injuriesResponse != null
+                                && injuriesResponse.getInjuryResults() != null)
+                            deleteDataFromDBAndSave(injuriesResponse.getInjuryResults());
                     }
                 });
     }
 
-    private void setUpAdapter(InjuriesResponse injuriesResponse) {
-        mAdapter = new InjuriesAdapter(mContext, injuriesResponse);
+    /**
+     * first delete the existing  db data
+     */
+    private void deleteDataFromDBAndSave(final List<InjuryResult> injuryResults) {
+        try {
+            //delete fixture results first
+            mTransaction = mRealm.executeTransactionAsync(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+                    realm.delete(InjuryResult.class);
+                }
+            }, new Realm.Transaction.OnSuccess() {
+                @Override
+                public void onSuccess() {
+                    //now save fixture data
+                    saveDataInDB(injuryResults);
+                    setUpAdapter();
+
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * save data in db
+     *
+     * @param injuryResults
+     */
+    private void saveDataInDB(List<InjuryResult> injuryResults) {
+        Collection<InjuryResult> realmTableList = null;
+        if (injuryResults != null && injuryResults.size() > 0) {
+            mRealm.beginTransaction();
+            realmTableList = mRealm.copyToRealm(injuryResults);
+            mRealm.commitTransaction();
+        }
+    }
+
+    /**
+     * populate data in recyclerview
+     */
+    private void setUpAdapter() {
+        if (mAdapter != null) {
+            mAdapter.notifyDataSetChanged();
+            return;
+        }
+        mAdapter = new InjuriesAdapter(mRealm.where(InjuryResult.class).findAll());
         mRecyclerView.setAdapter(Util.getAnimationAdapter(mAdapter));
         mRecyclerViewScrollListener.onRecyclerViewScrolled(mRecyclerView);
     }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mTransaction != null && !mTransaction.isCancelled())
+            mTransaction.cancel();
+
+    }
+
 
 }
