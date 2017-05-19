@@ -69,6 +69,9 @@ public class FixturesFragment extends MasterFragment {
         matchFixtures.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 
+    /**
+     * populate saved fixture db in listview
+     */
     public void populateFixtureList() {
         try {
             //delete past fixtures from db

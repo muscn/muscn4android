@@ -88,7 +88,7 @@ public class LeagueTableFragment extends MasterFragment {
         if (Util.checkInternetConnection(mContext))
             requestLeagueTable();
         else {
-            if (mRealm.where(LeagueTableResponse.class).count() < 1)
+            if (getTableDataCount(LeagueTableResponse.class) < 1)
                 noInternetConnectionDialog();
             else
                 setUpAdapter();

@@ -129,4 +129,9 @@ public abstract class MasterFragment extends Fragment {
         ((HomeActivity) mContext).noInternetConnectionDialog(mContext);
     }
 
+
+    protected long getTableDataCount(Class type){
+        return mRealm.where(type).count();
+    }
+
 }

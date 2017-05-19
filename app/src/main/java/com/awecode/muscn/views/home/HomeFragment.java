@@ -138,7 +138,7 @@ HomeFragment extends MasterFragment {
      */
     public void requestFixturesList() {
         try {
-            if (mRealm.where(Result.class).count() < 1)
+            if (getTableDataCount(Result.class) < 1)
                 showProgressView("Loading data...");
             Observable<FixturesResponse> call = ServiceGenerator.createService(MuscnApiInterface.class).getFixtures();
             call.subscribeOn(Schedulers.io())
