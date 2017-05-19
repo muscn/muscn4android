@@ -25,7 +25,7 @@ import com.awecode.muscn.views.league.LeagueTableFragment;
 import com.awecode.muscn.views.matchweekfixtures.EplMatchWeekFixtureFragment;
 import com.awecode.muscn.views.nav.NavigationDrawerFragment;
 import com.awecode.muscn.views.recentresults.ResultFragment;
-import com.awecode.muscn.views.topscorer.TopScorersFragment;
+import com.awecode.muscn.views.top_scorers.TopScorersFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

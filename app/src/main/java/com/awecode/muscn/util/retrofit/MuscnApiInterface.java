@@ -1,21 +1,18 @@
 package com.awecode.muscn.util.retrofit;
 
-import com.awecode.muscn.model.http.eplmatchweekdetails.EplMatchWeekFixtureDetailResponse;
 import com.awecode.muscn.model.http.fixtures.FixturesResponse;
 import com.awecode.muscn.model.http.injuries.InjuriesResponse;
 import com.awecode.muscn.model.http.leaguetable.LeagueTableResponse;
 import com.awecode.muscn.model.http.recentresults.RecentResultsResponse;
 import com.awecode.muscn.model.http.resultdetails.ResultDetailsResponse;
-import com.awecode.muscn.model.http.topscorers.TopScorersResponse;
+import com.awecode.muscn.model.http.top_scorers.TopScorersResponse;
 import com.awecode.muscn.model.registration.RegistrationPostData;
 import com.awecode.muscn.model.registration.RegistrationResponse;
 
 import java.util.List;
 
 import okhttp3.ResponseBody;
-import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.Field;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;

@@ -33,7 +33,7 @@ import com.awecode.muscn.views.nav.NavigationDrawerCallbacks;
 import com.awecode.muscn.views.nav.NavigationDrawerFragment;
 import com.awecode.muscn.views.nav.NavigationItem;
 import com.awecode.muscn.views.recentresults.ResultFragment;
-import com.awecode.muscn.views.topscorer.TopScorersFragment;
+import com.awecode.muscn.views.top_scorers.TopScorersFragment;
 import com.getkeepsafe.taptargetview.TapTarget;
 import com.getkeepsafe.taptargetview.TapTargetView;
 import com.robohorse.gpversionchecker.GPVersionChecker;

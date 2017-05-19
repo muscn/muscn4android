@@ -1,5 +1,5 @@
 
-package com.awecode.muscn.model.http.topscorers;
+package com.awecode.muscn.model.http.top_scorers;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

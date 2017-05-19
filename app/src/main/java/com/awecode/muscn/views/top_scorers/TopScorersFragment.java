@@ -1,4 +1,4 @@
-package com.awecode.muscn.views.topscorer;
+package com.awecode.muscn.views.top_scorers;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 
 import com.awecode.muscn.R;
 import com.awecode.muscn.adapter.TopScorerAdapter;
-import com.awecode.muscn.model.http.topscorers.TopScorersResponse;
+import com.awecode.muscn.model.http.top_scorers.TopScorersResponse;
 import com.awecode.muscn.model.listener.RecyclerViewScrollListener;
 import com.awecode.muscn.util.Util;
 import com.awecode.muscn.views.HomeActivity;

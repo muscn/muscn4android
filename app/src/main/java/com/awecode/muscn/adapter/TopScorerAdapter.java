@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.awecode.muscn.R;
-import com.awecode.muscn.model.http.topscorers.TopScorersResponse;
+import com.awecode.muscn.model.http.top_scorers.TopScorersResponse;
 
 import java.util.List;
 
