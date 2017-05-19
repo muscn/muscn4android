@@ -1,5 +1,5 @@
 
-package com.awecode.muscn.model.http.recentresults;
+package com.awecode.muscn.model.http.recent_results;
 
 import java.util.ArrayList;
 import java.util.List;

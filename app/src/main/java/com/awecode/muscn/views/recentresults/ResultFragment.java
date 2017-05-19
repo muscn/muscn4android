@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import com.awecode.muscn.R;
 import com.awecode.muscn.adapter.ResultAdapter;
 import com.awecode.muscn.model.Item;
-import com.awecode.muscn.model.http.recentresults.RecentResultsResponse;
+import com.awecode.muscn.model.http.recent_results.RecentResultsResponse;
 import com.awecode.muscn.model.listener.RecyclerViewScrollListener;
 import com.awecode.muscn.model.listener.ResultItemClickListener;
 import com.awecode.muscn.util.Constants;

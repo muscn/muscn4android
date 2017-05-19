@@ -3,7 +3,7 @@ package com.awecode.muscn.util.retrofit;
 import com.awecode.muscn.model.http.fixtures.FixturesResponse;
 import com.awecode.muscn.model.http.injuries.InjuriesResponse;
 import com.awecode.muscn.model.http.leaguetable.LeagueTableResponse;
-import com.awecode.muscn.model.http.recentresults.RecentResultsResponse;
+import com.awecode.muscn.model.http.recent_results.RecentResultsResponse;
 import com.awecode.muscn.model.http.resultdetails.ResultDetailsResponse;
 import com.awecode.muscn.model.http.top_scorers.TopScorersResponse;
 import com.awecode.muscn.model.registration.RegistrationPostData;

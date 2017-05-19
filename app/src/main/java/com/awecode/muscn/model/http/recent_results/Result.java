@@ -1,5 +1,5 @@
 
-package com.awecode.muscn.model.http.recentresults;
+package com.awecode.muscn.model.http.recent_results;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

@@ -2,7 +2,7 @@ package com.awecode.muscn.model;
 
 import android.content.Context;
 
-import com.awecode.muscn.model.http.recentresults.RecentResultsResponse;
+import com.awecode.muscn.model.http.recent_results.RecentResultsResponse;
 
 import java.util.List;
 

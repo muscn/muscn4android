@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.awecode.muscn.R;
 import com.awecode.muscn.model.Item;
-import com.awecode.muscn.model.http.recentresults.Result;
+import com.awecode.muscn.model.http.recent_results.Result;
 import com.awecode.muscn.model.listener.ResultItemClickListener;
 import com.awecode.muscn.util.Util;
 import com.awecode.muscn.views.HomeActivity;
