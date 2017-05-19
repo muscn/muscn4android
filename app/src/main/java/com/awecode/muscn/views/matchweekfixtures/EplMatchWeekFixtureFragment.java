@@ -9,25 +9,28 @@ import android.view.ViewGroup;
 
 import com.awecode.muscn.R;
 import com.awecode.muscn.adapter.MatchFixutreRecyclerviewAdapter;
-import com.awecode.muscn.model.http.eplmatchweek._20161001;
+import com.awecode.muscn.model.http.eplmatchweek.EplMatchweekResponse;
+import com.awecode.muscn.model.http.top_scorers.TopScorersResponse;
 import com.awecode.muscn.model.listener.MatchweekItemClickListener;
 import com.awecode.muscn.model.listener.RecyclerViewScrollListener;
 import com.awecode.muscn.util.Util;
-import com.awecode.muscn.util.retrofit.MuscnApiInterface;
-import com.awecode.muscn.util.retrofit.ServiceGenerator;
-import com.awecode.muscn.views.HomeActivity;
 import com.awecode.muscn.views.MasterFragment;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.Realm;
+import io.realm.RealmAsyncTask;
+import io.realm.Sort;
 import okhttp3.ResponseBody;
 import rx.Observable;
 import rx.Observer;
@@ -45,6 +48,7 @@ public class EplMatchWeekFixtureFragment extends MasterFragment implements Match
 
     private MatchFixutreRecyclerviewAdapter mMatchFixutreRecyclerviewAdapter;
     private RecyclerViewScrollListener mRecyclerViewScrollListener;
+    private RealmAsyncTask mTransaction;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -64,20 +68,43 @@ public class EplMatchWeekFixtureFragment extends MasterFragment implements Match
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mActivity.setCustomTitle(R.string.epl_matchweek);
+        initializeRecyclerView();
+        checkInternetConnection();
+    }
+
+    private void initializeRecyclerView() {
+        matchFixtures.setHasFixedSize(true);
+        matchFixtures.setLayoutManager(new LinearLayoutManager(getActivity()));
+    }
+
+    /**
+     * check internet, initialize request
+     * if no internet, show message incase of empty db,
+     * show saved data incase of data in db
+     */
+    private void checkInternetConnection() {
         if (Util.checkInternetConnection(mContext))
             requestEplMatchResults();
         else {
-            ((HomeActivity) mContext).noInternetConnectionDialog(mContext);
+            if (getTableDataCount(TopScorersResponse.class) < 1)
+                noInternetConnectionDialog();
+            else
+                setUpAdapter();
+
         }
     }
+
 
     /**
      * Setup match fixture recyclerview to show the matchweek mixtures
      */
-    public void setupMatchFixtureRecylerView(ArrayList<_20161001> mCategoryList) {
-        matchFixtures.setHasFixedSize(true);
-        matchFixtures.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mMatchFixutreRecyclerviewAdapter = new MatchFixutreRecyclerviewAdapter(getActivity(), mCategoryList);
+    public void setUpAdapter() {
+
+        if (mMatchFixutreRecyclerviewAdapter != null) {
+            mMatchFixutreRecyclerviewAdapter.notifyDataSetChanged();
+            return;
+        }
+        mMatchFixutreRecyclerviewAdapter = new MatchFixutreRecyclerviewAdapter(mRealm.where(EplMatchweekResponse.class).findAllSorted("kickoff", Sort.ASCENDING));
         matchFixtures.setAdapter(Util.getAnimationAdapter(mMatchFixutreRecyclerviewAdapter));
         mRecyclerViewScrollListener.onRecyclerViewScrolled(matchFixtures);
         mMatchFixutreRecyclerviewAdapter.mMatchweekItemClickListener = this;
@@ -88,7 +115,6 @@ public class EplMatchWeekFixtureFragment extends MasterFragment implements Match
      */
     public void requestEplMatchResults() {
         showProgressView(getString(R.string.loading_fixtures));
-        mApiInterface = ServiceGenerator.createService(MuscnApiInterface.class);
         Observable<ResponseBody> call = mApiInterface.getEplMatchweekFixtures();
         call.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -116,8 +142,7 @@ public class EplMatchWeekFixtureFragment extends MasterFragment implements Match
 
                             //Let's consider your POJO class is CategoryClass
                             // Let's take HashMap to store your POJO class for specific KEY
-                            HashMap<String, ArrayList<_20161001>> mMap = new HashMap<String, ArrayList<_20161001>>();
-                            ArrayList<_20161001> mCategoryList = new ArrayList<_20161001>();
+                            List<EplMatchweekResponse> responseList = new ArrayList<EplMatchweekResponse>();
 
                             while (keys.hasNext()) {
                                 // here you will get dynamic keys
@@ -126,29 +151,69 @@ public class EplMatchWeekFixtureFragment extends MasterFragment implements Match
                                 // get the value of the dynamic key
                                 JSONArray dynamicValue = object.getJSONArray(dynamicKey);
 
-                                //Let's store into POJO Class and Prepare HashMap.
-                                for (int i = 0; i < dynamicValue.length(); i++) {
-                                    _20161001 mCategory = new _20161001();
-                                    mCategory.setAwayTeam(dynamicValue.getJSONObject(i).get("away_team").toString());
-                                    mCategory.setHomeTeam(dynamicValue.getJSONObject(i).get("home_team").toString());
-                                    mCategory.setEid(dynamicValue.getJSONObject(i).get("eid").toString());
-                                    mCategory.setKickoff(dynamicValue.getJSONObject(i).get("kickoff").toString());
-                                    mCategory.setLive(dynamicValue.getJSONObject(i).get("live").toString());
-                                    mCategory.setMinute(dynamicValue.getJSONObject(i).get("minute").toString());
-                                    mCategory.setScore(dynamicValue.getJSONObject(i).get("score").toString());
-                                    mCategory.setFixtureId(dynamicValue.getJSONObject(i).get("fixture_id").toString());
-                                    mCategoryList.add(mCategory);
-                                }
-                                //Add Into Hashmap
-                                mMap.put(dynamicKey, mCategoryList);
-                                Collections.sort(mCategoryList);
-                                setupMatchFixtureRecylerView(mCategoryList);
+                                Type listType = new TypeToken<List<EplMatchweekResponse>>() {
+                                }.getType();
+                                // In this test code i just shove the JSON here as string.
+                                List<EplMatchweekResponse> dataList = new Gson().fromJson(dynamicValue.toString(), listType);
+                                responseList.addAll(dataList);
                             }
+                            if (responseList != null
+                                    && responseList.size() > 0)
+                                deleteDataFromDBAndSave(responseList);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
                 });
+    }
+
+    /**
+     * first delete the existing  data from db
+     */
+    private void deleteDataFromDBAndSave(final List<EplMatchweekResponse> responseList) {
+        try {
+            //delete fixture results first
+            mTransaction = mRealm.executeTransactionAsync(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+                    realm.delete(EplMatchweekResponse.class);
+                }
+            }, new Realm.Transaction.OnSuccess() {
+                @Override
+                public void onSuccess() {
+                    //now save fixture data
+                    saveResponseData(responseList);
+                    setUpAdapter();
+
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    /**
+     * save data in db and return the arraylist for recyclerview adapter
+     *
+     * @param responseList
+     * @return
+     */
+    private void saveResponseData(final List<EplMatchweekResponse> responseList) {
+
+        if (responseList != null && responseList.size() > 0) {
+            mRealm.beginTransaction();
+            mRealm.copyToRealm(responseList);
+            mRealm.commitTransaction();
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mTransaction != null && !mTransaction.isCancelled())
+            mTransaction.cancel();
+
     }
 
     @Override

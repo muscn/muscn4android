@@ -1,6 +1,6 @@
 package com.awecode.muscn.adapter;
 
-import android.content.Context;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,28 +9,26 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.awecode.muscn.R;
-import com.awecode.muscn.model.http.eplmatchweek._20161001;
+import com.awecode.muscn.model.http.eplmatchweek.EplMatchweekResponse;
 import com.awecode.muscn.model.listener.MatchweekItemClickListener;
 import com.awecode.muscn.util.Util;
 
-import java.util.ArrayList;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.OrderedRealmCollection;
+import io.realm.RealmRecyclerViewAdapter;
 
 /**
  * Created by suresh on 9/25/16.
  */
 
-public class MatchFixutreRecyclerviewAdapter extends RecyclerView.Adapter<MatchFixutreRecyclerviewAdapter.FixtureViewHolder> {
+public class MatchFixutreRecyclerviewAdapter extends RealmRecyclerViewAdapter<EplMatchweekResponse, MatchFixutreRecyclerviewAdapter.FixtureViewHolder> {
 
-    private Context context;
-    private ArrayList<_20161001> mCategoryList;
+
     public MatchweekItemClickListener mMatchweekItemClickListener;
 
-    public MatchFixutreRecyclerviewAdapter(Context context, ArrayList<_20161001> mCategoryList) {
-        this.context = context;
-        this.mCategoryList = mCategoryList;
+    public MatchFixutreRecyclerviewAdapter(@Nullable OrderedRealmCollection<EplMatchweekResponse> data) {
+        super(data, true);
     }
 
     @Override
@@ -42,22 +40,12 @@ public class MatchFixutreRecyclerviewAdapter extends RecyclerView.Adapter<MatchF
 
     @Override
     public void onBindViewHolder(FixtureViewHolder holder, int position) {
-        final _20161001 data = mCategoryList.get(position);
+        final EplMatchweekResponse data = getItem(position);
 
 //        /**
 //         * fetch kickoff date and format it into hours and minutes
 //         */
         String strCurrentDate = data.getKickoff();
-//        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");
-//
-//        Date newDate = null;
-//        try {
-//            newDate = format.parse(strCurrentDate);
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//        format = new SimpleDateFormat("EEE dd MMM, yyyy\nhh:mm a");
-//        String time = format.format(newDate);
 
         /**
          * populate data in viewholder
@@ -87,11 +75,6 @@ public class MatchFixutreRecyclerviewAdapter extends RecyclerView.Adapter<MatchF
         });
 
 
-    }
-
-    @Override
-    public int getItemCount() {
-        return mCategoryList.size();
     }
 
     /**
