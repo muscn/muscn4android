@@ -129,8 +129,8 @@ public abstract class MasterFragment extends Fragment {
     }
 
 
-    protected long getTableDataCount(Class type) {
-        return mRealm.where(type).count();
+    protected int getTableDataCount(Class type) {
+        return (int) mRealm.where(type).count();
     }
 
 }

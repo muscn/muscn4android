@@ -13,13 +13,15 @@ import com.awecode.muscn.adapter.TopScorerAdapter;
 import com.awecode.muscn.model.http.top_scorers.TopScorersResponse;
 import com.awecode.muscn.model.listener.RecyclerViewScrollListener;
 import com.awecode.muscn.util.Util;
-import com.awecode.muscn.views.HomeActivity;
 import com.awecode.muscn.views.MasterFragment;
 
+import java.util.Collection;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.Realm;
+import io.realm.RealmAsyncTask;
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -36,6 +38,7 @@ public class TopScorersFragment extends MasterFragment {
     TopScorerAdapter mAdapter;
     LinearLayoutManager mLinearLayoutManager;
     RecyclerViewScrollListener mRecyclerViewScrollListener;
+    private RealmAsyncTask mTransaction;
 
     public static TopScorersFragment newInstance() {
         TopScorersFragment fragment = new TopScorersFragment();
@@ -49,7 +52,6 @@ public class TopScorersFragment extends MasterFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        showProgressView(getString(R.string.loading_top_scorers));
         mRecyclerViewScrollListener = (RecyclerViewScrollListener) this.getContext();
 
     }
@@ -64,18 +66,47 @@ public class TopScorersFragment extends MasterFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        mActivity.setCustomTitle(R.string.top_scorers);
+        initializeRecyclerView();
+
+        checkInternetConnection();
+    }
+
+    private void initializeRecyclerView() {
         mLinearLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
         mRecyclerView.setHasFixedSize(true);
-        mActivity.setCustomTitle(R.string.top_scorers);
+    }
+
+    /**
+     * check internet, initialize request
+     * if no internet, show message incase of empty db,
+     * show saved data incase of data in db
+     */
+    private void checkInternetConnection() {
         if (Util.checkInternetConnection(mContext))
             requestTopScorers();
         else {
-            ((HomeActivity) mContext).noInternetConnectionDialog(mContext);
+            if (getTableDataCount(TopScorersResponse.class) < 1)
+                noInternetConnectionDialog();
+            else
+                setUpAdapter();
+
         }
     }
 
+
+    /**
+     * fetch top scorer data from api
+     */
     public void requestTopScorers() {
+        if (getTableDataCount(TopScorersResponse.class) > 0)
+            setUpAdapter();
+        else
+            showProgressView(getString(R.string.loading_top_scorers));
+
+
         Observable<List<TopScorersResponse>> call = mApiInterface.getTopScorers();
         call.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -87,19 +118,77 @@ public class TopScorersFragment extends MasterFragment {
 
                     @Override
                     public void onError(Throwable e) {
-//                        mActivity.showErrorView(e.getMessage() + ". Try again");
                         mActivity.noInternetConnectionDialog(mContext);
                     }
 
                     @Override
                     public void onNext(List<TopScorersResponse> topScorersResponses) {
-                        setUpAdapter(topScorersResponses);
+                        deleteDataFromDBAndSave(topScorersResponses);
                     }
                 });
     }
-    private void setUpAdapter(List<TopScorersResponse> topScorersResponses){
-        mAdapter = new TopScorerAdapter(mContext, topScorersResponses);
+
+    /**
+     * first delete the existing  data from db
+     */
+    private void deleteDataFromDBAndSave(final List<TopScorersResponse> responseList) {
+        try {
+            //delete fixture results first
+            mTransaction = mRealm.executeTransactionAsync(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+                    realm.delete(TopScorersResponse.class);
+                }
+            }, new Realm.Transaction.OnSuccess() {
+                @Override
+                public void onSuccess() {
+                    //now save fixture data
+                    saveResponseData(responseList);
+                    setUpAdapter();
+
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    /**
+     * save data in db and return the arraylist for recyclerview adapter
+     *
+     * @param responseList
+     * @return
+     */
+    private void saveResponseData(final List<TopScorersResponse> responseList) {
+
+        Collection<TopScorersResponse> realmTableList = null;
+        if (responseList != null && responseList.size() > 0) {
+            mRealm.beginTransaction();
+            realmTableList = mRealm.copyToRealm(responseList);
+            mRealm.commitTransaction();
+        }
+    }
+
+
+    /**
+     * populate saved db data in recyclerview
+     */
+    private void setUpAdapter() {
+        if (mAdapter != null) {
+            mAdapter.notifyDataSetChanged();
+            return;
+        }
+        mAdapter = new TopScorerAdapter(mRealm.where(TopScorersResponse.class).findAll(), true);
         mRecyclerView.setAdapter(Util.getAnimationAdapter(mAdapter));
         mRecyclerViewScrollListener.onRecyclerViewScrolled(mRecyclerView);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mTransaction != null && !mTransaction.isCancelled())
+            mTransaction.cancel();
+
     }
 }

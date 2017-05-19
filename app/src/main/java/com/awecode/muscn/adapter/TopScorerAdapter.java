@@ -1,6 +1,6 @@
 package com.awecode.muscn.adapter;
 
-import android.content.Context;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,25 +10,23 @@ import android.widget.TextView;
 import com.awecode.muscn.R;
 import com.awecode.muscn.model.http.top_scorers.TopScorersResponse;
 
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.OrderedRealmCollection;
+import io.realm.RealmRecyclerViewAdapter;
 
 /**
  * Created by surensth on 9/28/16.
  */
 
-public class TopScorerAdapter extends RecyclerView.Adapter<TopScorerAdapter.TopScorersViewHolder> {
-    Context mContext;
-    List<TopScorersResponse> topScorersList;
+public class TopScorerAdapter extends RealmRecyclerViewAdapter<TopScorersResponse, TopScorerAdapter.TopScorersViewHolder> {
+
     String players, goals;
 
-
-    public TopScorerAdapter(Context mContext, List<TopScorersResponse> topScorersList) {
-        this.mContext = mContext;
-        this.topScorersList = topScorersList;
+    public TopScorerAdapter(@Nullable OrderedRealmCollection<TopScorersResponse> data, boolean autoUpdate) {
+        super(data, autoUpdate);
     }
+
 
     @Override
     public TopScorersViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -38,7 +36,7 @@ public class TopScorerAdapter extends RecyclerView.Adapter<TopScorerAdapter.TopS
 
     @Override
     public void onBindViewHolder(TopScorersViewHolder holder, int position) {
-        final TopScorersResponse topScorersResponse = topScorersList.get(position);
+        final TopScorersResponse topScorersResponse = getItem(position);
 //       White divider line is hide if the table item is last
         if (topScorersResponse != null) {
             if (position == getItemCount() - 1)
@@ -62,10 +60,6 @@ public class TopScorerAdapter extends RecyclerView.Adapter<TopScorerAdapter.TopS
             return;
     }
 
-    @Override
-    public int getItemCount() {
-        return topScorersList.size();
-    }
 
     public static class TopScorersViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
