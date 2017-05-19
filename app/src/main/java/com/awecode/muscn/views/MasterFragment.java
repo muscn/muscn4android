@@ -2,9 +2,12 @@ package com.awecode.muscn.views;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.awecode.muscn.MyApplication;
 import com.awecode.muscn.R;
@@ -15,6 +18,7 @@ import com.awecode.muscn.util.retrofit.MuscnApiInterface;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.ButterKnife;
 import io.realm.Realm;
 import io.realm.RealmResults;
 
@@ -44,6 +48,14 @@ public abstract class MasterFragment extends Fragment {
         changeRandomParallaxImage();
         initializedRealm();
     }
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(getLayout(), container, false);
+        ButterKnife.bind(this, view);
+        return view;
+    }
+
+    public abstract int getLayout();
 
     private void initializedRealm() {
         mRealm = Realm.getDefaultInstance();
