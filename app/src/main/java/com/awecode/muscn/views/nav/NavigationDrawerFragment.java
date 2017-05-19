@@ -8,10 +8,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.awecode.muscn.R;
 import com.awecode.muscn.model.enumType.MenuType;
@@ -37,13 +34,16 @@ public class NavigationDrawerFragment extends MasterFragment implements Navigati
     private boolean mFromSavedInstanceState;
     private int mCurrentSelectedPosition;
     private List<NavigationItem> navigationItems;
-    private TextView bonjourTextView;
-    private TextView personNameTextView;
+
+    @Override
+    public int getLayout() {
+        return R.layout.fragment_navigation_drawer;
+    }
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         mDrawerList = (RecyclerView) view.findViewById(R.id.drawerList);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         mDrawerList.setLayoutManager(layoutManager);
@@ -51,25 +51,8 @@ public class NavigationDrawerFragment extends MasterFragment implements Navigati
         populateNavMenu();
         mCurrentSelectedPosition = 0;
         selectItem(mCurrentSelectedPosition, navigationItems.get(mCurrentSelectedPosition));
-//        setupBottomMenuOption(view);
-//        setupBonjourTextView(view);
-//        setupUserFullName(view);
-        return view;
     }
 
-//    private void setupUserFullName(View view) {
-//        personNameTextView = (TextView) view.findViewById(R.id.personNameTextView);
-//        if (LoginUtil.getUserDetails() != null) {
-//            personNameTextView.setText(LoginUtil.getUserDetails().getFullName());
-//        } else
-//            personNameTextView.setText("");
-//
-//    }
-
-//    private void setupBonjourTextView(View view) {
-//        bonjourTextView = (TextView) view.findViewById(R.id.salutationTextView);
-//        bonjourTextView.setTypeface(Typeface.create("sans-serif-thin", Typeface.NORMAL));
-//    }
 
 //    private void setupBottomMenuOption(View view) {
 //        ((LinearLayout) view.findViewById(R.id.logoutRowLayout)).setOnClickListener(new View.OnClickListener() {

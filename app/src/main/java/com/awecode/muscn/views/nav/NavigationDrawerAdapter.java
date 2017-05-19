@@ -58,7 +58,7 @@ public class NavigationDrawerAdapter extends RecyclerView.Adapter<NavigationDraw
         Picasso.with(mContext)
                 .load(item.getIcon())
                 .into(viewHolder.navIconImageView);
-        viewHolder.navMenuTextView.setText(item.getmText());
+        viewHolder.navMenuTextView.setText(item.getMText());
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                                                    @Override
                                                    public void onClick(View v) {

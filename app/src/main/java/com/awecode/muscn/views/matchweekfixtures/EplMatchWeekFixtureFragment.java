@@ -3,9 +3,7 @@ package com.awecode.muscn.views.matchweekfixtures;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.awecode.muscn.R;
 import com.awecode.muscn.adapter.MatchFixutreRecyclerviewAdapter;
@@ -27,7 +25,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import io.realm.Realm;
 import io.realm.RealmAsyncTask;
 import io.realm.Sort;
@@ -51,17 +48,14 @@ public class EplMatchWeekFixtureFragment extends MasterFragment implements Match
     private RealmAsyncTask mTransaction;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        mRecyclerViewScrollListener = (RecyclerViewScrollListener) this.getContext();
-
+    public int getLayout() {
+        return R.layout.fragment_epl_matchweek_fixture;
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_epl_matchweek_fixture, container, false);
-        ButterKnife.bind(this, view);
-        return view;
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mRecyclerViewScrollListener = (RecyclerViewScrollListener) this.getContext();
     }
 
     @Override
