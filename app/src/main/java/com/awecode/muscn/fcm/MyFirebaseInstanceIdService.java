@@ -4,7 +4,6 @@ import android.os.Build;
 import android.provider.Settings;
 import android.util.Log;
 
-import com.awecode.muscn.model.registration.RegistrationPostData;
 import com.awecode.muscn.model.registration.RegistrationResponse;
 import com.awecode.muscn.util.Constants;
 import com.awecode.muscn.util.retrofit.MuscnApiInterface;
@@ -23,6 +22,8 @@ import rx.schedulers.Schedulers;
  */
 
 public class MyFirebaseInstanceIdService extends FirebaseInstanceIdService {
+    private static final String TAG = "MyFirebaseInstanceIdSer";
+
     @Override
     public void onTokenRefresh() {
         super.onTokenRefresh();
@@ -37,32 +38,39 @@ public class MyFirebaseInstanceIdService extends FirebaseInstanceIdService {
         sendRegistrationToServer(refreshedToken);
     }
 
-    public void sendRegistrationToServer(String refreshedToken) {
-        String deviceId = Settings.Secure.getString(getApplicationContext().getContentResolver(),
+    public void sendRegistrationToServer(final String refreshedToken) {
+        final String deviceId = Settings.Secure.getString(getApplicationContext().getContentResolver(),
                 Settings.Secure.ANDROID_ID);
 
-        RegistrationPostData mRegistrationPostData = new RegistrationPostData(deviceId, refreshedToken, Build.MODEL, Constants.DEVICE_TYPE);
+//        RegistrationPostData mRegistrationPostData = new RegistrationPostData(deviceId, refreshedToken, Build.MODEL, Constants.DEVICE_TYPE);
 
+//        Log.d(TAG, "sendRegistrationToServer:  dev" + deviceId);
+//        Log.d(TAG, "sendRegistrationToServer:  refresh token" + refreshedToken);
+//        Log.d(TAG, "sendRegistrationToServer: model " + Build.MODEL);
+//        Log.d(TAG, "sendRegistrationToServer: type " + Constants.DEVICE_TYPE);
         MuscnApiInterface mApiInterface = ServiceGenerator.createService(MuscnApiInterface.class);
-        Observable<RegistrationResponse> call = mApiInterface.postRegistrationData(mRegistrationPostData);
+//        Observable<RegistrationResponse> call = mApiInterface.postRegistrationData(mRegistrationPostData);// gave 400 error in release apk only
+        Observable<RegistrationResponse> call = mApiInterface.postRegistrationData(deviceId,
+                refreshedToken, Build.MODEL, Constants.DEVICE_TYPE);
+
         call.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<RegistrationResponse>() {
                     @Override
                     public void onCompleted() {
-                        Log.v("response", "data com");
+                        Log.v(TAG, "data com");
 
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.v("response", "error" + e.getLocalizedMessage());
+                        Log.v(TAG, "error here " + new Gson().toJson(e).toString());
 
                     }
 
                     @Override
                     public void onNext(RegistrationResponse registrationResponse) {
-                        Log.v("response", "data succcess" + new Gson().toJson(registrationResponse).toString());
+                        Log.v(TAG, "data succcess" + new Gson().toJson(registrationResponse).toString());
                     }
                 });
 
