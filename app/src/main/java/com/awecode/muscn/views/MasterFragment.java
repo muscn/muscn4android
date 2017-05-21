@@ -29,7 +29,7 @@ import io.realm.RealmResults;
 public abstract class MasterFragment extends Fragment {
     public MuscnApiInterface mApiInterface;
     public Context mContext;
-    public HomeActivity mActivity;
+    public BaseActivity mActivity;
     public FragmentManager mFragmentManager;
     protected Realm mRealm;
 
@@ -37,7 +37,7 @@ public abstract class MasterFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = getActivity();
-        mActivity = (HomeActivity) getActivity();
+        mActivity = (BaseActivity) getActivity();
         mFragmentManager = mActivity.getSupportFragmentManager();
     }
 

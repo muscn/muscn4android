@@ -25,6 +25,9 @@ import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.realm.Realm;
+import io.realm.RealmAsyncTask;
+import io.realm.RealmResults;
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -64,6 +67,8 @@ public class ResultDetailsActivity extends BaseActivity {
 
     private int resultId;
     public ResultDetailsResponse mResponse;
+    private RealmAsyncTask mTransaction;
+
 
     private static final String TAG = ResultDetailsActivity.class.getSimpleName().toString();
 
@@ -83,12 +88,8 @@ public class ResultDetailsActivity extends BaseActivity {
 
         Intent intent = getIntent();
         resultId = intent.getIntExtra(Constants.ID, 0);
-        Log.v(TAG, "id is " + resultId);
-        if (Util.checkInternetConnection(mContext)) {
-            requestResultDetails();
-        } else {
-            noInternetConnectionDialog(mContext);
-        }
+
+        checkInternetConnection();
     }
 
     @Override
@@ -98,7 +99,14 @@ public class ResultDetailsActivity extends BaseActivity {
 
 
     private void requestResultDetails() {
-        showProgressView(getString(R.string.loading_results));
+        int count = (int) mRealm.where(ResultDetailsResponse.class)
+                .equalTo("id", resultId).count();
+
+        if (count < 1)
+            showProgressView(getString(R.string.loading_results));
+        else
+            getDataFromDbAndPopulateUI();
+
         mApiInterface = ServiceGenerator.createService(MuscnApiInterface.class);
         Observable<ResultDetailsResponse> call = mApiInterface.getResultDetails(resultId);
         call.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
@@ -117,8 +125,8 @@ public class ResultDetailsActivity extends BaseActivity {
                     public void onNext(ResultDetailsResponse response) {
                         Log.v(TAG, "response string is" + new Gson().toJson(response).toString());
                         mResponse = response;
-
-                        populateUI(response);
+                        if (response != null)
+                            deleteDataFromDBAndSave(response);
                     }
                 });
     }
@@ -189,6 +197,79 @@ public class ResultDetailsActivity extends BaseActivity {
         });
     }
 
+    /**
+     * check internet, initialize request
+     * if no internet, show message incase of empty db,
+     * show saved data incase of data in db
+     */
+    private void checkInternetConnection() {
+        if (Util.checkInternetConnection(mContext))
+            requestResultDetails();
+        else {
+            int count = (int) mRealm.where(ResultDetailsResponse.class)
+                    .equalTo("id", resultId).count();
+
+            if (count < 1)
+                noInternetConnectionDialog(mContext);
+            else
+                getDataFromDbAndPopulateUI();
+        }
+    }
+
+    /**
+     * if response exist in db then get and populate ui
+     */
+    private void getDataFromDbAndPopulateUI() {
+        ResultDetailsResponse resultDetailsResponse = mRealm.where(ResultDetailsResponse.class).equalTo("id", resultId).findFirst();
+        if (resultDetailsResponse != null)
+            populateUI(resultDetailsResponse);
+    }
+
+    /**
+     * first delete the existing  data from db
+     */
+    private void deleteDataFromDBAndSave(final ResultDetailsResponse response) {
+
+        try {
+            //delete fixture results first
+            mTransaction = mRealm.executeTransactionAsync(new Realm.Transaction() {
+                @Override
+                public void execute(Realm realm) {
+
+                    ResultDetailsResponse resultDetailsResponse = realm.where(ResultDetailsResponse.class).equalTo("id", resultId).findFirst();
+                    if (resultDetailsResponse != null)
+                        resultDetailsResponse.deleteFromRealm();
+                }
+            }, new Realm.Transaction.OnSuccess() {
+                @Override
+                public void onSuccess() {
+                    //now save fixture data
+                    saveResponseData(response);
+                    getDataFromDbAndPopulateUI();
+
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    /**
+     * save data in db
+     *
+     * @param response
+     * @return
+     */
+    private void saveResponseData(ResultDetailsResponse response) {
+
+        if (response != null) {
+            mRealm.beginTransaction();
+            mRealm.copyToRealm(response);
+            mRealm.commitTransaction();
+        }
+    }
+
     @OnClick(R.id.backArrowImageView)
     public void onArrowClick() {
         finish();
@@ -197,5 +278,12 @@ public class ResultDetailsActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         onArrowClick();
+    }
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mTransaction != null && !mTransaction.isCancelled())
+            mTransaction.cancel();
+
     }
 }
