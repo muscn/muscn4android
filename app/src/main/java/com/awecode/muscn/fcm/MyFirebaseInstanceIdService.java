@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.awecode.muscn.model.registration.RegistrationResponse;
 import com.awecode.muscn.util.Constants;
+import com.awecode.muscn.util.prefs.Prefs;
 import com.awecode.muscn.util.retrofit.MuscnApiInterface;
 import com.awecode.muscn.util.retrofit.ServiceGenerator;
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -35,19 +36,17 @@ public class MyFirebaseInstanceIdService extends FirebaseInstanceIdService {
         // If you want to send messages to this application instance or
         // manage this apps subscriptions on the server side, send the
         // Instance ID token to your app server.
-        sendRegistrationToServer(refreshedToken);
+        Prefs.putString(Constants.PREFS_REFRESH_TOKEN, refreshedToken);
+        sendRegistrationToServer();
     }
 
-    public void sendRegistrationToServer(final String refreshedToken) {
+    public void sendRegistrationToServer() {
         final String deviceId = Settings.Secure.getString(getApplicationContext().getContentResolver(),
                 Settings.Secure.ANDROID_ID);
-
+        String refreshedToken = Prefs.getString(Constants.PREFS_REFRESH_TOKEN, "");
+        Log.v(TAG, "sendRegistrationToServer: pref token "+refreshedToken);
 //        RegistrationPostData mRegistrationPostData = new RegistrationPostData(deviceId, refreshedToken, Build.MODEL, Constants.DEVICE_TYPE);
 
-//        Log.d(TAG, "sendRegistrationToServer:  dev" + deviceId);
-//        Log.d(TAG, "sendRegistrationToServer:  refresh token" + refreshedToken);
-//        Log.d(TAG, "sendRegistrationToServer: model " + Build.MODEL);
-//        Log.d(TAG, "sendRegistrationToServer: type " + Constants.DEVICE_TYPE);
         MuscnApiInterface mApiInterface = ServiceGenerator.createService(MuscnApiInterface.class);
 //        Observable<RegistrationResponse> call = mApiInterface.postRegistrationData(mRegistrationPostData);// gave 400 error in release apk only
         Observable<RegistrationResponse> call = mApiInterface.postRegistrationData(deviceId,
@@ -70,7 +69,8 @@ public class MyFirebaseInstanceIdService extends FirebaseInstanceIdService {
 
                     @Override
                     public void onNext(RegistrationResponse registrationResponse) {
-                        Log.v(TAG, "data succcess" + new Gson().toJson(registrationResponse).toString());
+                        Log.v("happ", "data succcess my" + new Gson().toJson(registrationResponse).toString());
+                        Prefs.putBoolean(Constants.PREFS_DEVICE_REGISTERED,true);
                     }
                 });
 
