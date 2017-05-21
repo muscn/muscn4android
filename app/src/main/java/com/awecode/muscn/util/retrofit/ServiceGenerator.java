@@ -9,7 +9,6 @@ import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -41,14 +40,13 @@ public class ServiceGenerator {
             interceptor = new MyInterceptor();
         httpClient.interceptors().add(interceptor);
 
-        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+//        httpClient.addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY));
         httpClient.connectTimeout(TIME_OUT, TimeUnit.SECONDS);
         httpClient.readTimeout(TIME_OUT, TimeUnit.SECONDS);
         httpClient.writeTimeout(TIME_OUT, TimeUnit.SECONDS);
 
 
-        retrofit = builder.client(httpClient.addInterceptor(loggingInterceptor).build()).build();
+        retrofit = builder.client(httpClient.build()).build();
         return retrofit.create(serviceClass);
     }
 
