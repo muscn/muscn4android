@@ -16,7 +16,6 @@ import com.awecode.muscn.R;
 import com.awecode.muscn.model.notification.NotificationData;
 import com.awecode.muscn.util.Constants;
 import com.awecode.muscn.views.HomeActivity;
-import com.awecode.muscn.views.notification.NotificationActivity;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -56,7 +55,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 else
                     notificationData = new NotificationData(title, message);
 
-//                NotificationData notificationData = new NotificationData(image, message);
                 createNotification(notificationData);
 
             } catch (Exception e) {
@@ -64,8 +62,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 Log.v(TAG, "data not found, json exception" + e.getLocalizedMessage());
 
             }
-        }
-        else
+        } else
             sendNotification(remoteMessage.getNotification().getBody());
     }
 
