@@ -29,6 +29,7 @@ import com.awecode.muscn.views.top_scorers.TopScorersFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.Realm;
 
 /**
  * Created by munnadroid on 9/21/16.
@@ -42,6 +43,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     @BindView(R.id.muscnLogo)
     ImageView muscnLogoImageView;
     NavigationDrawerFragment mNavigationDrawerFragment;
+    protected Realm mRealm;
+
 
     protected Context mContext;
     protected Activity mActivity;
@@ -64,6 +67,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         mContext = this;
         mActivity = this;
         mApiInterface = ((MyApplication) getApplication()).getApiInterface();
+        initializedRealm();
+
     }
 
     public void setup_onErrorClickListener() {
@@ -290,5 +295,13 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public void noInternetConnectionDialog(Context mContext) {
         showDialog(mContext, "Oops!", getString(R.string.no_internet_message));
+    }
+
+    protected int getTableDataCount(Class type) {
+        return (int) mRealm.where(type).count();
+    }
+
+    private void initializedRealm() {
+        mRealm = Realm.getDefaultInstance();
     }
 }
