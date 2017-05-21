@@ -6,11 +6,13 @@ import com.awecode.muscn.model.http.leaguetable.LeagueTableResponse;
 import com.awecode.muscn.model.http.recent_results.RecentResultsResponse;
 import com.awecode.muscn.model.http.resultdetails.ResultDetailsResponse;
 import com.awecode.muscn.model.http.top_scorers.TopScorersResponse;
+import com.awecode.muscn.model.registration.RegistrationPostData;
 import com.awecode.muscn.model.registration.RegistrationResponse;
 
 import java.util.List;
 
 import okhttp3.ResponseBody;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -47,14 +49,14 @@ public interface MuscnApiInterface {
     @GET("api/v1/injuries")
     Observable<InjuriesResponse> getInjuredPlayers();
 
-    //    @POST("api/v1/user_device/")
-//    Observable<RegistrationResponse> postRegistrationData(@Body RegistrationPostData registrationPostData);
-    @FormUrlEncoded
-    @POST("api/v1/user_device/")
-    Observable<RegistrationResponse> postRegistrationData(@Field("dev_id") String deviceId,
-                                                          @Field("reg_id") String regId,
-                                                          @Field("name") String name,
-                                                          @Field("type") String type);
+        @POST("api/v1/user_device/")
+    Observable<RegistrationResponse> postRegistrationData(@Body RegistrationPostData registrationPostData);
+//    @FormUrlEncoded
+//    @POST("api/v1/user_device/")
+//    Observable<RegistrationResponse> postRegistrationData(@Field("dev_id") String deviceId,
+//                                                          @Field("reg_id") String regId,
+//                                                          @Field("name") String name,
+//                                                          @Field("type") String type);
 
 
     @GET("api/v1/fixture_detail/{result_id}/")

@@ -114,3 +114,6 @@
 
 #okio
 -dontwarn okio.**
+#adding model class
+-keep class com.awecode.muscn.model.** { *; }
+

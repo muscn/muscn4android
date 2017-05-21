@@ -12,7 +12,6 @@ import android.provider.Settings;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +22,7 @@ import android.widget.TextView;
 import com.awecode.muscn.R;
 import com.awecode.muscn.model.enumType.MenuType;
 import com.awecode.muscn.model.listener.RecyclerViewScrollListener;
+import com.awecode.muscn.model.registration.RegistrationPostData;
 import com.awecode.muscn.model.registration.RegistrationResponse;
 import com.awecode.muscn.util.Constants;
 import com.awecode.muscn.util.Util;
@@ -42,7 +42,6 @@ import com.awecode.muscn.views.recent_results.ResultFragment;
 import com.awecode.muscn.views.top_scorers.TopScorersFragment;
 import com.getkeepsafe.taptargetview.TapTarget;
 import com.getkeepsafe.taptargetview.TapTargetView;
-import com.google.gson.Gson;
 import com.robohorse.gpversionchecker.GPVersionChecker;
 import com.robohorse.gpversionchecker.base.VersionInfoListener;
 import com.robohorse.gpversionchecker.domain.Version;
@@ -284,16 +283,15 @@ public class HomeActivity extends BaseActivity implements RecyclerViewScrollList
         return versionCode;
     }
 
-
     public void sendRegistrationToServer() {
         final String deviceId = Settings.Secure.getString(getApplicationContext().getContentResolver(),
                 Settings.Secure.ANDROID_ID);
-        String refreshedToken = Prefs.getString(Constants.PREFS_REFRESH_TOKEN, "");
-//        Log.v(TAG, "sendRegistrationToServer: pref token " + refreshedToken);
-        MuscnApiInterface mApiInterface = ServiceGenerator.createService(MuscnApiInterface.class);
-        Observable<RegistrationResponse> call = mApiInterface.postRegistrationData(deviceId,
-                refreshedToken, Build.MODEL, Constants.DEVICE_TYPE);
 
+        String refreshedToken = Prefs.getString(Constants.PREFS_REFRESH_TOKEN, "");
+        RegistrationPostData mRegistrationPostData = new RegistrationPostData(deviceId, refreshedToken, Build.MODEL, Constants.DEVICE_TYPE);
+
+        MuscnApiInterface mApiInterface = ServiceGenerator.createService(MuscnApiInterface.class);
+        Observable<RegistrationResponse> call = mApiInterface.postRegistrationData(mRegistrationPostData);
         call.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<RegistrationResponse>() {
@@ -311,10 +309,10 @@ public class HomeActivity extends BaseActivity implements RecyclerViewScrollList
 
                     @Override
                     public void onNext(RegistrationResponse registrationResponse) {
-//                        Log.v("happ", "data succcess" + new Gson().toJson(registrationResponse).toString());
-                        Prefs.putBoolean(Constants.PREFS_REFRESH_TOKEN, true);
+                        Prefs.putBoolean(Constants.PREFS_DEVICE_REGISTERED, true);
                     }
                 });
 
     }
+
 }

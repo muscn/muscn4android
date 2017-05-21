@@ -4,6 +4,7 @@ import android.os.Build;
 import android.provider.Settings;
 import android.util.Log;
 
+import com.awecode.muscn.model.registration.RegistrationPostData;
 import com.awecode.muscn.model.registration.RegistrationResponse;
 import com.awecode.muscn.util.Constants;
 import com.awecode.muscn.util.prefs.Prefs;
@@ -44,33 +45,31 @@ public class MyFirebaseInstanceIdService extends FirebaseInstanceIdService {
         final String deviceId = Settings.Secure.getString(getApplicationContext().getContentResolver(),
                 Settings.Secure.ANDROID_ID);
         String refreshedToken = Prefs.getString(Constants.PREFS_REFRESH_TOKEN, "");
-        Log.v(TAG, "sendRegistrationToServer: pref token "+refreshedToken);
-//        RegistrationPostData mRegistrationPostData = new RegistrationPostData(deviceId, refreshedToken, Build.MODEL, Constants.DEVICE_TYPE);
+        Log.v(TAG, "sendRegistrationToServer: pref token " + refreshedToken);
+        RegistrationPostData mRegistrationPostData = new RegistrationPostData(deviceId, refreshedToken, Build.MODEL, Constants.DEVICE_TYPE);
 
         MuscnApiInterface mApiInterface = ServiceGenerator.createService(MuscnApiInterface.class);
-//        Observable<RegistrationResponse> call = mApiInterface.postRegistrationData(mRegistrationPostData);// gave 400 error in release apk only
-        Observable<RegistrationResponse> call = mApiInterface.postRegistrationData(deviceId,
-                refreshedToken, Build.MODEL, Constants.DEVICE_TYPE);
+        Observable<RegistrationResponse> call = mApiInterface.postRegistrationData(mRegistrationPostData);
 
         call.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<RegistrationResponse>() {
                     @Override
                     public void onCompleted() {
-                        Log.v(TAG, "data com");
+//                        Log.v(TAG, "data com");
 
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.v(TAG, "error here " + new Gson().toJson(e).toString());
+//                        Log.v(TAG, "error here " + new Gson().toJson(e).toString());
 
                     }
 
                     @Override
                     public void onNext(RegistrationResponse registrationResponse) {
                         Log.v("happ", "data succcess my" + new Gson().toJson(registrationResponse).toString());
-                        Prefs.putBoolean(Constants.PREFS_DEVICE_REGISTERED,true);
+                        Prefs.putBoolean(Constants.PREFS_DEVICE_REGISTERED, true);
                     }
                 });
 
