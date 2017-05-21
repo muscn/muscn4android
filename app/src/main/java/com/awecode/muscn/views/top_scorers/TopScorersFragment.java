@@ -1,7 +1,6 @@
 package com.awecode.muscn.views.top_scorers;
 
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -38,8 +37,7 @@ public class TopScorersFragment extends MasterFragment {
     TopScorerAdapter mAdapter;
     LinearLayoutManager mLinearLayoutManager;
     RecyclerViewScrollListener mRecyclerViewScrollListener;
-    @BindView(R.id.swipeRefreshLayout)
-    SwipeRefreshLayout mSwipeRefreshLayout;
+
     private RealmAsyncTask mTransaction;
 
     public static TopScorersFragment newInstance() {
@@ -69,15 +67,6 @@ public class TopScorersFragment extends MasterFragment {
 
         checkInternetConnection();
 
-        mSwipeRefreshLayout.setOnRefreshListener(
-                new SwipeRefreshLayout.OnRefreshListener() {
-                    @Override
-                    public void onRefresh() {
-                        checkInternetConnection();
-                    }
-                }
-        );
-
     }
 
 
@@ -96,9 +85,6 @@ public class TopScorersFragment extends MasterFragment {
         if (Util.checkInternetConnection(mContext))
             requestTopScorers();
         else {
-            if (mSwipeRefreshLayout.isRefreshing())
-                mSwipeRefreshLayout.setRefreshing(false);
-
             if (getTableDataCount(TopScorersResponse.class) < 1)
                 noInternetConnectionDialog();
             else
@@ -124,8 +110,6 @@ public class TopScorersFragment extends MasterFragment {
                 .subscribe(new Observer<List<TopScorersResponse>>() {
                     @Override
                     public void onCompleted() {
-                        if (mSwipeRefreshLayout.isRefreshing())
-                            mSwipeRefreshLayout.setRefreshing(false);
                         mActivity.showContentView();
                     }
 

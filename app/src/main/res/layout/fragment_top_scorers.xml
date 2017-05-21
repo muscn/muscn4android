@@ -1,16 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginTop="@dimen/fragment_table_margin_top"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:layout_marginTop="@dimen/fragment_table_margin_top"
+              android:orientation="vertical">
     <!--table column title-->
-    <include layout="@layout/top_scorers_table_caption" />
-    <android.support.v4.widget.SwipeRefreshLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/swipeRefreshLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <include layout="@layout/top_scorers_table_caption"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/topScorersRecyclerView"
@@ -18,6 +13,5 @@
         android:layout_height="wrap_content"
         android:clipToPadding="false"
         android:paddingBottom="1dp"
-        android:scrollbars="vertical" />
-    </android.support.v4.widget.SwipeRefreshLayout>
+        android:scrollbars="vertical"/>
 </LinearLayout>
