@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.RecyclerView;
@@ -20,9 +22,13 @@ import android.widget.TextView;
 import com.awecode.muscn.R;
 import com.awecode.muscn.model.enumType.MenuType;
 import com.awecode.muscn.model.listener.RecyclerViewScrollListener;
+import com.awecode.muscn.model.registration.RegistrationPostData;
+import com.awecode.muscn.model.registration.RegistrationResponse;
 import com.awecode.muscn.util.Constants;
 import com.awecode.muscn.util.Util;
 import com.awecode.muscn.util.prefs.Prefs;
+import com.awecode.muscn.util.retrofit.MuscnApiInterface;
+import com.awecode.muscn.util.retrofit.ServiceGenerator;
 import com.awecode.muscn.views.aboutus.AboutUsActivity;
 import com.awecode.muscn.views.fixture.FixturesFragment;
 import com.awecode.muscn.views.home.HomeFragment;
@@ -42,6 +48,10 @@ import com.robohorse.gpversionchecker.domain.Version;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import rx.Observable;
+import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 
 public class HomeActivity extends BaseActivity implements RecyclerViewScrollListener, NavigationDrawerCallbacks {
@@ -65,6 +75,9 @@ public class HomeActivity extends BaseActivity implements RecyclerViewScrollList
         super.onCreate(savedInstanceState);
 
         mHomeFragment = HomeFragment.newInstance();
+        //if device is not registered then registration request is send
+        if (!Prefs.getBoolean(Constants.PREFS_DEVICE_REGISTERED, false))
+            sendRegistrationToServer();
         setAppVersion();
         setup_onErrorClickListener();
         setupNavigationDrawerView();
@@ -269,4 +282,37 @@ public class HomeActivity extends BaseActivity implements RecyclerViewScrollList
         }
         return versionCode;
     }
+
+    public void sendRegistrationToServer() {
+        final String deviceId = Settings.Secure.getString(getApplicationContext().getContentResolver(),
+                Settings.Secure.ANDROID_ID);
+
+        String refreshedToken = Prefs.getString(Constants.PREFS_REFRESH_TOKEN, "");
+        RegistrationPostData mRegistrationPostData = new RegistrationPostData(deviceId, refreshedToken, Build.MODEL, Constants.DEVICE_TYPE);
+
+        MuscnApiInterface mApiInterface = ServiceGenerator.createService(MuscnApiInterface.class);
+        Observable<RegistrationResponse> call = mApiInterface.postRegistrationData(mRegistrationPostData);
+        call.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<RegistrationResponse>() {
+                    @Override
+                    public void onCompleted() {
+//                        Log.v(TAG, "data com");
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+//                        Log.v(TAG, "error here " + new Gson().toJson(e).toString());
+
+                    }
+
+                    @Override
+                    public void onNext(RegistrationResponse registrationResponse) {
+                        Prefs.putBoolean(Constants.PREFS_DEVICE_REGISTERED, true);
+                    }
+                });
+
+    }
+
 }

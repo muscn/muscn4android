@@ -13,6 +13,8 @@ import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -37,7 +39,7 @@ public interface MuscnApiInterface {
 
     /**
      * fetch epl matchweek results list
-    */
+     */
     @GET("api/v1/fixtures/epl_matchweek/")
     Observable<ResponseBody> getEplMatchweekFixtures();
 
@@ -47,8 +49,15 @@ public interface MuscnApiInterface {
     @GET("api/v1/injuries")
     Observable<InjuriesResponse> getInjuredPlayers();
 
-    @POST("api/v1/user_device/")
+        @POST("api/v1/user_device/")
     Observable<RegistrationResponse> postRegistrationData(@Body RegistrationPostData registrationPostData);
+//    @FormUrlEncoded
+//    @POST("api/v1/user_device/")
+//    Observable<RegistrationResponse> postRegistrationData(@Field("dev_id") String deviceId,
+//                                                          @Field("reg_id") String regId,
+//                                                          @Field("name") String name,
+//                                                          @Field("type") String type);
+
 
     @GET("api/v1/fixture_detail/{result_id}/")
     Observable<ResultDetailsResponse> getResultDetails(@Path("result_id") int resultId);

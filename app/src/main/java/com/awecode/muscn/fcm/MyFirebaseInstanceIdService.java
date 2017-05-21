@@ -7,6 +7,7 @@ import android.util.Log;
 import com.awecode.muscn.model.registration.RegistrationPostData;
 import com.awecode.muscn.model.registration.RegistrationResponse;
 import com.awecode.muscn.util.Constants;
+import com.awecode.muscn.util.prefs.Prefs;
 import com.awecode.muscn.util.retrofit.MuscnApiInterface;
 import com.awecode.muscn.util.retrofit.ServiceGenerator;
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -23,6 +24,8 @@ import rx.schedulers.Schedulers;
  */
 
 public class MyFirebaseInstanceIdService extends FirebaseInstanceIdService {
+    private static final String TAG = "MyFirebaseInstanceIdSer";
+
     @Override
     public void onTokenRefresh() {
         super.onTokenRefresh();
@@ -34,35 +37,39 @@ public class MyFirebaseInstanceIdService extends FirebaseInstanceIdService {
         // If you want to send messages to this application instance or
         // manage this apps subscriptions on the server side, send the
         // Instance ID token to your app server.
-        sendRegistrationToServer(refreshedToken);
+        Prefs.putString(Constants.PREFS_REFRESH_TOKEN, refreshedToken);
+        sendRegistrationToServer();
     }
 
-    public void sendRegistrationToServer(String refreshedToken) {
-        String deviceId = Settings.Secure.getString(getApplicationContext().getContentResolver(),
+    public void sendRegistrationToServer() {
+        final String deviceId = Settings.Secure.getString(getApplicationContext().getContentResolver(),
                 Settings.Secure.ANDROID_ID);
-
+        String refreshedToken = Prefs.getString(Constants.PREFS_REFRESH_TOKEN, "");
+        Log.v(TAG, "sendRegistrationToServer: pref token " + refreshedToken);
         RegistrationPostData mRegistrationPostData = new RegistrationPostData(deviceId, refreshedToken, Build.MODEL, Constants.DEVICE_TYPE);
 
         MuscnApiInterface mApiInterface = ServiceGenerator.createService(MuscnApiInterface.class);
         Observable<RegistrationResponse> call = mApiInterface.postRegistrationData(mRegistrationPostData);
+
         call.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<RegistrationResponse>() {
                     @Override
                     public void onCompleted() {
-                        Log.v("response", "data com");
+//                        Log.v(TAG, "data com");
 
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.v("response", "error" + e.getLocalizedMessage());
+//                        Log.v(TAG, "error here " + new Gson().toJson(e).toString());
 
                     }
 
                     @Override
                     public void onNext(RegistrationResponse registrationResponse) {
-                        Log.v("response", "data succcess" + new Gson().toJson(registrationResponse).toString());
+                        Log.v("happ", "data succcess my" + new Gson().toJson(registrationResponse).toString());
+                        Prefs.putBoolean(Constants.PREFS_DEVICE_REGISTERED, true);
                     }
                 });
 

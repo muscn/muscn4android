@@ -127,3 +127,7 @@
 -keep class * implements javax.** {*;}
 -keepattributes Exceptions, InnerClasses, Signature, Deprecated, *Annotation*, EnclosingMethod
 -dontoptimize
+
+#adding model class
+-keep class com.awecode.muscn.model.** { *; }
+
