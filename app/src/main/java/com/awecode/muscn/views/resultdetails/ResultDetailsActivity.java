@@ -279,4 +279,11 @@ public class ResultDetailsActivity extends BaseActivity {
     public void onBackPressed() {
         onArrowClick();
     }
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mTransaction != null && !mTransaction.isCancelled())
+            mTransaction.cancel();
+
+    }
 }
