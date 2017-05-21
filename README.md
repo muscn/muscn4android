@@ -15,7 +15,7 @@ This application is made using Java and Android SDK.
 [RxAndroid](https://github.com/ReactiveX/RxAndroid)  
 [RxJava](https://github.com/ReactiveX/RxJava)  
 [Gson](https://github.com/google/gson)  
-[Picasso](https://github.com/square/picasso)
+[Picasso](https://github.com/square/picasso)  
 [Realm](https://realm.io)  
 
 
