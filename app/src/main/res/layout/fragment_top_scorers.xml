@@ -6,6 +6,11 @@
     android:orientation="vertical">
     <!--table column title-->
     <include layout="@layout/top_scorers_table_caption" />
+    <android.support.v4.widget.SwipeRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/swipeRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/topScorersRecyclerView"
@@ -14,4 +19,5 @@
         android:clipToPadding="false"
         android:paddingBottom="1dp"
         android:scrollbars="vertical" />
+    </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>

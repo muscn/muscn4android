@@ -1,9 +1,12 @@
 package com.awecode.muscn.views.top_scorers;
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.awecode.muscn.R;
 import com.awecode.muscn.adapter.TopScorerAdapter;
@@ -16,6 +19,7 @@ import java.util.Collection;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import io.realm.Realm;
 import io.realm.RealmAsyncTask;
 import rx.Observable;
@@ -34,6 +38,8 @@ public class TopScorersFragment extends MasterFragment {
     TopScorerAdapter mAdapter;
     LinearLayoutManager mLinearLayoutManager;
     RecyclerViewScrollListener mRecyclerViewScrollListener;
+    @BindView(R.id.swipeRefreshLayout)
+    SwipeRefreshLayout mSwipeRefreshLayout;
     private RealmAsyncTask mTransaction;
 
     public static TopScorersFragment newInstance() {
@@ -62,6 +68,16 @@ public class TopScorersFragment extends MasterFragment {
         initializeRecyclerView();
 
         checkInternetConnection();
+
+        mSwipeRefreshLayout.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        checkInternetConnection();
+                    }
+                }
+        );
+
     }
 
 
@@ -80,6 +96,9 @@ public class TopScorersFragment extends MasterFragment {
         if (Util.checkInternetConnection(mContext))
             requestTopScorers();
         else {
+            if (mSwipeRefreshLayout.isRefreshing())
+                mSwipeRefreshLayout.setRefreshing(false);
+
             if (getTableDataCount(TopScorersResponse.class) < 1)
                 noInternetConnectionDialog();
             else
@@ -105,6 +124,8 @@ public class TopScorersFragment extends MasterFragment {
                 .subscribe(new Observer<List<TopScorersResponse>>() {
                     @Override
                     public void onCompleted() {
+                        if (mSwipeRefreshLayout.isRefreshing())
+                            mSwipeRefreshLayout.setRefreshing(false);
                         mActivity.showContentView();
                     }
 
@@ -182,5 +203,13 @@ public class TopScorersFragment extends MasterFragment {
         if (mTransaction != null && !mTransaction.isCancelled())
             mTransaction.cancel();
 
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        ButterKnife.bind(this, rootView);
+        return rootView;
     }
 }
