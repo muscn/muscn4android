@@ -13,7 +13,6 @@
         android:weightSum="8">
 
         <TextView
-            android:id="@+id/serialNumberCaption"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -22,7 +21,6 @@
             android:textSize="@dimen/header_caption_text_size" />
 
         <TextView
-            android:id="@+id/clubCaption"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="4"
@@ -32,7 +30,6 @@
             android:textSize="@dimen/header_caption_text_size" />
 
         <TextView
-            android:id="@+id/pCaption"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -41,7 +38,6 @@
             android:textSize="@dimen/header_caption_text_size" />
 
         <TextView
-            android:id="@+id/gdCaption"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -50,7 +46,6 @@
             android:textSize="@dimen/header_caption_text_size" />
 
         <TextView
-            android:id="@+id/ptsCaption"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

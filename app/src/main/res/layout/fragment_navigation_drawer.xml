@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/nav_main_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/nav_background_red_black"
@@ -62,7 +61,6 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/internetLogo"
                 android:layout_width="15dp"
                 android:layout_height="15dp" />
 
