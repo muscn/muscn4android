@@ -20,6 +20,20 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="manutd.org.np"
+                    android:scheme="http" />
+                <data
+                    android:host="www.manutd.org.np"
+                    android:scheme="https" />
+            </intent-filter>
+
         </activity>
         <activity
             android:name=".views.aboutus.AboutUsActivity"
@@ -59,7 +73,8 @@
         <!-- declare widget update service -->
         <service android:name=".widget.UpdateWidgetService" />
 
-        <activity android:name=".views.resultdetails.ResultDetailsActivity"
+        <activity
+            android:name=".views.resultdetails.ResultDetailsActivity"
             android:screenOrientation="portrait">
 
         </activity>
