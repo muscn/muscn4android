@@ -123,7 +123,6 @@ public abstract class BaseActivity extends AppCompatActivity {
                 .beginTransaction();
         ft.replace(R.id.container,
                 fragment);
-        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         ft.addToBackStack(null);
         ft.commitAllowingStateLoss();
     }
@@ -133,7 +132,6 @@ public abstract class BaseActivity extends AppCompatActivity {
                 .beginTransaction();
         ft.replace(R.id.container,
                 fragment, tag);
-        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         ft.commitAllowingStateLoss();
     }
 
@@ -142,7 +140,6 @@ public abstract class BaseActivity extends AppCompatActivity {
                 .beginTransaction();
         ft.replace(R.id.container,
                 fragment);
-        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         ft.commitAllowingStateLoss();
     }
 

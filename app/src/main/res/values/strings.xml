@@ -42,5 +42,6 @@
     <string name="tap_title">Access Side Menu</string>
     <string name="tap_description">Click on the logo to open navigation menu.</string>
     <string name="loading_results">Loading results...</string>
+    <string name="fixture_schedule_yet_to_come">Fixture schedule yet to come....</string>
 
 </resources>
