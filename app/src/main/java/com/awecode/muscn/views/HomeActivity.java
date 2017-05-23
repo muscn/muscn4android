@@ -39,6 +39,7 @@ import com.awecode.muscn.views.nav.NavigationDrawerCallbacks;
 import com.awecode.muscn.views.nav.NavigationDrawerFragment;
 import com.awecode.muscn.views.nav.NavigationItem;
 import com.awecode.muscn.views.recent_results.ResultFragment;
+import com.awecode.muscn.views.signup.SignUpActivity;
 import com.awecode.muscn.views.top_scorers.TopScorersFragment;
 import com.getkeepsafe.taptargetview.TapTarget;
 import com.getkeepsafe.taptargetview.TapTargetView;
@@ -195,6 +196,10 @@ public class HomeActivity extends BaseActivity implements RecyclerViewScrollList
                 openFragment(mResultFragment);
             } else if (menuType == MenuType.ABOUT_US) {
                 startActivity(new Intent(this, AboutUsActivity.class));
+            } else if (menuType == MenuType.SIGN_UP) {
+                Intent intent = new Intent(HomeActivity.this, SignUpActivity.class);
+                intent.putExtra(SignUpActivity.TYPE_INTENT, MenuType.SIGN_UP);
+                startActivity(intent);
             } else {
                 mHomeFragment = HomeFragment.newInstance();
                 openFragmentNoHistory(mHomeFragment, "HOME");

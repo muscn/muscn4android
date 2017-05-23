@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:src="@drawable/logo_manutd"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_vertical_margin"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
+            android:orientation="vertical">
+            <!--fullname-->
+            <LinearLayout
+                android:id="@+id/fullnameLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/normal_text_view_style"
+                    android:text="@string/full_name"/>
+
+                <EditText
+                    android:id="@+id/fullnameEditText"
+                    style="@style/normal_edit_text_style"
+                    android:hint="@string/full_name"/>
+            </LinearLayout>
+            <!--username-->
+            <LinearLayout
+                android:id="@+id/usernameLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/normal_text_view_style"
+                    android:text="@string/username"/>
+
+                <EditText
+                    android:id="@+id/usernameEditText"
+                    style="@style/normal_edit_text_style"
+                    android:hint="@string/username"/>
+            </LinearLayout>
+            <!--email-->
+            <LinearLayout
+                android:id="@+id/emailLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/normal_text_view_style"
+                    android:text="@string/email"/>
+
+                <EditText
+                    android:id="@+id/emailEditText"
+                    style="@style/normal_edit_text_style"
+                    android:hint="@string/email"/>
+            </LinearLayout>
+            <!--password-->
+            <LinearLayout
+                android:id="@+id/passwordLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/normal_text_view_style"
+                    android:text="@string/password"/>
+
+                <EditText
+                    android:id="@+id/passwordEditText"
+                    style="@style/normal_edit_text_style"
+                    android:fontFamily="sans-serif"
+                    android:hint="@string/password"
+                    android:inputType="textPassword"/>
+            </LinearLayout>
+            <!--confirm password-->
+            <LinearLayout
+                android:id="@+id/confirmPasswordLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/normal_text_view_style"
+                    android:text="@string/confirmPassword"/>
+
+                <EditText
+                    android:id="@+id/confirmPasswordEditText"
+                    style="@style/normal_edit_text_style"
+                    android:fontFamily="sans-serif"
+                    android:hint="@string/confirmPassword"
+                    android:inputType="textPassword"/>
+            </LinearLayout>
+            <!--sign up button-->
+            <Button
+                android:id="@+id/signUpButton"
+                style="@style/normal_button_style"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:text="Sign Up"/>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

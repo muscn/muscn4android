@@ -22,5 +22,6 @@
     <dimen name="widget_margin">8dp</dimen>
     <dimen name="fixture_text_size">15sp</dimen>
     <dimen name="update_dialog_text_size">18sp</dimen>
-
+    <dimen name="normal_text_size">12dp</dimen>
+    <dimen name="form_below_margin">14dp</dimen>
 </resources>
