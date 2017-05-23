@@ -1,6 +1,7 @@
 package com.awecode.muscn.views;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -26,6 +27,7 @@ public abstract class AppCompatBaseActivity extends AppCompatActivity {
 
     protected Context mContext;
     protected Activity mActivity;
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -93,9 +95,33 @@ public abstract class AppCompatBaseActivity extends AppCompatActivity {
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
     }
+    public void showSuccessDialog(final Context context, String title, String message) {
+        new AlertDialog.Builder(context, R.style.AppCompatAlertDialogStyle)
+                .setTitle(title)
+                .setMessage(message)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+//                        finish();
+                        dialog.dismiss();
+                    }
+                })
+                .show();
+    }
 
     public void noInternetConnectionDialog(Context mContext) {
         showDialog(mContext, "Oops!", getString(R.string.no_internet_message));
+    }
+
+    public void showProgressDialog() {
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage(getResources().getString(R.string.loading));
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+    }
+
+    public void closeProgressDialog() {
+        if (progressDialog != null)
+            progressDialog.dismiss();
     }
 
 }
