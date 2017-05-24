@@ -7,7 +7,16 @@ import android.widget.EditText;
 
 import com.awecode.muscn.R;
 import com.awecode.muscn.model.http.signup.SignUpPostData;
+import com.awecode.muscn.util.Util;
 import com.awecode.muscn.views.AppCompatBaseFragment;
+import com.mobsandgeeks.saripaar.ValidationError;
+import com.mobsandgeeks.saripaar.annotation.ConfirmPassword;
+import com.mobsandgeeks.saripaar.annotation.Email;
+import com.mobsandgeeks.saripaar.annotation.Length;
+import com.mobsandgeeks.saripaar.annotation.NotEmpty;
+import com.mobsandgeeks.saripaar.annotation.Password;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -22,14 +31,27 @@ import rx.schedulers.Schedulers;
 
 public class SignUpFragment extends AppCompatBaseFragment {
     private static final String TAG = "SignUpFragment";
+    @NotEmpty(messageResId = R.string.not_empty_error_text)
     @BindView(R.id.fullnameEditText)
     EditText fullnameEditText;
+
+    @NotEmpty(messageResId = R.string.not_empty_error_text)
     @BindView(R.id.usernameEditText)
     EditText usernameEditText;
+
+    @NotEmpty(messageResId = R.string.not_empty_error_text)
+    @Email(messageResId = R.string.invalid_email)
     @BindView(R.id.emailEditText)
     EditText emailEditText;
+
+    @NotEmpty(messageResId = R.string.not_empty_error_text)
+    @Length(messageResId = R.string.invalid_length, min=8)
+    @Password(messageResId = R.string.password_error_text, scheme = Password.Scheme.ALPHA_NUMERIC)
     @BindView(R.id.passwordEditText)
     EditText passwordEditText;
+
+    @NotEmpty(messageResId = R.string.not_empty_error_text)
+    @ConfirmPassword
     @BindView(R.id.confirmPasswordEditText)
     EditText confirmPasswordEditText;
 
@@ -54,9 +76,13 @@ public class SignUpFragment extends AppCompatBaseFragment {
 
     @OnClick(R.id.signUpButton)
     public void onClick() {
-        signUpRequest();
+        if (Util.checkInternetConnection(mContext))
+            validateForm();
+        else
+            noInternetConnectionDialog();
     }
 
+    //sign up request
     private void signUpRequest() {
         mActivity.showProgressDialog();
         SignUpPostData signUpPostData = new SignUpPostData();
@@ -94,5 +120,16 @@ public class SignUpFragment extends AppCompatBaseFragment {
                             mActivity.showSuccessDialog(mContext, "Success!", "Successfully created account.");
                     }
                 });
+    }
+
+    @Override
+    public void onValidationSucceeded() {
+        super.onValidationSucceeded();
+        signUpRequest();
+    }
+
+    @Override
+    public void onValidationFailed(List<ValidationError> errors) {
+        super.onValidationFailed(errors);
     }
 }

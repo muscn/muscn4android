@@ -50,5 +50,9 @@
     <string name="confirmPassword">Confirm Password</string>
     <string name="signup">Sign Up</string>
     <string name="password_error">Password do not match.</string>
+    <string name="not_empty_error_text">This field is required</string>
+    <string name="invalid_email">Please enter valid email address</string>
+    <string name="password_error_text">Password must contain at least 1 alphabet and 1 digit</string>
+    <string name="invalid_length">Password must be at least of length 8</string>
 
 </resources>
