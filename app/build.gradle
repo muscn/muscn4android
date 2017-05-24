@@ -92,5 +92,9 @@ dependencies {
 
     //realmadapter
     compile 'io.realm:android-adapters:2.1.0'
+
+    //saripaar validator
+    compile 'com.mobsandgeeks:android-saripaar:2.0.3'
+
 }
 apply plugin: 'com.google.gms.google-services'
