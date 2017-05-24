@@ -117,6 +117,19 @@ public abstract class AppCompatBaseActivity extends AppCompatActivity implements
                 })
                 .show();
     }
+    public void successDialogAndCloseActivity(final Context context, String title, String message) {
+        new AlertDialog.Builder(context, R.style.AppCompatAlertDialogStyle)
+                .setTitle(title)
+                .setMessage(message)
+                .setCancelable(false)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                        dialog.dismiss();
+                    }
+                })
+                .show();
+    }
 
     public void noInternetConnectionDialog(Context mContext) {
         showDialog(mContext, "Oops!", getString(R.string.no_internet_message));
@@ -152,6 +165,7 @@ public abstract class AppCompatBaseActivity extends AppCompatActivity implements
 
         }
     }
+
     public void validateForm() {
         if (mValidator == null) {
             mValidator = new Validator(this);

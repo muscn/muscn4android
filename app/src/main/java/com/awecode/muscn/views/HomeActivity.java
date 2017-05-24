@@ -196,10 +196,6 @@ public class HomeActivity extends BaseActivity implements RecyclerViewScrollList
                 openFragment(mResultFragment);
             } else if (menuType == MenuType.ABOUT_US) {
                 startActivity(new Intent(this, AboutUsActivity.class));
-            } else if (menuType == MenuType.SIGN_UP) {
-                Intent intent = new Intent(HomeActivity.this, SignUpActivity.class);
-                intent.putExtra(SignUpActivity.TYPE_INTENT, MenuType.SIGN_UP);
-                startActivity(intent);
             } else {
                 mHomeFragment = HomeFragment.newInstance();
                 openFragmentNoHistory(mHomeFragment, "HOME");

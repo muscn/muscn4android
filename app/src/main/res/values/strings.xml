@@ -54,5 +54,12 @@
     <string name="invalid_email">Please enter valid email address</string>
     <string name="password_error_text">Password must contain at least 1 alphabet and 1 digit</string>
     <string name="invalid_length">Password must be at least of length 8</string>
+    <string name="sign_in">Sign In</string>
+    <string name="username_or_email">Username or Email</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="success_sign_out_text">Signed out successfully.</string>
+    <string name="success">Success!</string>
+    <string name="success_sign_in_text">Signed in Successfully.</string>
+
 
 </resources>

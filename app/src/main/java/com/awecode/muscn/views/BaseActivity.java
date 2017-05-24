@@ -301,4 +301,16 @@ public abstract class BaseActivity extends AppCompatActivity {
     private void initializedRealm() {
         mRealm = Realm.getDefaultInstance();
     }
+    public void showSuccessDialog(final Context context, String title, String message) {
+        new AlertDialog.Builder(context, R.style.AppCompatAlertDialogStyle)
+                .setTitle(title)
+                .setMessage(message)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+//                        finish();
+                        dialog.dismiss();
+                    }
+                })
+                .show();
+    }
 }

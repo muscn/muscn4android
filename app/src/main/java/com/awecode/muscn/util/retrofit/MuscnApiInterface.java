@@ -5,6 +5,8 @@ import com.awecode.muscn.model.http.injuries.InjuriesResponse;
 import com.awecode.muscn.model.http.leaguetable.LeagueTableResponse;
 import com.awecode.muscn.model.http.recent_results.RecentResultsResponse;
 import com.awecode.muscn.model.http.resultdetails.ResultDetailsResponse;
+import com.awecode.muscn.model.http.signin.SignInData;
+import com.awecode.muscn.model.http.signin.SignInSuccessData;
 import com.awecode.muscn.model.http.signup.SignUpPostData;
 import com.awecode.muscn.model.http.top_scorers.TopScorersResponse;
 import com.awecode.muscn.model.registration.RegistrationPostData;
@@ -56,5 +58,7 @@ public interface MuscnApiInterface {
 
     @POST("api/v1/users/")
     Observable<SignUpPostData> postSignUpData(@Body SignUpPostData signUpPostData);
-//
+
+    @POST("api/v1/obtain_auth_token/")
+    Observable<SignInSuccessData> doSignIn(@Body SignInData signInData);
 }

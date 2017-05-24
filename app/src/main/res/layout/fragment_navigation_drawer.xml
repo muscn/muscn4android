@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/nav_main_layout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/nav_background_red_black"
-    android:clickable="true"
-    android:orientation="vertical">
+                android:id="@+id/nav_main_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/nav_background_red_black"
+                android:clickable="true"
+                android:orientation="vertical">
 
     <ImageView
         android:id="@+id/navLogo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="45dp"
-        android:src="@drawable/aboutus_muscn_logo" />
+        android:src="@drawable/aboutus_muscn_logo"/>
 
     <LinearLayout
         android:id="@+id/muscnTextLayout"
@@ -29,7 +29,7 @@
             android:text="MANCHESTER UNITED"
             android:textColor="@color/white"
             android:textSize="@dimen/labels_text_size"
-            android:textStyle="bold|italic" />
+            android:textStyle="bold|italic"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -44,7 +44,7 @@
                 android:text="SUPPORTERS' CLUB,"
                 android:textColor="@color/white"
                 android:textSize="@dimen/labels_text_size"
-                android:textStyle="italic" />
+                android:textStyle="italic"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -52,7 +52,7 @@
                 android:text=" NEPAL"
                 android:textColor="@color/white"
                 android:textSize="@dimen/labels_text_size"
-                android:textStyle="bold|italic" />
+                android:textStyle="bold|italic"/>
         </LinearLayout>
 
         <LinearLayout
@@ -64,7 +64,7 @@
             <ImageView
                 android:id="@+id/internetLogo"
                 android:layout_width="15dp"
-                android:layout_height="15dp" />
+                android:layout_height="15dp"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -72,7 +72,7 @@
 
                 android:text="www.manutd.org.np"
                 android:textColor="@color/white"
-                android:textSize="12sp" />
+                android:textSize="12sp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -89,15 +89,50 @@
 
                 android:text="v0.0.1"
                 android:textColor="@color/white"
-                android:textSize="12sp" />
+                android:textSize="12sp"/>
         </LinearLayout>
 
     </LinearLayout><!--nav recycler view-->
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/drawerList"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/muscnTextLayout"
-        android:paddingTop="25dp" />
+        android:orientation="vertical"
+        android:weightSum="6">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/drawerList"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="5.5"
+            android:paddingTop="25dp"/>
+
+        <include layout="@layout/white_horizontal_line"/>
+
+        <LinearLayout
+            android:id="@+id/bottomLayout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
+            android:gravity="bottom"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <Button
+                android:id="@+id/signUpButton"
+                style="@style/no_background_button_style"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="@string/signup"/>
+
+            <Button
+                android:id="@+id/signInButton"
+                style="@style/no_background_button_style"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="@string/sign_in"/>
+
+        </LinearLayout>
+    </LinearLayout>
 
 </RelativeLayout>

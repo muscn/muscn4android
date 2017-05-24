@@ -31,6 +31,7 @@ import rx.schedulers.Schedulers;
 
 public class SignUpFragment extends AppCompatBaseFragment {
     private static final String TAG = "SignUpFragment";
+
     @NotEmpty(messageResId = R.string.not_empty_error_text)
     @BindView(R.id.fullnameEditText)
     EditText fullnameEditText;

@@ -6,8 +6,10 @@ import android.widget.TextView;
 import com.awecode.muscn.R;
 import com.awecode.muscn.model.enumType.MenuType;
 import com.awecode.muscn.views.AppCompatBaseActivity;
+import com.awecode.muscn.views.signin.SignInFragment;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * Created by surensth on 5/23/17.
@@ -31,6 +33,12 @@ public class SignUpActivity extends AppCompatBaseActivity {
         menuType = (MenuType) getIntent().getSerializableExtra(TYPE_INTENT);
         if (menuType != null && menuType == MenuType.SIGN_UP)
             configureSignUpView();
+        else if (menuType != null && menuType == MenuType.SIGN_IN_OUT)
+            configureSignInView();
+    }
+
+    private void configureSignInView() {
+        openFragmentNoHistory(SignInFragment.newInstance());
     }
 
     private void configureSignUpView() {
@@ -44,5 +52,11 @@ public class SignUpActivity extends AppCompatBaseActivity {
      */
     public void setToolbarTitle(String message) {
         toolbarTitle.setText(message);
+    }
+
+
+    @OnClick(R.id.angleBackImageView)
+    public void onClick() {
+        finish();
     }
 }
