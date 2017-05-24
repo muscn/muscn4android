@@ -8,10 +8,15 @@ import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.awecode.muscn.MyApplication;
 import com.awecode.muscn.util.Util;
 import com.awecode.muscn.util.retrofit.MuscnApiInterface;
+import com.mobsandgeeks.saripaar.ValidationError;
+import com.mobsandgeeks.saripaar.Validator;
+
+import java.util.List;
 
 import butterknife.ButterKnife;
 
@@ -19,11 +24,12 @@ import butterknife.ButterKnife;
  * Created by surensth on 5/23/17.
  */
 
-public abstract class AppCompatBaseFragment extends Fragment {
+public abstract class AppCompatBaseFragment extends Fragment implements Validator.ValidationListener{
     public MuscnApiInterface mApiInterface;
     public Context mContext;
     public AppCompatBaseActivity mActivity;
     public FragmentManager mFragmentManager;
+    protected Validator mValidator;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -31,6 +37,9 @@ public abstract class AppCompatBaseFragment extends Fragment {
         mContext = getActivity();
         mActivity = (AppCompatBaseActivity) getActivity();
         mFragmentManager = mActivity.getSupportFragmentManager();
+
+        mValidator = new Validator(this);
+        mValidator.setValidationListener(this);
     }
 
     @Override
@@ -67,4 +76,32 @@ public abstract class AppCompatBaseFragment extends Fragment {
     public void noInternetConnectionDialog() {
         ((AppCompatBaseActivity) mContext).noInternetConnectionDialog(mContext);
     }
+
+    @Override
+    public void onValidationSucceeded() {
+
+    }
+
+    @Override
+    public void onValidationFailed(List<ValidationError> errors) {
+        for (ValidationError error : errors) {
+            View view = error.getView();
+            String message = error.getCollatedErrorMessage(getActivity());
+            // Display error messages ;)
+            if (view instanceof EditText)
+                ((EditText) view).setError(message);
+            else
+                toast(message);
+
+        }
+    }
+
+    public void validateForm() {
+        if (mValidator == null) {
+            mValidator = new Validator(this);
+            mValidator.setValidationListener(this);
+        }
+        mValidator.validate();
+    }
+
 }

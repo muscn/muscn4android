@@ -10,11 +10,17 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.EditText;
 
 import com.awecode.muscn.MyApplication;
 import com.awecode.muscn.R;
 import com.awecode.muscn.util.Util;
 import com.awecode.muscn.util.retrofit.MuscnApiInterface;
+import com.mobsandgeeks.saripaar.ValidationError;
+import com.mobsandgeeks.saripaar.Validator;
+
+import java.util.List;
 
 import butterknife.ButterKnife;
 
@@ -22,12 +28,13 @@ import butterknife.ButterKnife;
  * Created by surensth on 5/23/17.
  */
 
-public abstract class AppCompatBaseActivity extends AppCompatActivity {
+public abstract class AppCompatBaseActivity extends AppCompatActivity implements Validator.ValidationListener {
     protected MuscnApiInterface mApiInterface = null;
 
     protected Context mContext;
     protected Activity mActivity;
     ProgressDialog progressDialog;
+    Validator mValidator;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,6 +44,8 @@ public abstract class AppCompatBaseActivity extends AppCompatActivity {
         mContext = this;
         mActivity = this;
         mApiInterface = ((MyApplication) getApplication()).getApiInterface();
+        mValidator = new Validator(this);
+        mValidator.setValidationListener(this);
     }
 
     protected int getDimen(int id) {
@@ -95,6 +104,7 @@ public abstract class AppCompatBaseActivity extends AppCompatActivity {
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
     }
+
     public void showSuccessDialog(final Context context, String title, String message) {
         new AlertDialog.Builder(context, R.style.AppCompatAlertDialogStyle)
                 .setTitle(title)
@@ -122,6 +132,32 @@ public abstract class AppCompatBaseActivity extends AppCompatActivity {
     public void closeProgressDialog() {
         if (progressDialog != null)
             progressDialog.dismiss();
+    }
+
+    @Override
+    public void onValidationSucceeded() {
+
+    }
+
+    @Override
+    public void onValidationFailed(List<ValidationError> errors) {
+        for (ValidationError error : errors) {
+            View view = error.getView();
+            String message = error.getCollatedErrorMessage(this);
+            // Display error messages ;)
+            if (view instanceof EditText)
+                ((EditText) view).setError(message);
+            else
+                toast(message);
+
+        }
+    }
+    public void validateForm() {
+        if (mValidator == null) {
+            mValidator = new Validator(this);
+            mValidator.setValidationListener(this);
+        }
+        mValidator.validate();
     }
 
 }
