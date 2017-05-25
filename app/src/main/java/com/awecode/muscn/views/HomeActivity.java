@@ -1,5 +1,6 @@
 package com.awecode.muscn.views;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -90,26 +91,33 @@ public class HomeActivity extends BaseActivity implements RecyclerViewScrollList
 
     }
 
+
     /**
      * create tap target view for first time
      */
+    @SuppressLint("WrongViewCast")
     private void createTapTarget() {
+
         TapTargetView.showFor(this,                 // `this` is an Activity
-                TapTarget.forView(findViewById(R.id.hamBurgerImageView), getString(R.string.tap_title), getString(R.string.tap_description))
+                TapTarget.forView(findViewById(R.id.hamBurgerImageView),
+                        getString(R.string.tap_title),
+                        getString(R.string.tap_description))
                         // All options below are optional
                         .outerCircleColor(R.color.colorPrimary)      // Specify a color for the outer circle
+                        .outerCircleAlpha(0.96f)            // Specify the alpha amount for the outer circle
                         .targetCircleColor(R.color.white)   // Specify a color for the target circle
                         .titleTextSize(25)                  // Specify the size (in sp) of the title text
                         .titleTextColor(R.color.white)      // Specify the color of the title text
                         .descriptionTextSize(20)            // Specify the size (in sp) of the description text
                         .descriptionTextColor(R.color.white)  // Specify the color of the description text
+                        .textColor(R.color.white)            // Specify a color for both the title and description text
                         .textTypeface(Typeface.SANS_SERIF)  // Specify a typeface for the text
-                        .dimColor(R.color.white)            // If set, will dim behind the view with 30% opacity of the given color
+                        .dimColor(R.color.black)            // If set, will dim behind the view with 30% opacity of the given color
                         .drawShadow(true)                   // Whether to draw a drop shadow or not
                         .cancelable(false)                  // Whether tapping outside the outer circle dismisses the view
                         .tintTarget(true)                   // Whether to tint the target view's color
-                        .transparentTarget(false)           // Specify whether the target is transparent (displays the content underneath)
-                        .icon(ContextCompat.getDrawable(mContext, R.drawable.ic_ham_burger), false)                     // Specify a custom drawable to draw as the target
+                        .transparentTarget(true)           // Specify whether the target is transparent (displays the content underneath)
+                        .icon(ContextCompat.getDrawable(mContext, R.drawable.ic_ham_burger_taptarget))                     // Specify a custom drawable to draw as the target
                         .targetRadius(60),                  // Specify the target radius (in dp)
                 new TapTargetView.Listener() {          // The listener can listen for regular clicks, long clicks or cancels
                     @Override
@@ -125,6 +133,7 @@ public class HomeActivity extends BaseActivity implements RecyclerViewScrollList
         Prefs.putBoolean(Constants.PREFS_TAP_STATUS, true);
     }
 
+    @SuppressLint("RestrictedApi")
     @Override
     public void onErrorViewClicked() {
         if (Util.checkInternetConnection(mContext)) {

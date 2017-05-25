@@ -57,6 +57,7 @@
     <string name="success_sign_out_text">Signed out successfully.</string>
     <string name="success">Success!</string>
     <string name="success_sign_in_text">Signed in Successfully.</string>
+    <string name="muscn">MUSCN</string>
 
 
 </resources>

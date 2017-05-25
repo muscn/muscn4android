@@ -107,13 +107,16 @@
             android:layout_weight="5.5"
             android:paddingTop="25dp"/>
 
-        <include layout="@layout/white_horizontal_line"/>
+        <include
+            android:visibility="gone"
+            layout="@layout/white_horizontal_line"/>
 
         <LinearLayout
             android:id="@+id/bottomLayout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="0.5"
+            android:visibility="gone"
             android:gravity="bottom"
             android:orientation="horizontal"
             android:weightSum="2">

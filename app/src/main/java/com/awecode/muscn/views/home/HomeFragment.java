@@ -106,6 +106,7 @@ HomeFragment extends MasterFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        mActivity.setCustomTitle(R.string.muscn);
         initializeCountDownTimer();
         setup_fixutres();
         if (Util.checkInternetConnection(mContext)) {
