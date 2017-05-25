@@ -65,6 +65,7 @@
     <string name="successful_account_creation">Successfully created account.</string>
     <string name="duplicate_username">That username isn\'t available. Try another.</string>
     <string name="duplicate_email">That email isn\'t available. Try another.</string>
+    <string name="loading_result_details">Loading result details...</string>
 
 
 </resources>
