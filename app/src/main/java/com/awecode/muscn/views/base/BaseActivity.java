@@ -40,8 +40,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     StateLayout mStateLayout;
     @BindView(R.id.title)
     TextView titleTextView;
-    @BindView(R.id.muscnLogo)
-    ImageView muscnLogoImageView;
+
     protected NavigationDrawerFragment mNavigationDrawerFragment;
     protected Realm mRealm;
 

@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.awecode.muscn.BuildConfig;
 import com.awecode.muscn.R;
 import com.awecode.muscn.model.enumType.MenuType;
 import com.awecode.muscn.model.listener.RecyclerViewScrollListener;
@@ -94,7 +95,7 @@ public class HomeActivity extends BaseActivity implements RecyclerViewScrollList
      */
     private void createTapTarget() {
         TapTargetView.showFor(this,                 // `this` is an Activity
-                TapTarget.forView(findViewById(R.id.muscnLogo), getString(R.string.tap_title), getString(R.string.tap_description))
+                TapTarget.forView(findViewById(R.id.hamBurgerImageView), getString(R.string.tap_title), getString(R.string.tap_description))
                         // All options below are optional
                         .outerCircleColor(R.color.colorPrimary)      // Specify a color for the outer circle
                         .targetCircleColor(R.color.white)   // Specify a color for the target circle
@@ -108,7 +109,7 @@ public class HomeActivity extends BaseActivity implements RecyclerViewScrollList
                         .cancelable(false)                  // Whether tapping outside the outer circle dismisses the view
                         .tintTarget(true)                   // Whether to tint the target view's color
                         .transparentTarget(false)           // Specify whether the target is transparent (displays the content underneath)
-                        .icon(ContextCompat.getDrawable(mContext, R.drawable.logo_white_muscn_new), false)                     // Specify a custom drawable to draw as the target
+                        .icon(ContextCompat.getDrawable(mContext, R.drawable.ic_ham_burger), false)                     // Specify a custom drawable to draw as the target
                         .targetRadius(60),                  // Specify the target radius (in dp)
                 new TapTargetView.Listener() {          // The listener can listen for regular clicks, long clicks or cancels
                     @Override
@@ -203,7 +204,7 @@ public class HomeActivity extends BaseActivity implements RecyclerViewScrollList
         }
     }
 
-    @OnClick(R.id.muscnLogo)
+    @OnClick(R.id.hamBurgerImageView)
     public void onClickLogo() {
         mNavigationDrawerFragment.openDrawer();
     }
@@ -258,7 +259,7 @@ public class HomeActivity extends BaseActivity implements RecyclerViewScrollList
                 .setPositiveButton(R.string.update, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.awecode.muscn"));
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + BuildConfig.APPLICATION_ID));
                         startActivity(intent);
                         updateAlertDialog = null;
                     }

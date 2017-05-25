@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MUSCN</string>
+    <string name="app_name">ManUtd Nepal</string>
     <string name="loading">Loading...</string>
     <string name="error">Error Ocurred. Try again</string>
     <string name="retry">Retry again...</string>
@@ -27,11 +27,11 @@
     <string name="about_us_membership_text">Official membership can be applied by the Nepali Red Devils from the clubs official website.</string>
     <string name="copyright_owner_string">All Images and logos used in this app are copyright by their respective owners.</string>
     <string name="official_website_link_text">&lt;a href="https://manutd.org.np">manutd.org.np&lt;/a></string>
-    <string name="facebook_link_text">&lt;a href="http://facebook.com/muscnepal">muscnepal&lt;/a></string>
-    <string name="twitter_link_text">&lt;a href="http://twitter.com/muscnp">@muncnp&lt;/a></string>
+    <string name="facebook_link_text">&lt;a href="https://facebook.com/muscnepal">muscnepal&lt;/a></string>
+    <string name="twitter_link_text">&lt;a href="https://twitter.com/muscnp">@muncnp&lt;/a></string>
     <string name="email_link_text">&lt;a href="mailto:info@manutd.org.np">info@manutd.org.np&lt;/a></string>
-    <string name="instagram_link_text">&lt;a href="http://instagram.com/muscnp">muscnp&lt;/a></string>
-    <string name="awecode_link_text">&lt;a href="http://awecode.com">Awecode&lt;/a></string>
+    <string name="instagram_link_text">&lt;a href="https://instagram.com/muscnp">muscnp&lt;/a></string>
+    <string name="awecode_link_text">&lt;a href="https://awecode.com">Awecode&lt;/a></string>
     <string name="drawer_open">Menu opened</string>
     <string name="drawer_close">Menu closed</string>
     <string name="cancel">CANCEL</string>

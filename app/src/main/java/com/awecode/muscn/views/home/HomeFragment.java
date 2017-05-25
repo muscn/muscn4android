@@ -264,8 +264,6 @@ HomeFragment extends MasterFragment {
 
                     Result result = arrangedResults.get(0);
 
-                    mActivity.setCustomTitle(R.string.app_name);
-
                     String opponentName = result.getOpponent().getName();
                     Boolean isHomeGame = result.getIsHomeGame();
                     //configure broadcast channel name
@@ -282,7 +280,7 @@ HomeFragment extends MasterFragment {
                         mSecondTeamNameTextView.setText(opponentName);
                         //populate imageview
                         Picasso.with(mContext)
-                                .load((String) result.getOpponent().getCrest())
+                                .load(result.getOpponent().getCrest())
                                 .placeholder(R.drawable.ic_placeholder_team)
                                 .resize(getDimen(R.dimen.team_logo_size), getDimen(R.dimen.team_logo_size))
                                 .into(mSecondTeamImageView);
