@@ -23,10 +23,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-<<<<<<< HEAD
-=======
 import retrofit2.adapter.rxjava.HttpException;
->>>>>>> 34efd228e6eb49744857d976bb536f9719960a56
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
