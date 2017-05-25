@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.awecode.muscn.R;
@@ -78,6 +79,10 @@ HomeFragment extends MasterFragment {
     TextView mDaysLabelTextView;
     @BindView(R.id.liveOnTextView)
     TextView liveOnTextView;
+    @BindView(R.id.main_layout)
+    LinearLayout mainLayout;
+    @BindView(R.id.emptyFixtureLayout)
+    LinearLayout emptyFixtureLayout;
 
     private CountDownTimer mCountDownTimer;
     private RealmAsyncTask mTransaction;
@@ -103,8 +108,9 @@ HomeFragment extends MasterFragment {
 
         initializeCountDownTimer();
         setup_fixutres();
-        if (Util.checkInternetConnection(mContext))
+        if (Util.checkInternetConnection(mContext)) {
             requestFixturesList();
+        }
     }
 
 
@@ -119,6 +125,8 @@ HomeFragment extends MasterFragment {
                 mActivity.showContentView();
                 //convert realms results into arraylist and show first index data in view
                 configureFixtureView();
+            } else {
+                showEmptyLayout();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -153,7 +161,10 @@ HomeFragment extends MasterFragment {
                         public void onNext(FixturesResponse fixturesResponse) {
                             mActivity.showContentView();
                             //delete previous saved data and save new fixtures
-                            deleteFixturesAndSave(fixturesResponse);
+                            if (fixturesResponse.getResults().size() > 0) {
+                                deleteFixturesAndSave(fixturesResponse);
+                            } else
+                                showEmptyLayout();
                         }
                     });
         } catch (Exception e) {
@@ -185,8 +196,10 @@ HomeFragment extends MasterFragment {
                 public void onSuccess() {
                     //now save fixture data
                     List<Result> results = saveFixtures(fixturesResponse);
-                    if (results != null && results.size() > 0)
+                    if (results != null && results.size() > 0) {
                         configureFixtureView();
+                    } else
+                        showEmptyLayout();
 
                 }
             });
@@ -240,60 +253,69 @@ HomeFragment extends MasterFragment {
      * start countdown timer
      */
     private void configureFixtureView() {
-
         try {
             List<Result> results = deletePastFixtureTable();
             if (results != null
                     && results.size() > 0) {
-                Result result = results.get(0);
+                List<Result> arrangedResults = filterPastDateFromFixture(results);
 
-                mActivity.setCustomTitle(R.string.app_name);
+                if (arrangedResults.size() != 0) {
+                    showMainLayout();//if fixture is present then mainlayout is shown
 
-                String opponentName = result.getOpponent().getName();
-                Boolean isHomeGame = result.getIsHomeGame();
-                //configure broadcast channel name
-                configureBroadCastChannelView(result.getBroadcastOn());
-                if (TextUtils.isEmpty(result.getBroadcastOn()))
-                    liveOnTextView.setVisibility(View.GONE);
+                    Result result = arrangedResults.get(0);
 
-                //configure countdown timer
-                configureDateTime_CountDownTimer(result.getDatetime());
+                    mActivity.setCustomTitle(R.string.app_name);
 
-                //configure game between team names
-                if (isHomeGame) {
-                    mFirstTeamNameTextView.setText(getString(R.string.manchester_united));
-                    mSecondTeamNameTextView.setText(opponentName);
-                    //populate imageview
-                    Picasso.with(mContext)
-                            .load((String) result.getOpponent().getCrest())
-                            .placeholder(R.drawable.ic_placeholder_team)
-                            .resize(getDimen(R.dimen.team_logo_size), getDimen(R.dimen.team_logo_size))
-                            .into(mSecondTeamImageView);
+                    String opponentName = result.getOpponent().getName();
+                    Boolean isHomeGame = result.getIsHomeGame();
+                    //configure broadcast channel name
+                    configureBroadCastChannelView(result.getBroadcastOn());
+                    if (TextUtils.isEmpty(result.getBroadcastOn()))
+                        liveOnTextView.setVisibility(View.GONE);
 
-                    Picasso.with(mContext)
-                            .load(Constants.URL_MANUTD_LOGO)
-                            .placeholder(R.drawable.logo_manutd)
-                            .resize(getDimen(R.dimen.team_logo_size), getDimen(R.dimen.team_logo_size))
-                            .into(mFirstTeamImageView);
+                    //configure countdown timer
+                    configureDateTime_CountDownTimer(result.getDatetime());
+
+                    //configure game between team names
+                    if (isHomeGame) {
+                        mFirstTeamNameTextView.setText(getString(R.string.manchester_united));
+                        mSecondTeamNameTextView.setText(opponentName);
+                        //populate imageview
+                        Picasso.with(mContext)
+                                .load((String) result.getOpponent().getCrest())
+                                .placeholder(R.drawable.ic_placeholder_team)
+                                .resize(getDimen(R.dimen.team_logo_size), getDimen(R.dimen.team_logo_size))
+                                .into(mSecondTeamImageView);
+
+                        Picasso.with(mContext)
+                                .load(Constants.URL_MANUTD_LOGO)
+                                .placeholder(R.drawable.logo_manutd)
+                                .resize(getDimen(R.dimen.team_logo_size), getDimen(R.dimen.team_logo_size))
+                                .into(mFirstTeamImageView);
+                    } else {
+                        mFirstTeamNameTextView.setText(opponentName);
+                        mSecondTeamNameTextView.setText(mContext.getString(R.string.manchester_united));
+                        //populate imageview
+                        Picasso.with(mContext)
+                                .load((String) result.getOpponent().getCrest())
+                                .placeholder(R.drawable.ic_placeholder_team)
+                                .resize(getDimen(R.dimen.team_logo_size), getDimen(R.dimen.team_logo_size))
+                                .into(mFirstTeamImageView);
+
+                        Picasso.with(mContext)
+                                .load(Constants.URL_MANUTD_LOGO)
+                                .placeholder(R.drawable.logo_manutd)
+                                .resize(getDimen(R.dimen.team_logo_size), getDimen(R.dimen.team_logo_size))
+                                .into(mSecondTeamImageView);
+                    }
+                    //configure  name and venue
+                    mCompetitionNameTextView.setText(result.getCompetitionYear().getCompetition().getName());
+                    mCompetitionVenueTextView.setText(result.getVenue());
                 } else {
-                    mFirstTeamNameTextView.setText(opponentName);
-                    mSecondTeamNameTextView.setText(mContext.getString(R.string.manchester_united));
-                    //populate imageview
-                    Picasso.with(mContext)
-                            .load((String) result.getOpponent().getCrest())
-                            .placeholder(R.drawable.ic_placeholder_team)
-                            .resize(getDimen(R.dimen.team_logo_size), getDimen(R.dimen.team_logo_size))
-                            .into(mFirstTeamImageView);
-
-                    Picasso.with(mContext)
-                            .load(Constants.URL_MANUTD_LOGO)
-                            .placeholder(R.drawable.logo_manutd)
-                            .resize(getDimen(R.dimen.team_logo_size), getDimen(R.dimen.team_logo_size))
-                            .into(mSecondTeamImageView);
+                    showEmptyLayout();
                 }
-                //configure  name and venue
-                mCompetitionNameTextView.setText(result.getCompetitionYear().getCompetition().getName());
-                mCompetitionVenueTextView.setText(result.getVenue());
+            } else {
+                showEmptyLayout();
             }
 
         } catch (Exception e) {
@@ -301,6 +323,22 @@ HomeFragment extends MasterFragment {
         }
 
 
+    }
+
+    /**
+     * main layout is shown and empty layout is hide if response is presence
+     */
+    private void showMainLayout() {
+        mainLayout.setVisibility(View.VISIBLE);
+        emptyFixtureLayout.setVisibility(View.GONE);
+    }
+
+    /**
+     * main layout is hidden and empty layout is shown if response is nt presence but request is success
+     */
+    private void showEmptyLayout() {
+        mainLayout.setVisibility(View.GONE);
+        emptyFixtureLayout.setVisibility(View.VISIBLE);
     }
 
 

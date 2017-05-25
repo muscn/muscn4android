@@ -92,7 +92,7 @@ public class ResultFragment extends MasterFragment implements ResultItemClickLis
         }
 
         mResultAdapter = new ResultAdapter(mRealm.where(RecentResultData.class).findAllSorted("datetime", Sort.DESCENDING));
-        mMatchResultRecyclerview.setAdapter(mResultAdapter);
+        mMatchResultRecyclerview.setAdapter(Util.getAnimationAdapter(mResultAdapter));
         recyclerViewScrollListener.onRecyclerViewScrolled(mMatchResultRecyclerview);
         mResultAdapter.mResultItemClickListener = this;
 

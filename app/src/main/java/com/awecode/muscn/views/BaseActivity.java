@@ -123,7 +123,6 @@ public abstract class BaseActivity extends AppCompatActivity {
                 .beginTransaction();
         ft.replace(R.id.container,
                 fragment);
-        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         ft.addToBackStack(null);
         ft.commitAllowingStateLoss();
     }
@@ -133,7 +132,6 @@ public abstract class BaseActivity extends AppCompatActivity {
                 .beginTransaction();
         ft.replace(R.id.container,
                 fragment, tag);
-        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         ft.commitAllowingStateLoss();
     }
 
@@ -142,7 +140,6 @@ public abstract class BaseActivity extends AppCompatActivity {
                 .beginTransaction();
         ft.replace(R.id.container,
                 fragment);
-        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         ft.commitAllowingStateLoss();
     }
 
@@ -303,5 +300,17 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     private void initializedRealm() {
         mRealm = Realm.getDefaultInstance();
+    }
+    public void showSuccessDialog(final Context context, String title, String message) {
+        new AlertDialog.Builder(context, R.style.AppCompatAlertDialogStyle)
+                .setTitle(title)
+                .setMessage(message)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+//                        finish();
+                        dialog.dismiss();
+                    }
+                })
+                .show();
     }
 }

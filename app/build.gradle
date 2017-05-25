@@ -24,8 +24,8 @@ android {
         applicationId "com.awecode.muscn"
         minSdkVersion 16
         targetSdkVersion 24
-        versionCode 19
-        versionName "1.2.1"
+        versionCode 20
+        versionName "1.2.2"
 
         javaCompileOptions {
             annotationProcessorOptions {
@@ -92,5 +92,9 @@ dependencies {
 
     //realmadapter
     compile 'io.realm:android-adapters:2.1.0'
+
+    //saripaar validator
+    compile 'com.mobsandgeeks:android-saripaar:2.0.3'
+
 }
 apply plugin: 'com.google.gms.google-services'

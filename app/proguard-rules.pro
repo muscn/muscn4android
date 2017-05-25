@@ -131,3 +131,7 @@
 #adding model class
 -keep class com.awecode.muscn.model.** { *; }
 
+#saripaar
+-keep class com.mobsandgeeks.saripaar.** {*;}
+-keep @com.mobsandgeeks.saripaar.annotation.ValidateUsing class * {*;}
+
