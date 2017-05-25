@@ -24,7 +24,7 @@
     <string name="tapExitMessage">Tap back button in order to exit</string>
     <string name="manutd_shortname">MUN</string>
     <string name="manutd_home_stadium">Old Traffod</string>
-    <string name="no_internet_message">Please check your internet connection and try again later.</string>
+    <string name="no_internet_message">Internet doesn\'t seem available.</string>
     <string name="no_data_string">-</string>
     <string name="about_us_detail_text">Manchester United Supporters’ Club, Nepal is an Official Supporters’ Club registered in 2014 and recognised by Manchester United in 2016. The club is a non-profit organization run by the fans. It has been actively working for the development of sports and social activites with the main objective of uniting all the Manchester United supporters under a common roof.</string>
     <string name="about_us_membership_text">Official membership can be applied by the Nepali Red Devils from the clubs official website.</string>
@@ -60,6 +60,11 @@
     <string name="success_sign_out_text">Signed out successfully.</string>
     <string name="success">Success!</string>
     <string name="success_sign_in_text">Signed in Successfully.</string>
+    <string name="login_error">Unable to log in with provided credentials.</string>
+    <string name="username_password_incorrect_text">That username or password doesn\'t look right.</string>
+    <string name="successful_account_creation">Successfully created account.</string>
+    <string name="duplicate_username">That username isn\'t available. Try another.</string>
+    <string name="duplicate_email">That email isn\'t available. Try another.</string>
 
 
 </resources>

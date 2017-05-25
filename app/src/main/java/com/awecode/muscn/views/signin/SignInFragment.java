@@ -1,11 +1,12 @@
 package com.awecode.muscn.views.signin;
 
 import android.os.Bundle;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 
 import com.awecode.muscn.R;
+import com.awecode.muscn.model.http.api_error.APIError;
 import com.awecode.muscn.model.http.signin.SignInData;
 import com.awecode.muscn.model.http.signin.SignInSuccessData;
 import com.awecode.muscn.util.Constants;
@@ -13,7 +14,6 @@ import com.awecode.muscn.util.Util;
 import com.awecode.muscn.util.prefs.Prefs;
 import com.awecode.muscn.views.AppCompatBaseFragment;
 import com.awecode.muscn.views.signup.SignUpActivity;
-import com.google.gson.Gson;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.annotation.Length;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
@@ -23,9 +23,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import retrofit2.adapter.rxjava.HttpException;
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -74,8 +72,8 @@ public class SignInFragment extends AppCompatBaseFragment {
         signInRequest();
 
     }
-
-    //sign in request
+    
+    //    sign in request
     private void signInRequest() {
         mActivity.showProgressDialog();
         final SignInData signInData = new SignInData();
@@ -93,11 +91,19 @@ public class SignInFragment extends AppCompatBaseFragment {
 
                     @Override
                     public void onError(Throwable e) {
-                        //TODO parse error and show message
-                        Log.i(TAG, "onError: "+new Gson().toJson(e).toString());
-                        e.printStackTrace();
                         mActivity.closeProgressDialog();
-                        mActivity.noInternetConnectionDialog(mContext);
+                        APIError apiError = null;
+                        String errorMessage = null;
+                        if (e instanceof HttpException) {
+                            apiError = Util.parseError(e);
+                            if (apiError != null)
+                                errorMessage = apiError.getNon_field_errors().get(0);
+                            if (!TextUtils.isEmpty(errorMessage))
+                                if (errorMessage.contains(getString(R.string.login_error)))
+                                    showErrorDialog(mContext, getString(R.string.username_password_incorrect_text));
+
+                        } else
+                            noInternetConnectionDialog();
                     }
 
                     @Override
@@ -106,7 +112,7 @@ public class SignInFragment extends AppCompatBaseFragment {
                         if (signInSuccessData.getToken() != null) {
                             Prefs.putBoolean(Constants.PREFS_LOGIN_STATUS, true);
                             Prefs.putString(Constants.PREFS_LOGIN_TOKEN, signInSuccessData.getToken().toString());
-                            mActivity.successDialogAndCloseActivity(mContext, getString(R.string.success), getString(R.string.success_sign_in_text));
+                            mActivity.successDialogAndCloseActivity(mContext, getString(R.string.success_sign_in_text));
                         }
                     }
                 });
