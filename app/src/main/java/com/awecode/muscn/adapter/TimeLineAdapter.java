@@ -1,7 +1,6 @@
 package com.awecode.muscn.adapter;
 
 import android.content.Context;
-import android.media.Image;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +13,7 @@ import com.awecode.muscn.R;
 import com.awecode.muscn.model.http.resultdetails.Event;
 import com.awecode.muscn.model.http.resultdetails.ResultDetailsResponse;
 import com.awecode.muscn.util.Util;
+import com.awecode.muscn.util.retrofit.ServiceGenerator;
 import com.github.vipulasri.timelineview.TimelineView;
 import com.squareup.picasso.Picasso;
 
@@ -47,15 +47,7 @@ public class TimeLineAdapter extends RecyclerView.Adapter<TimeLineAdapter.TimeLi
     public TimeLineAdapter.TimeLineViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         mContext = parent.getContext();
         mLayoutInflater = LayoutInflater.from(mContext);
-        View view;
-
-//        if(mOrientation == Orientation.HORIZONTAL) {
-//            view = mLayoutInflater.inflate(mWithLinePadding ? R.layout.item_timeline_horizontal_line_padding : R.layout.item_timeline_horizontal, parent, false);
-//        } else {
-        view = mLayoutInflater.inflate(/*mWithLinePadding ? R.layout.item_timeline_line_padding :*/ R.layout.goal_timeline_row_layout, parent, false);
-//        }
-
-
+        View view = mLayoutInflater.inflate(/*mWithLinePadding ? R.layout.item_timeline_line_padding :*/ R.layout.goal_timeline_row_layout, parent, false);
         return new TimeLineViewHolder(view, viewType);
     }
 
@@ -82,7 +74,7 @@ public class TimeLineAdapter extends RecyclerView.Adapter<TimeLineAdapter.TimeLi
 
         } else {
             holder.team.setText(mResponse.getOpponentName());
-            Picasso.with(mContext).load("http://manutd.org.np/" + mResponse.getOpponentCrest()).into(holder.scorerTeamLogo);
+            Picasso.with(mContext).load(ServiceGenerator.API_BASE_URL + mResponse.getOpponentCrest()).into(holder.scorerTeamLogo);
         }
 
 

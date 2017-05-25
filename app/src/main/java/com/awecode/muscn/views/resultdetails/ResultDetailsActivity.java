@@ -142,8 +142,8 @@ public class ResultDetailsActivity extends BaseActivity {
             secondTeamNameTextView.setText(response.getOpponentName());
             secondTeamScoreTextView.setText(response.getOpponentScore().toString());
             toolbarSecondTeamScore.setText(response.getOpponentScore().toString());
-            Picasso.with(mContext).load("http://manutd.org.np/" + response.getOpponentCrest()).into(secondTeamImageView);
-            Picasso.with(mContext).load("http://manutd.org.np/" + response.getOpponentCrest()).into(toolbarSecondTeamImageView);
+            Picasso.with(mContext).load(ServiceGenerator.API_BASE_URL + response.getOpponentCrest()).into(secondTeamImageView);
+            Picasso.with(mContext).load(ServiceGenerator.API_BASE_URL + response.getOpponentCrest()).into(toolbarSecondTeamImageView);
 //            setUpData(response);
 
         } else {
@@ -156,8 +156,8 @@ public class ResultDetailsActivity extends BaseActivity {
             firstTeamNameTextView.setText(response.getOpponentName());
             firstTeamScoreTextView.setText(response.getOpponentScore().toString());
             toolbarFirstTeamScore.setText(response.getOpponentScore().toString());
-            Picasso.with(mContext).load("http://manutd.org.np/" + response.getOpponentCrest()).into(firstTeamImageView);
-            Picasso.with(mContext).load("http://manutd.org.np/" + response.getOpponentCrest()).into(toolbarFirstTeamImageView);
+            Picasso.with(mContext).load(ServiceGenerator.API_BASE_URL + response.getOpponentCrest()).into(firstTeamImageView);
+            Picasso.with(mContext).load(ServiceGenerator.API_BASE_URL + response.getOpponentCrest()).into(toolbarFirstTeamImageView);
         }
         openFragmentNoHistoryResult(ResultDetailsFragment.newInstance(response));
     }
