@@ -18,7 +18,7 @@ import com.awecode.muscn.util.Constants;
 import com.awecode.muscn.util.Util;
 import com.awecode.muscn.util.retrofit.MuscnApiInterface;
 import com.awecode.muscn.util.retrofit.ServiceGenerator;
-import com.awecode.muscn.views.BaseActivity;
+import com.awecode.muscn.views.base.BaseActivity;
 import com.awecode.muscn.views.recent_results.ResultDetailsFragment;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
@@ -27,7 +27,6 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import io.realm.Realm;
 import io.realm.RealmAsyncTask;
-import io.realm.RealmResults;
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -81,6 +80,12 @@ public class ResultDetailsActivity extends BaseActivity {
         }
     }
 
+
+    @Override
+    protected int getLayoutResourceId() {
+        return R.layout.activity_result_details;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,18 +97,13 @@ public class ResultDetailsActivity extends BaseActivity {
         checkInternetConnection();
     }
 
-    @Override
-    protected int getLayoutResourceId() {
-        return R.layout.activity_result_details;
-    }
-
 
     private void requestResultDetails() {
         int count = (int) mRealm.where(ResultDetailsResponse.class)
                 .equalTo("id", resultId).count();
 
         if (count < 1)
-            showProgressView(getString(R.string.loading_results));
+            showProgressView(getString(R.string.loading_result_details));
         else
             getDataFromDbAndPopulateUI();
 
@@ -142,8 +142,8 @@ public class ResultDetailsActivity extends BaseActivity {
             secondTeamNameTextView.setText(response.getOpponentName());
             secondTeamScoreTextView.setText(response.getOpponentScore().toString());
             toolbarSecondTeamScore.setText(response.getOpponentScore().toString());
-            Picasso.with(mContext).load("http://manutd.org.np/" + response.getOpponentCrest()).into(secondTeamImageView);
-            Picasso.with(mContext).load("http://manutd.org.np/" + response.getOpponentCrest()).into(toolbarSecondTeamImageView);
+            Picasso.with(mContext).load(ServiceGenerator.API_BASE_URL + response.getOpponentCrest()).into(secondTeamImageView);
+            Picasso.with(mContext).load(ServiceGenerator.API_BASE_URL + response.getOpponentCrest()).into(toolbarSecondTeamImageView);
 //            setUpData(response);
 
         } else {
@@ -156,8 +156,8 @@ public class ResultDetailsActivity extends BaseActivity {
             firstTeamNameTextView.setText(response.getOpponentName());
             firstTeamScoreTextView.setText(response.getOpponentScore().toString());
             toolbarFirstTeamScore.setText(response.getOpponentScore().toString());
-            Picasso.with(mContext).load("http://manutd.org.np/" + response.getOpponentCrest()).into(firstTeamImageView);
-            Picasso.with(mContext).load("http://manutd.org.np/" + response.getOpponentCrest()).into(toolbarFirstTeamImageView);
+            Picasso.with(mContext).load(ServiceGenerator.API_BASE_URL + response.getOpponentCrest()).into(firstTeamImageView);
+            Picasso.with(mContext).load(ServiceGenerator.API_BASE_URL + response.getOpponentCrest()).into(toolbarFirstTeamImageView);
         }
         openFragmentNoHistoryResult(ResultDetailsFragment.newInstance(response));
     }
@@ -279,6 +279,7 @@ public class ResultDetailsActivity extends BaseActivity {
     public void onBackPressed() {
         onArrowClick();
     }
+
     @Override
     public void onStop() {
         super.onStop();
@@ -286,4 +287,5 @@ public class ResultDetailsActivity extends BaseActivity {
             mTransaction.cancel();
 
     }
+
 }

@@ -13,7 +13,6 @@
         android:weightSum="2">
 
         <TextView
-            android:id="@+id/playersCaption"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1.5"
@@ -23,7 +22,6 @@
             android:textSize="@dimen/header_caption_text_size" />
 
         <TextView
-            android:id="@+id/goalsCaption"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"

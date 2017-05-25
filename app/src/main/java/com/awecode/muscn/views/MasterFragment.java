@@ -14,6 +14,7 @@ import com.awecode.muscn.R;
 import com.awecode.muscn.model.http.fixtures.Result;
 import com.awecode.muscn.util.Util;
 import com.awecode.muscn.util.retrofit.MuscnApiInterface;
+import com.awecode.muscn.views.base.BaseActivity;
 
 import java.util.ArrayList;
 import java.util.List;

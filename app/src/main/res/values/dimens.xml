@@ -13,7 +13,6 @@
     <dimen name="table_item_padding">10dp</dimen>
     <dimen name="table_caption_padding">10dp</dimen>
     <dimen name="fragment_table_margin_top">10dp</dimen>
-    <dimen name="fragment_table_margin_bottom">10dp</dimen>
     <dimen name="header_caption_text_size">12sp</dimen>
     <dimen name="labels_text_size">18sp</dimen>
     <dimen name="about_us_body_text_size">14sp</dimen>
@@ -22,5 +21,7 @@
     <dimen name="widget_margin">8dp</dimen>
     <dimen name="fixture_text_size">15sp</dimen>
     <dimen name="update_dialog_text_size">18sp</dimen>
-
+    <dimen name="normal_text_size">12dp</dimen>
+    <dimen name="form_below_margin">14dp</dimen>
+    <dimen name="toolbar_icon_size">24dp</dimen>
 </resources>

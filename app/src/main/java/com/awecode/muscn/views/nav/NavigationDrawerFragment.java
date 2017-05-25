@@ -1,6 +1,7 @@
 package com.awecode.muscn.views.nav;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -8,14 +9,24 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.awecode.muscn.R;
 import com.awecode.muscn.model.enumType.MenuType;
+import com.awecode.muscn.util.Constants;
+import com.awecode.muscn.util.prefs.Prefs;
 import com.awecode.muscn.views.MasterFragment;
+import com.awecode.muscn.views.signup.SignUpActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by surensth on 10/6/16.
@@ -25,6 +36,8 @@ public class NavigationDrawerFragment extends MasterFragment implements Navigati
     private static final String PREF_USER_LEARNED_DRAWER = "navigation_drawer_learned";
     private static final String STATE_SELECTED_POSITION = "selected_navigation_drawer_position";
     private static final String PREFERENCES_FILE = "my_app_settings"; //TODO: change this to your file
+    @BindView(R.id.signInButton)
+    Button signInButton;
     private NavigationDrawerCallbacks mCallbacks;
     private RecyclerView mDrawerList;
     private View mFragmentContainerView;
@@ -168,11 +181,8 @@ public class NavigationDrawerFragment extends MasterFragment implements Navigati
         items.add(new NavigationItem("Epl Matchweek", "6", R.drawable.ic_fab_epl_matchweek, true, MenuType.EPL_MATCH_WEEK));//5 pos
         items.add(new NavigationItem("Recent Results", "7", R.drawable.ic_fab_recent_result, true, MenuType.RECENT_RESULTS));//6 pos
         items.add(new NavigationItem("About Us", "8", R.drawable.ic_fab_about_us, true, MenuType.ABOUT_US));//7 pos
-
-
         return items;
     }
-
 
     void selectItem(int position, NavigationItem navigationItem) {
         mCurrentSelectedPosition = position;
@@ -226,4 +236,39 @@ public class NavigationDrawerFragment extends MasterFragment implements Navigati
         return sharedPref.getString(settingName, defaultValue);
     }
 
+    @OnClick({R.id.signUpButton, R.id.signInButton})
+    public void onClick(View view) {
+        if (mDrawerLayout != null) {
+            mDrawerLayout.closeDrawer(mFragmentContainerView);
+        }
+        switch (view.getId()) {
+            case R.id.signUpButton:
+                Intent intent = new Intent(mContext, SignUpActivity.class);
+                intent.putExtra(SignUpActivity.TYPE_INTENT, MenuType.SIGN_UP);
+                startActivity(intent);
+                break;
+            case R.id.signInButton:
+                if (signInButton.getText().toString().equalsIgnoreCase(getString(R.string.sign_in))) {
+                    Intent signInIntent = new Intent(mContext, SignUpActivity.class);
+                    signInIntent.putExtra(SignUpActivity.TYPE_INTENT, MenuType.SIGN_IN_OUT);
+                    startActivity(signInIntent);
+                } else {//logout case
+                    Prefs.putBoolean(Constants.PREFS_LOGIN_STATUS, false);
+                    Prefs.remove(Constants.PREFS_LOGIN_TOKEN);
+                    mActivity.showSuccessDialog(mContext, getString(R.string.success), getString(R.string.success_sign_out_text));
+                    signInButton.setText(getString(R.string.sign_in));
+
+                }
+                break;
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (Prefs.getBoolean(Constants.PREFS_LOGIN_STATUS, false)) {
+            signInButton.setText(getString(R.string.sign_out));
+        } else
+            signInButton.setText(getString(R.string.sign_in));
+    }
 }

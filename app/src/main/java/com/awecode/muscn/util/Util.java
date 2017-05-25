@@ -20,8 +20,12 @@ import android.view.animation.OvershootInterpolator;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.awecode.muscn.model.http.api_error.APIError;
+import com.awecode.muscn.util.retrofit.ServiceGenerator;
 import com.awecode.muscn.views.aboutus.CustomSpannable;
 
+import java.io.IOException;
+import java.lang.annotation.Annotation;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -32,6 +36,9 @@ import java.util.TimeZone;
 
 import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
+import okhttp3.ResponseBody;
+import retrofit2.Converter;
+import retrofit2.adapter.rxjava.HttpException;
 
 /**
  * Created by munnadroid on 9/21/16.
@@ -255,7 +262,7 @@ public class Util {
      * but if game is away and event has team away then player is from manutd
      *
      * @param isHomeGame home game or not
-     * @param team team in event score
+     * @param team       team in event score
      * @return
      */
     public static String getPlayerTeamName(Boolean isHomeGame, String team) {
@@ -273,6 +280,25 @@ public class Util {
             }
         }
 
+    }
+
+    /**
+     * parse error and set error messages in APIError class and returns this class
+     *
+     * @param throwable
+     * @return
+     */
+    public static APIError parseError(Throwable throwable) {
+        Converter<ResponseBody, APIError> errorConverter =
+                ServiceGenerator.retrofit.responseBodyConverter(APIError.class, new Annotation[0]);
+        // Convert the error body into our Error type.
+        APIError error = null;
+        try {
+            error = errorConverter.convert(((HttpException) throwable).response().errorBody());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return error;
     }
 
 }

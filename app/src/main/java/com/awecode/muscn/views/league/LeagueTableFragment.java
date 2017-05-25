@@ -7,7 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.awecode.muscn.R;
-import com.awecode.muscn.adapter.RealmLeagueTableAdapter;
+import com.awecode.muscn.adapter.LeagueTableAdapter;
 import com.awecode.muscn.model.http.leaguetable.LeagueTableResponse;
 import com.awecode.muscn.model.listener.RecyclerViewScrollListener;
 import com.awecode.muscn.util.Util;
@@ -32,7 +32,7 @@ public class LeagueTableFragment extends MasterFragment {
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
 
-    RealmLeagueTableAdapter mAdapter;
+    LeagueTableAdapter mAdapter;
     LinearLayoutManager mLinearLayoutManager;
     RecyclerViewScrollListener recyclerViewScrollListener;
     private RealmAsyncTask mTransaction;
@@ -172,7 +172,7 @@ public class LeagueTableFragment extends MasterFragment {
             mAdapter.notifyDataSetChanged();
             return;
         }
-        mAdapter = new RealmLeagueTableAdapter(mRealm.where(LeagueTableResponse.class).findAll());
+        mAdapter = new LeagueTableAdapter(mRealm.where(LeagueTableResponse.class).findAll());
         mRecyclerView.setAdapter(Util.getAnimationAdapter(mAdapter));
         recyclerViewScrollListener.onRecyclerViewScrolled(mRecyclerView);
     }

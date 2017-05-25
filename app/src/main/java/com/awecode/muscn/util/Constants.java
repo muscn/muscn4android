@@ -4,7 +4,7 @@ package com.awecode.muscn.util;
  * Created by munnadroid on 9/21/16.
  */
 public class Constants {
-    public static final String DISTRIBUTION_KEY = "#######";
+    public static final String DISTRIBUTION_KEY = "######";
     public static final String NONE = "none";
     public static final String INTENT_NOTIFICATION_DATA = "intent_notification_data";
     public static final String PREFS_FIXTURES = "prefs_fixtures";
@@ -14,5 +14,7 @@ public class Constants {
     public static final String ID = "id";
     public static final String PREFS_REFRESH_TOKEN = "prefs_refresh_token";
     public static final String PREFS_DEVICE_REGISTERED = "prefs_device_registered";
+    public static final String PREFS_LOGIN_STATUS = "prefs_login_status";
+    public static final String PREFS_LOGIN_TOKEN = "prefs_login_token";
 
 }

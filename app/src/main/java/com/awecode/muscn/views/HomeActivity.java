@@ -1,5 +1,6 @@
 package com.awecode.muscn.views;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -19,6 +20,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.awecode.muscn.BuildConfig;
 import com.awecode.muscn.R;
 import com.awecode.muscn.model.enumType.MenuType;
 import com.awecode.muscn.model.listener.RecyclerViewScrollListener;
@@ -30,11 +32,12 @@ import com.awecode.muscn.util.prefs.Prefs;
 import com.awecode.muscn.util.retrofit.MuscnApiInterface;
 import com.awecode.muscn.util.retrofit.ServiceGenerator;
 import com.awecode.muscn.views.aboutus.AboutUsActivity;
+import com.awecode.muscn.views.base.BaseActivity;
 import com.awecode.muscn.views.fixture.FixturesFragment;
 import com.awecode.muscn.views.home.HomeFragment;
 import com.awecode.muscn.views.injuries.InjuriesFragment;
 import com.awecode.muscn.views.league.LeagueTableFragment;
-import com.awecode.muscn.views.matchweekfixtures.EplMatchWeekFixtureFragment;
+import com.awecode.muscn.views.matchweekfixtures.MatchWeekFragment;
 import com.awecode.muscn.views.nav.NavigationDrawerCallbacks;
 import com.awecode.muscn.views.nav.NavigationDrawerFragment;
 import com.awecode.muscn.views.nav.NavigationItem;
@@ -88,26 +91,33 @@ public class HomeActivity extends BaseActivity implements RecyclerViewScrollList
 
     }
 
+
     /**
      * create tap target view for first time
      */
+    @SuppressLint("WrongViewCast")
     private void createTapTarget() {
+
         TapTargetView.showFor(this,                 // `this` is an Activity
-                TapTarget.forView(findViewById(R.id.muscnLogo), getString(R.string.tap_title), getString(R.string.tap_description))
+                TapTarget.forView(findViewById(R.id.hamBurgerImageView),
+                        getString(R.string.tap_title),
+                        getString(R.string.tap_description))
                         // All options below are optional
                         .outerCircleColor(R.color.colorPrimary)      // Specify a color for the outer circle
+                        .outerCircleAlpha(0.96f)            // Specify the alpha amount for the outer circle
                         .targetCircleColor(R.color.white)   // Specify a color for the target circle
                         .titleTextSize(25)                  // Specify the size (in sp) of the title text
                         .titleTextColor(R.color.white)      // Specify the color of the title text
                         .descriptionTextSize(20)            // Specify the size (in sp) of the description text
                         .descriptionTextColor(R.color.white)  // Specify the color of the description text
+                        .textColor(R.color.white)            // Specify a color for both the title and description text
                         .textTypeface(Typeface.SANS_SERIF)  // Specify a typeface for the text
-                        .dimColor(R.color.white)            // If set, will dim behind the view with 30% opacity of the given color
+                        .dimColor(R.color.black)            // If set, will dim behind the view with 30% opacity of the given color
                         .drawShadow(true)                   // Whether to draw a drop shadow or not
                         .cancelable(false)                  // Whether tapping outside the outer circle dismisses the view
                         .tintTarget(true)                   // Whether to tint the target view's color
-                        .transparentTarget(false)           // Specify whether the target is transparent (displays the content underneath)
-                        .icon(ContextCompat.getDrawable(mContext, R.drawable.logo_white_muscn_new), false)                     // Specify a custom drawable to draw as the target
+                        .transparentTarget(true)           // Specify whether the target is transparent (displays the content underneath)
+                        .icon(ContextCompat.getDrawable(mContext, R.drawable.ic_ham_burger_taptarget))                     // Specify a custom drawable to draw as the target
                         .targetRadius(60),                  // Specify the target radius (in dp)
                 new TapTargetView.Listener() {          // The listener can listen for regular clicks, long clicks or cancels
                     @Override
@@ -123,6 +133,7 @@ public class HomeActivity extends BaseActivity implements RecyclerViewScrollList
         Prefs.putBoolean(Constants.PREFS_TAP_STATUS, true);
     }
 
+    @SuppressLint("RestrictedApi")
     @Override
     public void onErrorViewClicked() {
         if (Util.checkInternetConnection(mContext)) {
@@ -138,8 +149,8 @@ public class HomeActivity extends BaseActivity implements RecyclerViewScrollList
             } else if (mResultFragment != null && mResultFragment.isVisible() && mResultFragment.isMenuVisible()) {
                 mResultFragment.requestMatchResults();
 
-            } else if (mEplMatchWeekFixtureFragment != null && mEplMatchWeekFixtureFragment.isVisible() && mEplMatchWeekFixtureFragment.isMenuVisible()) {
-                mEplMatchWeekFixtureFragment.requestEplMatchResults();
+            } else if (mMatchWeekFragment != null && mMatchWeekFragment.isVisible() && mMatchWeekFragment.isMenuVisible()) {
+                mMatchWeekFragment.requestEplMatchResults();
 
             }
         } else {
@@ -188,8 +199,8 @@ public class HomeActivity extends BaseActivity implements RecyclerViewScrollList
                 mTopScorersFragment = TopScorersFragment.newInstance();
                 openFragment(mTopScorersFragment);
             } else if (menuType == MenuType.EPL_MATCH_WEEK) {
-                mEplMatchWeekFixtureFragment = new EplMatchWeekFixtureFragment();
-                openFragment(mEplMatchWeekFixtureFragment);
+                mMatchWeekFragment = new MatchWeekFragment();
+                openFragment(mMatchWeekFragment);
             } else if (menuType == MenuType.RECENT_RESULTS) {
                 mResultFragment = new ResultFragment();
                 openFragment(mResultFragment);
@@ -202,7 +213,7 @@ public class HomeActivity extends BaseActivity implements RecyclerViewScrollList
         }
     }
 
-    @OnClick(R.id.muscnLogo)
+    @OnClick(R.id.hamBurgerImageView)
     public void onClickLogo() {
         mNavigationDrawerFragment.openDrawer();
     }
@@ -257,7 +268,7 @@ public class HomeActivity extends BaseActivity implements RecyclerViewScrollList
                 .setPositiveButton(R.string.update, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.awecode.muscn"));
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + BuildConfig.APPLICATION_ID));
                         startActivity(intent);
                         updateAlertDialog = null;
                     }
