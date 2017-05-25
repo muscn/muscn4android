@@ -16,6 +16,7 @@ import com.awecode.muscn.model.Item;
 import com.awecode.muscn.model.http.recent_results.RecentResultData;
 import com.awecode.muscn.model.listener.ResultItemClickListener;
 import com.awecode.muscn.util.Util;
+import com.awecode.muscn.util.retrofit.ServiceGenerator;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
@@ -68,7 +69,7 @@ public class ResultAdapter extends RealmRecyclerViewAdapter<RecentResultData, Re
             } else
                 itemController.eplMatchweekAwayTeamScore.setText(recentResultData.getOpponentScore().toString());
             itemController.eplMatchweekFixtureHomeTeamLogo.setImageResource(R.drawable.logo_manutd);
-            Picasso.with(context).load("http://manutd.org.np/" + recentResultData.getOpponentCrest()).into(itemController.eplMatchweekFixtureAwayTeamLogo);
+            Picasso.with(context).load(ServiceGenerator.API_BASE_URL + recentResultData.getOpponentCrest()).into(itemController.eplMatchweekFixtureAwayTeamLogo);
 
         } else {
             itemController.eplMatchweekAwayTeamShortName.setText(R.string.manutd_shortname);
@@ -88,8 +89,8 @@ public class ResultAdapter extends RealmRecyclerViewAdapter<RecentResultData, Re
                 itemController.eplMatchweekTimeandHomeGround.setText(Util.commonDateFormatter(recentResultData.getDatetime(), "yyyy-MM-dd'T'hh:mm:ss'Z'") + "\n" + recentResultData.getVenue().substring(0, recentResultData.getVenue().indexOf(",")));
             else
                 itemController.eplMatchweekTimeandHomeGround.setText(Util.commonDateFormatter(recentResultData.getDatetime(), "yyyy-MM-dd'T'hh:mm:ss'Z'") + "\n" + recentResultData.getVenue());
-            Picasso.with(context).load("http://manutd.org.np/" + recentResultData.getOpponentCrest()).into(itemController.eplMatchweekFixtureHomeTeamLogo);
-            Log.v("TEST", "crest: " + recentResultData.getOpponentCrest());
+            Picasso.with(context).load(ServiceGenerator.API_BASE_URL + recentResultData.getOpponentCrest())
+                    .into(itemController.eplMatchweekFixtureHomeTeamLogo);
             itemController.eplMatchweekFixtureAwayTeamLogo.setImageResource(R.drawable.logo_manutd);
         }
         itemController.matchResultRowLayout.setOnClickListener(new View.OnClickListener() {
