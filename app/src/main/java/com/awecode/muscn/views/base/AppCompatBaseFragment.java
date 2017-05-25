@@ -1,6 +1,8 @@
 package com.awecode.muscn.views.base;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.awecode.muscn.MyApplication;
+import com.awecode.muscn.R;
 import com.awecode.muscn.util.Util;
 import com.awecode.muscn.util.retrofit.MuscnApiInterface;
 import com.mobsandgeeks.saripaar.ValidationError;
@@ -24,7 +27,7 @@ import butterknife.ButterKnife;
  * Created by surensth on 5/23/17.
  */
 
-public abstract class AppCompatBaseFragment extends Fragment implements Validator.ValidationListener{
+public abstract class AppCompatBaseFragment extends Fragment implements Validator.ValidationListener {
     public MuscnApiInterface mApiInterface;
     public Context mContext;
     public AppCompatBaseActivity mActivity;
@@ -102,6 +105,24 @@ public abstract class AppCompatBaseFragment extends Fragment implements Validato
             mValidator.setValidationListener(this);
         }
         mValidator.validate();
+    }
+
+    /**
+     * normal dialog
+     *
+     * @param context
+     * @param message
+     */
+    public void showErrorDialog(final Context context, String message) {
+        new AlertDialog.Builder(context, R.style.AppCompatAlertDialogStyle)
+                .setMessage(message)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+//                        finish();
+                        dialog.dismiss();
+                    }
+                })
+                .show();
     }
 
 }

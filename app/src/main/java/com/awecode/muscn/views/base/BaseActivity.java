@@ -270,12 +270,10 @@ public abstract class BaseActivity extends AppCompatActivity {
      * dialog to show message
      *
      * @param context context of current view
-     * @param title   title of the dialog to show
      * @param message message to show in dialog
      */
-    public void showDialog(final Context context, String title, String message) {
+    public void showDialog(final Context context, String message) {
         new AlertDialog.Builder(context, R.style.AppCompatAlertDialogStyle)
-                .setTitle(title)
                 .setMessage(message)
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
@@ -284,12 +282,11 @@ public abstract class BaseActivity extends AppCompatActivity {
                         showErrorView();
                     }
                 })
-                .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
     }
 
     public void noInternetConnectionDialog(Context mContext) {
-        showDialog(mContext, "Oops!", getString(R.string.no_internet_message));
+        showDialog(mContext, getString(R.string.no_internet_message));
     }
 
     protected int getTableDataCount(Class type) {

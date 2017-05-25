@@ -1,11 +1,12 @@
 package com.awecode.muscn.views.signup;
 
 import android.os.Bundle;
-import android.util.Log;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 
 import com.awecode.muscn.R;
+import com.awecode.muscn.model.http.api_error.APIError;
 import com.awecode.muscn.model.http.signup.SignUpPostData;
 import com.awecode.muscn.util.Util;
 import com.awecode.muscn.views.base.AppCompatBaseFragment;
@@ -20,6 +21,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import retrofit2.adapter.rxjava.HttpException;
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -46,7 +48,7 @@ public class SignUpFragment extends AppCompatBaseFragment {
     EditText emailEditText;
 
     @NotEmpty(messageResId = R.string.not_empty_error_text)
-    @Length(messageResId = R.string.invalid_length, min=8)
+    @Length(messageResId = R.string.invalid_length, min = 8)
     @Password(messageResId = R.string.password_error_text, scheme = Password.Scheme.ALPHA_NUMERIC)
     @BindView(R.id.passwordEditText)
     EditText passwordEditText;
@@ -90,13 +92,7 @@ public class SignUpFragment extends AppCompatBaseFragment {
         signUpPostData.setFullName(fullnameEditText.getText().toString());
         signUpPostData.setUsername(usernameEditText.getText().toString());
         signUpPostData.setEmail(emailEditText.getText().toString());
-        if (passwordEditText.getText().toString().equalsIgnoreCase(confirmPasswordEditText.getText().toString()))
-            signUpPostData.setPassword(passwordEditText.getText().toString());
-        else {
-            mActivity.showDialog(mContext, "Error!", getString(R.string.password_error));
-            mActivity.closeProgressDialog();
-            return;
-        }
+        signUpPostData.setPassword(passwordEditText.getText().toString());
         Observable<SignUpPostData> call = mApiInterface.postSignUpData(signUpPostData);
         call.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -107,18 +103,28 @@ public class SignUpFragment extends AppCompatBaseFragment {
 
                     @Override
                     public void onError(Throwable e) {
-                        //TODO parse error and show message
-                        e.printStackTrace();
                         mActivity.closeProgressDialog();
-                        mActivity.noInternetConnectionDialog(mContext);
+                        APIError apiError = null;
+                        String errorMessage = null;
+                        if (e instanceof HttpException) {
+                            apiError = Util.parseError(e);
+                            if (apiError != null)
+                                errorMessage = apiError.getError();
+                            if (!TextUtils.isEmpty(errorMessage)) {
+                                if (errorMessage.contains("users_user_username_key"))
+                                    showErrorDialog(mContext, getString(R.string.duplicate_username));
+                                else if (errorMessage.contains("users_user_email_key"))
+                                    showErrorDialog(mContext, getString(R.string.duplicate_email));
+                            }
+                        } else
+                            noInternetConnectionDialog();
                     }
 
                     @Override
                     public void onNext(SignUpPostData signUpPostData) {
                         mActivity.closeProgressDialog();
-                        Log.v(TAG, "success");
                         if (signUpPostData != null)
-                            mActivity.showSuccessDialog(mContext, "Success!", "Successfully created account.");
+                            mActivity.successDialogAndCloseActivity(mContext, getString(R.string.successful_account_creation));
                     }
                 });
     }
