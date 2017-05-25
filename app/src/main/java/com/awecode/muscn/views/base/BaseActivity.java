@@ -10,7 +10,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.awecode.muscn.MyApplication;
@@ -22,7 +21,7 @@ import com.awecode.muscn.views.fixture.FixturesFragment;
 import com.awecode.muscn.views.home.HomeFragment;
 import com.awecode.muscn.views.injuries.InjuriesFragment;
 import com.awecode.muscn.views.league.LeagueTableFragment;
-import com.awecode.muscn.views.matchweekfixtures.EplMatchWeekFixtureFragment;
+import com.awecode.muscn.views.matchweekfixtures.MatchWeekFragment;
 import com.awecode.muscn.views.nav.NavigationDrawerFragment;
 import com.awecode.muscn.views.recent_results.ResultFragment;
 import com.awecode.muscn.views.top_scorers.TopScorersFragment;
@@ -51,7 +50,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     public LeagueTableFragment mLeagueTableFragment;
     public FixturesFragment mFixturesFragment;
     public ResultFragment mResultFragment;
-    public EplMatchWeekFixtureFragment mEplMatchWeekFixtureFragment;
+    public MatchWeekFragment mMatchWeekFragment;
     public InjuriesFragment mInjuriesFragment;
     public TopScorersFragment mTopScorersFragment;
 

@@ -36,7 +36,7 @@ import com.awecode.muscn.views.fixture.FixturesFragment;
 import com.awecode.muscn.views.home.HomeFragment;
 import com.awecode.muscn.views.injuries.InjuriesFragment;
 import com.awecode.muscn.views.league.LeagueTableFragment;
-import com.awecode.muscn.views.matchweekfixtures.EplMatchWeekFixtureFragment;
+import com.awecode.muscn.views.matchweekfixtures.MatchWeekFragment;
 import com.awecode.muscn.views.nav.NavigationDrawerCallbacks;
 import com.awecode.muscn.views.nav.NavigationDrawerFragment;
 import com.awecode.muscn.views.nav.NavigationItem;
@@ -140,8 +140,8 @@ public class HomeActivity extends BaseActivity implements RecyclerViewScrollList
             } else if (mResultFragment != null && mResultFragment.isVisible() && mResultFragment.isMenuVisible()) {
                 mResultFragment.requestMatchResults();
 
-            } else if (mEplMatchWeekFixtureFragment != null && mEplMatchWeekFixtureFragment.isVisible() && mEplMatchWeekFixtureFragment.isMenuVisible()) {
-                mEplMatchWeekFixtureFragment.requestEplMatchResults();
+            } else if (mMatchWeekFragment != null && mMatchWeekFragment.isVisible() && mMatchWeekFragment.isMenuVisible()) {
+                mMatchWeekFragment.requestEplMatchResults();
 
             }
         } else {
@@ -190,8 +190,8 @@ public class HomeActivity extends BaseActivity implements RecyclerViewScrollList
                 mTopScorersFragment = TopScorersFragment.newInstance();
                 openFragment(mTopScorersFragment);
             } else if (menuType == MenuType.EPL_MATCH_WEEK) {
-                mEplMatchWeekFixtureFragment = new EplMatchWeekFixtureFragment();
-                openFragment(mEplMatchWeekFixtureFragment);
+                mMatchWeekFragment = new MatchWeekFragment();
+                openFragment(mMatchWeekFragment);
             } else if (menuType == MenuType.RECENT_RESULTS) {
                 mResultFragment = new ResultFragment();
                 openFragment(mResultFragment);

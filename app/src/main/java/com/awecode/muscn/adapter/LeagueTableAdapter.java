@@ -22,12 +22,12 @@ import io.realm.RealmRecyclerViewAdapter;
  * Created by surensth on 9/27/16.
  */
 
-public class RealmLeagueTableAdapter extends RealmRecyclerViewAdapter<LeagueTableResponse, RealmLeagueTableAdapter.LeagueViewHolder> {
+public class LeagueTableAdapter extends RealmRecyclerViewAdapter<LeagueTableResponse, LeagueTableAdapter.LeagueViewHolder> {
     Context mContext;
     String serialNumber;
     String club, p, gd, pts;
 
-    public RealmLeagueTableAdapter(OrderedRealmCollection<LeagueTableResponse> data) {
+    public LeagueTableAdapter(OrderedRealmCollection<LeagueTableResponse> data) {
         super(data, true);
     }
 

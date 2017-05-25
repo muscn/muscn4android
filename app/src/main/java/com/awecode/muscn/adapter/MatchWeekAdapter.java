@@ -22,12 +22,12 @@ import io.realm.RealmRecyclerViewAdapter;
  * Created by suresh on 9/25/16.
  */
 
-public class MatchFixutreRecyclerviewAdapter extends RealmRecyclerViewAdapter<EplMatchweekResponse, MatchFixutreRecyclerviewAdapter.FixtureViewHolder> {
+public class MatchWeekAdapter extends RealmRecyclerViewAdapter<EplMatchweekResponse, MatchWeekAdapter.FixtureViewHolder> {
 
 
     public MatchweekItemClickListener mMatchweekItemClickListener;
 
-    public MatchFixutreRecyclerviewAdapter(@Nullable OrderedRealmCollection<EplMatchweekResponse> data) {
+    public MatchWeekAdapter(@Nullable OrderedRealmCollection<EplMatchweekResponse> data) {
         super(data, true);
     }
 

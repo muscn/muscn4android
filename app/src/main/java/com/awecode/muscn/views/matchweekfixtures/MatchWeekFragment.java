@@ -6,7 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.awecode.muscn.R;
-import com.awecode.muscn.adapter.MatchFixutreRecyclerviewAdapter;
+import com.awecode.muscn.adapter.MatchWeekAdapter;
 import com.awecode.muscn.model.http.eplmatchweek.EplMatchweekResponse;
 import com.awecode.muscn.model.http.top_scorers.TopScorersResponse;
 import com.awecode.muscn.model.listener.MatchweekItemClickListener;
@@ -38,12 +38,12 @@ import rx.schedulers.Schedulers;
  * Created by suresh on 9/28/16.
  */
 
-public class EplMatchWeekFixtureFragment extends MasterFragment implements MatchweekItemClickListener {
+public class MatchWeekFragment extends MasterFragment implements MatchweekItemClickListener {
 
     @BindView(R.id.matchFixtures)
     RecyclerView matchFixtures;
 
-    private MatchFixutreRecyclerviewAdapter mMatchFixutreRecyclerviewAdapter;
+    private MatchWeekAdapter mMatchWeekAdapter;
     private RecyclerViewScrollListener mRecyclerViewScrollListener;
     private RealmAsyncTask mTransaction;
 
@@ -94,14 +94,14 @@ public class EplMatchWeekFixtureFragment extends MasterFragment implements Match
      */
     public void setUpAdapter() {
 
-        if (mMatchFixutreRecyclerviewAdapter != null) {
-            mMatchFixutreRecyclerviewAdapter.notifyDataSetChanged();
+        if (mMatchWeekAdapter != null) {
+            mMatchWeekAdapter.notifyDataSetChanged();
             return;
         }
-        mMatchFixutreRecyclerviewAdapter = new MatchFixutreRecyclerviewAdapter(mRealm.where(EplMatchweekResponse.class).findAllSorted("kickoff", Sort.ASCENDING));
-        matchFixtures.setAdapter(Util.getAnimationAdapter(mMatchFixutreRecyclerviewAdapter));
+        mMatchWeekAdapter = new MatchWeekAdapter(mRealm.where(EplMatchweekResponse.class).findAllSorted("kickoff", Sort.ASCENDING));
+        matchFixtures.setAdapter(Util.getAnimationAdapter(mMatchWeekAdapter));
         mRecyclerViewScrollListener.onRecyclerViewScrolled(matchFixtures);
-        mMatchFixutreRecyclerviewAdapter.mMatchweekItemClickListener = this;
+        mMatchWeekAdapter.mMatchweekItemClickListener = this;
     }
 
     /**
