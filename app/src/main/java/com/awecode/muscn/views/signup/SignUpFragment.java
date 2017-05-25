@@ -8,7 +8,7 @@ import android.widget.EditText;
 import com.awecode.muscn.R;
 import com.awecode.muscn.model.http.signup.SignUpPostData;
 import com.awecode.muscn.util.Util;
-import com.awecode.muscn.views.AppCompatBaseFragment;
+import com.awecode.muscn.views.base.AppCompatBaseFragment;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.annotation.ConfirmPassword;
 import com.mobsandgeeks.saripaar.annotation.Email;

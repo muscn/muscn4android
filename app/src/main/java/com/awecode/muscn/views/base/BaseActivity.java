@@ -1,4 +1,4 @@
-package com.awecode.muscn.views;
+package com.awecode.muscn.views.base;
 
 import android.app.Activity;
 import android.content.Context;
@@ -42,7 +42,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     TextView titleTextView;
     @BindView(R.id.muscnLogo)
     ImageView muscnLogoImageView;
-    NavigationDrawerFragment mNavigationDrawerFragment;
+    protected NavigationDrawerFragment mNavigationDrawerFragment;
     protected Realm mRealm;
 
 
@@ -90,7 +90,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected abstract int getLayoutResourceId();
 
-    protected void showProgressView(String message) {
+    public void showProgressView(String message) {
         mStateLayout.showProgressView(message);
     }
 
@@ -102,7 +102,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         mStateLayout.showErrorView(message);
     }
 
-    protected void showErrorView() {
+    public void showErrorView() {
         mStateLayout.showErrorView();
     }
 

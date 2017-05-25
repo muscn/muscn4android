@@ -5,7 +5,7 @@ import android.widget.TextView;
 
 import com.awecode.muscn.R;
 import com.awecode.muscn.model.enumType.MenuType;
-import com.awecode.muscn.views.AppCompatBaseActivity;
+import com.awecode.muscn.views.base.AppCompatBaseActivity;
 import com.awecode.muscn.views.signin.SignInFragment;
 
 import butterknife.BindView;

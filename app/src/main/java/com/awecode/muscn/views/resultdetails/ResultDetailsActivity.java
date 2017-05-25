@@ -18,7 +18,7 @@ import com.awecode.muscn.util.Constants;
 import com.awecode.muscn.util.Util;
 import com.awecode.muscn.util.retrofit.MuscnApiInterface;
 import com.awecode.muscn.util.retrofit.ServiceGenerator;
-import com.awecode.muscn.views.BaseActivity;
+import com.awecode.muscn.views.base.BaseActivity;
 import com.awecode.muscn.views.recent_results.ResultDetailsFragment;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;

@@ -11,7 +11,7 @@ import com.awecode.muscn.model.http.signin.SignInSuccessData;
 import com.awecode.muscn.util.Constants;
 import com.awecode.muscn.util.Util;
 import com.awecode.muscn.util.prefs.Prefs;
-import com.awecode.muscn.views.AppCompatBaseFragment;
+import com.awecode.muscn.views.base.AppCompatBaseFragment;
 import com.awecode.muscn.views.signup.SignUpActivity;
 import com.google.gson.Gson;
 import com.mobsandgeeks.saripaar.ValidationError;
@@ -23,9 +23,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;

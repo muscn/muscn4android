@@ -1,4 +1,4 @@
-package com.awecode.muscn.views;
+package com.awecode.muscn.views.base;
 
 import android.content.Context;
 import android.os.Bundle;
