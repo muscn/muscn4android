@@ -1,4 +1,4 @@
-package com.awecode.muscn.views.recent_results;
+package com.awecode.muscn.views.recent_results.result_details;
 
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -39,19 +39,6 @@ public class ResultDetailsFragment extends MasterFragment {
     LinearLayout halfTimeLayout;
     @BindView(R.id.liveOnLayout)
     LinearLayout liveOnLayout;
-//    @BindView(R.id.goalsTextView)
-//    TextView goalsTextView;
-//    @BindView(R.id.goalFirstTeamName)
-//    TextView goalFirstTeamName;
-//    @BindView(R.id.firstTeamRecyclerView)
-//    RecyclerView firstTeamRecyclerView;
-//    @BindView(R.id.goalSecondTeamName)
-//    TextView goalSecondTeamName;
-//    @BindView(R.id.secondTeamRecyclerView)
-//    RecyclerView secondTeamRecyclerView;
-//    @BindView(R.id.goals_main_layout)
-//    LinearLayout goalsMainLayout;
-
     LinearLayoutManager mLinearLayoutManager;
     TimeLineAdapter mAdapter;
     @BindView(R.id.timelineRecyclerView)
@@ -104,19 +91,6 @@ public class ResultDetailsFragment extends MasterFragment {
         } else
             halfTimeLayout.setVisibility(View.GONE);
 
-//setting goal scored by which player
-//        if (response.getGoals() != null) {
-//            if (response.getIsHomeGame()) {
-//                setUpRecyclerView(firstTeamRecyclerView, response);
-//                goalFirstTeamName.setText(getString(R.string.manchester_united));
-//                goalSecondTeamName.setText(response.getOpponentName());
-//            } else {
-//                setUpRecyclerView(secondTeamRecyclerView, response);
-//                goalSecondTeamName.setText(getString(R.string.manchester_united));
-//                goalFirstTeamName.setText(response.getOpponentName());
-//            }
-//
-//        }
     }
 
     private void setUpRecyclerView(ResultDetailsResponse mResultDetailsResponse) {
@@ -125,7 +99,6 @@ public class ResultDetailsFragment extends MasterFragment {
         timelineRecyclerView.setHasFixedSize(true);
         mAdapter = new TimeLineAdapter(mResultDetailsResponse);
         timelineRecyclerView.setAdapter(mAdapter);
-//        mRecyclerView.setNestedScrollingEnabled(false);
 
     }
 

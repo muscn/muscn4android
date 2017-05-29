@@ -1,4 +1,4 @@
-package com.awecode.muscn.views.matchweekfixtures;
+package com.awecode.muscn.views.match_week;
 
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -46,6 +46,7 @@ public class MatchWeekFragment extends MasterFragment implements MatchweekItemCl
     private MatchWeekAdapter mMatchWeekAdapter;
     private RecyclerViewScrollListener mRecyclerViewScrollListener;
     private RealmAsyncTask mTransaction;
+    private int dbDataCount;
 
     @Override
     public int getLayout() {
@@ -77,15 +78,16 @@ public class MatchWeekFragment extends MasterFragment implements MatchweekItemCl
      * show saved data incase of data in db
      */
     private void checkInternetConnection() {
+        dbDataCount = getTableDataCount(TopScorersResponse.class);
+        if (dbDataCount > 1)
+            setUpAdapter();
+
         if (Util.checkInternetConnection(mContext))
             requestEplMatchResults();
-        else {
-            if (getTableDataCount(TopScorersResponse.class) < 1)
-                noInternetConnectionDialog();
-            else
-                setUpAdapter();
+        else if (dbDataCount < 1)
+            noInternetConnectionDialog();
 
-        }
+
     }
 
 
@@ -108,7 +110,9 @@ public class MatchWeekFragment extends MasterFragment implements MatchweekItemCl
      * fetch manutd recent match results list
      */
     public void requestEplMatchResults() {
-        showProgressView(getString(R.string.loading_fixtures));
+        if (dbDataCount < 1)
+            showProgressView(getString(R.string.loading_data));
+
         Observable<ResponseBody> call = mApiInterface.getEplMatchweekFixtures();
         call.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

@@ -109,9 +109,8 @@ HomeFragment extends MasterFragment {
         mActivity.setCustomTitle(R.string.muscn);
         initializeCountDownTimer();
         setup_fixutres();
-        if (Util.checkInternetConnection(mContext)) {
+        if (Util.checkInternetConnection(mContext))
             requestFixturesList();
-        }
     }
 
 

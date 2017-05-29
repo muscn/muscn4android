@@ -16,7 +16,7 @@ import com.awecode.muscn.model.listener.ResultItemClickListener;
 import com.awecode.muscn.util.Constants;
 import com.awecode.muscn.util.Util;
 import com.awecode.muscn.views.MasterFragment;
-import com.awecode.muscn.views.resultdetails.ResultDetailsActivity;
+import com.awecode.muscn.views.recent_results.result_details.ResultDetailsActivity;
 
 import java.util.List;
 
@@ -39,6 +39,7 @@ public class ResultFragment extends MasterFragment implements ResultItemClickLis
     private ResultAdapter mResultAdapter;
     public RecyclerViewScrollListener recyclerViewScrollListener;
     private RealmAsyncTask mTransaction;
+    private int dbDataCount;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -70,15 +71,15 @@ public class ResultFragment extends MasterFragment implements ResultItemClickLis
      * show saved data incase of data in db
      */
     private void checkInternetConnection() {
+        dbDataCount = getTableDataCount(RecentResultData.class);
+        if (dbDataCount > 1)
+            setUpAdapter();
+
         if (Util.checkInternetConnection(mContext))
             requestMatchResults();
-        else {
-            if (getTableDataCount(RecentResultData.class) < 1)
-                noInternetConnectionDialog();
-            else
-                setUpAdapter();
+        else if (dbDataCount < 1)
+            noInternetConnectionDialog();
 
-        }
     }
 
 
@@ -103,10 +104,9 @@ public class ResultFragment extends MasterFragment implements ResultItemClickLis
      * fetch manutd recent match results list
      */
     public void requestMatchResults() {
-        if (getTableDataCount(RecentResultData.class) < 1)
+        if (dbDataCount < 1)
             showProgressView(getString(R.string.loading_recent_results));
-        else
-            setUpAdapter();
+
 
         Observable<RecentResultsResponse> call = mApiInterface.getResults();
         call.subscribeOn(Schedulers.io())
