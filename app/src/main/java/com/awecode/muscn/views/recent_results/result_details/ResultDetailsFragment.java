@@ -1,4 +1,4 @@
-package com.awecode.muscn.views.recent_results;
+package com.awecode.muscn.views.recent_results.result_details;
 
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;

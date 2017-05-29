@@ -1,4 +1,4 @@
-package com.awecode.muscn.views.matchweekfixtures;
+package com.awecode.muscn.views.match_week;
 
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;

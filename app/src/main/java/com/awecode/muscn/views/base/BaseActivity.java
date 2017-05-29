@@ -21,7 +21,7 @@ import com.awecode.muscn.views.fixture.FixturesFragment;
 import com.awecode.muscn.views.home.HomeFragment;
 import com.awecode.muscn.views.injuries.InjuriesFragment;
 import com.awecode.muscn.views.league.LeagueTableFragment;
-import com.awecode.muscn.views.matchweekfixtures.MatchWeekFragment;
+import com.awecode.muscn.views.match_week.MatchWeekFragment;
 import com.awecode.muscn.views.nav.NavigationDrawerFragment;
 import com.awecode.muscn.views.recent_results.ResultFragment;
 import com.awecode.muscn.views.top_scorers.TopScorersFragment;

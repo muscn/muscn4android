@@ -16,7 +16,7 @@ import com.awecode.muscn.model.listener.ResultItemClickListener;
 import com.awecode.muscn.util.Constants;
 import com.awecode.muscn.util.Util;
 import com.awecode.muscn.views.MasterFragment;
-import com.awecode.muscn.views.result_details.ResultDetailsActivity;
+import com.awecode.muscn.views.recent_results.result_details.ResultDetailsActivity;
 
 import java.util.List;
 

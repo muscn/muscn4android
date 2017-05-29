@@ -1,4 +1,4 @@
-package com.awecode.muscn.views.result_details;
+package com.awecode.muscn.views.recent_results.result_details;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,7 +18,6 @@ import com.awecode.muscn.util.Util;
 import com.awecode.muscn.util.retrofit.MuscnApiInterface;
 import com.awecode.muscn.util.retrofit.ServiceGenerator;
 import com.awecode.muscn.views.base.BaseActivity;
-import com.awecode.muscn.views.recent_results.ResultDetailsFragment;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
