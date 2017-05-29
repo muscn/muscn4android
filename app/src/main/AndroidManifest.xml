@@ -60,7 +60,7 @@
         <service android:name=".widget.UpdateWidgetService"/>
 
         <activity
-            android:name=".views.resultdetails.ResultDetailsActivity"
+            android:name=".views.result_details.ResultDetailsActivity"
             android:screenOrientation="portrait">
         </activity>
         <activity

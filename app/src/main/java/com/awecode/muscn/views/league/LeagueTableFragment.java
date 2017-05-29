@@ -36,6 +36,7 @@ public class LeagueTableFragment extends MasterFragment {
     LinearLayoutManager mLinearLayoutManager;
     RecyclerViewScrollListener recyclerViewScrollListener;
     private RealmAsyncTask mTransaction;
+    private int dbDataCount;
 
     public static LeagueTableFragment newInstance() {
         LeagueTableFragment fragment = new LeagueTableFragment();
@@ -78,26 +79,24 @@ public class LeagueTableFragment extends MasterFragment {
      * show saved data incase of data in db
      */
     private void checkInternetConnection() {
+        dbDataCount = getTableDataCount(LeagueTableResponse.class);
+        if (dbDataCount > 1)
+            setUpAdapter();
+
         if (Util.checkInternetConnection(mContext))
             requestLeagueTable();
-        else {
-            if (getTableDataCount(LeagueTableResponse.class) < 1)
-                noInternetConnectionDialog();
-            else
-                setUpAdapter();
-
-        }
+        else if (dbDataCount < 1)
+            noInternetConnectionDialog();
     }
-
 
     /**
      * request for league table data
      */
+
     public void requestLeagueTable() {
-        if (mRealm.where(LeagueTableResponse.class).count() < 1)
+        if (dbDataCount < 1)
             showProgressView(getString(R.string.loading_league_table));
-        else
-            setUpAdapter();
+
         Observable<List<LeagueTableResponse>> call = mApiInterface.getLeague();
         call.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

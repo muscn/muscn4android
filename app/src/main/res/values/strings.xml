@@ -65,6 +65,9 @@
     <string name="duplicate_username">That username isn\'t available. Try another.</string>
     <string name="duplicate_email">That email isn\'t available. Try another.</string>
     <string name="loading_result_details">Loading result details...</string>
+    <string name="loading_data">Loading data...</string>
+    <string name="mun">MUN</string>
+    <string name="ft">FT</string>
 
 
 </resources>

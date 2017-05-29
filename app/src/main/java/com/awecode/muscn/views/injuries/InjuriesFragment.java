@@ -36,6 +36,7 @@ public class InjuriesFragment extends MasterFragment {
     LinearLayoutManager mLinearLayoutManager;
     RecyclerViewScrollListener mRecyclerViewScrollListener;
     private RealmAsyncTask mTransaction;
+    private int dbDataCount;
 
     public static InjuriesFragment newInstance() {
         InjuriesFragment fragment = new InjuriesFragment();
@@ -74,15 +75,15 @@ public class InjuriesFragment extends MasterFragment {
      * show saved data incase of data in db
      */
     private void checkInternetConnection() {
+        dbDataCount = getTableDataCount(InjuryResult.class);
+        if (dbDataCount > 1)
+            setUpAdapter();
+
         if (Util.checkInternetConnection(mContext))
             requestInjuries();
-        else {
-            if (getTableDataCount(InjuryResult.class) < 1)
-                noInternetConnectionDialog();
-            else
-                setUpAdapter();
+        else if (dbDataCount < 1)
+            noInternetConnectionDialog();
 
-        }
     }
 
     private void initializeRecyclerView() {
@@ -96,10 +97,8 @@ public class InjuriesFragment extends MasterFragment {
      */
     public void requestInjuries() {
 
-        if (getTableDataCount(InjuryResult.class) < 1)
+        if (dbDataCount < 1)
             showProgressView(getString(R.string.loading_injuries));
-        else
-            setUpAdapter();
 
         Observable<InjuriesResponse> call = mApiInterface.getInjuredPlayers();
         call.subscribeOn(Schedulers.io())

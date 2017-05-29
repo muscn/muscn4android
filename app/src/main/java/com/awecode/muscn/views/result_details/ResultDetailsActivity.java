@@ -1,4 +1,4 @@
-package com.awecode.muscn.views.resultdetails;
+package com.awecode.muscn.views.result_details;
 
 import android.content.Intent;
 import android.os.Bundle;
