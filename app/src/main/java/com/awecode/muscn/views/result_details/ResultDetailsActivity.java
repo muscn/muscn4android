@@ -7,7 +7,6 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -20,7 +19,6 @@ import com.awecode.muscn.util.retrofit.MuscnApiInterface;
 import com.awecode.muscn.util.retrofit.ServiceGenerator;
 import com.awecode.muscn.views.base.BaseActivity;
 import com.awecode.muscn.views.recent_results.ResultDetailsFragment;
-import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
@@ -123,7 +121,6 @@ public class ResultDetailsActivity extends BaseActivity {
 
                     @Override
                     public void onNext(ResultDetailsResponse response) {
-                        Log.v(TAG, "response string is" + new Gson().toJson(response).toString());
                         mResponse = response;
                         if (response != null)
                             deleteDataFromDBAndSave(response);
@@ -144,7 +141,6 @@ public class ResultDetailsActivity extends BaseActivity {
             toolbarSecondTeamScore.setText(response.getOpponentScore().toString());
             Picasso.with(mContext).load(ServiceGenerator.API_BASE_URL + response.getOpponentCrest()).into(secondTeamImageView);
             Picasso.with(mContext).load(ServiceGenerator.API_BASE_URL + response.getOpponentCrest()).into(toolbarSecondTeamImageView);
-//            setUpData(response);
 
         } else {
             secondTeamNameTextView.setText(getString(R.string.manchester_united));
@@ -180,19 +176,6 @@ public class ResultDetailsActivity extends BaseActivity {
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
                 toolbarLayout.setAlpha(Math.abs(verticalOffset / (float)
                         appBarLayout.getTotalScrollRange()));
-
-//                if (scrollRange == -1) {
-//                    scrollRange = appBarLayout.getTotalScrollRange();
-//                }
-//                if (scrollRange + verticalOffset == 0) {
-//                    toolbarLayout.setVisibility(View.VISIBLE);
-////                    appBarLayout.setExpanded(false);
-//                    isShow = true;
-//                } else if (isShow) {
-//                    toolbarLayout.setVisibility(View.GONE);
-//
-//                    isShow = false;
-//                }
             }
         });
     }

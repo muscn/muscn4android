@@ -39,6 +39,7 @@ public class TopScorersFragment extends MasterFragment {
     RecyclerViewScrollListener mRecyclerViewScrollListener;
 
     private RealmAsyncTask mTransaction;
+    private int dbDataCount;
 
     public static TopScorersFragment newInstance() {
         TopScorersFragment fragment = new TopScorersFragment();
@@ -82,15 +83,14 @@ public class TopScorersFragment extends MasterFragment {
      * show saved data incase of data in db
      */
     private void checkInternetConnection() {
+        dbDataCount = getTableDataCount(TopScorersResponse.class);
+        if (dbDataCount > 1)
+            setUpAdapter();
+
         if (Util.checkInternetConnection(mContext))
             requestTopScorers();
-        else {
-            if (getTableDataCount(TopScorersResponse.class) < 1)
-                noInternetConnectionDialog();
-            else
-                setUpAdapter();
-
-        }
+        else if (dbDataCount < 1)
+            noInternetConnectionDialog();
     }
 
 
@@ -98,9 +98,7 @@ public class TopScorersFragment extends MasterFragment {
      * fetch top scorer data from api
      */
     public void requestTopScorers() {
-        if (getTableDataCount(TopScorersResponse.class) > 0)
-            setUpAdapter();
-        else
+        if (dbDataCount < 1)
             showProgressView(getString(R.string.loading_top_scorers));
 
 
