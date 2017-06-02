@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="  Injury"
+            android:text="@string/injury"
             android:textColor="@color/white"
             android:textSize="@dimen/injury_item_txt_size" />
 

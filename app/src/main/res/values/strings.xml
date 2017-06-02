@@ -72,6 +72,7 @@
     <string name="unspecified">Unspecified</string>
     <string name="loading_news">Loading News...</string>
     <string name="news">News</string>
+    <string name="injury">Injury</string>
 
 
 </resources>

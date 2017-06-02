@@ -13,7 +13,6 @@ import com.awecode.muscn.model.listener.RecyclerViewScrollListener;
 import com.awecode.muscn.util.Util;
 import com.awecode.muscn.views.MasterFragment;
 
-import java.util.Collection;
 import java.util.List;
 
 import butterknife.BindView;
@@ -155,10 +154,9 @@ public class InjuriesFragment extends MasterFragment {
      * @param injuryResults
      */
     private void saveDataInDB(List<InjuryResult> injuryResults) {
-        Collection<InjuryResult> realmTableList = null;
         if (injuryResults != null && injuryResults.size() > 0) {
             mRealm.beginTransaction();
-            realmTableList = mRealm.copyToRealm(injuryResults);
+            mRealm.copyToRealm(injuryResults);
             mRealm.commitTransaction();
         }
     }

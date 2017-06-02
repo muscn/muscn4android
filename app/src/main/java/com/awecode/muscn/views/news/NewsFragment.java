@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 
 import com.awecode.muscn.R;
@@ -138,7 +137,6 @@ public class NewsFragment extends MasterFragment implements NewsItemClickListene
      * @return
      */
     private void saveResponseData(final List<Item> itemList) {
-        Log.v("TAG", "saving the data: " + itemList.size());
         if (itemList != null && itemList.size() > 0) {
             mRealm.beginTransaction();
             mRealm.copyToRealm(itemList);
