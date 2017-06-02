@@ -38,6 +38,7 @@ import com.awecode.muscn.views.match_week.MatchWeekFragment;
 import com.awecode.muscn.views.nav.NavigationDrawerCallbacks;
 import com.awecode.muscn.views.nav.NavigationDrawerFragment;
 import com.awecode.muscn.views.nav.NavigationItem;
+import com.awecode.muscn.views.news.NewsFragment;
 import com.awecode.muscn.views.recent_results.ResultFragment;
 import com.awecode.muscn.views.top_scorers.TopScorersFragment;
 import com.getkeepsafe.taptargetview.TapTarget;
@@ -203,9 +204,11 @@ public class HomeActivity extends BaseActivity implements RecyclerViewScrollList
             } else if (menuType == MenuType.RECENT_RESULTS) {
                 mResultFragment = new ResultFragment();
                 openFragment(mResultFragment);
-            } else if (menuType == MenuType.ABOUT_US) {
+            } else if (menuType == MenuType.ABOUT_US)
                 startActivity(new Intent(this, AboutUsActivity.class));
-            } else {
+            else if(menuType==MenuType.NEWS)
+                openFragment(NewsFragment.newInstance());
+            else {
                 mHomeFragment = HomeFragment.newInstance();
                 openFragmentNoHistory(mHomeFragment, "HOME");
             }

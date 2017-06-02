@@ -135,3 +135,32 @@
 -keep class com.mobsandgeeks.saripaar.** {*;}
 -keep @com.mobsandgeeks.saripaar.annotation.ValidateUsing class * {*;}
 
+
+#simplexml
+-dontwarn com.bea.xml.stream.**
+-dontwarn org.simpleframework.xml.stream.**
+-keep class org.simpleframework.xml.**{ *; }
+-keepclassmembers,allowobfuscation class * {
+    @org.simpleframework.xml.* <fields>;
+    @org.simpleframework.xml.* <init>(...);
+}
+
+-keep interface org.simpleframework.xml.core.Label {
+   public *;
+}
+-keep class * implements org.simpleframework.xml.core.Label {
+   public *;
+}
+-keep interface org.simpleframework.xml.core.Parameter {
+   public *;
+}
+-keep class * implements org.simpleframework.xml.core.Parameter {
+   public *;
+}
+-keep interface org.simpleframework.xml.core.Extractor {
+   public *;
+}
+-keep class * implements org.simpleframework.xml.core.Extractor {
+   public *;
+}
+

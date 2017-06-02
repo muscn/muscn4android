@@ -11,7 +11,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.awecode.muscn.R;
-import com.awecode.muscn.model.Item;
 import com.awecode.muscn.model.http.recent_results.RecentResultData;
 import com.awecode.muscn.model.listener.ResultItemClickListener;
 import com.awecode.muscn.util.Util;
@@ -41,7 +40,7 @@ public class ResultAdapter extends RealmRecyclerViewAdapter<RecentResultData, Re
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         context = parent.getContext();
         LayoutInflater inflater = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.epl_matchweek_fixture_row_item, parent, false);
+        View view = inflater.inflate(R.layout.item_recent_result, parent, false);
         HeaderViewHolder header = new HeaderViewHolder(view);
         return header;
 
@@ -135,8 +134,6 @@ public class ResultAdapter extends RealmRecyclerViewAdapter<RecentResultData, Re
         TextView eplMatchweekAwayTeamShortName;
         @BindView(R.id.matchResultRowLayout)
         LinearLayout matchResultRowLayout;
-
-        public Item headerRefferalItem;
 
         HeaderViewHolder(View view) {
             super(view);

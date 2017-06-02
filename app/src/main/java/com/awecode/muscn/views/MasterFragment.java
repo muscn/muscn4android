@@ -14,6 +14,7 @@ import com.awecode.muscn.R;
 import com.awecode.muscn.model.http.fixtures.Result;
 import com.awecode.muscn.util.Util;
 import com.awecode.muscn.util.retrofit.MuscnApiInterface;
+import com.awecode.muscn.util.retrofit.feed.FeedApiInterface;
 import com.awecode.muscn.views.base.BaseActivity;
 
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ import java.util.List;
 import butterknife.ButterKnife;
 import io.realm.Realm;
 import io.realm.RealmResults;
+import io.realm.exceptions.RealmMigrationNeededException;
 
 /**
  * Created by surensth on 9/23/16.
@@ -29,6 +31,7 @@ import io.realm.RealmResults;
 
 public abstract class MasterFragment extends Fragment {
     public MuscnApiInterface mApiInterface;
+    protected FeedApiInterface mFeedApiInterface;
     public Context mContext;
     public BaseActivity mActivity;
     public FragmentManager mFragmentManager;
@@ -45,10 +48,14 @@ public abstract class MasterFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         mApiInterface = getApiInterface();
+        mFeedApiInterface = getFeedApiInterface();
+
         changeRandomParallaxImage();
         initializedRealm();
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(getLayout(), container, false);
@@ -59,7 +66,11 @@ public abstract class MasterFragment extends Fragment {
     public abstract int getLayout();
 
     private void initializedRealm() {
-        mRealm = Realm.getDefaultInstance();
+        try {
+            mRealm = ((MyApplication) getActivity().getApplication()).getRealmInstance();
+        } catch (RealmMigrationNeededException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -73,7 +84,11 @@ public abstract class MasterFragment extends Fragment {
     }
 
     public MuscnApiInterface getApiInterface() {
-        return mApiInterface = ((MyApplication) getActivity().getApplication()).getApiInterface();
+        return ((MyApplication) getActivity().getApplication()).getApiInterface();
+    }
+
+    public FeedApiInterface getFeedApiInterface() {
+        return ((MyApplication) getActivity().getApplication()).getFeedApiInterface();
     }
 
     public void showProgressView(String message) {

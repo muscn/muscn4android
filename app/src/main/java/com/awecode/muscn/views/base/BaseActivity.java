@@ -141,86 +141,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         ft.commitAllowingStateLoss();
     }
 
-//    public void setupFloatingActionButton() {
-//        mActionMenu = (FloatingActionMenu) findViewById(R.id.menu2);
-//        createCustomAnimation();
-//
-//    }
-
-//    private void createCustomAnimation() {
-//        AnimatorSet set = new AnimatorSet();
-//        ObjectAnimator scaleOutX = ObjectAnimator.ofFloat(mActionMenu.getMenuIconView(), "scaleX", 1.0f, 0.2f);
-//        ObjectAnimator scaleOutY = ObjectAnimator.ofFloat(mActionMenu.getMenuIconView(), "scaleY", 1.0f, 0.2f);
-//
-//        ObjectAnimator scaleInX = ObjectAnimator.ofFloat(mActionMenu.getMenuIconView(), "scaleX", 0.2f, 1.0f);
-//        ObjectAnimator scaleInY = ObjectAnimator.ofFloat(mActionMenu.getMenuIconView(), "scaleY", 0.2f, 1.0f);
-//
-//        scaleOutX.setDuration(50);
-//        scaleOutY.setDuration(50);
-//
-//        scaleInX.setDuration(150);
-//        scaleInY.setDuration(150);
-//
-//        scaleInX.addListener(new AnimatorListenerAdapter() {
-//            @Override
-//            public void onAnimationStart(Animator animation) {
-//                mActionMenu.getMenuIconView().setImageResource(mActionMenu.isOpened()
-//                        ? R.drawable.ic_fab_close_menu : R.drawable.ic_fab_menu);
-//            }
-//        });
-//
-//        set.play(scaleOutX).with(scaleOutY);
-//        set.play(scaleInX).with(scaleInY).after(scaleOutX);
-//        set.setInterpolator(new OvershootInterpolator(2));
-//
-//        mActionMenu.setIconToggleAnimatorSet(set);
-//    }
-
-//    @OnClick({R.id.fabAboutUs, R.id.fabHome, R.id.fabLeagueTable, R.id.fabInjuries, R.id.fabTopScores, R.id.fabEplMatchWeek, R.id.fabRecentResults, R.id.fabFixtures})
-//    public void onClick(View view) {
-//        mActionMenu.close(true);
-//        switch (view.getId()) {
-//            case R.id.fabHome:
-//                mHomeFragment = HomeFragment.newInstance();
-//                openFragmentNoHistory(mHomeFragment, "HOME");
-//                break;
-//            case R.id.fabLeagueTable:
-//                mLeagueTableFragment = LeagueTableFragment.newInstance();
-//                openFragment(mLeagueTableFragment);
-//                break;
-//            case R.id.fabInjuries:
-//                mInjuriesFragment = InjuriesFragment.newInstance();
-//                openFragment(mInjuriesFragment);
-//                break;
-//            case R.id.fabTopScores:
-//                mTopScorersFragment = TopScorersFragment.newInstance();
-//                openFragment(mTopScorersFragment);
-//                break;
-//            case R.id.fabEplMatchWeek:
-//                mEplMatchWeekFixtureFragment = new EplMatchWeekFixtureFragment();
-//                openFragment(mEplMatchWeekFixtureFragment);
-//                break;
-//            case R.id.fabRecentResults:
-//                mResultFragment = new ResultFragment();
-//                openFragment(mResultFragment);
-//                break;
-//            case R.id.fabFixtures:
-//                mFixturesFragment = FixturesFragment.newInstance(fixturesResponse);
-//                openFragment(mFixturesFragment);
-//                break;
-//            case R.id.fabAboutUs:
-//                startActivity(new Intent(this, AboutUsActivity.class));
-//                break;
-//        }
-//    }
 
     @Override
     public void onBackPressed() {
         Fragment homeFragment = getSupportFragmentManager().findFragmentByTag("HOME");
-
-//        if (mActionMenu.isOpened())
-//            mActionMenu.close(true);    //if fab menu is open, then close it
-//        else
         if (mNavigationDrawerFragment.isDrawerOpen())
             mNavigationDrawerFragment.closeDrawer(); //close navigation bar on back pressed if opened
         else {
@@ -230,41 +154,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             } else
                 openFragmentNoHistory(HomeFragment.newInstance(), "HOME");
         }
-
-//        openFragment(HomeFragment.newInstance());
-//        super.onBackPressed();
-//        if (mActionMenu.isOpened())
-//            mActionMenu.close(true);
-//
-//        else {
-//            if (mBackPressed + TIME_INTERVAL > System.currentTimeMillis()) {
-//                super.onBackPressed();
-//                mActivity.finish();
-//            } else {
-//                Util.toast(mContext, getString(R.string.tapExitMessage));
-//            }
-//
-//            mBackPressed = System.currentTimeMillis();
-//        }
     }
-
-
-    /**
-     * when recycler view is scrolled, floating action button hide/show
-     *
-     * @param recyclerView recyclerview with scroll enabled
-     */
-//    public void setScrollAnimation(RecyclerView recyclerView) {
-//        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-//            @Override
-//            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-//                if (dy > 0)
-//                    mActionMenu.hideMenu(true);
-//                else if (dy < 0)
-//                    mActionMenu.showMenu(true);
-//            }
-//        });
-//    }
 
     /**
      * dialog to show message
@@ -277,7 +167,6 @@ public abstract class BaseActivity extends AppCompatActivity {
                 .setMessage(message)
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-//                        finish();
                         dialog.dismiss();
                         showErrorView();
                     }
@@ -294,15 +183,15 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     private void initializedRealm() {
-        mRealm = Realm.getDefaultInstance();
+        mRealm = ((MyApplication) getApplication()).getRealmInstance();
     }
+
     public void showSuccessDialog(final Context context, String title, String message) {
         new AlertDialog.Builder(context, R.style.AppCompatAlertDialogStyle)
                 .setTitle(title)
                 .setMessage(message)
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-//                        finish();
                         dialog.dismiss();
                     }
                 })
