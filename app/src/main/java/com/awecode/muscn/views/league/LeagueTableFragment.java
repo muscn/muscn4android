@@ -108,6 +108,7 @@ public class LeagueTableFragment extends MasterFragment {
 
                     @Override
                     public void onError(Throwable e) {
+                        if (dbDataCount < 1)
                         mActivity.noInternetConnectionDialog(mContext);
                     }
 

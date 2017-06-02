@@ -124,6 +124,7 @@ public class MatchWeekFragment extends MasterFragment implements MatchweekItemCl
 
                     @Override
                     public void onError(Throwable e) {
+                        if (dbDataCount < 1)
                         mActivity.noInternetConnectionDialog(mContext);
 
                     }

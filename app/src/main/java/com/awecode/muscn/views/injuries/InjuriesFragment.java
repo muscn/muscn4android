@@ -111,7 +111,8 @@ public class InjuriesFragment extends MasterFragment {
 
                     @Override
                     public void onError(Throwable e) {
-                        mActivity.noInternetConnectionDialog(mContext);
+                        if (dbDataCount < 1)
+                            mActivity.noInternetConnectionDialog(mContext);
                     }
 
                     @Override
