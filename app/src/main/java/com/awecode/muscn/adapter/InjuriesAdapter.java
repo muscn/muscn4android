@@ -60,14 +60,14 @@ public class InjuriesAdapter extends RealmRecyclerViewAdapter<InjuryResult, Inju
                 type = type.replaceAll("\\s+", " ");//removing spaces
                 holder.injury.setText(type);
             } else
-                holder.injury.setText(R.string.no_data_string);
+                holder.injury.setText(mContext.getString(R.string.unspecified));
 
             returnDate = injuredInjuryResult.getReturnDate();
             if (returnDate != null) {
                 returnDate = Util.dateFormatter(returnDate);//formating date in format "28 Sep, 2016"
                 holder.returnDate.setText(returnDate);
             } else
-                holder.returnDate.setText(R.string.no_data_string);
+                holder.returnDate.setText(mContext.getString(R.string.unspecified));
         } else {
             return;
         }
