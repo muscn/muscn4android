@@ -114,5 +114,8 @@ dependencies {
         exclude group: 'stax', module: 'stax'
     }
 
+    //webview
+    compile 'com.thefinestartist:finestwebview:1.2.7'
+
 }
 apply plugin: 'com.google.gms.google-services'

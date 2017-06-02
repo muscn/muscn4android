@@ -9,10 +9,12 @@ import android.view.View;
 
 import com.awecode.muscn.R;
 import com.awecode.muscn.adapter.NewsListAdapter;
+import com.awecode.muscn.model.listener.NewsItemClickListener;
 import com.awecode.muscn.model.simplexml.Item;
 import com.awecode.muscn.model.simplexml.Rss;
 import com.awecode.muscn.util.Util;
 import com.awecode.muscn.views.MasterFragment;
+import com.thefinestartist.finestwebview.FinestWebView;
 
 import java.util.List;
 
@@ -28,7 +30,7 @@ import rx.schedulers.Schedulers;
  * Created by munnadroid on 6/2/17.
  */
 
-public class NewsFragment extends MasterFragment {
+public class NewsFragment extends MasterFragment implements NewsItemClickListener {
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
 
@@ -44,6 +46,9 @@ public class NewsFragment extends MasterFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        mActivity.setCustomTitle(R.string.news);
+
         initializeRecyclerView();
         checkInternetConnection();
     }
@@ -151,7 +156,15 @@ public class NewsFragment extends MasterFragment {
             return;
         }
         mAdapter = new NewsListAdapter(mRealm.where(Item.class).findAll());
+        mAdapter.mNewsItemClickListener=this;
         recyclerView.setAdapter(Util.getAnimationAdapter(mAdapter));
+    }
+
+    @Override
+    public void onItemClickListener(Item item) {
+        new FinestWebView.Builder(getActivity())
+                .webViewBuiltInZoomControls(true)
+                .show(item.getLink());
     }
 
     @Override

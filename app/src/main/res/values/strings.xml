@@ -71,6 +71,7 @@
     <string name="https_manutd_org_np">https://manutd.org.np</string>
     <string name="unspecified">Unspecified</string>
     <string name="loading_news">Loading News...</string>
+    <string name="news">News</string>
 
 
 </resources>

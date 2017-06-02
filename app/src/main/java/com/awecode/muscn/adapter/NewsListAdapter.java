@@ -5,10 +5,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.awecode.muscn.R;
+import com.awecode.muscn.model.listener.NewsItemClickListener;
 import com.awecode.muscn.model.simplexml.Item;
 
 import butterknife.BindView;
@@ -22,6 +23,7 @@ import io.realm.RealmRecyclerViewAdapter;
 
 public class NewsListAdapter extends RealmRecyclerViewAdapter<Item, NewsListAdapter.DataViewHolder> {
     Context mContext;
+    public NewsItemClickListener mNewsItemClickListener;
 
     public NewsListAdapter(OrderedRealmCollection<Item> data) {
         super(data, true);
@@ -40,6 +42,13 @@ public class NewsListAdapter extends RealmRecyclerViewAdapter<Item, NewsListAdap
         final Item data = getItem(position);
         holder.titleTextView.setText(data.getTitle());
         holder.descriptionTextView.setText(data.getDescription());
+
+        holder.rowLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mNewsItemClickListener.onItemClickListener(data);
+            }
+        });
     }
 
     public static class DataViewHolder extends RecyclerView.ViewHolder {
@@ -51,7 +60,7 @@ public class NewsListAdapter extends RealmRecyclerViewAdapter<Item, NewsListAdap
         @BindView(R.id.descriptionTextView)
         TextView descriptionTextView;
         @BindView(R.id.rowLayout)
-        LinearLayout rowLayout;
+        RelativeLayout rowLayout;
 
         public DataViewHolder(View itemView) {
             super(itemView);
