@@ -61,7 +61,7 @@ public class MatchWeekAdapter extends RealmRecyclerViewAdapter<EplMatchweekRespo
             holder.eplMatchweekAwayTeamScore.setText(awayTeamScore);
             holder.eplMatchweekHomeTeamScore.setText(homeTeamScore);
         }
-        holder.eplMatchweekTimeandHomeGround.setText(Util.commonDateFormatter(strCurrentDate, "yyyy-MM-dd'T'hh:mm:ss"));
+        holder.dateTimeTextView.setText(Util.commonDateFormatter(strCurrentDate, "yyyy-MM-dd'T'hh:mm:ss"));
         holder.eplMatchweekHomeTeam.setText(data.getHomeTeam());
         holder.eplMatchweekAwayTeam.setText(data.getAwayTeam());
 
@@ -88,8 +88,8 @@ public class MatchWeekAdapter extends RealmRecyclerViewAdapter<EplMatchweekRespo
         TextView eplMatchweekHomeTeam;
         @BindView(R.id.eplMatchweekHomeTeamScore)
         TextView eplMatchweekHomeTeamScore;
-        @BindView(R.id.eplMatchweekTimeandHomeGround)
-        TextView eplMatchweekTimeandHomeGround;
+        @BindView(R.id.dateTimeTextView)
+        TextView dateTimeTextView;
         @BindView(R.id.eplMatchweekAwayTeamScore)
         TextView eplMatchweekAwayTeamScore;
         @BindView(R.id.eplMatchweekAwayTeam)

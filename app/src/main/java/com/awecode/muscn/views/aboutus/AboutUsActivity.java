@@ -1,6 +1,5 @@
 package com.awecode.muscn.views.aboutus;
 
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.LinkMovementMethod;
@@ -12,6 +11,8 @@ import com.awecode.muscn.util.Util;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.awecode.muscn.util.Util.getAppVersion;
 
 /**
  * Created by surensth on 11/16/16.
@@ -55,7 +56,6 @@ public class AboutUsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_us);
         ButterKnife.bind(this);
-//        Util.makeTextViewResizable(textViewDescription, 3, "...Read More", true);
 
         manutd = getResources().getString(R.string.official_website_link_text);
         facebook = getResources().getString(R.string.facebook_link_text);
@@ -84,14 +84,4 @@ public class AboutUsActivity extends AppCompatActivity {
         textView.setClickable(true);
     }
 
-    public String getAppVersion() {
-        String versionCode = "0.0";
-        try {
-            versionCode = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
-        } catch (PackageManager.NameNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        return versionCode;
-    }
 }

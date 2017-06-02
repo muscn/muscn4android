@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
@@ -29,8 +28,6 @@ import com.awecode.muscn.model.registration.RegistrationResponse;
 import com.awecode.muscn.util.Constants;
 import com.awecode.muscn.util.Util;
 import com.awecode.muscn.util.prefs.Prefs;
-import com.awecode.muscn.util.retrofit.MuscnApiInterface;
-import com.awecode.muscn.util.retrofit.ServiceGenerator;
 import com.awecode.muscn.views.aboutus.AboutUsActivity;
 import com.awecode.muscn.views.base.BaseActivity;
 import com.awecode.muscn.views.fixture.FixturesFragment;
@@ -55,6 +52,8 @@ import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+
+import static com.awecode.muscn.util.Util.getAppVersion;
 
 
 public class HomeActivity extends BaseActivity implements RecyclerViewScrollListener, NavigationDrawerCallbacks {
@@ -282,16 +281,8 @@ public class HomeActivity extends BaseActivity implements RecyclerViewScrollList
         pButton.setTextColor(ContextCompat.getColor(mContext, R.color.colorPrimary));
     }
 
-    public String setAppVersion() {
-        String versionCode = "0.0";
-        try {
-            versionCode = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
-            mVersionTextView.setText("v" + versionCode);
-        } catch (PackageManager.NameNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        return versionCode;
+    public void setAppVersion() {
+        mVersionTextView.setText("v" + getAppVersion());
     }
 
     public void sendRegistrationToServer() {
@@ -301,20 +292,17 @@ public class HomeActivity extends BaseActivity implements RecyclerViewScrollList
         String refreshedToken = Prefs.getString(Constants.PREFS_REFRESH_TOKEN, "");
         RegistrationPostData mRegistrationPostData = new RegistrationPostData(deviceId, refreshedToken, Build.MODEL, Constants.DEVICE_TYPE);
 
-        MuscnApiInterface mApiInterface = ServiceGenerator.createService(MuscnApiInterface.class);
         Observable<RegistrationResponse> call = mApiInterface.postRegistrationData(mRegistrationPostData);
         call.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<RegistrationResponse>() {
                     @Override
                     public void onCompleted() {
-//                        Log.v(TAG, "data com");
 
                     }
 
                     @Override
                     public void onError(Throwable e) {
-//                        Log.v(TAG, "error here " + new Gson().toJson(e).toString());
 
                     }
 

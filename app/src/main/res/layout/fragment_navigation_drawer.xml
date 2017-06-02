@@ -69,8 +69,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
-                android:text="www.manutd.org.np"
+                android:text="@string/https_manutd_org_np"
                 android:textColor="@color/white"
                 android:textSize="12sp" />
         </LinearLayout>
@@ -86,7 +85,6 @@
                 android:id="@+id/versionNavTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:text="v0.0.1"
                 android:textColor="@color/white"
                 android:textSize="12sp" />

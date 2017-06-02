@@ -20,6 +20,7 @@ import android.view.animation.OvershootInterpolator;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.awecode.muscn.BuildConfig;
 import com.awecode.muscn.model.http.api_error.APIError;
 import com.awecode.muscn.util.retrofit.ServiceGenerator;
 import com.awecode.muscn.views.aboutus.CustomSpannable;
@@ -44,6 +45,18 @@ import retrofit2.adapter.rxjava.HttpException;
  * Created by munnadroid on 9/21/16.
  */
 public class Util {
+
+
+    public static String getAppVersion() {
+        String versionCode = "0.0";
+        try {
+            versionCode = BuildConfig.VERSION_NAME;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return versionCode;
+    }
+
     public static void toast(Context context, String message) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
     }
