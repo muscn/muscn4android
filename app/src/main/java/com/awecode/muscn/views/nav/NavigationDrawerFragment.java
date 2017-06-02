@@ -9,9 +9,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.awecode.muscn.R;
@@ -25,7 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -66,21 +63,6 @@ public class NavigationDrawerFragment extends MasterFragment implements Navigati
         selectItem(mCurrentSelectedPosition, navigationItems.get(mCurrentSelectedPosition));
     }
 
-
-//    private void setupBottomMenuOption(View view) {
-//        ((LinearLayout) view.findViewById(R.id.logoutRowLayout)).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                SessionManager.logoutUser();
-//                //startlogin activity
-//                Intent intent = new Intent(mContext, LoginActivity.class);
-//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                startActivity(intent);
-//                getActivity().finish();
-//
-//            }
-//        });
-//    }
 
     private void populateNavMenu() {
         navigationItems = getMenu();
@@ -178,9 +160,10 @@ public class NavigationDrawerFragment extends MasterFragment implements Navigati
         items.add(new NavigationItem("League Table", "3", R.drawable.ic_fab_league_table, true, MenuType.LEAGUE_TABLE)); //2 pos
         items.add(new NavigationItem("Injuries", "4", R.drawable.ic_fab_injuries, true, MenuType.INJURIES));//3 pos
         items.add(new NavigationItem("Top Scorers", "5", R.drawable.ic_fab_tops_scorer, true, MenuType.TOPSCORERS));//4 pos
-        items.add(new NavigationItem("Epl Matchweek", "6", R.drawable.ic_fab_epl_matchweek, true, MenuType.EPL_MATCH_WEEK));//5 pos
+        items.add(new NavigationItem("EPL Matchweek", "6", R.drawable.ic_fab_epl_matchweek, true, MenuType.EPL_MATCH_WEEK));//5 pos
         items.add(new NavigationItem("Recent Results", "7", R.drawable.ic_fab_recent_result, true, MenuType.RECENT_RESULTS));//6 pos
-        items.add(new NavigationItem("About Us", "8", R.drawable.ic_fab_about_us, true, MenuType.ABOUT_US));//7 pos
+        items.add(new NavigationItem("News", "8", R.drawable.ic_fab_recent_result, true, MenuType.NEWS));//7 pos
+        items.add(new NavigationItem("About Us", "9", R.drawable.ic_fab_about_us, true, MenuType.ABOUT_US));//8 pos
         return items;
     }
 

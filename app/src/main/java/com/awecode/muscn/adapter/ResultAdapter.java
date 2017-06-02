@@ -3,7 +3,6 @@ package com.awecode.muscn.adapter;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +11,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.awecode.muscn.R;
-import com.awecode.muscn.model.Item;
 import com.awecode.muscn.model.http.recent_results.RecentResultData;
 import com.awecode.muscn.model.listener.ResultItemClickListener;
 import com.awecode.muscn.util.Util;
@@ -42,7 +40,7 @@ public class ResultAdapter extends RealmRecyclerViewAdapter<RecentResultData, Re
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         context = parent.getContext();
         LayoutInflater inflater = (LayoutInflater) parent.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.epl_matchweek_fixture_row_item, parent, false);
+        View view = inflater.inflate(R.layout.item_recent_result, parent, false);
         HeaderViewHolder header = new HeaderViewHolder(view);
         return header;
 
@@ -53,6 +51,16 @@ public class ResultAdapter extends RealmRecyclerViewAdapter<RecentResultData, Re
 
         final RecentResultData recentResultData = getItem(position);
         final HeaderViewHolder itemController = (HeaderViewHolder) holder;
+
+
+        if (recentResultData.getVenue().contains(","))
+            itemController.eplMatchweekTimeandHomeGround.setText(Util.commonDateFormatter(recentResultData.getDatetime(),
+                    "yyyy-MM-dd'T'hh:mm:ss'Z'") + "\n" + recentResultData.getVenue().substring(0, recentResultData.getVenue().indexOf(",")));
+        else
+            itemController.eplMatchweekTimeandHomeGround.setText(Util.commonDateFormatter(recentResultData.getDatetime(),
+                    "yyyy-MM-dd'T'hh:mm:ss'Z'") + "\n" + recentResultData.getVenue());
+
+
         if (recentResultData.getIsHomeGame()) {
             itemController.eplMatchweekHomeTeamShortName.setText(R.string.manutd_shortname);
             if (recentResultData.getMufcScore() == null) {
@@ -63,7 +71,7 @@ public class ResultAdapter extends RealmRecyclerViewAdapter<RecentResultData, Re
                 itemController.eplMatchweekAwayTeamShortName.setText(recentResultData.getOpponentName().substring(0, 3).toUpperCase());
             else
                 itemController.eplMatchweekAwayTeamShortName.setText(recentResultData.getOpponentShortName().toUpperCase());
-            itemController.eplMatchweekTimeandHomeGround.setText(Util.commonDateFormatter(recentResultData.getDatetime(), "yyyy-MM-dd'T'hh:mm:ss'Z'") + "\nOldTraffod");
+
             if (recentResultData.getOpponentScore() == null) {
                 itemController.eplMatchweekAwayTeamScore.setText("?");
             } else
@@ -85,10 +93,7 @@ public class ResultAdapter extends RealmRecyclerViewAdapter<RecentResultData, Re
                 itemController.eplMatchweekAwayTeamScore.setText("?");
             } else
                 itemController.eplMatchweekAwayTeamScore.setText(recentResultData.getMufcScore().toString());
-            if (recentResultData.getVenue().contains(","))
-                itemController.eplMatchweekTimeandHomeGround.setText(Util.commonDateFormatter(recentResultData.getDatetime(), "yyyy-MM-dd'T'hh:mm:ss'Z'") + "\n" + recentResultData.getVenue().substring(0, recentResultData.getVenue().indexOf(",")));
-            else
-                itemController.eplMatchweekTimeandHomeGround.setText(Util.commonDateFormatter(recentResultData.getDatetime(), "yyyy-MM-dd'T'hh:mm:ss'Z'") + "\n" + recentResultData.getVenue());
+
             Picasso.with(context).load(ServiceGenerator.API_BASE_URL + recentResultData.getOpponentCrest())
                     .into(itemController.eplMatchweekFixtureHomeTeamLogo);
             itemController.eplMatchweekFixtureAwayTeamLogo.setImageResource(R.drawable.logo_manutd);
@@ -129,8 +134,6 @@ public class ResultAdapter extends RealmRecyclerViewAdapter<RecentResultData, Re
         TextView eplMatchweekAwayTeamShortName;
         @BindView(R.id.matchResultRowLayout)
         LinearLayout matchResultRowLayout;
-
-        public Item headerRefferalItem;
 
         HeaderViewHolder(View view) {
             super(view);

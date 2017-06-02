@@ -24,4 +24,5 @@
     <dimen name="normal_text_size">12dp</dimen>
     <dimen name="form_below_margin">14dp</dimen>
     <dimen name="toolbar_icon_size">24dp</dimen>
+    <dimen name="injury_item_txt_size">10sp</dimen>
 </resources>

@@ -17,22 +17,29 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Player"
-            android:textColor="@color/white" />
+            android:gravity="left"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
 
         <TextView
             android:id="@+id/injury"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1.5"
-            android:text=" Injury"
-            android:textColor="@color/white" />
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/injury"
+            android:textColor="@color/white"
+            android:textSize="@dimen/injury_item_txt_size" />
+
         <TextView
             android:id="@+id/returnDate"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5"
+            android:layout_weight="1"
             android:text="Return"
-            android:textColor="@color/white" />
+            android:gravity="right"
+            android:textColor="@color/white"
+            android:textSize="@dimen/injury_item_txt_size" />
 
     </LinearLayout>
     <!--table row divider white line-->

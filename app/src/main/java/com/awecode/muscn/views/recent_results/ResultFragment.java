@@ -119,7 +119,8 @@ public class ResultFragment extends MasterFragment implements ResultItemClickLis
 
                     @Override
                     public void onError(Throwable e) {
-                        mActivity.noInternetConnectionDialog(mContext);
+                        if (dbDataCount < 1)
+                            mActivity.noInternetConnectionDialog(mContext);
                     }
 
                     @Override
