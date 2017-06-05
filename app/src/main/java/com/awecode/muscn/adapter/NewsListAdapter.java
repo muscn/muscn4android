@@ -5,12 +5,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.awecode.muscn.R;
 import com.awecode.muscn.model.listener.NewsItemClickListener;
 import com.awecode.muscn.model.simplexml.Item;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,6 +46,17 @@ public class NewsListAdapter extends RealmRecyclerViewAdapter<Item, NewsListAdap
         holder.titleTextView.setText(data.getTitle());
         holder.descriptionTextView.setText(data.getDescription());
 
+        try {
+            SimpleDateFormat format = new SimpleDateFormat("EEE, dd MMM yyyy hh:mm:ss Z");
+            Date newDate = format.parse(data.getPubDate());
+
+            format = new SimpleDateFormat("dd MMM yyyy");
+            String date = format.format(newDate);
+            holder.dateTextView.setText(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         holder.rowLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -60,7 +74,9 @@ public class NewsListAdapter extends RealmRecyclerViewAdapter<Item, NewsListAdap
         @BindView(R.id.descriptionTextView)
         TextView descriptionTextView;
         @BindView(R.id.rowLayout)
-        RelativeLayout rowLayout;
+        View rowLayout;
+        @BindView(R.id.dateTextView)
+        TextView dateTextView;
 
         public DataViewHolder(View itemView) {
             super(itemView);
