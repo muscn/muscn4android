@@ -2,6 +2,7 @@ package com.awecode.muscn.views.news;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -154,7 +155,7 @@ public class NewsFragment extends MasterFragment implements NewsItemClickListene
             return;
         }
         mAdapter = new NewsListAdapter(mRealm.where(Item.class).findAll());
-        mAdapter.mNewsItemClickListener=this;
+        mAdapter.mNewsItemClickListener = this;
         recyclerView.setAdapter(Util.getAnimationAdapter(mAdapter));
     }
 
@@ -162,6 +163,11 @@ public class NewsFragment extends MasterFragment implements NewsItemClickListene
     public void onItemClickListener(Item item) {
         new FinestWebView.Builder(getActivity())
                 .webViewBuiltInZoomControls(true)
+                .titleColor(ContextCompat.getColor(mContext, R.color.white))
+                .urlColor(ContextCompat.getColor(mContext,R.color.white))
+                .iconDefaultColor(ContextCompat.getColor(mContext,R.color.white))
+                .toolbarColorRes(R.color.colorPrimary)
+                .progressBarColor(ContextCompat.getColor(mContext, R.color.black))
                 .show(item.getLink());
     }
 

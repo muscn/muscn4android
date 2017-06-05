@@ -162,7 +162,7 @@ public class NavigationDrawerFragment extends MasterFragment implements Navigati
         items.add(new NavigationItem("Top Scorers", "5", R.drawable.ic_fab_tops_scorer, true, MenuType.TOPSCORERS));//4 pos
         items.add(new NavigationItem("EPL Matchweek", "6", R.drawable.ic_fab_epl_matchweek, true, MenuType.EPL_MATCH_WEEK));//5 pos
         items.add(new NavigationItem("Recent Results", "7", R.drawable.ic_fab_recent_result, true, MenuType.RECENT_RESULTS));//6 pos
-        items.add(new NavigationItem("News", "8", R.drawable.ic_fab_recent_result, true, MenuType.NEWS));//7 pos
+        items.add(new NavigationItem("News", "8", R.drawable.ic_rss_feed_24dp, true, MenuType.NEWS));//7 pos
         items.add(new NavigationItem("About Us", "9", R.drawable.ic_fab_about_us, true, MenuType.ABOUT_US));//8 pos
         return items;
     }
