@@ -28,11 +28,11 @@ import io.realm.RealmRecyclerViewAdapter;
  * Created by suresh on 10/2/16.
  */
 
-public class FixturesRecyclerViewAdapter extends RealmRecyclerViewAdapter<Result, FixturesRecyclerViewAdapter.FixtureViewHolder> {
+public class FixturesListAdapter extends RealmRecyclerViewAdapter<Result, FixturesListAdapter.FixtureViewHolder> {
 
     private Context context;
 
-    public FixturesRecyclerViewAdapter(OrderedRealmCollection<Result> data) {
+    public FixturesListAdapter(OrderedRealmCollection<Result> data) {
         super(data, true);
     }
 
@@ -74,9 +74,11 @@ public class FixturesRecyclerViewAdapter extends RealmRecyclerViewAdapter<Result
             holder.mStadiumTimeTextView.setText(result.getVenue() + " at " + String.valueOf(mCalendar.get(Calendar.HOUR)) + ":" + String.valueOf(mCalendar.get(Calendar.MINUTE)) + mCalendar.getDisplayName(Calendar.AM_PM, Calendar.LONG, Locale.getDefault()));
 
             if (result.getIsHomeGame())
-                holder.mHomeVsAwayTeamTextView.setText(context.getString(R.string.manchester_united) + " vs " + result.getOpponent().getName() + " - " + result.getCompetitionYear().getCompetition().getName());
+                holder.mHomeVsAwayTeamTextView.setText(Util.getHtmlText(context.getString(R.string.manchester_united) + " <small>vs</small> " + result.getOpponent().getName()
+                        + " <small>- " + result.getCompetitionYear().getCompetition().getName()+"</small>"));
             else if (!result.getIsHomeGame())
-                holder.mHomeVsAwayTeamTextView.setText(result.getOpponent().getName() + " vs " + context.getString(R.string.manchester_united) + " - " + result.getCompetitionYear().getCompetition().getName());
+                holder.mHomeVsAwayTeamTextView.setText(Util.getHtmlText(result.getOpponent().getName() + " <small>vs</small> " + context.getString(R.string.manchester_united)
+                        + " <small>- " + result.getCompetitionYear().getCompetition().getName()+"</small>"));
 
         } catch (Exception e) {
             e.printStackTrace();
