@@ -6,7 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.awecode.muscn.R;
-import com.awecode.muscn.adapter.FixturesRecyclerViewAdapter;
+import com.awecode.muscn.adapter.FixturesListAdapter;
 import com.awecode.muscn.model.http.fixtures.Result;
 import com.awecode.muscn.model.listener.RecyclerViewScrollListener;
 import com.awecode.muscn.util.Util;
@@ -24,7 +24,7 @@ public class FixturesFragment extends MasterFragment {
 
     @BindView(R.id.matchFixtures)
     RecyclerView matchFixtures;
-    private FixturesRecyclerViewAdapter fixturesRecyclerViewAdapter;
+    private FixturesListAdapter fixturesListAdapter;
     private RecyclerViewScrollListener mRecyclerViewScrollListener;
 
     public static FixturesFragment newInstance() {
@@ -70,8 +70,8 @@ public class FixturesFragment extends MasterFragment {
             List<Result> results = deletePastFixtureTable();
             if (results != null
                     && results.size() > 0) {
-                fixturesRecyclerViewAdapter = new FixturesRecyclerViewAdapter(mRealm.where(Result.class).findAll());
-                matchFixtures.setAdapter(Util.getAnimationAdapter(fixturesRecyclerViewAdapter));
+                fixturesListAdapter = new FixturesListAdapter(mRealm.where(Result.class).findAll());
+                matchFixtures.setAdapter(Util.getAnimationAdapter(fixturesListAdapter));
                 mRecyclerViewScrollListener.onRecyclerViewScrolled(matchFixtures);
             }
         } catch (Exception e) {
