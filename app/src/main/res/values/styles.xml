@@ -52,6 +52,7 @@
         <item name="android:textSize">@dimen/normal_text_size</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:textColorHint">@color/colorGrey</item>
+        <item name="android:textCursorDrawable">@drawable/cursor_drawable</item>
     </style>
 
     <style name="normal_button_style">
@@ -70,6 +71,7 @@
         <item name="theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
         <item name="android:background">@color/white</item>
     </style>
+
     <style name="no_background_button_style">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
