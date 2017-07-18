@@ -87,7 +87,7 @@ public class SignUpFragment extends AppCompatBaseFragment {
 
     //sign up request
     private void signUpRequest() {
-        mActivity.showProgressDialog();
+        mActivity.showProgressDialog("Creating account...");
         SignUpPostData signUpPostData = new SignUpPostData();
         signUpPostData.setFullName(fullnameEditText.getText().toString());
         signUpPostData.setUsername(usernameEditText.getText().toString());

@@ -9,9 +9,8 @@ import com.awecode.muscn.R;
 import com.awecode.muscn.model.http.api_error.APIError;
 import com.awecode.muscn.model.http.signin.SignInData;
 import com.awecode.muscn.model.http.signin.SignInSuccessData;
-import com.awecode.muscn.util.Constants;
 import com.awecode.muscn.util.Util;
-import com.awecode.muscn.util.prefs.Prefs;
+import com.awecode.muscn.util.prefs.PrefsHelper;
 import com.awecode.muscn.views.base.AppCompatBaseFragment;
 import com.awecode.muscn.views.signup.SignUpActivity;
 import com.mobsandgeeks.saripaar.ValidationError;
@@ -72,10 +71,10 @@ public class SignInFragment extends AppCompatBaseFragment {
         signInRequest();
 
     }
-    
+
     //    sign in request
     private void signInRequest() {
-        mActivity.showProgressDialog();
+        mActivity.showProgressDialog("Please wait...");
         final SignInData signInData = new SignInData();
         signInData.setUsername(usernameEditText.getText().toString());
         signInData.setPassword(passwordEditText.getText().toString());
@@ -110,8 +109,8 @@ public class SignInFragment extends AppCompatBaseFragment {
                     public void onNext(SignInSuccessData signInSuccessData) {
                         mActivity.closeProgressDialog();
                         if (signInSuccessData.getToken() != null) {
-                            Prefs.putBoolean(Constants.PREFS_LOGIN_STATUS, true);
-                            Prefs.putString(Constants.PREFS_LOGIN_TOKEN, signInSuccessData.getToken().toString());
+                            PrefsHelper.getLoginStatus();
+                            PrefsHelper.saveLoginToken(signInSuccessData.getToken().toString());
                             mActivity.successDialogAndCloseActivity(mContext, getString(R.string.success_sign_in_text));
                         }
                     }
