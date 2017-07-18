@@ -58,12 +58,6 @@ public class SignInFragment extends AppCompatBaseFragment {
         return R.layout.fragment_sign_in;
     }
 
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        ((SignUpActivity) mContext).setToolbarTitle(getString(R.string.sign_in));
-
-    }
 
     @Override
     public void onValidationSucceeded() {

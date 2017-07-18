@@ -314,4 +314,11 @@ public class Util {
         return error;
     }
 
+    public static String twoDigitFormat(String number) {
+        return String.format("%02d", number);
+    }
+
+    public static String twoDigitFormat(int number) {
+        return String.format("%02d", number);
+    }
 }

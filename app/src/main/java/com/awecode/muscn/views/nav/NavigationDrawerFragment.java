@@ -34,8 +34,11 @@ public class NavigationDrawerFragment extends MasterFragment implements Navigati
     private static final String PREF_USER_LEARNED_DRAWER = "navigation_drawer_learned";
     private static final String STATE_SELECTED_POSITION = "selected_navigation_drawer_position";
     private static final String PREFERENCES_FILE = "my_app_settings"; //TODO: change this to your file
+
     @BindView(R.id.signInButton)
     Button signInButton;
+    @BindView(R.id.signUpButton)
+    Button signUpButton;
     private NavigationDrawerCallbacks mCallbacks;
     private RecyclerView mDrawerList;
     private View mFragmentContainerView;
@@ -227,8 +230,15 @@ public class NavigationDrawerFragment extends MasterFragment implements Navigati
         }
         switch (view.getId()) {
             case R.id.signUpButton:
+                String text = signUpButton.getText().toString();
+
                 Intent intent = new Intent(mContext, SignUpActivity.class);
-                intent.putExtra(SignUpActivity.TYPE_INTENT, MenuType.SIGN_UP);
+
+                if (text.equalsIgnoreCase(getString(R.string.membership_registration))) {
+                    intent.putExtra(SignUpActivity.TYPE_INTENT, MenuType.MEMBERSHIP_REGISTRATION);
+                } else {
+                    intent.putExtra(SignUpActivity.TYPE_INTENT, MenuType.SIGN_UP);
+                }
                 startActivity(intent);
                 break;
             case R.id.signInButton:
@@ -252,7 +262,11 @@ public class NavigationDrawerFragment extends MasterFragment implements Navigati
         super.onStart();
         if (PrefsHelper.getLoginStatus()) {
             signInButton.setText(getString(R.string.sign_out));
-        } else
+            signUpButton.setText(getString(R.string.membership_registration));
+
+        } else {
             signInButton.setText(getString(R.string.sign_in));
+            signUpButton.setText(getString(R.string.signup));
+        }
     }
 }

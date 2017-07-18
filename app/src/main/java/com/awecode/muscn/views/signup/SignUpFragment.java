@@ -71,11 +71,6 @@ public class SignUpFragment extends AppCompatBaseFragment {
         return R.layout.fragment_signup;
     }
 
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        ((SignUpActivity) mContext).setToolbarTitle(getString(R.string.signup));
-    }
 
     @OnClick(R.id.signUpButton)
     public void onClick() {

@@ -1,24 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
-
+    android:background="@color/colorPrimary"
     android:orientation="vertical">
 
     <ImageView
-        android:layout_width="120dp"
-        android:layout_height="120dp"
+        android:layout_width="@dimen/signup_logo_width"
+        android:layout_height="@dimen/signup_logo_width"
         android:layout_gravity="center"
         android:layout_margin="@dimen/activity_horizontal_margin"
-        android:src="@drawable/logo_manutd"/>
+        android:src="@drawable/aboutus_muscn_logo" />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/activity_vertical_margin"
-        android:fillViewport="true">
+        android:background="@color/white"
+        android:fillViewport="true"
+        android:padding="@dimen/activity_vertical_margin">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -34,12 +33,12 @@
 
                 <TextView
                     style="@style/normal_text_view_style"
-                    android:text="@string/full_name"/>
+                    android:text="@string/full_name" />
 
                 <EditText
                     android:id="@+id/fullnameEditText"
                     style="@style/normal_edit_text_style"
-                    android:hint="@string/full_name"/>
+                    android:hint="@string/full_name" />
             </LinearLayout>
             <!--username-->
             <LinearLayout
@@ -50,12 +49,12 @@
 
                 <TextView
                     style="@style/normal_text_view_style"
-                    android:text="@string/username"/>
+                    android:text="@string/username" />
 
                 <EditText
                     android:id="@+id/usernameEditText"
                     style="@style/normal_edit_text_style"
-                    android:hint="@string/username"/>
+                    android:hint="@string/username" />
             </LinearLayout>
             <!--email-->
             <LinearLayout
@@ -66,12 +65,12 @@
 
                 <TextView
                     style="@style/normal_text_view_style"
-                    android:text="@string/email"/>
+                    android:text="@string/email" />
 
                 <EditText
                     android:id="@+id/emailEditText"
                     style="@style/normal_edit_text_style"
-                    android:hint="@string/email"/>
+                    android:hint="@string/email" />
             </LinearLayout>
             <!--password-->
             <LinearLayout
@@ -82,14 +81,14 @@
 
                 <TextView
                     style="@style/normal_text_view_style"
-                    android:text="@string/password"/>
+                    android:text="@string/password" />
 
                 <EditText
                     android:id="@+id/passwordEditText"
                     style="@style/normal_edit_text_style"
                     android:fontFamily="sans-serif"
                     android:hint="@string/password"
-                    android:inputType="textPassword"/>
+                    android:inputType="textPassword" />
             </LinearLayout>
             <!--confirm password-->
             <LinearLayout
@@ -100,14 +99,14 @@
 
                 <TextView
                     style="@style/normal_text_view_style"
-                    android:text="@string/confirmPassword"/>
+                    android:text="@string/confirmPassword" />
 
                 <EditText
                     android:id="@+id/confirmPasswordEditText"
                     style="@style/normal_edit_text_style"
                     android:fontFamily="sans-serif"
                     android:hint="@string/confirmPassword"
-                    android:inputType="textPassword"/>
+                    android:inputType="textPassword" />
             </LinearLayout>
             <!--sign up button-->
             <Button
@@ -115,7 +114,7 @@
                 style="@style/normal_button_style"
                 android:layout_marginBottom="@dimen/activity_vertical_margin"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:text="Sign Up"/>
+                android:text="@string/sign_up" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
