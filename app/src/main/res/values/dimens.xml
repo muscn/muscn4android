@@ -26,5 +26,5 @@
     <dimen name="toolbar_icon_size">24dp</dimen>
     <dimen name="injury_item_txt_size">10sp</dimen>
     <dimen name="signup_logo_width">120dp</dimen>
-    <dimen name="signup_header_img_width">170dp</dimen>
+    <dimen name="signup_header_img_width">185dp</dimen>
 </resources>
