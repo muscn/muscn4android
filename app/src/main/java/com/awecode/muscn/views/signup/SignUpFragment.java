@@ -1,8 +1,6 @@
 package com.awecode.muscn.views.signup;
 
-import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.EditText;
 
 import com.awecode.muscn.R;
@@ -38,9 +36,6 @@ public class SignUpFragment extends AppCompatBaseFragment {
     @BindView(R.id.fullnameEditText)
     EditText fullnameEditText;
 
-    @NotEmpty(messageResId = R.string.not_empty_error_text)
-    @BindView(R.id.usernameEditText)
-    EditText usernameEditText;
 
     @NotEmpty(messageResId = R.string.not_empty_error_text)
     @Email(messageResId = R.string.invalid_email)
@@ -85,7 +80,6 @@ public class SignUpFragment extends AppCompatBaseFragment {
         mActivity.showProgressDialog("Creating account...");
         SignUpPostData signUpPostData = new SignUpPostData();
         signUpPostData.setFullName(fullnameEditText.getText().toString());
-        signUpPostData.setUsername(usernameEditText.getText().toString());
         signUpPostData.setEmail(emailEditText.getText().toString());
         signUpPostData.setPassword(passwordEditText.getText().toString());
         Observable<SignUpPostData> call = mApiInterface.postSignUpData(signUpPostData);

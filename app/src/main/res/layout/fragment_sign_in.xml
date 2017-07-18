@@ -25,40 +25,29 @@
             android:fitsSystemWindows="true"
             android:orientation="vertical">
 
-            <!--username-->
-            <LinearLayout
-                android:id="@+id/usernameLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+            <!--email-->
+            <TextView
+                style="@style/normal_text_view_style"
+                android:text="@string/email" />
 
-                <TextView
-                    style="@style/normal_text_view_style"
-                    android:text="@string/username" />
+            <EditText
+                android:id="@+id/emailEditText"
+                style="@style/normal_edit_text_style"
+                android:hint="@string/email" />
 
-                <EditText
-                    android:id="@+id/usernameEditText"
-                    style="@style/normal_edit_text_style"
-                    android:hint="@string/username" />
-            </LinearLayout>
+
             <!--password-->
-            <LinearLayout
-                android:id="@+id/passwordLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+            <TextView
+                style="@style/normal_text_view_style"
+                android:text="@string/password" />
 
-                <TextView
-                    style="@style/normal_text_view_style"
-                    android:text="@string/password" />
-
-                <EditText
-                    android:id="@+id/passwordEditText"
-                    style="@style/normal_edit_text_style"
-                    android:fontFamily="sans-serif"
-                    android:hint="@string/password"
-                    android:inputType="textPassword" />
-            </LinearLayout>
+            <EditText
+                android:id="@+id/passwordEditText"
+                style="@style/normal_edit_text_style"
+                android:fontFamily="sans-serif"
+                android:hint="@string/password"
+                android:inputType="textPassword" />
+ 
 
             <Button
                 android:id="@+id/signInButton"
@@ -67,5 +56,6 @@
                 android:layout_marginTop="@dimen/activity_vertical_margin"
                 android:text="@string/sign_in" />
         </LinearLayout>
+
     </ScrollView>
 </LinearLayout>

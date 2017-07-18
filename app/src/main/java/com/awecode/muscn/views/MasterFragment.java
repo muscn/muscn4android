@@ -52,7 +52,6 @@ public abstract class MasterFragment extends Fragment {
         mApiInterface = getApiInterface();
         mFeedApiInterface = getFeedApiInterface();
 
-        changeRandomParallaxImage();
         initializedRealm();
     }
 
@@ -95,26 +94,6 @@ public abstract class MasterFragment extends Fragment {
         ((BaseActivity) mContext).showProgressView(message);
     }
 
-    public void changeParallaxImage(int drawableId) {
-//        ((HomeActivity) getActivity()).setParallaxImageBackground(drawableId);
-    }
-
-
-    public void changeRandomParallaxImage() {
-        try {
-            int drawables[] = {R.drawable.background_1,
-                    R.drawable.background_2,
-                    R.drawable.background_3,
-                    R.drawable.background_4,
-                    R.drawable.background_5,
-                    R.drawable.background_6,
-                    R.drawable.background_7};
-            changeParallaxImage(drawables[(int) Math.floor(Math.random() * (6 - 0 + 1)) + 0]);
-        } catch (Exception e) {
-            e.printStackTrace();
-            changeParallaxImage(R.drawable.background_2);
-        }
-    }
 
     protected void showErrorView() {
         ((BaseActivity) mContext).showErrorView();

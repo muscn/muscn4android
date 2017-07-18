@@ -40,22 +40,7 @@
                     style="@style/normal_edit_text_style"
                     android:hint="@string/full_name" />
             </LinearLayout>
-            <!--username-->
-            <LinearLayout
-                android:id="@+id/usernameLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
 
-                <TextView
-                    style="@style/normal_text_view_style"
-                    android:text="@string/username" />
-
-                <EditText
-                    android:id="@+id/usernameEditText"
-                    style="@style/normal_edit_text_style"
-                    android:hint="@string/username" />
-            </LinearLayout>
             <!--email-->
             <LinearLayout
                 android:id="@+id/emailLayout"

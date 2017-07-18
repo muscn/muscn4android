@@ -1,8 +1,6 @@
 package com.awecode.muscn.views.signin;
 
-import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.EditText;
 
 import com.awecode.muscn.R;
@@ -12,8 +10,8 @@ import com.awecode.muscn.model.http.signin.SignInSuccessData;
 import com.awecode.muscn.util.Util;
 import com.awecode.muscn.util.prefs.PrefsHelper;
 import com.awecode.muscn.views.base.AppCompatBaseFragment;
-import com.awecode.muscn.views.signup.SignUpActivity;
 import com.mobsandgeeks.saripaar.ValidationError;
+import com.mobsandgeeks.saripaar.annotation.Email;
 import com.mobsandgeeks.saripaar.annotation.Length;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.mobsandgeeks.saripaar.annotation.Password;
@@ -36,8 +34,9 @@ public class SignInFragment extends AppCompatBaseFragment {
     private static final String TAG = "SignInFragment";
 
     @NotEmpty(messageResId = R.string.not_empty_error_text)
-    @BindView(R.id.usernameEditText)
-    EditText usernameEditText;
+    @Email
+    @BindView(R.id.emailEditText)
+    EditText emailEditText;
 
     @Length(messageResId = R.string.invalid_length, min = 8)
     @Password(messageResId = R.string.password_error_text, scheme = Password.Scheme.ALPHA_NUMERIC)
@@ -70,7 +69,7 @@ public class SignInFragment extends AppCompatBaseFragment {
     private void signInRequest() {
         mActivity.showProgressDialog("Please wait...");
         final SignInData signInData = new SignInData();
-        signInData.setUsername(usernameEditText.getText().toString());
+        signInData.setUsername(emailEditText.getText().toString());
         signInData.setPassword(passwordEditText.getText().toString());
 
         Observable<SignInSuccessData> call = mApiInterface.doSignIn(signInData);

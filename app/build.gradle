@@ -117,5 +117,9 @@ dependencies {
     //webview
     compile 'com.thefinestartist:finestwebview:1.2.7'
 
+
+    //datepicker
+    compile 'com.wdullaer:materialdatetimepicker:3.2.2'
+
 }
 apply plugin: 'com.google.gms.google-services'
