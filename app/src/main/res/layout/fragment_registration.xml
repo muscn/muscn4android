@@ -1,78 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-
-    <ImageView
-        android:layout_width="@dimen/signup_logo_width"
-        android:layout_height="@dimen/signup_logo_width"
-        android:layout_gravity="center"
-        android:layout_margin="@dimen/activity_horizontal_margin"
-        android:src="@drawable/aboutus_muscn_logo" />
-
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white">
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/activity_horizontal_margin"
-            android:orientation="vertical">
+        <!--fullname-->
+        <TextView
+            style="@style/normal_text_view_style"
+            android:text="@string/full_name" />
 
-            <!--fullname-->
-            <TextView
-                style="@style/normal_text_view_style"
-                android:text="@string/full_name" />
+        <EditText
+            android:id="@+id/fullnameEditText"
+            style="@style/normal_edit_text_style"
+            android:hint="@string/full_name" />
 
-            <EditText
-                android:id="@+id/fullnameEditText"
-                style="@style/normal_edit_text_style"
-                android:hint="@string/full_name" />
+        <!--phone number-->
+        <TextView
+            style="@style/normal_text_view_style"
+            android:text="@string/phone_number" />
 
-            <!--phone number-->
-            <TextView
-                style="@style/normal_text_view_style"
-                android:text="@string/phone_number" />
+        <EditText
+            android:id="@+id/phoneNumberEditText"
+            style="@style/normal_edit_text_style"
+            android:hint="@string/phone_number" />
 
-            <EditText
-                android:id="@+id/phoneNumberEditText"
-                style="@style/normal_edit_text_style"
-                android:hint="@string/phone_number" />
+        <!--date of birth-->
+        <TextView
+            style="@style/normal_text_view_style"
+            android:text="@string/date_of_birth" />
 
-            <!--date of birth-->
-            <TextView
-                style="@style/normal_text_view_style"
-                android:text="@string/date_of_birth" />
+        <EditText
+            android:id="@+id/dateOfBirthEditText"
+            style="@style/normal_edit_text_style"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:hint="@string/date_of_birth" />
 
-            <EditText
-                android:id="@+id/dateOfBirthEditText"
-                style="@style/normal_edit_text_style"
-                android:focusable="false"
-                android:focusableInTouchMode="false"
-                android:hint="@string/date_of_birth" />
+        <!--address-->
+        <TextView
+            style="@style/normal_text_view_style"
+            android:text="@string/address" />
 
-            <!--address-->
-            <TextView
-                style="@style/normal_text_view_style"
-                android:text="@string/address" />
-
-            <EditText
-                android:id="@+id/addressEditText"
-                style="@style/normal_edit_text_style"
-                android:hint="@string/address" />
+        <EditText
+            android:id="@+id/addressEditText"
+            style="@style/normal_edit_text_style"
+            android:hint="@string/address" />
 
 
-            <Button
-                android:id="@+id/submitUpButton"
-                style="@style/normal_button_style"
-                android:layout_marginBottom="@dimen/activity_vertical_margin"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:text="@string/submit" />
-        </LinearLayout>
-    </ScrollView>
-</LinearLayout>
+        <Button
+            android:id="@+id/submitUpButton"
+            style="@style/normal_button_style"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:text="@string/submit" />
+    </LinearLayout>
+</ScrollView>
