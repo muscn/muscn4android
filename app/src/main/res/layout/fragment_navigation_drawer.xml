@@ -98,18 +98,14 @@
         android:orientation="vertical"
         android:weightSum="6">
 
-        <!--add android:layout_weight="5.5" for recyclerview-->
         <android.support.v7.widget.RecyclerView
             android:id="@+id/drawerList"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="6"
+            android:layout_weight="5.5"
             android:paddingTop="25dp" />
 
-        <include
-            layout="@layout/white_horizontal_line"
-            android:visibility="gone" />
-        <!--remove   android:visibility="gone" in below line-->
+        <include layout="@layout/white_horizontal_line" />
 
 
         <LinearLayout
@@ -119,7 +115,7 @@
             android:layout_weight="0.5"
             android:gravity="bottom"
             android:orientation="horizontal"
-            android:visibility="gone"
+            android:visibility="visible"
             android:weightSum="2">
 
             <Button

@@ -16,6 +16,7 @@ import com.awecode.muscn.R;
 import com.awecode.muscn.model.enumType.MenuType;
 import com.awecode.muscn.util.Constants;
 import com.awecode.muscn.util.prefs.Prefs;
+import com.awecode.muscn.util.prefs.PrefsHelper;
 import com.awecode.muscn.views.MasterFragment;
 import com.awecode.muscn.views.signup.SignUpActivity;
 
@@ -236,7 +237,7 @@ public class NavigationDrawerFragment extends MasterFragment implements Navigati
                     signInIntent.putExtra(SignUpActivity.TYPE_INTENT, MenuType.SIGN_IN_OUT);
                     startActivity(signInIntent);
                 } else {//logout case
-                    Prefs.putBoolean(Constants.PREFS_LOGIN_STATUS, false);
+                    PrefsHelper.saveLoginStatus(false);
                     Prefs.remove(Constants.PREFS_LOGIN_TOKEN);
                     mActivity.showSuccessDialog(mContext, getString(R.string.success), getString(R.string.success_sign_out_text));
                     signInButton.setText(getString(R.string.sign_in));
@@ -249,7 +250,7 @@ public class NavigationDrawerFragment extends MasterFragment implements Navigati
     @Override
     public void onStart() {
         super.onStart();
-        if (Prefs.getBoolean(Constants.PREFS_LOGIN_STATUS, false)) {
+        if (PrefsHelper.getLoginStatus()) {
             signInButton.setText(getString(R.string.sign_out));
         } else
             signInButton.setText(getString(R.string.sign_in));
