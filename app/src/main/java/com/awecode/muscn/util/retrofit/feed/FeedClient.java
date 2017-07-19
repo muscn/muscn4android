@@ -14,7 +14,7 @@ import rx.schedulers.Schedulers;
 public class FeedClient {
 
 
-    private static final String BASE_URL = "http://newsrss.bbc.co.uk/";
+    private static final String BASE_URL = "http://talksport.com/";
     private static OkHttpClient client;
     private static Retrofit retrofit;
 

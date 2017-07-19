@@ -2,6 +2,7 @@ package com.awecode.muscn.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,7 +45,12 @@ public class NewsListAdapter extends RealmRecyclerViewAdapter<Item, NewsListAdap
     public void onBindViewHolder(DataViewHolder holder, int position) {
         final Item data = getItem(position);
         holder.titleTextView.setText(data.getTitle());
-        holder.descriptionTextView.setText(data.getDescription());
+        if (TextUtils.isEmpty(data.getDescription()))
+            holder.descriptionTextView.setVisibility(View.GONE);
+        else {
+            holder.descriptionTextView.setText(data.getDescription());
+            holder.descriptionTextView.setVisibility(View.VISIBLE);
+        }
 
         try {
             SimpleDateFormat format = new SimpleDateFormat("EEE, dd MMM yyyy hh:mm:ss Z");
