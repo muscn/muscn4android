@@ -101,9 +101,9 @@ public class SignUpFragment extends AppCompatBaseFragment {
                                 errorMessage = apiError.getError();
                             if (!TextUtils.isEmpty(errorMessage)) {
                                 if (errorMessage.contains("users_user_username_key"))
-                                    showErrorDialog(mContext, getString(R.string.duplicate_username));
+                                    showErrorDialog(getString(R.string.duplicate_username));
                                 else if (errorMessage.contains("users_user_email_key"))
-                                    showErrorDialog(mContext, getString(R.string.duplicate_email));
+                                    showErrorDialog(getString(R.string.duplicate_email));
                             }
                         } else
                             noInternetConnectionDialog();

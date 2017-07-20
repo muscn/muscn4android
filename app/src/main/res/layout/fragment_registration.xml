@@ -27,7 +27,7 @@
         <EditText
             android:id="@+id/phoneNumberEditText"
             style="@style/normal_edit_text_style"
-            android:hint="@string/phone_number" />
+            android:hint="@string/mobile_number" />
 
         <!--date of birth-->
         <TextView
@@ -49,11 +49,12 @@
         <EditText
             android:id="@+id/addressEditText"
             style="@style/normal_edit_text_style"
+            android:imeOptions="actionDone"
             android:hint="@string/address" />
 
 
         <Button
-            android:id="@+id/submitUpButton"
+            android:id="@+id/submitButton"
             style="@style/normal_button_style"
             android:layout_marginBottom="@dimen/activity_vertical_margin"
             android:layout_marginTop="@dimen/activity_vertical_margin"

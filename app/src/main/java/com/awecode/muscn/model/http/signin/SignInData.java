@@ -10,6 +10,6 @@ import lombok.Setter;
 @Setter
 @Getter
 public class SignInData {
-    String username;
+    String email;
     String password;
 }

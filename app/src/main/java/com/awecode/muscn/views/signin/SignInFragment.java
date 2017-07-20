@@ -69,7 +69,7 @@ public class SignInFragment extends AppCompatBaseFragment {
     private void signInRequest() {
         mActivity.showProgressDialog("Please wait...");
         final SignInData signInData = new SignInData();
-        signInData.setUsername(emailEditText.getText().toString());
+        signInData.setEmail(emailEditText.getText().toString());
         signInData.setPassword(passwordEditText.getText().toString());
 
         Observable<SignInSuccessData> call = mApiInterface.doSignIn(signInData);
@@ -84,18 +84,8 @@ public class SignInFragment extends AppCompatBaseFragment {
                     @Override
                     public void onError(Throwable e) {
                         mActivity.closeProgressDialog();
-                        APIError apiError = null;
-                        String errorMessage = null;
-                        if (e instanceof HttpException) {
-                            apiError = Util.parseError(e);
-                            if (apiError != null)
-                                errorMessage = apiError.getNon_field_errors().get(0);
-                            if (!TextUtils.isEmpty(errorMessage))
-                                if (errorMessage.contains(getString(R.string.login_error)))
-                                    showErrorDialog(mContext, getString(R.string.username_password_incorrect_text));
+                        handleSignInRequestError(e);
 
-                        } else
-                            noInternetConnectionDialog();
                     }
 
                     @Override
@@ -108,6 +98,25 @@ public class SignInFragment extends AppCompatBaseFragment {
                         }
                     }
                 });
+    }
+
+    private void handleSignInRequestError(Throwable e) {
+        APIError apiError = null;
+        String errorMessage = null;
+        if (e instanceof HttpException) {
+            apiError = Util.parseError(e);
+            if (apiError != null) {
+                if (apiError.getNon_field_errors() != null
+                        && !TextUtils.isEmpty(errorMessage)) {
+                    errorMessage = apiError.getNon_field_errors().get(0);
+                    if (errorMessage.contains(getString(R.string.login_error)))
+                        showErrorDialog(getString(R.string.username_password_incorrect_text));
+                } else if (apiError.getDetail() != null &&
+                        !TextUtils.isEmpty(apiError.getDetail()))
+                    showErrorDialog(apiError.getDetail());
+            }
+        } else
+            noInternetConnectionDialog();
     }
 
     @Override
