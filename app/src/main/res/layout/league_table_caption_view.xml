@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/colorPrimaryDark"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:gravity="center"
+              android:layout_marginBottom="10dp"
+              android:background="@color/colorPrimaryDark"
+              android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,45 +15,38 @@
         android:weightSum="8">
 
         <TextView
+            style="@style/league_table_caption_style"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="#"
-            android:textColor="@color/white"
-            android:textSize="@dimen/header_caption_text_size" />
+            android:text="#"/>
 
         <TextView
+            style="@style/league_table_caption_style"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
             android:layout_weight="4"
             android:text="Club"
-            android:textAllCaps="true"
-            android:textColor="@color/white"
-            android:textSize="@dimen/header_caption_text_size" />
+            android:textAllCaps="true"/>
 
         <TextView
+            style="@style/league_table_caption_style"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="P"
-            android:textColor="@color/white"
-            android:textSize="@dimen/header_caption_text_size" />
+            android:textAllCaps="true"/>
 
         <TextView
+            style="@style/league_table_caption_style"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="GD"
-            android:textColor="@color/white"
-            android:textSize="@dimen/header_caption_text_size" />
+            android:textAllCaps="true"/>
 
         <TextView
+            style="@style/league_table_caption_style"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Pts"
-            android:textColor="@color/white"
-            android:textSize="@dimen/header_caption_text_size" />
+            android:text="Pts"/>
     </LinearLayout>
     <!--table row divider white line-->
     <!--<include layout="@layout/white_horizontal_line"/>-->
