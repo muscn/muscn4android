@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/table_item_padding"
+        android:weightSum="3">
+
+        <TextView
+            android:id="@+id/players"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Player"
+            android:gravity="left"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:textSize="@dimen/injury_item_txt_size" />
+
+        <TextView
+            android:id="@+id/injury"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/injury"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:textSize="@dimen/injury_item_txt_size" />
+
+        <TextView
+            android:id="@+id/returnDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Return"
+            android:gravity="right"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:textSize="@dimen/injury_item_txt_size" />
+
+    </LinearLayout>
+    <!--table row divider white line-->
+    <include layout="@layout/white_horizontal_line" />
+
+</LinearLayout>
