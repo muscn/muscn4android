@@ -61,7 +61,7 @@ public class MatchWeekAdapter extends RealmRecyclerViewAdapter<EplMatchweekRespo
             holder.eplMatchweekAwayTeamScore.setText(awayTeamScore);
             holder.eplMatchweekHomeTeamScore.setText(homeTeamScore);
         }
-        holder.dateTimeTextView.setText(Util.commonDateFormatter(strCurrentDate, "yyyy-MM-dd'T'hh:mm:ss"));
+        holder.dateTimeTextView.setText(Util.nepalDateFormatter(strCurrentDate, "yyyy-MM-dd'T'hh:mm:ss"));
         holder.eplMatchweekHomeTeam.setText(data.getHomeTeam());
         holder.eplMatchweekAwayTeam.setText(data.getAwayTeam());
 
