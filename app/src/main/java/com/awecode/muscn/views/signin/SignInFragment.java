@@ -69,7 +69,7 @@ public class SignInFragment extends AppCompatBaseFragment {
     private void signInRequest() {
         mActivity.showProgressDialog("Please wait...");
         final SignInData signInData = new SignInData();
-        signInData.setEmail(emailEditText.getText().toString());
+        signInData.setUsername(emailEditText.getText().toString());
         signInData.setPassword(passwordEditText.getText().toString());
 
         Observable<SignInSuccessData> call = mApiInterface.doSignIn(signInData);
@@ -92,7 +92,7 @@ public class SignInFragment extends AppCompatBaseFragment {
                     public void onNext(SignInSuccessData signInSuccessData) {
                         mActivity.closeProgressDialog();
                         if (signInSuccessData.getToken() != null) {
-                            PrefsHelper.getLoginStatus();
+                            PrefsHelper.saveLoginStatus(true);
                             PrefsHelper.saveLoginToken(signInSuccessData.getToken().toString());
                             mActivity.successDialogAndCloseActivity(mContext, getString(R.string.success_sign_in_text));
                         }

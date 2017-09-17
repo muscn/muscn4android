@@ -251,6 +251,7 @@ public class NavigationDrawerFragment extends MasterFragment implements Navigati
                     Prefs.remove(Constants.PREFS_LOGIN_TOKEN);
                     mActivity.showSuccessDialog(mContext, getString(R.string.success), getString(R.string.success_sign_out_text));
                     signInButton.setText(getString(R.string.sign_in));
+                    signUpButton.setText(getString(R.string.sign_up));
 
                 }
                 break;

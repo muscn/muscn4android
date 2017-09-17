@@ -9,6 +9,7 @@ import com.awecode.muscn.model.http.signin.SignInData;
 import com.awecode.muscn.model.http.signin.SignInSuccessData;
 import com.awecode.muscn.model.http.signup.SignUpPostData;
 import com.awecode.muscn.model.http.top_scorers.TopScorersResponse;
+import com.awecode.muscn.model.membership.MembershipResponse;
 import com.awecode.muscn.model.registration.RegistrationPostData;
 import com.awecode.muscn.model.registration.RegistrationResponse;
 
@@ -61,4 +62,7 @@ public interface MuscnApiInterface {
 
     @POST("api/v1/obtain_auth_token/")
     Observable<SignInSuccessData> doSignIn(@Body SignInData signInData);
+
+    @POST("api/v1/memberships/")
+    Observable<MembershipResponse> postMembershipData(@Body SignUpPostData signUpPostData);
 }

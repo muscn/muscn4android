@@ -1,8 +1,15 @@
 package com.awecode.muscn.util.retrofit;
 
+import android.text.TextUtils;
+import android.util.Log;
+
 import com.awecode.muscn.util.Constants;
+import com.awecode.muscn.util.Util;
+import com.awecode.muscn.util.prefs.Prefs;
+import com.awecode.muscn.util.prefs.PrefsHelper;
 
 import java.io.IOException;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Interceptor;
@@ -58,6 +65,11 @@ public class ServiceGenerator {
             Request.Builder requestBuilder;
             requestBuilder = original.newBuilder()
                     .header("key", Constants.DISTRIBUTION_KEY);
+
+            if(!TextUtils.isEmpty(PrefsHelper.getLoginToken())){
+                requestBuilder.header("Authorization","token "+PrefsHelper.getLoginToken());
+            }
+
 
             Request request = requestBuilder.build();
             Response response = chain.proceed(request);

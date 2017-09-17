@@ -10,6 +10,6 @@ import lombok.Setter;
 @Setter
 @Getter
 public class SignInData {
-    String email;
+    String username; //email key is changed to username but pass email data here
     String password;
 }

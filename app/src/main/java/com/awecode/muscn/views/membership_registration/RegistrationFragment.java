@@ -3,6 +3,7 @@ package com.awecode.muscn.views.membership_registration;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
@@ -10,8 +11,12 @@ import android.widget.EditText;
 import com.awecode.muscn.R;
 import com.awecode.muscn.model.http.api_error.APIError;
 import com.awecode.muscn.model.http.signup.SignUpPostData;
+import com.awecode.muscn.model.membership.MembershipResponse;
 import com.awecode.muscn.util.Util;
+import com.awecode.muscn.util.retrofit.MuscnApiInterface;
+import com.awecode.muscn.util.retrofit.ServiceGenerator;
 import com.awecode.muscn.views.base.AppCompatBaseFragment;
+import com.google.gson.Gson;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.mobsandgeeks.saripaar.annotation.Order;
@@ -137,16 +142,21 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
         signUpPostData.setDateOfBirth(dateOfBirthEditText.getText().toString());
         signUpPostData.setMobile(phoneNumberEditText.getText().toString());
         signUpPostData.setAddress(addressEditText.getText().toString());
-        Observable<SignUpPostData> call = mApiInterface.postSignUpData(signUpPostData);
+        //creating new service as header contains token
+        MuscnApiInterface mApiInterface = ServiceGenerator.createService(MuscnApiInterface.class);
+
+        Log.v(TAG,"json"+new Gson().toJson(signUpPostData));
+        Observable<MembershipResponse> call = mApiInterface.postMembershipData(signUpPostData);
         call.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<SignUpPostData>() {
+                .subscribe(new Observer<MembershipResponse>() {
                     @Override
                     public void onCompleted() {
                     }
 
                     @Override
                     public void onError(Throwable e) {
+                        Log.v(TAG,"sdsd"+e.getLocalizedMessage());
                         mActivity.closeProgressDialog();
                         APIError apiError = null;
                         String errorMessage = null;
@@ -165,7 +175,7 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
                     }
 
                     @Override
-                    public void onNext(SignUpPostData signUpPostData) {
+                    public void onNext(MembershipResponse signUpPostData) {
                         mActivity.closeProgressDialog();
                         if (signUpPostData != null)
                             mActivity.successDialogAndCloseActivity(mContext, "Registration success. Thank you!");
