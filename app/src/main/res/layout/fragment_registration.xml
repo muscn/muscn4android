@@ -27,6 +27,7 @@
         <EditText
             android:id="@+id/phoneNumberEditText"
             style="@style/normal_edit_text_style"
+            android:inputType="phone"
             android:hint="@string/mobile_number" />
 
         <!--date of birth-->
