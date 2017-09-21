@@ -60,6 +60,7 @@
             android:orientation="horizontal">
 
             <ImageView
+                android:id="@+id/oponentLogo"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:src="@drawable/ic_calendar" />

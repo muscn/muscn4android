@@ -5,7 +5,7 @@
     <dimen name="drawable_size">76dp</dimen>
     <dimen name="home_view_margin_top_large">22dp</dimen>
     <dimen name="titlee_logo_size">30dp</dimen>
-    <dimen name="match_between_txt_size">25sp</dimen>
+    <dimen name="match_between_txt_size">20sp</dimen>
     <dimen name="competition_txt_size">19sp</dimen>
     <dimen name="time_label_txt_size">18sp</dimen>
     <dimen name="vertical_line_height">60dp</dimen>
@@ -27,4 +27,6 @@
     <dimen name="injury_item_txt_size">12sp</dimen>
     <dimen name="signup_logo_width">120dp</dimen>
     <dimen name="signup_header_img_width">185dp</dimen>
+    <dimen name="team_logo_size_new">100dp</dimen>
+
 </resources>

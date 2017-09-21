@@ -126,6 +126,18 @@ public abstract class AppCompatBaseActivity extends AppCompatActivity implements
                 })
                 .show();
     }
+    public void successDialogAndOpen(final Context context, String message, final Fragment mFragment) {
+        new AlertDialog.Builder(context, R.style.AppCompatAlertDialogStyle)
+                .setMessage(message)
+                .setCancelable(false)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        openFragmentNoHistory(mFragment);
+                        dialog.dismiss();
+                    }
+                })
+                .show();
+    }
 
     public void noInternetConnectionDialog(Context mContext) {
         showDialog(mContext, getString(R.string.no_internet_message));

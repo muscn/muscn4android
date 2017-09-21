@@ -1,15 +1,22 @@
 package com.awecode.muscn.views.signin;
 
+import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.awecode.muscn.R;
 import com.awecode.muscn.model.http.api_error.APIError;
 import com.awecode.muscn.model.http.signin.SignInData;
 import com.awecode.muscn.model.http.signin.SignInSuccessData;
+import com.awecode.muscn.model.http.signup.SignUpPostData;
 import com.awecode.muscn.util.Util;
 import com.awecode.muscn.util.prefs.PrefsHelper;
 import com.awecode.muscn.views.base.AppCompatBaseFragment;
+import com.awecode.muscn.views.signup.SignUpActivity;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.annotation.Email;
 import com.mobsandgeeks.saripaar.annotation.Length;
@@ -43,6 +50,7 @@ public class SignInFragment extends AppCompatBaseFragment {
     @NotEmpty(messageResId = R.string.not_empty_error_text)
     @BindView(R.id.passwordEditText)
     EditText passwordEditText;
+    SignUpPostData mSignUpResponse;
 
     public SignInFragment() {
     }
@@ -52,11 +60,41 @@ public class SignInFragment extends AppCompatBaseFragment {
         return fragment;
     }
 
+    public static SignInFragment newInstance(SignUpPostData signUpResponse) {
+        SignInFragment fragment = new SignInFragment();
+        fragment.setData(signUpResponse);
+        return fragment;
+    }
+
+    private void setData(SignUpPostData signUpPostData) {
+        this.mSignUpResponse = signUpPostData;
+    }
+
     @Override
     public int getLayout() {
         return R.layout.fragment_sign_in;
     }
 
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        ((SignUpActivity) mContext).setToolbarTitle(getString(R.string.sign_in));
+        if (mSignUpResponse != null && mSignUpResponse.getEmail() != null) {
+            emailEditText.setText(mSignUpResponse.getEmail());
+        }
+
+        passwordEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                boolean handled = false;
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    validateForm();
+                    handled = true;
+                }
+                return handled;
+            }
+        });
+    }
 
     @Override
     public void onValidationSucceeded() {
@@ -94,6 +132,7 @@ public class SignInFragment extends AppCompatBaseFragment {
                         if (signInSuccessData.getToken() != null) {
                             PrefsHelper.saveLoginStatus(true);
                             PrefsHelper.saveLoginToken(signInSuccessData.getToken().toString());
+                            PrefsHelper.saveLoginResponse(signInSuccessData);
                             mActivity.successDialogAndCloseActivity(mContext, getString(R.string.success_sign_in_text));
                         }
                     }
@@ -106,11 +145,11 @@ public class SignInFragment extends AppCompatBaseFragment {
         if (e instanceof HttpException) {
             apiError = Util.parseError(e);
             if (apiError != null) {
-                if (apiError.getNon_field_errors() != null
-                        && !TextUtils.isEmpty(errorMessage)) {
+                if (apiError.getNon_field_errors() != null) {
                     errorMessage = apiError.getNon_field_errors().get(0);
                     if (errorMessage.contains(getString(R.string.login_error)))
                         showErrorDialog(getString(R.string.username_password_incorrect_text));
+
                 } else if (apiError.getDetail() != null &&
                         !TextUtils.isEmpty(apiError.getDetail()))
                     showErrorDialog(apiError.getDetail());

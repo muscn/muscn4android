@@ -263,7 +263,11 @@ public class NavigationDrawerFragment extends MasterFragment implements Navigati
         super.onStart();
         if (PrefsHelper.getLoginStatus()) {
             signInButton.setText(getString(R.string.sign_out));
-            signUpButton.setText(getString(R.string.membership_registration));
+            if (!PrefsHelper.getLoginResponse().getMember_status())
+                signUpButton.setText(getString(R.string.membership_registration));
+            else
+                signUpButton.setText("");
+
 
         } else {
             signInButton.setText(getString(R.string.sign_in));

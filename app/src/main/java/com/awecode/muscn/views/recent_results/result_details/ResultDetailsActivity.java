@@ -101,8 +101,8 @@ public class ResultDetailsActivity extends BaseActivity {
 
         if (count < 1)
             showProgressView(getString(R.string.loading_result_details));
-        else
-            getDataFromDbAndPopulateUI();
+//        else
+//            getDataFromDbAndPopulateUI();
 
         mApiInterface = ServiceGenerator.createService(MuscnApiInterface.class);
         Observable<ResultDetailsResponse> call = mApiInterface.getResultDetails(resultId);
@@ -196,6 +196,7 @@ public class ResultDetailsActivity extends BaseActivity {
             else
                 getDataFromDbAndPopulateUI();
         }
+
     }
 
     /**

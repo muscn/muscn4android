@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/circular_gradient_black_red"
-    android:orientation="vertical"
-    android:padding="@dimen/activity_horizontal_margin">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@drawable/circular_gradient_black_red"
+              android:orientation="vertical"
+              android:padding="@dimen/activity_horizontal_margin">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,7 +17,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
-            android:src="@drawable/aboutus_muscn_logo" />
+            android:src="@drawable/aboutus_muscn_logo"/>
 
         <LinearLayout
             android:layout_width="0dp"
@@ -31,9 +31,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="MANCHESTER UNITED"
-                android:textColor="@color/white"
+                android:textColor="@color/whiteColor"
                 android:textSize="@dimen/labels_text_size"
-                android:textStyle="bold|italic" />
+                android:textStyle="bold|italic"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -46,17 +46,17 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-thin"
                     android:text="SUPPORTERS' CLUB,"
-                    android:textColor="@color/white"
+                    android:textColor="@color/whiteColor"
                     android:textSize="@dimen/labels_text_size"
-                    android:textStyle="italic" />
+                    android:textStyle="italic"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=" NEPAL"
-                    android:textColor="@color/white"
+                    android:textColor="@color/whiteColor"
                     android:textSize="@dimen/labels_text_size"
-                    android:textStyle="bold|italic" />
+                    android:textStyle="bold|italic"/>
             </LinearLayout>
 
         </LinearLayout>
@@ -85,8 +85,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/about_us_detail_text"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/about_us_body_text_size" />
+                    android:textColor="@color/whiteColor"
+                    android:textSize="@dimen/about_us_body_text_size"/>
 
                 <TextView
                     android:id="@+id/textViewMembership"
@@ -94,8 +94,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:text="@string/about_us_membership_text"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/about_us_body_text_size" />
+                    android:textColor="@color/whiteColor"
+                    android:textSize="@dimen/about_us_body_text_size"/>
 
             </LinearLayout>
 
@@ -109,8 +109,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Find us at:"
-                    android:textColor="@color/white"
-                    android:textStyle="bold" />
+                    android:textColor="@color/whiteColor"
+                    android:textStyle="bold"/>
             </LinearLayout>
             <!--find us layout-->
             <LinearLayout
@@ -130,21 +130,22 @@
 
                     <ImageView
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
                         android:layout_weight="0.3"
-                        android:src="@drawable/aboutus_url" />
+                        android:padding="3dp"
+                        android:src="@drawable/aboutus_url"/>
 
                     <TextView
                         android:id="@+id/textViewOfficial_website"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
                         android:layout_weight="2.7"
                         android:text="manutd.org.np"
-                        android:textColor="@color/white"
+                        android:textColor="@color/whiteColor"
                         android:textSize="@dimen/labels_text_size"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"/>
 
 
                 </LinearLayout>
@@ -159,21 +160,22 @@
 
                     <ImageView
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
                         android:layout_weight="0.3"
-                        android:src="@drawable/aboutus_mail" />
+                        android:padding="3dp"
+                        android:src="@drawable/aboutus_mail"/>
 
                     <TextView
                         android:id="@+id/textViewEmail"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
+                        android:layout_height="match_parent"
+                        android:gravity="left|center"
                         android:layout_weight="2.7"
                         android:text="info@manutd.org.np"
-                        android:textColor="@color/white"
+                        android:textColor="@color/whiteColor"
                         android:textSize="@dimen/labels_text_size"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"/>
 
 
                 </LinearLayout>
@@ -188,21 +190,22 @@
 
                     <ImageView
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:layout_weight="0.3"
-
-                        android:src="@drawable/aboutus_fb" />
+                        android:padding="3dp"
+                        android:src="@drawable/aboutus_fb"/>
 
                     <TextView
                         android:id="@+id/textViewFacebook"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="left|center"
                         android:layout_weight="2.7"
                         android:text="muscnepal"
-                        android:textColor="@color/white"
+                        android:textColor="@color/whiteColor"
                         android:textSize="@dimen/labels_text_size"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"/>
 
 
                 </LinearLayout>
@@ -217,20 +220,22 @@
 
                     <ImageView
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:layout_weight="0.3"
-                        android:src="@drawable/aboutus_twitter" />
+                        android:padding="3dp"
+                        android:src="@drawable/aboutus_twitter"/>
 
                     <TextView
                         android:id="@+id/textViewTwitter"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="left|center"
                         android:layout_weight="2.7"
                         android:text="\@muscnp"
-                        android:textColor="@color/white"
+                        android:textColor="@color/whiteColor"
                         android:textSize="@dimen/labels_text_size"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"/>
 
 
                 </LinearLayout>
@@ -238,28 +243,29 @@
                 <LinearLayout
                     android:id="@+id/instagramLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginTop="8dp"
                     android:orientation="horizontal"
                     android:weightSum="3">
 
                     <ImageView
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
+                        android:padding="3dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
                         android:layout_weight="0.3"
-                        android:src="@drawable/aboutus_insta" />
+                        android:src="@drawable/aboutus_insta"/>
 
                     <TextView
                         android:id="@+id/textViewInstagram"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="left|center"
                         android:layout_weight="2.7"
-                        android:gravity="center_vertical"
                         android:text="muscnepal"
-                        android:textColor="@color/white"
+                        android:textColor="@color/whiteColor"
                         android:textSize="@dimen/labels_text_size"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"/>
 
 
                 </LinearLayout>
@@ -276,15 +282,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="MUSCN app for android"
-                    android:textColor="@color/white"
-                    android:textStyle="bold" />
+                    android:textColor="@color/whiteColor"
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:id="@+id/versionTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Version 1.0"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/whiteColor"/>
             </LinearLayout>
 
             <LinearLayout
@@ -296,15 +302,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Powered by "
-                    android:textColor="@color/white" />
+                    android:textColor="@color/whiteColor"/>
 
                 <TextView
                     android:id="@+id/textViewAwecode"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Awecode"
-                    android:textColor="@color/white"
-                    android:textStyle="bold" />
+                    android:textColor="@color/whiteColor"
+                    android:textStyle="bold"/>
             </LinearLayout>
 
             <LinearLayout
@@ -316,15 +322,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/copyright_owner_string"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/whiteColor"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="10dp"
-                    android:text="©  2016 | MUSCN"
-                    android:textColor="@color/white" />
+                    android:text="©  2017 | MUSCN"
+                    android:textColor="@color/whiteColor"/>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

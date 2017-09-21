@@ -2,7 +2,6 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
     android:padding="@dimen/activity_vertical_margin">
 
     <LinearLayout
@@ -24,6 +23,7 @@
             <EditText
                 android:id="@+id/fullnameEditText"
                 style="@style/normal_edit_text_style"
+                android:inputType="text"
                 android:hint="@string/full_name" />
         </LinearLayout>
 
@@ -41,6 +41,7 @@
             <EditText
                 android:id="@+id/emailEditText"
                 style="@style/normal_edit_text_style"
+                android:inputType="textEmailAddress"
                 android:hint="@string/email" />
         </LinearLayout>
         <!--password-->

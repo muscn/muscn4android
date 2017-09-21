@@ -1,100 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/nav_main_layout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/nav_background_red_black"
-    android:clickable="true"
-    android:orientation="vertical">
-
-
-    <ImageView
-        android:id="@+id/navLogo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="45dp"
-        android:src="@drawable/aboutus_muscn_logo" />
+                android:id="@+id/nav_main_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/whiteColor"
+                android:clickable="true"
+                android:orientation="vertical">
 
     <LinearLayout
-        android:id="@+id/muscnTextLayout"
+        android:id="@+id/navHeaderLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/navLogo"
-        android:layout_gravity="center"
+        android:background="@color/colorPrimary"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <ImageView
+            android:id="@+id/navLogo"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="MANCHESTER UNITED"
-            android:textColor="@color/white"
-            android:textSize="@dimen/labels_text_size"
-            android:textStyle="bold|italic" />
+            android:layout_marginTop="45dp"
+            android:src="@drawable/aboutus_muscn_logo"/>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:id="@+id/muscnTextLayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/navLogo"
             android:layout_gravity="center"
-            android:orientation="horizontal">
+            android:background="@color/colorPrimary"
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-thin"
-                android:text="SUPPORTERS' CLUB,"
-                android:textColor="@color/white"
+                android:layout_gravity="center"
+                android:text="MANCHESTER UNITED"
+                android:textColor="@color/whiteColor"
                 android:textSize="@dimen/labels_text_size"
-                android:textStyle="italic" />
+                android:textStyle="bold|italic"/>
 
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=" NEPAL"
-                android:textColor="@color/white"
-                android:textSize="@dimen/labels_text_size"
-                android:textStyle="bold|italic" />
-        </LinearLayout>
+                android:layout_gravity="center"
+                android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-thin"
+                    android:text="SUPPORTERS' CLUB,"
+                    android:textColor="@color/whiteColor"
+                    android:textSize="@dimen/labels_text_size"
+                    android:textStyle="italic"/>
 
-            <ImageView
-                android:layout_width="15dp"
-                android:layout_height="15dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" NEPAL"
+                    android:textColor="@color/whiteColor"
+                    android:textSize="@dimen/labels_text_size"
+                    android:textStyle="bold|italic"/>
+            </LinearLayout>
 
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/https_manutd_org_np"
-                android:textColor="@color/white"
-                android:textSize="12sp" />
-        </LinearLayout>
+                android:layout_gravity="center"
+                android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="horizontal"
-            android:paddingBottom="20dp">
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"/>
 
-            <TextView
-                android:id="@+id/versionNavTextView"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/https_manutd_org_np"
+                    android:textColor="@color/whiteColor"
+                    android:textSize="12sp"/>
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="v0.0.1"
-                android:textColor="@color/white"
-                android:textSize="12sp" />
-        </LinearLayout>
+                android:layout_gravity="center"
+                android:orientation="horizontal"
+                android:paddingBottom="20dp">
 
-    </LinearLayout><!--nav recycler view-->
+                <TextView
+                    android:id="@+id/versionNavTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="v0.0.1"
+                    android:textColor="@color/whiteColor"
+                    android:textSize="12sp"/>
+            </LinearLayout>
+
+        </LinearLayout><!--nav recycler view-->
+    </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/muscnTextLayout"
+        android:layout_below="@+id/navHeaderLayout"
         android:orientation="vertical"
         android:weightSum="6">
 
@@ -104,12 +113,16 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="5.5"
-            android:paddingTop="25dp" />
+            />
 
         <!--make below visibility gone-->
-        <include layout="@layout/white_horizontal_line"
+        <include
+            layout="@layout/white_horizontal_line"
             android:visibility="visible"/>
 
+        <include
+            layout="@layout/red_horizontal_line"
+            android:visibility="visible"/>
         <!--make below visibility gone-->
 
         <LinearLayout
@@ -127,14 +140,14 @@
                 style="@style/no_background_button_style"
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:text="@string/signup" />
+                android:text="@string/signup"/>
 
             <Button
                 android:id="@+id/signInButton"
                 style="@style/no_background_button_style"
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:text="@string/sign_in" />
+                android:text="@string/sign_in"/>
 
         </LinearLayout>
     </LinearLayout>

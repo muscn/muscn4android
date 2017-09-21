@@ -101,18 +101,18 @@ public class HomeActivity extends BaseActivity implements RecyclerViewScrollList
                         // All options below are optional
                         .outerCircleColor(R.color.colorPrimary)      // Specify a color for the outer circle
                         .outerCircleAlpha(0.96f)            // Specify the alpha amount for the outer circle
-                        .targetCircleColor(R.color.white)   // Specify a color for the target circle
+                        .targetCircleColor(R.color.whiteColor)   // Specify a color for the target circle
                         .titleTextSize(25)                  // Specify the size (in sp) of the title text
-                        .titleTextColor(R.color.white)      // Specify the color of the title text
+                        .titleTextColor(R.color.whiteColor)      // Specify the color of the title text
                         .descriptionTextSize(20)            // Specify the size (in sp) of the description text
-                        .descriptionTextColor(R.color.white)  // Specify the color of the description text
-                        .textColor(R.color.white)            // Specify a color for both the title and description text
+                        .descriptionTextColor(R.color.whiteColor)  // Specify the color of the description text
+                        .textColor(R.color.whiteColor)            // Specify a color for both the title and description text
                         .textTypeface(Typeface.SANS_SERIF)  // Specify a typeface for the text
                         .dimColor(R.color.black)            // If set, will dim behind the view with 30% opacity of the given color
                         .drawShadow(true)                   // Whether to draw a drop shadow or not
                         .cancelable(false)                  // Whether tapping outside the outer circle dismisses the view
                         .tintTarget(true)                   // Whether to tint the target view's color
-                        .transparentTarget(true)           // Specify whether the target is transparent (displays the content underneath)
+                        .transparentTarget(false)           // Specify whether the target is transparent (displays the content underneath)
                         .icon(ContextCompat.getDrawable(mContext, R.drawable.ic_ham_burger_taptarget))                     // Specify a custom drawable to draw as the target
                         .targetRadius(60),                  // Specify the target radius (in dp)
                 new TapTargetView.Listener() {          // The listener can listen for regular clicks, long clicks or cancels
@@ -281,7 +281,9 @@ public class HomeActivity extends BaseActivity implements RecyclerViewScrollList
     }
 
     public void setAppVersion() {
-        mVersionTextView.setText("v" + getAppVersion());
+//        mVersionTextView.setText("v" + getAppVersion());
+        mVersionTextView.setText("");
+
     }
 
     public void sendRegistrationToServer() {

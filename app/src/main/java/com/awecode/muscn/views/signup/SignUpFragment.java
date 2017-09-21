@@ -1,13 +1,19 @@
 package com.awecode.muscn.views.signup;
 
+import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.awecode.muscn.R;
 import com.awecode.muscn.model.http.api_error.APIError;
 import com.awecode.muscn.model.http.signup.SignUpPostData;
 import com.awecode.muscn.util.Util;
 import com.awecode.muscn.views.base.AppCompatBaseFragment;
+import com.awecode.muscn.views.signin.SignInFragment;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.annotation.ConfirmPassword;
 import com.mobsandgeeks.saripaar.annotation.Email;
@@ -75,6 +81,22 @@ public class SignUpFragment extends AppCompatBaseFragment {
             noInternetConnectionDialog();
     }
 
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        confirmPasswordEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                boolean handled = false;
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    validateForm();
+                    handled = true;
+                }
+                return handled;
+            }
+        });
+    }
+
     //sign up request
     private void signUpRequest() {
         mActivity.showProgressDialog("Creating account...");
@@ -113,7 +135,7 @@ public class SignUpFragment extends AppCompatBaseFragment {
                     public void onNext(SignUpPostData signUpPostData) {
                         mActivity.closeProgressDialog();
                         if (signUpPostData != null)
-                            mActivity.successDialogAndCloseActivity(mContext, getString(R.string.successful_account_creation));
+                            mActivity.successDialogAndOpen(mContext, getString(R.string.successful_account_creation), SignInFragment.newInstance(signUpPostData));
                     }
                 });
     }

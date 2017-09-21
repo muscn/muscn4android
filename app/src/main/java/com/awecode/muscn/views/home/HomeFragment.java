@@ -63,12 +63,12 @@ HomeFragment extends MasterFragment {
     TextView mCompetitionNameTextView;
     @BindView(R.id.broadCastChannelTextView)
     TextView mBroadCastChannelTextView;
-    @BindView(R.id.dateTimeTextView)
-    TextView mDateTimeTextView;
+    @BindView(R.id.dateTextView)
+    TextView mDateTextView;
     @BindView(R.id.firstTeamImageView)
     ImageView mFirstTeamImageView;
-    @BindView(R.id.secondTeamImageView)
-    ImageView mSecondTeamImageView;
+//    @BindView(R.id.secondTeamImageView)
+//    ImageView mSecondTeamImageView;
     @BindView(R.id.hoursLabelTextView)
     TextView mHoursLabelTextView;
     @BindView(R.id.minsLabelTextView)
@@ -83,6 +83,13 @@ HomeFragment extends MasterFragment {
     LinearLayout mainLayout;
     @BindView(R.id.emptyFixtureLayout)
     LinearLayout emptyFixtureLayout;
+
+    @BindView(R.id.timeTextView)
+    TextView mTimeTextView;
+    @BindView(R.id.dayTextView)
+    TextView mDayTextView;
+    @BindView(R.id.opponentTeamImageView)
+    ImageView mOpponentTeamImageView;
 
     private CountDownTimer mCountDownTimer;
     private RealmAsyncTask mTransaction;
@@ -99,7 +106,9 @@ HomeFragment extends MasterFragment {
 
     @Override
     public int getLayout() {
-        return R.layout.fragment_home;
+//        return R.layout.fragment_home;
+        return R.layout.fragment_home_new;
+
     }
 
     @Override
@@ -161,6 +170,7 @@ HomeFragment extends MasterFragment {
                         public void onNext(FixturesResponse fixturesResponse) {
                             mActivity.showContentView();
                             //delete previous saved data and save new fixtures
+
                             if (fixturesResponse.getResults().size() > 0) {
                                 deleteFixturesAndSave(fixturesResponse);
                             } else
@@ -278,34 +288,40 @@ HomeFragment extends MasterFragment {
                     if (isHomeGame) {
                         mFirstTeamNameTextView.setText(getString(R.string.manchester_united));
                         mSecondTeamNameTextView.setText(opponentName);
-                        //populate imageview
-                        Picasso.with(mContext)
-                                .load(result.getOpponent().getCrest())
-                                .placeholder(R.drawable.ic_placeholder_team)
-                                .resize(getDimen(R.dimen.team_logo_size), getDimen(R.dimen.team_logo_size))
-                                .into(mSecondTeamImageView);
-
-                        Picasso.with(mContext)
-                                .load(Constants.URL_MANUTD_LOGO)
-                                .placeholder(R.drawable.logo_manutd)
-                                .resize(getDimen(R.dimen.team_logo_size), getDimen(R.dimen.team_logo_size))
-                                .into(mFirstTeamImageView);
+//                        //populate imageview
+//                        Picasso.with(mContext)
+//                                .load(result.getOpponent().getCrest())
+//                                .placeholder(R.drawable.ic_placeholder_team)
+//                                .resize(0, getDimen(R.dimen.team_logo_size_new))
+//                                .into(mSecondTeamImageView);
+//
+//                        Picasso.with(mContext)
+//                                .load(Constants.URL_MANUTD_LOGO)
+//                                .placeholder(R.drawable.logo_manutd)
+//                                .resize(0, getDimen(R.dimen.team_logo_size_new))
+//                                .into(mFirstTeamImageView);
                     } else {
                         mFirstTeamNameTextView.setText(opponentName);
                         mSecondTeamNameTextView.setText(mContext.getString(R.string.manchester_united));
                         //populate imageview
-                        Picasso.with(mContext)
-                                .load((String) result.getOpponent().getCrest())
-                                .placeholder(R.drawable.ic_placeholder_team)
-                                .resize(getDimen(R.dimen.team_logo_size), getDimen(R.dimen.team_logo_size))
-                                .into(mFirstTeamImageView);
-
-                        Picasso.with(mContext)
-                                .load(Constants.URL_MANUTD_LOGO)
-                                .placeholder(R.drawable.logo_manutd)
-                                .resize(getDimen(R.dimen.team_logo_size), getDimen(R.dimen.team_logo_size))
-                                .into(mSecondTeamImageView);
+//                        Picasso.with(mContext)
+//                                .load((String) result.getOpponent().getCrest())
+//                                .placeholder(R.drawable.ic_placeholder_team)
+//                                .resize(0, getDimen(R.dimen.team_logo_size))
+//                                .into(mFirstTeamImageView);
+//
+//                        Picasso.with(mContext)
+//                                .load(Constants.URL_MANUTD_LOGO)
+//                                .placeholder(R.drawable.logo_manutd)
+//                                .resize(0, getDimen(R.dimen.team_logo_size))
+//                                .into(mSecondTeamImageView);
                     }
+                    //populate imageview
+                    Picasso.with(mContext)
+                            .load(result.getOpponent().getCrest())
+                            .placeholder(R.drawable.ic_placeholder_team)
+                            .resize(0, getDimen(R.dimen.team_logo_size_new))
+                            .into(mOpponentTeamImageView);
                     //configure  name and venue
                     mCompetitionNameTextView.setText(result.getCompetitionYear().getCompetition().getName());
                     mCompetitionVenueTextView.setText(result.getVenue());
@@ -358,15 +374,22 @@ HomeFragment extends MasterFragment {
             mCountDownTimer.setTime(timeDiff);
 
             try {
+//format day
+                SimpleDateFormat targetDayFormat = new SimpleDateFormat("dd");
+                String dayValue = targetDayFormat.format(date);
+
                 //format new date format
-                SimpleDateFormat targetDateFormat = new SimpleDateFormat("dd MMMM, EEEE");
+                SimpleDateFormat targetDateFormat = new SimpleDateFormat("MMMM, EEEE");
                 String newDateFormat = targetDateFormat.format(date);
 
                 //format for hr min
                 SimpleDateFormat timeFormatter = new SimpleDateFormat("h:mm a");
                 String displayValue = timeFormatter.format(date);
 
-                mDateTimeTextView.setText(newDateFormat + "\n" + displayValue);
+                mDayTextView.setText(dayValue);
+                mDateTextView.setText(newDateFormat);
+                mTimeTextView.setText(displayValue + " NPT");
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
