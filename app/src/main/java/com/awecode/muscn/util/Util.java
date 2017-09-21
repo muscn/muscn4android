@@ -80,7 +80,20 @@ public class Util {
         }
         return date;
     }
-
+    public static String recentResultCommonDateFormatter(String date, String obtainedFormat) {
+        String requiredFormat = "dd MMM";
+        SimpleDateFormat format = new SimpleDateFormat(obtainedFormat);
+        format.setTimeZone(TimeZone.getTimeZone("UTC"));
+        Date newDate = null;
+        try {
+            newDate = format.parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        format = new SimpleDateFormat(requiredFormat);
+        String time = format.format(newDate);
+        return time;
+    }
     public static String commonDateFormatter(String date, String obtainedFormat) {
         String requiredFormat = "HH:mm EEE dd MMM ''yy";
         SimpleDateFormat format = new SimpleDateFormat(obtainedFormat);
