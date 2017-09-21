@@ -101,7 +101,10 @@ public class ResultAdapter extends RealmRecyclerViewAdapter<RecentResultData, Re
         itemController.matchResultRowLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mResultItemClickListener.onRecentResultClicked(recentResultData.getId());
+                if (recentResultData.getMufcScore() != null && recentResultData.getOpponentScore() != null)
+                    mResultItemClickListener.onRecentResultClicked(recentResultData.getId());
+                else
+                    Util.toast(context,"Details not available");
             }
         });
 
