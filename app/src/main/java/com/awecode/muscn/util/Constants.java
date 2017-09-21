@@ -16,5 +16,6 @@ public class Constants {
     public static final String PREFS_DEVICE_REGISTERED = "prefs_device_registered";
     public static final String PREFS_LOGIN_STATUS = "prefs_login_status";
     public static final String PREFS_LOGIN_TOKEN = "prefs_login_token";
+    public static final String PREFS_LOGIN_RESPONSE= "prefs_login_response";
 
 }
