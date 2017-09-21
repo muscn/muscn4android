@@ -2,15 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@drawable/circular_gradient_black_red"
-              android:orientation="vertical"
-              android:padding="@dimen/activity_horizontal_margin">
+              android:background="@color/whiteColor"
+              android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_height="?android:attr/actionBarSize"
+        android:background="@color/colorPrimary"
         android:orientation="horizontal"
+        android:padding="5dp"
         android:weightSum="3">
 
         <ImageView
@@ -72,6 +72,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:padding="@dimen/activity_vertical_margin"
             android:orientation="vertical">
 
             <LinearLayout
@@ -85,7 +86,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/about_us_detail_text"
-                    android:textColor="@color/whiteColor"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/about_us_body_text_size"/>
 
                 <TextView
@@ -94,7 +95,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:text="@string/about_us_membership_text"
-                    android:textColor="@color/whiteColor"
+                    android:textColor="@color/black"
                     android:textSize="@dimen/about_us_body_text_size"/>
 
             </LinearLayout>
@@ -109,7 +110,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Find us at:"
-                    android:textColor="@color/whiteColor"
+                    android:textColor="@color/black"
                     android:textStyle="bold"/>
             </LinearLayout>
             <!--find us layout-->
@@ -134,7 +135,7 @@
                         android:layout_gravity="center"
                         android:layout_weight="0.3"
                         android:padding="3dp"
-                        android:src="@drawable/aboutus_url"/>
+                        android:src="@drawable/icon_link"/>
 
                     <TextView
                         android:id="@+id/textViewOfficial_website"
@@ -164,14 +165,14 @@
                         android:layout_gravity="center"
                         android:layout_weight="0.3"
                         android:padding="3dp"
-                        android:src="@drawable/aboutus_mail"/>
+                        android:src="@drawable/mail"/>
 
                     <TextView
                         android:id="@+id/textViewEmail"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:gravity="left|center"
                         android:layout_weight="2.7"
+                        android:gravity="left|center"
                         android:text="info@manutd.org.np"
                         android:textColor="@color/whiteColor"
                         android:textSize="@dimen/labels_text_size"
@@ -194,14 +195,14 @@
                         android:layout_gravity="center"
                         android:layout_weight="0.3"
                         android:padding="3dp"
-                        android:src="@drawable/aboutus_fb"/>
+                        android:src="@drawable/fb"/>
 
                     <TextView
                         android:id="@+id/textViewFacebook"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:gravity="left|center"
                         android:layout_weight="2.7"
+                        android:gravity="left|center"
                         android:text="muscnepal"
                         android:textColor="@color/whiteColor"
                         android:textSize="@dimen/labels_text_size"
@@ -224,14 +225,14 @@
                         android:layout_gravity="center"
                         android:layout_weight="0.3"
                         android:padding="3dp"
-                        android:src="@drawable/aboutus_twitter"/>
+                        android:src="@drawable/tw"/>
 
                     <TextView
                         android:id="@+id/textViewTwitter"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:gravity="left|center"
                         android:layout_weight="2.7"
+                        android:gravity="left|center"
                         android:text="\@muscnp"
                         android:textColor="@color/whiteColor"
                         android:textSize="@dimen/labels_text_size"
@@ -250,18 +251,18 @@
 
                     <ImageView
                         android:layout_width="0dp"
-                        android:padding="3dp"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:layout_weight="0.3"
-                        android:src="@drawable/aboutus_insta"/>
+                        android:padding="3dp"
+                        android:src="@drawable/ins"/>
 
                     <TextView
                         android:id="@+id/textViewInstagram"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:gravity="left|center"
                         android:layout_weight="2.7"
+                        android:gravity="left|center"
                         android:text="muscnepal"
                         android:textColor="@color/whiteColor"
                         android:textSize="@dimen/labels_text_size"
@@ -282,7 +283,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="MUSCN app for android"
-                    android:textColor="@color/whiteColor"
+                    android:textColor="@color/black"
                     android:textStyle="bold"/>
 
                 <TextView
@@ -290,7 +291,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Version 1.0"
-                    android:textColor="@color/whiteColor"/>
+                    android:textColor="@color/black"/>
             </LinearLayout>
 
             <LinearLayout
@@ -302,14 +303,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Powered by "
-                    android:textColor="@color/whiteColor"/>
+                    android:textColor="@color/black"/>
 
                 <TextView
                     android:id="@+id/textViewAwecode"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Awecode"
-                    android:textColor="@color/whiteColor"
+                    android:textColor="@color/black"
                     android:textStyle="bold"/>
             </LinearLayout>
 
@@ -322,7 +323,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/copyright_owner_string"
-                    android:textColor="@color/whiteColor"/>
+                    android:textColor="@color/black"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -330,7 +331,7 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="10dp"
                     android:text="©  2017 | MUSCN"
-                    android:textColor="@color/whiteColor"/>
+                    android:textColor="@color/black"/>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
