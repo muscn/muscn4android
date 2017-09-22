@@ -14,7 +14,6 @@ import com.awecode.muscn.model.http.fixtures.CompetitionYear;
 import com.awecode.muscn.model.http.fixtures.FixturesResponse;
 import com.awecode.muscn.model.http.fixtures.Opponent;
 import com.awecode.muscn.model.http.fixtures.Result;
-import com.awecode.muscn.util.Constants;
 import com.awecode.muscn.util.Util;
 import com.awecode.muscn.util.countdown_timer.CountDownTimer;
 import com.awecode.muscn.util.retrofit.MuscnApiInterface;
@@ -30,6 +29,7 @@ import java.util.List;
 import java.util.TimeZone;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import io.realm.Realm;
 import io.realm.RealmAsyncTask;
 import io.realm.RealmResults;
@@ -67,7 +67,7 @@ HomeFragment extends MasterFragment {
     TextView mDateTextView;
     @BindView(R.id.firstTeamImageView)
     ImageView mFirstTeamImageView;
-//    @BindView(R.id.secondTeamImageView)
+    //    @BindView(R.id.secondTeamImageView)
 //    ImageView mSecondTeamImageView;
     @BindView(R.id.hoursLabelTextView)
     TextView mHoursLabelTextView;
@@ -91,8 +91,13 @@ HomeFragment extends MasterFragment {
     @BindView(R.id.opponentTeamImageView)
     ImageView mOpponentTeamImageView;
 
+    @BindView(R.id.liveScreeningImageView)
+    ImageView mLiveScreeningImageView;
+
     private CountDownTimer mCountDownTimer;
     private RealmAsyncTask mTransaction;
+    String mLocation;
+    String mLocationName;
 
 
     public static HomeFragment newInstance() {
@@ -325,6 +330,11 @@ HomeFragment extends MasterFragment {
                     //configure  name and venue
                     mCompetitionNameTextView.setText(result.getCompetitionYear().getCompetition().getName());
                     mCompetitionVenueTextView.setText(result.getVenue());
+                    if (result.getLiveScreening() != null) {
+                        Picasso.with(mContext).load(result.getLiveScreening().getLogo()).into(mLiveScreeningImageView);
+                        mLocation = result.getLiveScreening().getLocation();
+                        mLocationName = result.getLiveScreening().getName();
+                    }
                 } else {
                     showEmptyLayout();
                 }
@@ -462,5 +472,28 @@ HomeFragment extends MasterFragment {
 
     }
 
+    @OnClick(R.id.liveScreeningLayout)
+    public void onClick() {
+        try {
+            if (mLocation != null) {
+                String[] latlng = mLocation.split(",");
+                Double dblLat = Double.parseDouble(latlng[0].trim());
+                Double dblLng = Double.parseDouble(latlng[1].trim());
+                String markerLabel;
+                if (mLocationName != null)
+                    markerLabel = mLocationName;
+                else
+                    markerLabel = "";
 
+                openMap(dblLat, dblLng, markerLabel);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private void openMap(Double lat, Double lng, String mTitle) {
+        String geoUri = "http://maps.google.com/maps?q=loc:" + lat + "," + lng + " (" + mTitle + ")";
+        Util.openUrl(mContext, geoUri);
+    }
 }

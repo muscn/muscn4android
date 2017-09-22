@@ -1,8 +1,10 @@
 package com.awecode.muscn.util;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -80,6 +82,7 @@ public class Util {
         }
         return date;
     }
+
     public static String recentResultCommonDateFormatter(String date, String obtainedFormat) {
         String requiredFormat = "dd MMM";
         SimpleDateFormat format = new SimpleDateFormat(obtainedFormat);
@@ -94,6 +97,7 @@ public class Util {
         String time = format.format(newDate);
         return time;
     }
+
     public static String commonDateFormatter(String date, String obtainedFormat) {
         String requiredFormat = "HH:mm EEE dd MMM ''yy";
         SimpleDateFormat format = new SimpleDateFormat(obtainedFormat);
@@ -349,5 +353,16 @@ public class Util {
 
     public static String twoDigitFormat(int number) {
         return String.format("%02d", number);
+    }
+
+    /**
+     * open url in browser
+     *
+     * @param mContext  context
+     * @param uriString url to open in browser or other application
+     */
+    public static void openUrl(Context mContext, String uriString) {
+        Uri uri = Uri.parse(uriString);
+        mContext.startActivity(new Intent(Intent.ACTION_VIEW, uri));
     }
 }

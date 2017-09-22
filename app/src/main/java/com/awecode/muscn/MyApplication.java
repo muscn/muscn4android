@@ -3,6 +3,7 @@ package com.awecode.muscn;
 import android.app.Application;
 import android.util.Log;
 
+import com.awecode.muscn.model.http.fixtures.LiveScreening;
 import com.awecode.muscn.util.prefs.Prefs;
 import com.awecode.muscn.util.retrofit.MuscnApiInterface;
 import com.awecode.muscn.util.retrofit.ServiceGenerator;
@@ -17,6 +18,7 @@ import io.realm.DynamicRealm;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmMigration;
+import io.realm.RealmObjectSchema;
 import io.realm.RealmSchema;
 import io.realm.exceptions.RealmMigrationNeededException;
 
@@ -41,7 +43,7 @@ public class MyApplication extends Application {
         Realm.init(this);
         config = new RealmConfiguration
                 .Builder()
-                .schemaVersion(2)
+                .schemaVersion(3)
                 .name("muscn.realm")
                 .build();
         Realm.setDefaultConfiguration(config);
@@ -74,6 +76,24 @@ public class MyApplication extends Application {
 
                             oldVersion++;
                         }
+                        if (oldVersion == 2) {
+
+                            Log.v("test", "inside version");
+                            RealmObjectSchema objectSchema = schema.create("LiveScreening")
+                                    .addField("id", Integer.class)
+                                    .addField("name", String.class)
+                                    .addField("slug", String.class)
+                                    .addField("logo", String.class)
+                                    .addField("about", String.class)
+                                    .addField("privileges", String.class)
+                                    .addField("url", String.class)
+                                    .addField("active", Boolean.class)
+                                    .addField("location", String.class)
+                                    .addField("order", Integer.class);
+                            schema.get("Result").addRealmObjectField("liveScreening",objectSchema);
+                            oldVersion++;
+                        }
+
                     }
                 });
             } catch (FileNotFoundException e1) {

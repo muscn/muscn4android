@@ -5,6 +5,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -51,6 +52,9 @@ public class Result extends RealmObject {
     @SerializedName("competition_year")
     @Expose
     private CompetitionYear competitionYear;
+    @SerializedName("live_screening")
+    @Expose
+    private LiveScreening liveScreening;
 
 
     public Result() {
