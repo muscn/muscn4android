@@ -17,6 +17,7 @@ import com.awecode.muscn.R;
 import com.awecode.muscn.util.Util;
 import com.awecode.muscn.util.retrofit.MuscnApiInterface;
 import com.awecode.muscn.util.stateLayout.StateLayout;
+import com.awecode.muscn.views.aboutus.AboutUsFragment;
 import com.awecode.muscn.views.fixture.FixturesFragment;
 import com.awecode.muscn.views.home.HomeFragment;
 import com.awecode.muscn.views.injuries.InjuriesFragment;
@@ -53,6 +54,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     public MatchWeekFragment mMatchWeekFragment;
     public InjuriesFragment mInjuriesFragment;
     public TopScorersFragment mTopScorersFragment;
+    public AboutUsFragment mAboutUsFragment;
 
 
     public abstract void onErrorViewClicked();

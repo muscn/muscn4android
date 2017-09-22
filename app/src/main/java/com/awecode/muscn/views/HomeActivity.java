@@ -16,7 +16,6 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.awecode.muscn.BuildConfig;
@@ -28,7 +27,7 @@ import com.awecode.muscn.model.registration.RegistrationResponse;
 import com.awecode.muscn.util.Constants;
 import com.awecode.muscn.util.Util;
 import com.awecode.muscn.util.prefs.Prefs;
-import com.awecode.muscn.views.aboutus.AboutUsActivity;
+import com.awecode.muscn.views.aboutus.AboutUsFragment;
 import com.awecode.muscn.views.base.BaseActivity;
 import com.awecode.muscn.views.fixture.FixturesFragment;
 import com.awecode.muscn.views.home.HomeFragment;
@@ -53,8 +52,6 @@ import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
-
-import static com.awecode.muscn.util.Util.getAppVersion;
 
 
 public class HomeActivity extends BaseActivity implements RecyclerViewScrollListener, NavigationDrawerCallbacks {
@@ -200,9 +197,11 @@ public class HomeActivity extends BaseActivity implements RecyclerViewScrollList
             } else if (menuType == MenuType.RECENT_RESULTS) {
                 mResultFragment = new ResultFragment();
                 openFragment(mResultFragment);
-            } else if (menuType == MenuType.ABOUT_US)
-                startActivity(new Intent(this, AboutUsActivity.class));
-            else if(menuType==MenuType.NEWS)
+            } else if (menuType == MenuType.ABOUT_US) {
+                mAboutUsFragment = new AboutUsFragment();
+                openFragment(mAboutUsFragment);
+//                startActivity(new Intent(this, AboutUsActivity.class));
+            } else if (menuType == MenuType.NEWS)
                 openFragment(NewsFragment.newInstance());
             else {
                 mHomeFragment = HomeFragment.newInstance();

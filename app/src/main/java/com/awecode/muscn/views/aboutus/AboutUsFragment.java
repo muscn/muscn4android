@@ -1,39 +1,23 @@
 package com.awecode.muscn.views.aboutus;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.text.method.LinkMovementMethod;
-import android.widget.LinearLayout;
+import android.view.View;
 import android.widget.TextView;
 
 import com.awecode.muscn.R;
 import com.awecode.muscn.util.Util;
+import com.awecode.muscn.views.MasterFragment;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 import static com.awecode.muscn.util.Util.getAppVersion;
 
 /**
- * Created by surensth on 11/16/16.
+ * Created by surensth on 9/28/16.
  */
 
-public class AboutUsActivity extends AppCompatActivity {
-
-    @BindView(R.id.textViewDescription)
-    TextView textViewDescription;
-    @BindView(R.id.textViewMembership)
-    TextView textViewMembership;
-    @BindView(R.id.websiteLayout)
-    LinearLayout websiteLayout;
-    @BindView(R.id.emailLayout)
-    LinearLayout emailLayout;
-    @BindView(R.id.facebookLayout)
-    LinearLayout facebookLayout;
-    @BindView(R.id.twitterLayout)
-    LinearLayout twitterLayout;
-    @BindView(R.id.instagramLayout)
-    LinearLayout instagramLayout;
+public class AboutUsFragment extends MasterFragment {
     @BindView(R.id.versionTextView)
     TextView versionTextView;
     @BindView(R.id.textViewAwecode)
@@ -51,12 +35,27 @@ public class AboutUsActivity extends AppCompatActivity {
 
     String manutd, email, facebook, twitter, instagram, awecode;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_about_us);
-        ButterKnife.bind(this);
 
+    public static AboutUsFragment newInstance() {
+        AboutUsFragment fragment = new AboutUsFragment();
+        return fragment;
+    }
+
+    public AboutUsFragment() {
+
+    }
+
+    @Override
+    public int getLayout() {
+        return R.layout.fragment_about_us;
+    }
+
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        mActivity.setCustomTitle(R.string.about_us);
         manutd = getResources().getString(R.string.official_website_link_text);
         facebook = getResources().getString(R.string.facebook_link_text);
         twitter = getResources().getString(R.string.twitter_link_text);

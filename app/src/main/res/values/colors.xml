@@ -19,6 +19,7 @@
 
     <color name="whiteColor">#ffffff</color>
     <color name="dimPrimaryColor">#88e54d36</color>
+    <color name="colorGreyDark">#606060</color>
 
 
 </resources>
