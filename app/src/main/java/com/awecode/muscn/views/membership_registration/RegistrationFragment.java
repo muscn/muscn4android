@@ -3,6 +3,7 @@ package com.awecode.muscn.views.membership_registration;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.text.Editable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -33,7 +34,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.OnEditorAction;
-import butterknife.OnFocusChange;
+import butterknife.OnTextChanged;
 import retrofit2.adapter.rxjava.HttpException;
 import rx.Observable;
 import rx.Observer;
@@ -47,7 +48,7 @@ import static android.app.Activity.RESULT_OK;
  * Created by munnadroid on 7/18/17.
  */
 
-public class RegistrationFragment extends AppCompatBaseFragment implements DatePickerDialog.OnDateSetListener, View.OnFocusChangeListener {
+public class RegistrationFragment extends AppCompatBaseFragment implements DatePickerDialog.OnDateSetListener {
 
     private static final String TAG = RegistrationFragment.class.getSimpleName();
 
@@ -175,12 +176,6 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
     }
 
 
-    @Override
-    public void onFocusChange(View view, boolean hasFocus) {
-        if (hasFocus)
-            mValidator.validateBefore(view);
-    }
-
     /**
      * DOB and submit button clicked
      *
@@ -230,11 +225,12 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
         return false;
     }
 
-    @OnFocusChange({R.id.fullnameEditText, R.id.phoneNumberEditText})
-    public void editTextFocusChanged(View view, boolean hasFocus) {
-        if (hasFocus)
-            mValidator.validateBefore(view);
+    @OnTextChanged({R.id.fullnameEditText, R.id.phoneNumberEditText})
+    public void inputFieldTextChanged(Editable editable) {
+        mValidator.validate();
+
     }
+    
 
     @Override
     public void onValidationSucceeded() {
