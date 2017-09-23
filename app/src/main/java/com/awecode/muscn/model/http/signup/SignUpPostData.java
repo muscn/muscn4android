@@ -15,9 +15,5 @@ public class SignUpPostData {
     String fullName;
     String email;
     String password;
-
-    @SerializedName("date_of_birth")
-    String dateOfBirth;
-    String address;
     String mobile;
 }

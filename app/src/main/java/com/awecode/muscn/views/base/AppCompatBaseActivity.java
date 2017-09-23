@@ -102,17 +102,6 @@ public abstract class AppCompatBaseActivity extends AppCompatActivity implements
                 .show();
     }
 
-    public void showSuccessDialog(final Context context, String message) {
-        new AlertDialog.Builder(context, R.style.AppCompatAlertDialogStyle)
-                .setMessage(message)
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-//                        finish();
-                        dialog.dismiss();
-                    }
-                })
-                .show();
-    }
 
     public void successDialogAndCloseActivity(final Context context, String message) {
         new AlertDialog.Builder(context, R.style.AppCompatAlertDialogStyle)

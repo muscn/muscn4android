@@ -27,32 +27,38 @@
         <EditText
             android:id="@+id/phoneNumberEditText"
             style="@style/normal_edit_text_style"
-            android:inputType="phone"
-            android:hint="@string/mobile_number" />
+            android:hint="@string/mobile_number"
+            android:inputType="phone" />
 
-        <!--date of birth-->
-        <TextView
-            style="@style/normal_text_view_style"
-            android:text="@string/date_of_birth" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+            <!--date of birth-->
+            <TextView
+                style="@style/normal_text_view_style"
+                android:text="@string/date_of_birth" />
 
-        <EditText
-            android:id="@+id/dateOfBirthEditText"
-            style="@style/normal_edit_text_style"
-            android:focusable="false"
-            android:focusableInTouchMode="false"
-            android:hint="@string/date_of_birth" />
+            <EditText
+                android:id="@+id/dateOfBirthEditText"
+                style="@style/normal_edit_text_style"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:hint="@string/date_of_birth" />
 
-        <!--address-->
-        <TextView
-            style="@style/normal_text_view_style"
-            android:text="@string/address" />
+            <!--address-->
+            <TextView
+                style="@style/normal_text_view_style"
+                android:text="@string/address" />
 
-        <EditText
-            android:id="@+id/addressEditText"
-            style="@style/normal_edit_text_style"
-            android:imeOptions="actionDone"
-            android:hint="@string/address" />
+            <EditText
+                android:id="@+id/addressEditText"
+                style="@style/normal_edit_text_style"
+                android:hint="@string/address"
+                android:imeOptions="actionDone" />
 
+        </LinearLayout>
 
         <Button
             android:id="@+id/submitButton"
