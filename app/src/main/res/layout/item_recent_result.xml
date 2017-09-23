@@ -34,7 +34,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:text="@string/mun"
-                android:textColor="@color/white"
+                android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/fixture_team_name"/>
 
         </LinearLayout>
@@ -51,7 +51,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:textColor="@color/white"
+                android:textColor="@color/colorPrimary"
                 android:textSize="20sp"
                 android:textStyle="bold"/>
 
@@ -71,7 +71,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="19Nov, 2016\nOld Traffford, Manchester"
-                android:textColor="@color/white"
+                android:textColor="@color/colorPrimary"
                 android:textSize="13sp"/>
 
             <TextView
@@ -80,7 +80,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/ft"
-                android:textColor="@color/white"
+                android:textColor="@color/colorPrimary"
                 android:textSize="13sp"/>
 
 
@@ -99,7 +99,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:textColor="@color/white"
+                android:textColor="@color/colorPrimary"
                 android:textSize="20sp"
                 android:textStyle="bold"/>
         </LinearLayout>
@@ -124,7 +124,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="WBA"
-                android:textColor="@color/white"
+                android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/fixture_team_name"/>
         </LinearLayout>
 

@@ -22,7 +22,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:textAllCaps="true"
-                android:textColor="@color/white"
+                android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/fixture_text_size"
                 android:textStyle="bold" />
 
@@ -34,7 +34,7 @@
                 <!--android:layout_alignParentTop="true"-->
                 <!--android:text=" V "-->
                 <!--android:textAllCaps="true"-->
-                <!--android:textColor="@color/white"-->
+                <!--android:textColor="@color/colorPrimary"-->
                 <!--android:textSize="@dimen/fixture_text_size"-->
                 <!--android:textStyle="bold" />-->
 
@@ -45,7 +45,7 @@
                 <!--android:layout_toRightOf="@+id/vsTextView"-->
                 <!--android:text="Manchester United"-->
                 <!--android:textAllCaps="true"-->
-                <!--android:textColor="@color/white"-->
+                <!--android:textColor="@color/colorPrimary"-->
                 <!--android:textSize="@dimen/fixture_text_size"-->
                 <!--android:textStyle="bold" />-->
         <!--</RelativeLayout>-->
@@ -56,7 +56,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text=""
-            android:textColor="@color/white"
+            android:textColor="@color/colorPrimary"
             android:textSize="15sp" />
 
         <!--countdown timer: day,hr, min,sec-->
@@ -88,7 +88,7 @@
                     android:layout_marginTop="5dp"
                     android:text="@string/days"
                     android:textAllCaps="true"
-                    android:textColor="@color/white"
+                    android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/time_label_txt_size" />
             </LinearLayout>
 
@@ -121,7 +121,7 @@
                     android:layout_marginTop="5dp"
                     android:text="@string/hours"
                     android:textAllCaps="true"
-                    android:textColor="@color/white"
+                    android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/time_label_txt_size" />
             </LinearLayout>
 
@@ -154,7 +154,7 @@
                     android:layout_marginTop="5dp"
                     android:text="@string/mins"
                     android:textAllCaps="true"
-                    android:textColor="@color/white"
+                    android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/time_label_txt_size" />
             </LinearLayout>
 
@@ -187,7 +187,7 @@
                     android:layout_marginTop="5dp"
                     android:text="@string/secs"
                     android:textAllCaps="true"
-                    android:textColor="@color/white"
+                    android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/time_label_txt_size" />
             </LinearLayout>
 
@@ -214,7 +214,7 @@
                 android:layout_height="wrap_content"
                 android:textAllCaps="true"
                 android:text=""
-                android:textColor="@color/white"
+                android:textColor="@color/colorPrimary"
                 android:textSize="10sp" />
 
             <ImageView
@@ -229,7 +229,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:textColor="@color/white"
+                android:textColor="@color/colorPrimary"
                 android:textSize="10sp" />
 
         </LinearLayout>

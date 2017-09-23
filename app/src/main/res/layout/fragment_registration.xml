@@ -27,6 +27,7 @@
         <EditText
             android:id="@+id/phoneNumberEditText"
             style="@style/normal_edit_text_style"
+            android:digits="@string/digits_only"
             android:hint="@string/mobile_number"
             android:inputType="phone" />
 
@@ -57,6 +58,54 @@
                 style="@style/normal_edit_text_style"
                 android:hint="@string/address"
                 android:imeOptions="actionDone" />
+
+        </LinearLayout>
+
+        <!--membership fee -->
+        <TextView
+            android:id="@+id/membershipFeeTextView"
+            style="@style/WidthMatchHeightWrap"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:text="Membership Fee: NRS 200"
+            android:textColor="@color/black"
+            android:textSize="13sp" />
+
+        <!--payment options label-->
+        <TextView
+            android:id="@+id/paymentOptionLabelTextView"
+            style="@style/WidthMatchHeightWrap"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:text="Payment Via: "
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            style="@style/WidthMatchHeightWrap"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="3.2">
+
+            <!--eswea-->
+            <Button
+                android:id="@+id/esewaButton"
+                style="@style/PaymentOptionBtnStyle"
+                android:text="@string/e_sewa" />
+
+            <!--receipt-->
+            <Button
+                android:id="@+id/receiptButton"
+                style="@style/PaymentOptionBtnStyle"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:text="@string/receipt" />
+
+            <!--bank deposit-->
+            <Button
+                android:id="@+id/bankDepositButton"
+                style="@style/PaymentOptionBtnStyle"
+                android:text="@string/bank_deposit" />
+
 
         </LinearLayout>
 

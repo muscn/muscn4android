@@ -89,6 +89,11 @@
     <string name="fb_login_protocol_scheme">fb309035936237940</string>
     <string name="partners">Partners</string>
     <string name="loading_partners">Loading partners...</string>
+    <string name="digits_only">0123456789</string>
+    <string name="payment_options">Payment Options</string>
+    <string name="e_sewa">E-Sewa</string>
+    <string name="receipt">Receipt</string>
+    <string name="bank_deposit">Bank Deposit</string>
 
 
 </resources>

@@ -228,6 +228,8 @@ public class SignInFragment extends AppCompatBaseFragment {
                         if (signInSuccessData.getToken() != null) {
                             PrefsHelper.saveLoginStatus(true);
                             PrefsHelper.saveLoginToken(signInSuccessData.getToken().toString());
+
+                            signInSuccessData.setEmail(emailEditText.getText().toString());
                             PrefsHelper.saveLoginResponse(signInSuccessData);
                             mActivity.successDialogAndCloseActivity(mContext, getString(R.string.success_sign_in_text));
                         }

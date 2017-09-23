@@ -12,4 +12,5 @@ import lombok.Setter;
 public class SignInSuccessData {
     String token;
     Boolean status;
+    String email;
 }

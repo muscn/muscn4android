@@ -3,7 +3,7 @@
     <color name="colorPrimary">#e54d36</color>
     <color name="colorPrimaryDark">#ffc6260e</color><!--99e54d36-->
     <color name="colorAccent">#A4A4A4</color>
-    <color name="white">#e54d36</color>
+    <color name="white">#ffffff</color>
     <color name="colorGrey">#A4A4A4</color>
     <color name="colorGradientStart">#762316</color>
     <color name="colorGradientEnd">#ff000000</color>

@@ -188,7 +188,7 @@
                                     android:layout_marginLeft="3dp"
                                     android:text="MUSCN"
                                     android:textAllCaps="true"
-                                    android:textColor="@color/white"
+                                    android:textColor="@color/colorPrimary"
                                     android:textSize="18sp"/>
                             </LinearLayout>
 

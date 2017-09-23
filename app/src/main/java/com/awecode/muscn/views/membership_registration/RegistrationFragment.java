@@ -1,8 +1,10 @@
 package com.awecode.muscn.views.membership_registration;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
@@ -11,14 +13,22 @@ import com.awecode.muscn.R;
 import com.awecode.muscn.model.http.api_error.APIError;
 import com.awecode.muscn.model.http.signup.SignUpPostData;
 import com.awecode.muscn.model.membership.MembershipResponse;
+import com.awecode.muscn.util.Constants;
 import com.awecode.muscn.util.Util;
+import com.awecode.muscn.util.prefs.PrefsHelper;
 import com.awecode.muscn.views.base.AppCompatBaseFragment;
+import com.esewa.android.sdk.payment.ESewaConfiguration;
+import com.esewa.android.sdk.payment.ESewaPayment;
+import com.esewa.android.sdk.payment.ESewaPaymentActivity;
+import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
+import com.mobsandgeeks.saripaar.annotation.Length;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.mobsandgeeks.saripaar.annotation.Order;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.util.Calendar;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -30,11 +40,14 @@ import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
+import static android.app.Activity.RESULT_CANCELED;
+import static android.app.Activity.RESULT_OK;
+
 /**
  * Created by munnadroid on 7/18/17.
  */
 
-public class RegistrationFragment extends AppCompatBaseFragment implements DatePickerDialog.OnDateSetListener {
+public class RegistrationFragment extends AppCompatBaseFragment implements DatePickerDialog.OnDateSetListener, View.OnFocusChangeListener {
 
     private static final String TAG = RegistrationFragment.class.getSimpleName();
 
@@ -45,6 +58,7 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
 
     @NotEmpty
     @Order(2)
+    @Length(min = 10, message = "Must be minimum of 10 digit.")
     @BindView(R.id.phoneNumberEditText)
     EditText phoneNumberEditText;
 
@@ -54,6 +68,11 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
 
     @BindView(R.id.addressEditText)
     EditText addressEditText;
+
+    private Boolean mIsInputFieldFilled = false;
+    private ESewaConfiguration mEsewConfiguration;
+    private static final int REQUEST_CODE_PAYMENT = 112;
+
 
     public static RegistrationFragment newInstance() {
         RegistrationFragment fragment = new RegistrationFragment();
@@ -68,11 +87,107 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mValidator.setValidationMode(Validator.Mode.IMMEDIATE);
+
+        setupForFormValidation();
     }
 
+    @OnClick({R.id.esewaButton, R.id.receiptButton, R.id.bankDepositButton})
+    public void paymentOptionsBtnClicked(View view) {
+        if (mIsInputFieldFilled)
+            switch (view.getId()) {
+                case R.id.esewaButton:
+                    handleEsewaBtnClicked();
+                    break;
+                case R.id.receiptButton:
+                    break;
+                case R.id.bankDepositButton:
+                    break;
+            }
+        else
+            toast("Please enter fullname and mobile number first.");
+    }
+
+    private void handleEsewaBtnClicked() {
+        //check internet connection
+        if (!Util.checkInternetConnection(mContext)) {
+            noInternetConnectionDialog();
+            return;
+        }
+
+        //start esewa payment
+        startEsewaPayment();
+    }
+
+
+    /**
+     * start esewa payment
+     */
+    private void startEsewaPayment() {
+        //config esewa with client id and secret key first
+        setupEsewaConfig();
+
+        ESewaPayment eSewaPayment = new ESewaPayment("100", "Membership Registration", PrefsHelper.getLoginResponse().getEmail(), "");
+        Intent intent = new Intent(mContext, ESewaPaymentActivity.class);
+        intent.putExtra(ESewaConfiguration.ESEWA_CONFIGURATION, mEsewConfiguration);
+        intent.putExtra(ESewaPayment.ESEWA_PAYMENT, eSewaPayment);
+        startActivityForResult(intent, REQUEST_CODE_PAYMENT);
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_PAYMENT) {
+            //payment success
+            if (resultCode == RESULT_OK) {
+                String s = data.getStringExtra(ESewaPayment.EXTRA_RESULT_MESSAGE);
+                Log.i("Proof   of   Payment", s);
+                toast("SUCCESSFUL   PAYMENT");
+                //payment cancel by user
+            } else if (resultCode == RESULT_CANCELED) {
+                toast("It seems you cancelled the payment.");
+                //invalid parameter passed to esewa sdk
+            } else if (resultCode == ESewaPayment.RESULT_EXTRAS_INVALID) {
+                String s = data.getStringExtra(ESewaPayment.EXTRA_RESULT_MESSAGE);
+                Log.i("Proof   of   Payment", s);
+            }
+        }
+    }
+
+
+    /**
+     * Config esewa with client ID and secret key
+     */
+    private void setupEsewaConfig() {
+        if (mEsewConfiguration != null)
+            return;
+        mEsewConfiguration = new ESewaConfiguration().clientId(Constants.ESEWA_CLIENT_ID)
+                .secretKey(Constants.ESEWA_SECRET_KEY)
+                .environment(ESewaConfiguration.ENVIRONMENT_TEST);
+    }
+
+    /**
+     * set validation mode
+     */
+    private void setupForFormValidation() {
+        //set form validation mode
+        mValidator.setValidationMode(Validator.Mode.BURST);
+    }
+
+
+    @Override
+    public void onFocusChange(View view, boolean hasFocus) {
+        if (hasFocus)
+            mValidator.validateBefore(view);
+    }
+
+    /**
+     * DOB and submit button clicked
+     *
+     * @param view
+     */
     @OnClick({R.id.dateOfBirthEditText, R.id.submitButton})
-    public void dateOfBirthClicked(View view) {
+    public void dobFieldSubmitBtnClicked(View view) {
         switch (view.getId()) {
             case R.id.dateOfBirthEditText:
                 showDOBDatePicker();
@@ -115,8 +230,7 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
         return false;
     }
 
-    @OnFocusChange({R.id.fullnameEditText, R.id.dateOfBirthEditText,
-            R.id.phoneNumberEditText, R.id.addressEditText})
+    @OnFocusChange({R.id.fullnameEditText, R.id.phoneNumberEditText})
     public void editTextFocusChanged(View view, boolean hasFocus) {
         if (hasFocus)
             mValidator.validateBefore(view);
@@ -125,10 +239,17 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
     @Override
     public void onValidationSucceeded() {
         super.onValidationSucceeded();
-        membershipRegistrationRequest();
+        mIsInputFieldFilled = true;
+
     }
 
-    private void membershipRegistrationRequest() {
+    @Override
+    public void onValidationFailed(List<ValidationError> errors) {
+        super.onValidationFailed(errors);
+        mIsInputFieldFilled = false;
+    }
+
+    private void requestMembershipRegistrationRequest() {
         mActivity.showProgressDialog("Please wait...");
         SignUpPostData signUpPostData = new SignUpPostData();
         signUpPostData.setFullName(fullnameEditText.getText().toString());

@@ -1,17 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tool="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/whiteColor"
-              android:orientation="vertical">
+    xmlns:tool="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/whiteColor"
+    android:orientation="vertical">
 
-    <Button
-        android:id="@+id/esewaButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="E-Sewa"
-        android:visibility="gone"/>
 
     <LinearLayout
         android:id="@+id/main_layout"
@@ -37,7 +31,7 @@
                     android:id="@+id/daysTextView"
                     style="@style/countdown_timer_text_style"
                     android:layout_gravity="center"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/daysLabelTextView"
@@ -48,7 +42,7 @@
                     android:text="@string/days"
                     android:textAllCaps="true"
                     android:textColor="@color/dimPrimaryColor"
-                    android:textSize="@dimen/time_label_txt_size"/>
+                    android:textSize="@dimen/time_label_txt_size" />
             </LinearLayout>
 
 
@@ -58,7 +52,7 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginTop="5dp"
-                android:background="@color/white"/>
+                android:background="@color/colorPrimary" />
 
 
             <LinearLayout
@@ -71,7 +65,7 @@
                     android:id="@+id/hoursTextView"
                     style="@style/countdown_timer_text_style"
                     android:layout_gravity="center"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/hoursLabelTextView"
@@ -82,7 +76,7 @@
                     android:text="@string/hours"
                     android:textAllCaps="true"
                     android:textColor="@color/dimPrimaryColor"
-                    android:textSize="@dimen/time_label_txt_size"/>
+                    android:textSize="@dimen/time_label_txt_size" />
             </LinearLayout>
 
 
@@ -92,7 +86,7 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginTop="5dp"
-                android:background="@color/white"/>
+                android:background="@color/colorPrimary" />
 
 
             <LinearLayout
@@ -105,7 +99,7 @@
                     android:id="@+id/minsTextView"
                     style="@style/countdown_timer_text_style"
                     android:layout_gravity="center"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/minsLabelTextView"
@@ -116,7 +110,7 @@
                     android:text="@string/mins"
                     android:textAllCaps="true"
                     android:textColor="@color/dimPrimaryColor"
-                    android:textSize="@dimen/time_label_txt_size"/>
+                    android:textSize="@dimen/time_label_txt_size" />
             </LinearLayout>
 
 
@@ -126,7 +120,7 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginTop="5dp"
-                android:background="@color/white"/>
+                android:background="@color/colorPrimary" />
 
 
             <LinearLayout
@@ -139,7 +133,7 @@
                     android:id="@+id/secsTextView"
                     style="@style/countdown_timer_text_style"
                     android:layout_gravity="center"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/secsLabelTextView"
@@ -150,7 +144,7 @@
                     android:text="@string/secs"
                     android:textAllCaps="true"
                     android:textColor="@color/dimPrimaryColor"
-                    android:textSize="@dimen/time_label_txt_size"/>
+                    android:textSize="@dimen/time_label_txt_size" />
             </LinearLayout>
 
 
@@ -169,8 +163,8 @@
                 android:layout_marginTop="@dimen/home_view_margin_top_large"
                 android:gravity="center"
                 android:lineSpacingExtra="8dp"
-                android:textColor="@color/white"
-                android:textSize="@dimen/match_between_txt_size"/>
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/match_between_txt_size" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -178,8 +172,8 @@
                 android:gravity="center"
                 android:lineSpacingExtra="8dp"
                 android:text="vs."
-                android:textColor="@color/white"
-                android:textSize="@dimen/match_between_txt_size"/>
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/match_between_txt_size" />
 
 
             <TextView
@@ -188,8 +182,8 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:lineSpacingExtra="8dp"
-                android:textColor="@color/white"
-                android:textSize="@dimen/match_between_txt_size"/>
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/match_between_txt_size" />
         </LinearLayout>
         <!--competition name/venue/live on-->
         <LinearLayout
@@ -204,8 +198,8 @@
                 android:layout_marginTop="@dimen/home_view_margin_top_large"
                 android:gravity="center"
                 android:lineSpacingExtra="5dp"
-                android:textColor="@color/white"
-                android:textSize="@dimen/competition_txt_size"/>
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/competition_txt_size" />
             <!--venue-->
             <TextView
                 android:id="@+id/competitionVenueTextView"
@@ -213,8 +207,8 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:lineSpacingExtra="5dp"
-                android:textColor="@color/white"
-                android:textSize="@dimen/competition_txt_size"/>
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/competition_txt_size" />
 
             <!--live on-->
             <LinearLayout
@@ -233,16 +227,16 @@
                     android:layout_height="wrap_content"
                     android:padding="5dp"
                     android:text="live On"
-                    android:textColor="@color/white"
-                    android:textSize="10sp"/>
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="10sp" />
 
                 <TextView
                     android:id="@+id/broadCastChannelTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:lineSpacingExtra="5dp"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/competition_txt_size"/>
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/competition_txt_size" />
             </LinearLayout>
 
             <!--<TextView-->
@@ -253,7 +247,7 @@
             <!--android:gravity="center"-->
             <!--android:lineSpacingExtra="5dp"-->
             <!--android:textAllCaps="true"-->
-            <!--android:textColor="@color/white"-->
+            <!--android:textColor="@color/colorPrimary"-->
             <!--android:textSize="@dimen/competition_txt_size"/>-->
         </LinearLayout>
 
@@ -277,8 +271,8 @@
                     android:gravity="center"
                     android:lineSpacingExtra="5dp"
                     android:text="12"
-                    android:textColor="@color/white"
-                    android:textSize="40sp"/>
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="40sp" />
 
                 <TextView
                     android:id="@+id/dateTextView"
@@ -286,8 +280,8 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:lineSpacingExtra="5dp"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/competition_txt_size"/>
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/competition_txt_size" />
 
                 <TextView
                     android:id="@+id/timeTextView"
@@ -295,9 +289,9 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:lineSpacingExtra="5dp"
-                    android:textColor="@color/white"
+                    android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/competition_txt_size"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <FrameLayout
@@ -310,7 +304,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:src="@drawable/ic_placeholder_team"/>
+                    android:src="@drawable/ic_placeholder_team" />
             </FrameLayout>
         </LinearLayout>
 
@@ -331,15 +325,15 @@
                 android:layout_height="wrap_content"
                 android:padding="5dp"
                 android:text="@string/live_screening"
-                android:textColor="@color/white"
-                android:textSize="15sp"/>
+                android:textColor="@color/colorPrimary"
+                android:textSize="15sp" />
 
             <ImageView
                 android:id="@+id/liveScreeningImageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                tool:src="@drawable/mail"/>
+                tool:src="@drawable/mail" />
         </LinearLayout>
     </LinearLayout>
 
@@ -356,7 +350,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/fixture_schedule_yet_to_come"
-            android:textColor="@color/white"
-            android:textSize="14dp"/>
+            android:textColor="@color/colorPrimary"
+            android:textSize="14dp" />
     </LinearLayout>
 </LinearLayout>
