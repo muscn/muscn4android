@@ -168,7 +168,7 @@ public class NavigationDrawerFragment extends MasterFragment implements Navigati
         items.add(new NavigationItem("Recent Results", "7", R.drawable.ic_fab_recent_result, true, MenuType.RECENT_RESULTS));//6 pos
         items.add(new NavigationItem("News", "8", R.drawable.ic_rss_feed_24dp, true, MenuType.NEWS));//7 pos
         items.add(new NavigationItem("About Us", "9", R.drawable.ic_fab_about_us, true, MenuType.ABOUT_US));//8 pos
-        items.add(new NavigationItem("Partners", "10", R.drawable.ic_fab_about_us, true, MenuType.PARTNERS));//9 pos
+        items.add(new NavigationItem("Partners", "10", R.drawable.ic_partner_24dp, true, MenuType.PARTNERS));//9 pos
 
         return items;
     }
