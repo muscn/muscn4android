@@ -1,9 +1,7 @@
 package com.awecode.muscn.views.home;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -16,13 +14,9 @@ import com.awecode.muscn.model.http.fixtures.CompetitionYear;
 import com.awecode.muscn.model.http.fixtures.FixturesResponse;
 import com.awecode.muscn.model.http.fixtures.Opponent;
 import com.awecode.muscn.model.http.fixtures.Result;
-import com.awecode.muscn.util.Constants;
 import com.awecode.muscn.util.Util;
 import com.awecode.muscn.util.countdown_timer.CountDownTimer;
 import com.awecode.muscn.views.MasterFragment;
-import com.esewa.android.sdk.payment.ESewaConfiguration;
-import com.esewa.android.sdk.payment.ESewaPayment;
-import com.esewa.android.sdk.payment.ESewaPaymentActivity;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
@@ -41,9 +35,6 @@ import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
-
-import static android.app.Activity.RESULT_CANCELED;
-import static android.app.Activity.RESULT_OK;
 
 /**
  * Created by surensth on 9/23/16.
@@ -132,67 +123,6 @@ HomeFragment extends MasterFragment {
             requestFixturesList();
     }
 
-    @OnClick(R.id.esewaButton)
-    public void esweaButtonClicked(View view) {
-        //check internet connection
-        if (!Util.checkInternetConnection(mContext)) {
-            noInternetConnectionDialog();
-            return;
-        }
-
-        //start esewa payment
-        startEsewaPayment();
-    }
-
-    private ESewaConfiguration mEsewConfiguration;
-    private static final int REQUEST_CODE_PAYMENT = 112;
-
-    /**
-     * start esewa payment
-     */
-    private void startEsewaPayment() {
-        //config esewa with client id and secret key first
-        setupEsewaConfig();
-
-        ESewaPayment eSewaPayment = new ESewaPayment("100", "Membership Registration", "MEMB-01", "");
-        Intent intent = new Intent(mContext, ESewaPaymentActivity.class);
-        intent.putExtra(ESewaConfiguration.ESEWA_CONFIGURATION, mEsewConfiguration);
-        intent.putExtra(ESewaPayment.ESEWA_PAYMENT, eSewaPayment);
-        startActivityForResult(intent, REQUEST_CODE_PAYMENT);
-
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_CODE_PAYMENT) {
-            //payment success
-            if (resultCode == RESULT_OK) {
-                String s = data.getStringExtra(ESewaPayment.EXTRA_RESULT_MESSAGE);
-                Log.i("Proof   of   Payment", s);
-                toast("SUCCESSFUL   PAYMENT");
-                //payment cancel by user
-            } else if (resultCode == RESULT_CANCELED) {
-                toast("It seems you cancelled the payment.");
-                //invalid parameter passed to esewa sdk
-            } else if (resultCode == ESewaPayment.RESULT_EXTRAS_INVALID) {
-                String s = data.getStringExtra(ESewaPayment.EXTRA_RESULT_MESSAGE);
-                Log.i("Proof   of   Payment", s);
-            }
-        }
-    }
-
-
-    /**
-     * Config esewa with client ID and secret key
-     */
-    private void setupEsewaConfig() {
-        if (mEsewConfiguration != null)
-            return;
-        mEsewConfiguration = new ESewaConfiguration().clientId(Constants.ESEWA_CLIENT_ID)
-                .secretKey(Constants.ESEWA_SECRET_KEY)
-                .environment(ESewaConfiguration.ENVIRONMENT_TEST);
-    }
 
     /**
      * Load fixtures from db and show in view
@@ -441,7 +371,7 @@ HomeFragment extends MasterFragment {
 
                 mDayTextView.setText(dayValue);
                 mDateTextView.setText(newDateFormat);
-                mTimeTextView.setText(displayValue + " NPT");
+                mTimeTextView.setText(displayValue);
 
             } catch (Exception e) {
                 e.printStackTrace();
