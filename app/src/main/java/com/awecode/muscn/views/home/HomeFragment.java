@@ -213,6 +213,7 @@ HomeFragment extends MasterFragment {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            showEmptyLayout();
         }
 
     }

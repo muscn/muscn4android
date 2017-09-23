@@ -3,7 +3,6 @@ package com.awecode.muscn;
 import android.app.Application;
 import android.util.Log;
 
-import com.awecode.muscn.model.http.fixtures.LiveScreening;
 import com.awecode.muscn.util.prefs.Prefs;
 import com.awecode.muscn.util.retrofit.MuscnApiInterface;
 import com.awecode.muscn.util.retrofit.ServiceGenerator;
@@ -79,7 +78,7 @@ public class MyApplication extends Application {
                         if (oldVersion == 2) {
 
                             Log.v("test", "inside version");
-                            RealmObjectSchema objectSchema = schema.create("LiveScreening")
+                            RealmObjectSchema livscreenSchema = schema.create("LiveScreening")
                                     .addField("id", Integer.class)
                                     .addField("name", String.class)
                                     .addField("slug", String.class)
@@ -90,7 +89,22 @@ public class MyApplication extends Application {
                                     .addField("active", Boolean.class)
                                     .addField("location", String.class)
                                     .addField("order", Integer.class);
-                            schema.get("Result").addRealmObjectField("liveScreening",objectSchema);
+
+                            RealmObjectSchema partnersResultSchema = schema.create("PartnersResult")
+                                    .addField("id", Integer.class)
+                                    .addField("name", String.class)
+                                    .addField("partnership", String.class)
+                                    .addField("slug", String.class)
+                                    .addField("logo", String.class)
+                                    .addField("about", String.class)
+                                    .addField("privileges", String.class)
+                                    .addField("url", String.class)
+                                    .addField("active", Boolean.class)
+                                    .addField("location", Integer.class)
+                                    .addField("order", Integer.class);
+
+                            schema.get("Result").addRealmObjectField("liveScreening", livscreenSchema)
+                                    .addRealmObjectField("PartnersResult", partnersResultSchema);
                             oldVersion++;
                         }
 
