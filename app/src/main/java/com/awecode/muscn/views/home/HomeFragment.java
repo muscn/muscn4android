@@ -75,8 +75,6 @@ HomeFragment extends MasterFragment {
     TextView mBroadCastChannelTextView;
     @BindView(R.id.dateTextView)
     TextView mDateTextView;
-    @BindView(R.id.firstTeamImageView)
-    ImageView mFirstTeamImageView;
     @BindView(R.id.hoursLabelTextView)
     TextView mHoursLabelTextView;
     @BindView(R.id.minsLabelTextView)

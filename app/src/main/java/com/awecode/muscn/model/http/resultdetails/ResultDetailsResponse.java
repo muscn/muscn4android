@@ -1,7 +1,6 @@
 
 package com.awecode.muscn.model.http.resultdetails;
 
-import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -10,7 +9,7 @@ import io.realm.RealmObject;
 import lombok.Getter;
 
 @Getter
-public class ResultDetailsResponse  extends RealmObject{
+public class ResultDetailsResponse extends RealmObject {
 
     @SerializedName("id")
     @Expose

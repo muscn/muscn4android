@@ -3,6 +3,7 @@ package com.awecode.muscn.util.retrofit;
 import com.awecode.muscn.model.http.fixtures.FixturesResponse;
 import com.awecode.muscn.model.http.injuries.InjuriesResponse;
 import com.awecode.muscn.model.http.leaguetable.LeagueTableResponse;
+import com.awecode.muscn.model.http.partners.PartnersResponse;
 import com.awecode.muscn.model.http.recent_results.RecentResultsResponse;
 import com.awecode.muscn.model.http.resultdetails.ResultDetailsResponse;
 import com.awecode.muscn.model.http.signin.SignInData;
@@ -27,7 +28,7 @@ import rx.Observable;
  */
 public interface MuscnApiInterface {
 
-    @GET("api/v1/fixtures")
+    @GET("api/v1/fixtures/")
     Observable<FixturesResponse> getFixtures();
 
     @GET("api/v1/league_table")
@@ -65,4 +66,8 @@ public interface MuscnApiInterface {
 
     @POST("api/v1/memberships/")
     Observable<MembershipResponse> postMembershipData(@Body SignUpPostData signUpPostData);
+
+    @GET("api/v1/partners/")
+    Observable<PartnersResponse> getPartnersList();
+
 }

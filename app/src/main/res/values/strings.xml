@@ -85,6 +85,10 @@
     <string name="google_maps_package_name">com.google.android.apps.maps</string>
     <string name="install_google_maps">Please install Google Maps.</string>
     <string name="install">Install</string>
+    <string name="facebook_app_id">309035936237940</string>
+    <string name="fb_login_protocol_scheme">fb309035936237940</string>
+    <string name="partners">Partners</string>
+    <string name="loading_partners">Loading partners...</string>
 
 
 </resources>

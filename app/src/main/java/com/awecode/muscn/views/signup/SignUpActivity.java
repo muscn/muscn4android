@@ -8,6 +8,7 @@ import com.awecode.muscn.model.enumType.MenuType;
 import com.awecode.muscn.views.base.AppCompatBaseActivity;
 import com.awecode.muscn.views.membership_registration.RegistrationFragment;
 import com.awecode.muscn.views.signin.SignInFragment;
+import com.facebook.FacebookSdk;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -31,6 +32,8 @@ public class SignUpActivity extends AppCompatBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FacebookSdk.sdkInitialize(getApplicationContext());
+
         menuType = (MenuType) getIntent().getSerializableExtra(TYPE_INTENT);
         if (menuType != null)
             if (menuType == MenuType.SIGN_UP)
@@ -39,7 +42,6 @@ public class SignUpActivity extends AppCompatBaseActivity {
                 configureSignInView();
             else if (menuType == MenuType.MEMBERSHIP_REGISTRATION)
                 configureMembershipRegistrationView();
-
     }
 
     private void configureMembershipRegistrationView() {
