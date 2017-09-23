@@ -8,7 +8,9 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import com.awecode.muscn.R;
 import com.awecode.muscn.model.http.api_error.APIError;
@@ -17,6 +19,7 @@ import com.awecode.muscn.model.membership.MembershipResponse;
 import com.awecode.muscn.util.Constants;
 import com.awecode.muscn.util.Util;
 import com.awecode.muscn.util.prefs.PrefsHelper;
+import com.awecode.muscn.util.saripaar.EditTextNotEmptyRule;
 import com.awecode.muscn.views.base.AppCompatBaseFragment;
 import com.esewa.android.sdk.payment.ESewaConfiguration;
 import com.esewa.android.sdk.payment.ESewaPayment;
@@ -25,7 +28,6 @@ import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.Length;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
-import com.mobsandgeeks.saripaar.annotation.Order;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.util.Calendar;
@@ -53,12 +55,10 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
     private static final String TAG = RegistrationFragment.class.getSimpleName();
 
     @NotEmpty
-    @Order(1)
     @BindView(R.id.fullnameEditText)
     EditText fullnameEditText;
 
     @NotEmpty
-    @Order(2)
     @Length(min = 10, message = "Must be minimum of 10 digit.")
     @BindView(R.id.phoneNumberEditText)
     EditText phoneNumberEditText;
@@ -69,6 +69,15 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
 
     @BindView(R.id.addressEditText)
     EditText addressEditText;
+
+    @BindView(R.id.receiptLayout)
+    LinearLayout receiptLayout;
+
+    @BindView(R.id.receiptNoEditText)
+    EditText receiptNoEditText;
+
+    @BindView(R.id.submitButton)
+    Button submitButton;
 
     private Boolean mIsInputFieldFilled = false;
     private ESewaConfiguration mEsewConfiguration;
@@ -94,24 +103,61 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
 
     @OnClick({R.id.esewaButton, R.id.receiptButton, R.id.bankDepositButton})
     public void paymentOptionsBtnClicked(View view) {
-        if (mIsInputFieldFilled)
-            switch (view.getId()) {
-                case R.id.esewaButton:
-                    handleEsewaBtnClicked();
-                    break;
-                case R.id.receiptButton:
-                    break;
-                case R.id.bankDepositButton:
-                    break;
-            }
-        else
-            toast("Please enter fullname and mobile number first.");
+        switch (view.getId()) {
+            case R.id.esewaButton:
+                handleEsewaBtnClicked();
+                break;
+            case R.id.receiptButton:
+                handleReceiptBtnClicked();
+                break;
+            case R.id.bankDepositButton:
+                handleBankDepositBtnClicked();
+                break;
+        }
+
     }
 
+    private void handleBankDepositBtnClicked() {
+        toast("Feature coming soon.");
+    }
+
+    private void handleReceiptBtnClicked() {
+
+        //reset receipt input field - remove field validation
+        mValidator.removeRules(receiptNoEditText);
+        receiptNoEditText.setError(null);
+        
+        if (receiptLayout.getVisibility() == View.VISIBLE) {
+            //hide receipt layout
+            receiptLayout.setVisibility(View.GONE);
+
+            //hide submit button
+            submitButton.setVisibility(View.GONE);
+        } else {
+            //show receipt layout
+            receiptLayout.setVisibility(View.VISIBLE);
+
+            //show submit button
+            submitButton.setVisibility(View.VISIBLE);
+
+            //add not empty receipt input field validation
+            mValidator.put(receiptNoEditText, new EditTextNotEmptyRule("Receipt Number cannot be empty."));
+
+        }
+    }
+
+    /**
+     * handle esewa button click
+     */
     private void handleEsewaBtnClicked() {
         //check internet connection
         if (!Util.checkInternetConnection(mContext)) {
             noInternetConnectionDialog();
+            return;
+        }
+
+        if (!mIsInputFieldFilled) {
+            toast("Please enter full name and mobile number first.");
             return;
         }
 
@@ -230,7 +276,7 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
         mValidator.validate();
 
     }
-    
+
 
     @Override
     public void onValidationSucceeded() {
