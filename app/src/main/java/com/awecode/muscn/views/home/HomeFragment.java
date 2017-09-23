@@ -19,8 +19,6 @@ import com.awecode.muscn.model.http.fixtures.Result;
 import com.awecode.muscn.util.Constants;
 import com.awecode.muscn.util.Util;
 import com.awecode.muscn.util.countdown_timer.CountDownTimer;
-import com.awecode.muscn.util.retrofit.MuscnApiInterface;
-import com.awecode.muscn.util.retrofit.ServiceGenerator;
 import com.awecode.muscn.views.MasterFragment;
 import com.esewa.android.sdk.payment.ESewaConfiguration;
 import com.esewa.android.sdk.payment.ESewaPayment;
@@ -119,7 +117,6 @@ HomeFragment extends MasterFragment {
 
     @Override
     public int getLayout() {
-//        return R.layout.fragment_home;
         return R.layout.fragment_home_new;
 
     }
@@ -226,7 +223,7 @@ HomeFragment extends MasterFragment {
         try {
             if (getTableDataCount(Result.class) < 1)
                 showProgressView("Loading data...");
-            Observable<FixturesResponse> call = ServiceGenerator.createService(MuscnApiInterface.class).getFixtures();
+            Observable<FixturesResponse> call = mApiInterface.getFixtures();
             call.subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Observer<FixturesResponse>() {

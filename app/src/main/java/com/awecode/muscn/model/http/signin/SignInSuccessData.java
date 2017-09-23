@@ -11,6 +11,5 @@ import lombok.Setter;
 @Setter
 public class SignInSuccessData {
     String token;
-    Boolean is_member;
-    Boolean member_status;
+    Boolean status;
 }

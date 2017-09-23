@@ -95,11 +95,25 @@ public class SignInFragment extends AppCompatBaseFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        //set toolbar title
         ((SignUpActivity) mContext).setToolbarTitle(getString(R.string.sign_in));
-        if (mSignUpResponse != null && mSignUpResponse.getEmail() != null) {
-            emailEditText.setText(mSignUpResponse.getEmail());
-        }
 
+
+        setEmailIfFromSignup();
+        passwordEditTextIMEAction();
+        fbLoginConfigure();
+    }
+
+    /**
+     * set value in email field if from signup
+     */
+    private void setEmailIfFromSignup() {
+        if (mSignUpResponse != null && !TextUtils.isEmpty(mSignUpResponse.getEmail()))
+            emailEditText.setText(mSignUpResponse.getEmail());
+
+    }
+
+    private void passwordEditTextIMEAction() {
         passwordEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -111,8 +125,6 @@ public class SignInFragment extends AppCompatBaseFragment {
                 return handled;
             }
         });
-
-        fbLoginConfigure();
     }
 
     /**
@@ -185,7 +197,9 @@ public class SignInFragment extends AppCompatBaseFragment {
         signInRequest();
     }
 
-    //    sign in request
+    /**
+     * signin request
+     */
     private void signInRequest() {
         mActivity.showProgressDialog("Please wait...");
         final SignInData signInData = new SignInData();
