@@ -13,7 +13,11 @@ import lombok.Setter;
 public class SignUpPostData {
     @SerializedName("full_name")
     String fullName;
-    String username;
     String email;
     String password;
+
+    @SerializedName("date_of_birth")
+    String dateOfBirth;
+    String address;
+    String mobile;
 }

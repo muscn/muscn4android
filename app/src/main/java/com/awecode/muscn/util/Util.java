@@ -96,6 +96,22 @@ public class Util {
         return time;
     }
 
+    //nepal time is obtained from API so just formatting to get desired format date string
+    public static String nepalDateFormatter(String date, String obtainedFormat) {
+        String requiredFormat = "HH:mm EEE dd MMM ''yy";
+        SimpleDateFormat format = new SimpleDateFormat(obtainedFormat);
+//        format.setTimeZone(TimeZone.getTimeZone("UTC"));
+        Date newDate = null;
+        try {
+            newDate = format.parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        format = new SimpleDateFormat(requiredFormat);
+        String time = format.format(newDate);
+        return time;
+    }
+
     public static String dateFormatter(String date, String obtainedFormat, String requiredFormat) {
         SimpleDateFormat format = new SimpleDateFormat(obtainedFormat);
         format.setTimeZone(TimeZone.getTimeZone("UTC"));
@@ -314,4 +330,11 @@ public class Util {
         return error;
     }
 
+    public static String twoDigitFormat(String number) {
+        return String.format("%02d", number);
+    }
+
+    public static String twoDigitFormat(int number) {
+        return String.format("%02d", number);
+    }
 }

@@ -73,6 +73,13 @@
     <string name="loading_news">Loading News...</string>
     <string name="news">News</string>
     <string name="injury">Injury</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="date_of_birth">Date of Birth</string>
+    <string name="address">Address</string>
+    <string name="membership_registration">Membership Registration</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="submit">Submit</string>
+    <string name="mobile_number">Mobile Number</string>
 
 
 </resources>

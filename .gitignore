@@ -100,3 +100,7 @@ freeline_project_description.json
 #MACOSX
 .DS_Store
 *.DS_Store
+
+# Fabric plugin, crashlytics
+fabric.properties
+

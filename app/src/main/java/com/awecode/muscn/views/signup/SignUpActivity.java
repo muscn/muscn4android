@@ -6,6 +6,7 @@ import android.widget.TextView;
 import com.awecode.muscn.R;
 import com.awecode.muscn.model.enumType.MenuType;
 import com.awecode.muscn.views.base.AppCompatBaseActivity;
+import com.awecode.muscn.views.membership_registration.RegistrationFragment;
 import com.awecode.muscn.views.signin.SignInFragment;
 
 import butterknife.BindView;
@@ -31,17 +32,28 @@ public class SignUpActivity extends AppCompatBaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         menuType = (MenuType) getIntent().getSerializableExtra(TYPE_INTENT);
-        if (menuType != null && menuType == MenuType.SIGN_UP)
-            configureSignUpView();
-        else if (menuType != null && menuType == MenuType.SIGN_IN_OUT)
-            configureSignInView();
+        if (menuType != null)
+            if (menuType == MenuType.SIGN_UP)
+                configureSignUpView();
+            else if (menuType == MenuType.SIGN_IN_OUT)
+                configureSignInView();
+            else if (menuType == MenuType.MEMBERSHIP_REGISTRATION)
+                configureMembershipRegistrationView();
+
+    }
+
+    private void configureMembershipRegistrationView() {
+        setToolbarTitle(getString(R.string.membership_registration));
+        openFragmentNoHistory(RegistrationFragment.newInstance());
     }
 
     private void configureSignInView() {
+        setToolbarTitle(getString(R.string.sign_in));
         openFragmentNoHistory(SignInFragment.newInstance());
     }
 
     private void configureSignUpView() {
+        setToolbarTitle(getString(R.string.signup));
         openFragmentNoHistory(SignUpFragment.newInstance());
     }
 

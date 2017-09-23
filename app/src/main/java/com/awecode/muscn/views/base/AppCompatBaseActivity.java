@@ -113,6 +113,7 @@ public abstract class AppCompatBaseActivity extends AppCompatActivity implements
                 })
                 .show();
     }
+
     public void successDialogAndCloseActivity(final Context context, String message) {
         new AlertDialog.Builder(context, R.style.AppCompatAlertDialogStyle)
                 .setMessage(message)
@@ -133,6 +134,13 @@ public abstract class AppCompatBaseActivity extends AppCompatActivity implements
     public void showProgressDialog() {
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage(getResources().getString(R.string.loading));
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+    }
+
+    public void showProgressDialog(String message) {
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage(message);
         progressDialog.setCancelable(false);
         progressDialog.show();
     }

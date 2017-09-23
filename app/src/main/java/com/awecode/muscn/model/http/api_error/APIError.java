@@ -15,4 +15,5 @@ public class APIError {
     private String ErrorDescription;
     private List<String> non_field_errors;
     private String error;
+    private String detail;
 }

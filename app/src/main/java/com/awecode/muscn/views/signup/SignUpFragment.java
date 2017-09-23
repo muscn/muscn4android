@@ -1,8 +1,6 @@
 package com.awecode.muscn.views.signup;
 
-import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.EditText;
 
 import com.awecode.muscn.R;
@@ -38,9 +36,6 @@ public class SignUpFragment extends AppCompatBaseFragment {
     @BindView(R.id.fullnameEditText)
     EditText fullnameEditText;
 
-    @NotEmpty(messageResId = R.string.not_empty_error_text)
-    @BindView(R.id.usernameEditText)
-    EditText usernameEditText;
 
     @NotEmpty(messageResId = R.string.not_empty_error_text)
     @Email(messageResId = R.string.invalid_email)
@@ -71,11 +66,6 @@ public class SignUpFragment extends AppCompatBaseFragment {
         return R.layout.fragment_signup;
     }
 
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        ((SignUpActivity) mContext).setToolbarTitle(getString(R.string.signup));
-    }
 
     @OnClick(R.id.signUpButton)
     public void onClick() {
@@ -87,10 +77,9 @@ public class SignUpFragment extends AppCompatBaseFragment {
 
     //sign up request
     private void signUpRequest() {
-        mActivity.showProgressDialog();
+        mActivity.showProgressDialog("Creating account...");
         SignUpPostData signUpPostData = new SignUpPostData();
         signUpPostData.setFullName(fullnameEditText.getText().toString());
-        signUpPostData.setUsername(usernameEditText.getText().toString());
         signUpPostData.setEmail(emailEditText.getText().toString());
         signUpPostData.setPassword(passwordEditText.getText().toString());
         Observable<SignUpPostData> call = mApiInterface.postSignUpData(signUpPostData);
@@ -112,9 +101,9 @@ public class SignUpFragment extends AppCompatBaseFragment {
                                 errorMessage = apiError.getError();
                             if (!TextUtils.isEmpty(errorMessage)) {
                                 if (errorMessage.contains("users_user_username_key"))
-                                    showErrorDialog(mContext, getString(R.string.duplicate_username));
+                                    showErrorDialog(getString(R.string.duplicate_username));
                                 else if (errorMessage.contains("users_user_email_key"))
-                                    showErrorDialog(mContext, getString(R.string.duplicate_email));
+                                    showErrorDialog(getString(R.string.duplicate_email));
                             }
                         } else
                             noInternetConnectionDialog();

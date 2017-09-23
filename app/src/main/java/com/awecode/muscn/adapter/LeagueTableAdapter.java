@@ -50,7 +50,7 @@ public class LeagueTableAdapter extends RealmRecyclerViewAdapter<LeagueTableResp
             pts = leagueTableResponse.getPts();
 
             if (club.equalsIgnoreCase("Manchester United"))
-                holder.rowLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.colorPrimaryDark));
+                holder.rowLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.league_table_manutd_color));
             else
                 holder.rowLayout.setBackgroundColor(Color.TRANSPARENT);
 

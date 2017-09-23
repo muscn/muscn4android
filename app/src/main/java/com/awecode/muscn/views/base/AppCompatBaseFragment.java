@@ -110,19 +110,18 @@ public abstract class AppCompatBaseFragment extends Fragment implements Validato
     /**
      * normal dialog
      *
-     * @param context
      * @param message
      */
-    public void showErrorDialog(final Context context, String message) {
-        new AlertDialog.Builder(context, R.style.AppCompatAlertDialogStyle)
+    public void showErrorDialog(String message) {
+        new AlertDialog.Builder(mContext, R.style.AppCompatAlertDialogStyle)
                 .setMessage(message)
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-//                        finish();
                         dialog.dismiss();
                     }
                 })
                 .show();
     }
+
 
 }

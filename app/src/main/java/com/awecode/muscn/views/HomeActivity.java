@@ -60,10 +60,6 @@ import static com.awecode.muscn.util.Util.getAppVersion;
 public class HomeActivity extends BaseActivity implements RecyclerViewScrollListener, NavigationDrawerCallbacks {
 
     private static final String TAG = HomeActivity.class.getSimpleName();
-    @BindView(R.id.background_one)
-    ImageView mBackgroundOne;
-    @BindView(R.id.background_two)
-    ImageView mBackgroundTwo;
     @BindView(R.id.fragment_drawer)
     View mNavLayout;
     @BindView(R.id.versionNavTextView)

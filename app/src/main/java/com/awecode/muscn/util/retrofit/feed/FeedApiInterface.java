@@ -10,6 +10,6 @@ import rx.Observable;
  */
 
 public interface FeedApiInterface {
-    @GET("rss/sportonline_uk_edition/football/teams/m/man_utd/rss.xml")
+    @GET("rss/football/manchester-united/feed")
     Observable<Rss> getManutdFeed();
 }

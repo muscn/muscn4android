@@ -98,7 +98,7 @@
         android:orientation="vertical"
         android:weightSum="6">
 
-        <!--add android:layout_weight="5.5" for recyclerview-->
+        <!--make layout weight of recycler view 5.5-->
         <android.support.v7.widget.RecyclerView
             android:id="@+id/drawerList"
             android:layout_width="match_parent"
@@ -106,11 +106,11 @@
             android:layout_weight="6"
             android:paddingTop="25dp" />
 
-        <include
-            layout="@layout/white_horizontal_line"
-            android:visibility="gone" />
-        <!--remove   android:visibility="gone" in below line-->
+        <!--make below visibility visible-->
+        <include layout="@layout/white_horizontal_line"
+            android:visibility="gone"/>
 
+        <!--make below visibility visible-->
 
         <LinearLayout
             android:id="@+id/bottomLayout"
