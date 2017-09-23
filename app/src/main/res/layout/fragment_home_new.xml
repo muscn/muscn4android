@@ -6,6 +6,13 @@
               android:background="@color/whiteColor"
               android:orientation="vertical">
 
+    <Button
+        android:id="@+id/esewaButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="E-Sewa"
+        android:visibility="gone"/>
+
     <LinearLayout
         android:id="@+id/main_layout"
         android:layout_width="match_parent"
@@ -164,15 +171,6 @@
                 android:lineSpacingExtra="8dp"
                 android:textColor="@color/white"
                 android:textSize="@dimen/match_between_txt_size"/>
-
-            <ImageView
-                android:id="@+id/firstTeamImageView"
-                android:layout_width="@dimen/team_logo_size"
-                android:layout_height="@dimen/team_logo_size"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:src="@drawable/ic_placeholder_team"
-                android:visibility="gone"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -343,8 +341,6 @@
                 android:layout_gravity="center"
                 tool:src="@drawable/mail"/>
         </LinearLayout>
-
-
     </LinearLayout>
 
     <LinearLayout

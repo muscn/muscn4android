@@ -18,4 +18,10 @@ public class Constants {
     public static final String PREFS_LOGIN_TOKEN = "prefs_login_token";
     public static final String PREFS_LOGIN_RESPONSE= "prefs_login_response";
 
+    /**
+     * esewa key and ID
+     */
+    public static final String ESEWA_CLIENT_ID = "######";
+    public static final String ESEWA_SECRET_KEY = "########";
+
 }
