@@ -1,7 +1,6 @@
 package com.awecode.muscn;
 
 import android.app.Application;
-import android.util.Log;
 
 import com.awecode.muscn.util.prefs.Prefs;
 import com.awecode.muscn.util.retrofit.MuscnApiInterface;
@@ -63,8 +62,6 @@ public class MyApplication extends Application {
                         // DynamicRealm exposes an editable schema
                         RealmSchema schema = realm.getSchema();
 
-
-                        Log.v("", "testing the migration: " + oldVersion + " new: " + newVersion);
                         if (oldVersion == 1) {
 
                             schema.create("Item")
@@ -77,7 +74,6 @@ public class MyApplication extends Application {
                         }
                         if (oldVersion == 2) {
 
-                            Log.v("test", "inside version");
                             RealmObjectSchema livscreenSchema = schema.create("LiveScreening")
                                     .addField("id", Integer.class)
                                     .addField("name", String.class)
@@ -117,29 +113,6 @@ public class MyApplication extends Application {
 
         return mRealm;
     }
-
-    RealmMigration migration_1 = new RealmMigration() {
-        @Override
-        public void migrate(DynamicRealm realm, long oldVersion, long newVersion) {
-
-            // DynamicRealm exposes an editable schema
-            RealmSchema schema = realm.getSchema();
-
-
-            Log.v("", "testing the migration: " + oldVersion + " new: " + newVersion);
-            if (oldVersion == 1) {
-
-                schema.create("Item")
-                        .addField("title", String.class)
-                        .addField("link", String.class)
-                        .addField("description", String.class)
-                        .addField("pubDate", String.class);
-
-                oldVersion++;
-            }
-
-        }
-    };
 
     public MuscnApiInterface getApiInterface() {
         if (mApiInterface == null)
