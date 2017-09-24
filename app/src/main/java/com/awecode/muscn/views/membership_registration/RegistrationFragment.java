@@ -16,7 +16,6 @@ import android.widget.TextView;
 import com.awecode.muscn.R;
 import com.awecode.muscn.model.http.api_error.APIError;
 import com.awecode.muscn.model.http.signin.SignInSuccessData;
-import com.awecode.muscn.model.http.signup.SignUpPostData;
 import com.awecode.muscn.model.membership.MembershipResponse;
 import com.awecode.muscn.util.Constants;
 import com.awecode.muscn.util.Util;
@@ -38,11 +37,15 @@ import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.OnEditorAction;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 import retrofit2.adapter.rxjava.HttpException;
 import rx.Observable;
 import rx.Observer;
@@ -112,6 +115,7 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
 
     private String mBankDepositImgFilePath = "";
     private PaymentType mPaymentType;
+    private Boolean mEsewaPaymentStatus = false;
 
 
     public static RegistrationFragment newInstance() {
@@ -348,6 +352,7 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
                 String s = data.getStringExtra(ESewaPayment.EXTRA_RESULT_MESSAGE);
                 Log.i("Proof   of   Payment", s);
                 toast("SUCCESSFUL   PAYMENT");
+                mEsewaPaymentStatus = true;
                 //payment cancel by user
             } else if (resultCode == RESULT_CANCELED) {
                 toast("It seems you cancelled the payment.");
@@ -466,6 +471,7 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
             case ESEWA:
             case RECEIPT:
                 requestMembershipRegistrationRequest();
+                break;
             case BANK_DEPOSIT:
                 if (TextUtils.isEmpty(mBankDepositImgFilePath)) {
                     toast("Please pick image of bank receipt.");
@@ -487,44 +493,78 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
 
     private void requestMembershipRegistrationRequest() {
         mActivity.showProgressDialog("Please wait...");
-        SignUpPostData signUpPostData = new SignUpPostData();
-        signUpPostData.setFullName(fullnameEditText.getText().toString());
-        signUpPostData.setMobile(phoneNumberEditText.getText().toString());
 
-        Observable<MembershipResponse> call = mApiInterface.postMembershipData(signUpPostData);
-        call.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<MembershipResponse>() {
-                    @Override
-                    public void onCompleted() {
-                    }
+        Map<String, RequestBody> map = new HashMap<>();
+        //add fullname and mobile number to request
+        map.put("full_name", RequestBody.create(MediaType.parse("text/plain"), fullnameEditText.getText().toString()));
+        map.put("mobile", RequestBody.create(MediaType.parse("text/plain"), phoneNumberEditText.getText().toString()));
 
-                    @Override
-                    public void onError(Throwable e) {
-                        mActivity.closeProgressDialog();
-                        APIError apiError = null;
-                        String errorMessage = null;
-                        if (e instanceof HttpException) {
-                            apiError = Util.parseError(e);
-                            if (apiError != null)
-                                errorMessage = apiError.getError();
-                            if (!TextUtils.isEmpty(errorMessage)) {
-                                if (errorMessage.contains("users_user_username_key"))
-                                    showErrorDialog(getString(R.string.duplicate_username));
-                                else if (errorMessage.contains("users_user_email_key"))
-                                    showErrorDialog(getString(R.string.duplicate_email));
-                            }
-                        } else
-                            noInternetConnectionDialog();
-                    }
 
-                    @Override
-                    public void onNext(MembershipResponse signUpPostData) {
-                        mActivity.closeProgressDialog();
-                        if (signUpPostData != null)
-                            mActivity.successDialogAndCloseActivity(mContext, "Registration success. Thank you!");
-                    }
-                });
+        if (mPaymentType == PaymentType.BANK_DEPOSIT) {
+            File file = new File(mBankDepositImgFilePath);
+            if (file == null || !file.exists()) {
+                toast("Please choose bank deposit image.");
+                openImagePicker();
+                return;
+            }
+            //send deposit status true
+            map.put("deposit", RequestBody.create(MediaType.parse("text/plain"), "true"));
+            //add bank deposit image to request
+            map.put("voucher_image", RequestBody.create(MediaType.parse("image/*"), file));
+
+        } else if (mPaymentType == PaymentType.RECEIPT) {
+            //send deposit status true
+            map.put("receipt", RequestBody.create(MediaType.parse("text/plain"), "true"));
+            map.put("receipt_no", RequestBody.create(MediaType.parse("text/plain"), receiptNoEditText.getText().toString()));
+        } else if (mPaymentType == PaymentType.ESEWA) {
+            if (!mEsewaPaymentStatus) {
+                toast("Please click esewa to start payment.");
+                return;
+            }
+        }
+
+        try {
+            Observable<MembershipResponse> call = mApiInterface.postMembershipData(map);
+            call.subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Observer<MembershipResponse>() {
+                        @Override
+                        public void onCompleted() {
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            mActivity.closeProgressDialog();
+                            handleRegistrationRequestError(e);
+                        }
+
+                        @Override
+                        public void onNext(MembershipResponse signUpPostData) {
+                            mActivity.closeProgressDialog();
+                            if (signUpPostData != null)
+                                mActivity.successDialogAndCloseActivity(mContext, "Registration success. Thank you!");
+                        }
+                    });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void handleRegistrationRequestError(Throwable e) {
+        APIError apiError = null;
+        String errorMessage = null;
+        if (e instanceof HttpException) {
+            apiError = Util.parseError(e);
+            if (apiError != null)
+                errorMessage = apiError.getError();
+            if (!TextUtils.isEmpty(errorMessage)) {
+                if (errorMessage.contains("users_user_username_key"))
+                    showErrorDialog(getString(R.string.duplicate_username));
+                else if (errorMessage.contains("users_user_email_key"))
+                    showErrorDialog(getString(R.string.duplicate_email));
+            }
+        } else
+            noInternetConnectionDialog();
     }
 
     public enum PaymentType {
