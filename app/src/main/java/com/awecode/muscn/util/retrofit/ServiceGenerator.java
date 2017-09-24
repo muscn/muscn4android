@@ -1,18 +1,15 @@
 package com.awecode.muscn.util.retrofit;
 
 import android.text.TextUtils;
-import android.util.Log;
 
+import com.awecode.muscn.model.http.signin.SignInSuccessData;
 import com.awecode.muscn.util.Constants;
-import com.awecode.muscn.util.Util;
-import com.awecode.muscn.util.prefs.Prefs;
 import com.awecode.muscn.util.prefs.PrefsHelper;
 
 import java.io.IOException;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
-import okhttp3.Call;
+import okhttp3.Headers;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -73,16 +70,30 @@ public class ServiceGenerator {
             requestBuilder = original.newBuilder()
                     .header("key", Constants.DISTRIBUTION_KEY);
 
-            if(!TextUtils.isEmpty(PrefsHelper.getLoginToken())){
-                requestBuilder.header("Authorization","token "+PrefsHelper.getLoginToken());
+            if (!TextUtils.isEmpty(PrefsHelper.getLoginToken())) {
+                requestBuilder.header("Authorization", "token " + PrefsHelper.getLoginToken());
             }
 
 
             Request request = requestBuilder.build();
             Response response = chain.proceed(request);
+            readPaymentStatus(response.headers());
             return response;
         }
     }
 
+    private static void readPaymentStatus(Headers headers) {
+        try {
+            String status = headers.get("status");
+            SignInSuccessData data = PrefsHelper.getLoginResponse();
+            if (!TextUtils.isEmpty(status) && data != null) {
+                data.setStatus(status);
+                PrefsHelper.saveLoginResponse(data);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
 
 }
