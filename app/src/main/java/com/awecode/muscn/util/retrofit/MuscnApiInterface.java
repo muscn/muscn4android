@@ -72,7 +72,7 @@ public interface MuscnApiInterface {
     Observable<SignInSuccessData> doSignIn(@Body SignInData signInData);
 
     @Multipart
-    @POST("api/v1/memberships/")
+    @POST("api/v1/users/membership/")
     Observable<MembershipResponse> postMembershipData(@PartMap Map<String, RequestBody> map);
 
     @GET("api/v1/partners/")

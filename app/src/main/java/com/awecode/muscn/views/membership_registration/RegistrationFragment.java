@@ -14,12 +14,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.awecode.muscn.R;
-import com.awecode.muscn.model.http.api_error.APIError;
 import com.awecode.muscn.model.http.signin.SignInSuccessData;
 import com.awecode.muscn.model.membership.MembershipResponse;
 import com.awecode.muscn.util.Constants;
 import com.awecode.muscn.util.Util;
 import com.awecode.muscn.util.prefs.PrefsHelper;
+import com.awecode.muscn.util.retrofit.error.ErrorUtils;
 import com.awecode.muscn.util.saripaar.EditTextNotEmptyRule;
 import com.awecode.muscn.views.base.AppCompatBaseFragment;
 import com.esafirm.imagepicker.features.ImagePicker;
@@ -46,7 +46,6 @@ import butterknife.OnClick;
 import butterknife.OnEditorAction;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
-import retrofit2.adapter.rxjava.HttpException;
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -94,8 +93,6 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
     @BindView(R.id.submitButton)
     Button submitButton;
 
-    @BindView(R.id.bankDepositLayout)
-    LinearLayout bankDepositLayout;
 
     @BindView(R.id.bankDepositImageView)
     ImageView bankDepositImageView;
@@ -196,7 +193,7 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
     }
 
     @OnClick({R.id.esewaButton, R.id.receiptButton,
-            R.id.bankDepositButton, R.id.chooseBankDepositImgButton})
+            R.id.bankDepositButton})
     public void BtnClicked(View view) {
         switch (view.getId()) {
             case R.id.esewaButton:
@@ -207,9 +204,6 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
                 break;
             case R.id.bankDepositButton:
                 handleBankDepositBtnClicked();
-                break;
-            case R.id.chooseBankDepositImgButton:
-                openImagePicker();
                 break;
         }
 
@@ -243,29 +237,16 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
             removeReceiptNoFieldValidation();
         }
 
-        if (bankDepositLayout.getVisibility() == View.VISIBLE) {
-            //hide receipt layout
-            resetBankDepositView();
+        mPaymentType = PaymentType.BANK_DEPOSIT;
 
-            //hide submit button
-            submitButton.setVisibility(View.GONE);
-        } else {
-            mPaymentType = PaymentType.BANK_DEPOSIT;
-            //show receipt layout
-            bankDepositLayout.setVisibility(View.VISIBLE);
-            bankDepositImageView.setVisibility(View.GONE);
-
-            //show submit button
-            submitButton.setVisibility(View.VISIBLE);
-
-        }
+        openImagePicker();
     }
 
     /**
      * Hide bank deposit view, reset image view
      */
     private void resetBankDepositView() {
-        bankDepositLayout.setVisibility(View.GONE);
+        bankDepositImageView.setVisibility(View.GONE);
         bankDepositImageView.setImageBitmap(null);
         bankDepositImageView.destroyDrawingCache();
         mBankDepositImgFilePath = "";
@@ -276,9 +257,8 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
      */
     private void handleReceiptBtnClicked() {
 
-        //reset receipt layout
-        if (bankDepositLayout.getVisibility() == View.VISIBLE)
-            resetBankDepositView();
+        //reset receipt image
+        resetBankDepositView();
 
         removeReceiptNoFieldValidation();
 
@@ -292,6 +272,10 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
             mPaymentType = PaymentType.RECEIPT;
             //show receipt layout
             receiptLayout.setVisibility(View.VISIBLE);
+
+            //show keyboard in receipt number input field
+            receiptNoEditText.requestFocus();
+            Util.showKeyboard(receiptNoEditText);
 
             //show submit button
             submitButton.setVisibility(View.VISIBLE);
@@ -320,10 +304,20 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
             noInternetConnectionDialog();
             return;
         }
+        resetReceiptBankDeposit();
 
         mPaymentType = PaymentType.ESEWA;
         //start esewa payment
         startEsewaPayment();
+    }
+
+    /**
+     * reset receipt and bank depsoit when esewa clicked
+     */
+    private void resetReceiptBankDeposit() {
+        resetBankDepositView();
+        receiptLayout.setVisibility(View.GONE);
+        removeReceiptNoFieldValidation();
     }
 
 
@@ -334,7 +328,17 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
         //config esewa with client id and secret key first
         setupEsewaConfig();
 
-        ESewaPayment eSewaPayment = new ESewaPayment("100", "Membership Registration", PrefsHelper.getLoginResponse().getEmail(), "");
+        SignInSuccessData data = PrefsHelper.getLoginResponse();
+        String productName = "Membership";
+        if (data.getStatus().equalsIgnoreCase("Expired"))
+            productName = "Renewal";
+
+        String productId = "m_" + data.getUserId() + "_" + String.valueOf(System.currentTimeMillis());
+
+        ESewaPayment eSewaPayment = new ESewaPayment(data.getMembershipFee(),
+                productName,
+                productId,
+                Constants.ESEWA_CALLBACK_URL);
         Intent intent = new Intent(mContext, ESewaPaymentActivity.class);
         intent.putExtra(ESewaConfiguration.ESEWA_CONFIGURATION, mEsewConfiguration);
         intent.putExtra(ESewaPayment.ESEWA_PAYMENT, eSewaPayment);
@@ -365,7 +369,11 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
         } else if (requestCode == REQUEST_CODE_PICKER && resultCode == RESULT_OK && data != null) {
             ArrayList<Image> images = (ArrayList<Image>) ImagePicker.getImages(data);
             if (images.size() > 0) {
+                //show submit button
+                submitButton.setVisibility(View.VISIBLE);
+
                 mBankDepositImgFilePath = images.get(0).getPath();
+                //load selected image in image view
                 loadImageInView(mBankDepositImgFilePath);
             }
         }
@@ -378,7 +386,11 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
      */
     private void loadImageInView(String path) {
         try {
+            //show submit button
+            submitButton.setVisibility(View.VISIBLE);
+            //show imageview
             bankDepositImageView.setVisibility(View.VISIBLE);
+            //load image in view
             Picasso.with(mContext)
                     .load(new File(path))
                     .resizeDimen(R.dimen.bank_deposit_img_width, R.dimen.bank_deposit_img_height)
@@ -535,7 +547,7 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
                         @Override
                         public void onError(Throwable e) {
                             mActivity.closeProgressDialog();
-                            handleRegistrationRequestError(e);
+                            mActivity.showDialog(ErrorUtils.parseError(e));
                         }
 
                         @Override
@@ -550,22 +562,6 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
         }
     }
 
-    private void handleRegistrationRequestError(Throwable e) {
-        APIError apiError = null;
-        String errorMessage = null;
-        if (e instanceof HttpException) {
-            apiError = Util.parseError(e);
-            if (apiError != null)
-                errorMessage = apiError.getError();
-            if (!TextUtils.isEmpty(errorMessage)) {
-                if (errorMessage.contains("users_user_username_key"))
-                    showErrorDialog(getString(R.string.duplicate_username));
-                else if (errorMessage.contains("users_user_email_key"))
-                    showErrorDialog(getString(R.string.duplicate_email));
-            }
-        } else
-            noInternetConnectionDialog();
-    }
 
     public enum PaymentType {
         ESEWA,

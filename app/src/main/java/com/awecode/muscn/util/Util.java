@@ -19,6 +19,8 @@ import android.text.style.UnderlineSpan;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.animation.OvershootInterpolator;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,9 +51,15 @@ import retrofit2.adapter.rxjava.HttpException;
  */
 public class Util {
 
+
+    public static void showKeyboard(EditText editText) {
+        InputMethodManager imm = (InputMethodManager) editText.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT);
+    }
+
     /**
      * true- show user member registration button/form
-     *
+     * <p>
      * status- memeber and pending approval - no need of registration
      *
      * @return

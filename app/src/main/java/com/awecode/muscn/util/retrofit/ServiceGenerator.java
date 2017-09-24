@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
+import okhttp3.Call;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -58,6 +59,11 @@ public class ServiceGenerator {
         return retrofit.create(serviceClass);
     }
 
+    public static Retrofit retrofit() {
+        return retrofit;
+
+    }
+
     private static class MyInterceptor implements Interceptor {
 
         @Override
@@ -77,5 +83,6 @@ public class ServiceGenerator {
             return response;
         }
     }
+
 
 }
