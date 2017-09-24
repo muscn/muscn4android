@@ -267,8 +267,25 @@ public class NavigationDrawerFragment extends MasterFragment implements Navigati
     }
 
     @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+
+        if (isVisibleToUser && isResumed()) {
+            //Only manually call onResume if fragment is already visible
+            //Otherwise allow natural fragment lifecycle to call onResume
+            onResume();
+        }
+    }
+
+
+    @Override
     public void onResume() {
         super.onResume();
+
+        if (!getUserVisibleHint()) {
+            return;
+        }
+
         changeRegisterLoginButtons();
     }
 

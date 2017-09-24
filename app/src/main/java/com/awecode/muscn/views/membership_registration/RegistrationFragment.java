@@ -15,6 +15,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.awecode.muscn.R;
+import com.awecode.muscn.model.esewa.EsewaResponse;
 import com.awecode.muscn.model.http.signin.SignInSuccessData;
 import com.awecode.muscn.util.Constants;
 import com.awecode.muscn.util.Util;
@@ -26,6 +27,7 @@ import com.esafirm.imagepicker.model.Image;
 import com.esewa.android.sdk.payment.ESewaConfiguration;
 import com.esewa.android.sdk.payment.ESewaPayment;
 import com.esewa.android.sdk.payment.ESewaPaymentActivity;
+import com.google.gson.Gson;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.Length;
@@ -44,6 +46,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.OnEditorAction;
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import rx.Observable;
 import rx.Observer;
@@ -115,6 +118,7 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
     private String mBankDepositImgFilePath = "";
     private PaymentType mPaymentType;
     private Boolean mEsewaPaymentStatus = false;
+    private String mEswaResponse = "";
 
 
     public static RegistrationFragment newInstance() {
@@ -355,9 +359,7 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
             //payment success
             if (resultCode == RESULT_OK) {
                 String s = data.getStringExtra(ESewaPayment.EXTRA_RESULT_MESSAGE);
-                Log.i("Proof   of   Payment", s);
-                toast("SUCCESSFUL   PAYMENT");
-                mEsewaPaymentStatus = true;
+                handlePostEsewaPayment(s);
                 //payment cancel by user
             } else if (resultCode == RESULT_CANCELED) {
                 toast("It seems you cancelled the payment.");
@@ -377,6 +379,25 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
                 //load selected image in image view
                 loadImageInView(mBankDepositImgFilePath);
             }
+        }
+    }
+
+    private void handlePostEsewaPayment(String response) {
+
+
+        EsewaResponse esewaResponse = new Gson().fromJson(response, EsewaResponse.class);
+        if (response != null
+                && esewaResponse.getTransactionDetails() != null
+                && esewaResponse.getTransactionDetails().getStatus().equalsIgnoreCase("COMPLETE")) {
+            mEswaResponse = response;
+            Log.i("Proof   of   Payment", response);
+            toast("SUCCESSFUL   PAYMENT");
+            mEsewaPaymentStatus = true;
+            //show submit button
+            submitButton.setVisibility(View.VISIBLE);
+
+
+            mValidator.validate();
         }
     }
 
@@ -491,6 +512,8 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
         }
         switch (mPaymentType) {
             case ESEWA:
+                requestMembershipRegistrationRequest();
+                break;
             case RECEIPT:
                 requestMembershipRegistrationRequest();
                 break;
@@ -514,12 +537,25 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
     }
 
     private void requestMembershipRegistrationRequest() {
+
+        String fullName = fullnameEditText.getText().toString();
+        String mobileNumber = phoneNumberEditText.getText().toString();
+        if (TextUtils.isEmpty(fullName)) {
+            fullnameEditText.setError(getString(R.string.this_field_cannot_be_empty));
+            return;
+        }
+        if (TextUtils.isEmpty(mobileNumber)) {
+            phoneNumberEditText.setError(getString(R.string.this_field_cannot_be_empty));
+            return;
+        }
+
         mActivity.showProgressDialog("Please wait...");
 
+        MultipartBody.Part imageFile = null;
         Map<String, RequestBody> map = new HashMap<>();
         //add fullname and mobile number to request
-        map.put("full_name", RequestBody.create(MediaType.parse("text/plain"), fullnameEditText.getText().toString()));
-        map.put("mobile", RequestBody.create(MediaType.parse("text/plain"), phoneNumberEditText.getText().toString()));
+        map.put("full_name", RequestBody.create(MediaType.parse("text/plain"), fullName));
+        map.put("mobile", RequestBody.create(MediaType.parse("text/plain"), mobileNumber));
 
 
         if (mPaymentType == PaymentType.BANK_DEPOSIT) {
@@ -532,7 +568,10 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
             //send deposit status true
             map.put("deposit", RequestBody.create(MediaType.parse("text/plain"), "true"));
             //add bank deposit image to request
-            map.put("voucher_image", RequestBody.create(MediaType.parse("multipart/form-data"), file));
+            // map.put("voucher_image", RequestBody.create(MediaType.parse("multipart/form-data"), file));
+
+            imageFile = MultipartBody.Part.createFormData("voucher_image", file.getName(),
+                    RequestBody.create(MediaType.parse("multipart/form-data"), file));
 
         } else if (mPaymentType == PaymentType.RECEIPT) {
             //send deposit status true
@@ -543,10 +582,12 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
                 toast("Please click esewa to start payment.");
                 return;
             }
+            map.put("esewa", RequestBody.create(MediaType.parse("text/plain"), "true"));
+            map.put("esewa_response", RequestBody.create(MediaType.parse("text/plain"), mEswaResponse));
         }
 
         try {
-            Observable<SignInSuccessData> call = mApiInterface.postMembershipData(map);
+            Observable<SignInSuccessData> call = mApiInterface.postMembershipData(map, imageFile);
             call.subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Observer<SignInSuccessData>() {

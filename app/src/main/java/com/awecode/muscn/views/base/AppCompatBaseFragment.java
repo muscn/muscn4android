@@ -60,6 +60,35 @@ public abstract class AppCompatBaseFragment extends Fragment implements Validato
         return view;
     }
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+
+        if (isVisibleToUser && isResumed()) {
+            //Only manually call onResume if fragment is already visible
+            //Otherwise allow natural fragment lifecycle to call onResume
+            onResume();
+        }
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (!getUserVisibleHint()) {
+            return;
+        }
+
+        onFragmentVisible();
+        //INSERT CUSTOM CODE HERE
+    }
+
+    public void onFragmentVisible() {
+
+    }
+
+
     public SignInSuccessData getUserDetail() {
         return PrefsHelper.getLoginResponse();
     }

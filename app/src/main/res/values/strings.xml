@@ -99,6 +99,7 @@
     <string name="field_cannot_be_empty">Field cannot be empty.</string>
     <string name="choose_bank_deposit">Tap to Upload Bank Deposit</string>
     <string name="thank_you_for_being_around_have_a_nice_day">Thank you for being around. Have a nice day!!!.</string>
+    <string name="this_field_cannot_be_empty">This field cannot be empty.</string>
 
 
 </resources>

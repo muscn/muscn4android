@@ -20,6 +20,6 @@ public class SignInSuccessData {
     String mobile;
     @SerializedName("membership_fee")
     String membershipFee;
-    @SerializedName("user_id")
+    @SerializedName("id")
     String userId;
 }

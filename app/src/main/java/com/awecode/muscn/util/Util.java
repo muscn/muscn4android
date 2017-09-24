@@ -13,6 +13,7 @@ import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextPaint;
+import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.text.style.URLSpan;
 import android.text.style.UnderlineSpan;
@@ -66,8 +67,8 @@ public class Util {
      */
     public static Boolean userNeedMemberRegistration() {
         String status = PrefsHelper.getLoginResponse().getStatus();
-        if (status.equalsIgnoreCase(Constants.STATUS_MEMBER)
-                || status.equalsIgnoreCase(Constants.STATUS_PENDING_APPROVAL))
+        if (!TextUtils.isEmpty(status) && (status.equalsIgnoreCase(Constants.STATUS_MEMBER)
+                || status.equalsIgnoreCase(Constants.STATUS_PENDING_APPROVAL)))
             return false;
         else
             return true;
