@@ -23,6 +23,7 @@ public class Constants {
      */
     public static final String ESEWA_CLIENT_ID = "########";
     public static final String ESEWA_SECRET_KEY = "#######";
+    public static final String ESEWA_CALLBACK_URL = "https://requestb.in/17dpfl71";
 
     /**
      * payment status
