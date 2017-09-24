@@ -267,8 +267,18 @@ public class NavigationDrawerFragment extends MasterFragment implements Navigati
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        changeRegisterLoginButtons();
+    }
+
+    @Override
     public void onStart() {
         super.onStart();
+        changeRegisterLoginButtons();
+    }
+
+    private void changeRegisterLoginButtons() {
         if (PrefsHelper.getLoginStatus()) {
             signInButton.setText(getString(R.string.sign_out));
             if (Util.userNeedMemberRegistration())
