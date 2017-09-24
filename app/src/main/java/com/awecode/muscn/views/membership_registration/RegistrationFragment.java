@@ -3,7 +3,6 @@ package com.awecode.muscn.views.membership_registration;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.text.Editable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -42,7 +41,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.OnEditorAction;
-import butterknife.OnTextChanged;
 import retrofit2.adapter.rxjava.HttpException;
 import rx.Observable;
 import rx.Observer;
@@ -91,12 +89,12 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
     @BindView(R.id.bankDepositImageView)
     ImageView bankDepositImageView;
 
-    private Boolean mIsInputFieldFilled = false;
     private ESewaConfiguration mEsewConfiguration;
     private static final int REQUEST_CODE_PAYMENT = 112;
     private static final int REQUEST_CODE_PICKER = 113;
 
     private String mBankDepositImgFilePath = "";
+    private PaymentType mPaymentType;
 
 
     public static RegistrationFragment newInstance() {
@@ -119,11 +117,6 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
     @OnClick({R.id.esewaButton, R.id.receiptButton,
             R.id.bankDepositButton, R.id.chooseBankDepositImgButton})
     public void BtnClicked(View view) {
-        //first fill full name and mobile number
-        if (!mIsInputFieldFilled) {
-            toast("Please enter full name and mobile number first.");
-            return;
-        }
         switch (view.getId()) {
             case R.id.esewaButton:
                 handleEsewaBtnClicked();
@@ -176,6 +169,7 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
             //hide submit button
             submitButton.setVisibility(View.GONE);
         } else {
+            mPaymentType = PaymentType.BANK_DEPOSIT;
             //show receipt layout
             bankDepositLayout.setVisibility(View.VISIBLE);
             bankDepositImageView.setVisibility(View.GONE);
@@ -214,6 +208,7 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
             //hide submit button
             submitButton.setVisibility(View.GONE);
         } else {
+            mPaymentType = PaymentType.RECEIPT;
             //show receipt layout
             receiptLayout.setVisibility(View.VISIBLE);
 
@@ -245,6 +240,7 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
             return;
         }
 
+        mPaymentType = PaymentType.ESEWA;
         //start esewa payment
         startEsewaPayment();
     }
@@ -381,24 +377,35 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
         return false;
     }
 
-    @OnTextChanged({R.id.fullnameEditText, R.id.phoneNumberEditText})
-    public void inputFieldTextChanged(Editable editable) {
-        mValidator.validate();
-
-    }
-
 
     @Override
     public void onValidationSucceeded() {
         super.onValidationSucceeded();
-        mIsInputFieldFilled = true;
+        if (mPaymentType == null) {
+            toast("Please select any payment options first.");
+            return;
+        }
+        switch (mPaymentType) {
+            case ESEWA:
+            case RECEIPT:
+                requestMembershipRegistrationRequest();
+            case BANK_DEPOSIT:
+                if (TextUtils.isEmpty(mBankDepositImgFilePath)) {
+                    toast("Please pick image of bank receipt.");
+                    openImagePicker();
+                    return;
+                }
+                requestMembershipRegistrationRequest();
+
+                break;
+        }
 
     }
+
 
     @Override
     public void onValidationFailed(List<ValidationError> errors) {
         super.onValidationFailed(errors);
-        mIsInputFieldFilled = false;
     }
 
     private void requestMembershipRegistrationRequest() {
@@ -446,4 +453,9 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
                 });
     }
 
+    public enum PaymentType {
+        ESEWA,
+        RECEIPT,
+        BANK_DEPOSIT
+    }
 }
