@@ -97,7 +97,7 @@
     <string name="receipt_number">Receipt Number</string>
     <string name="receipt_no_if_you_paid_directly_to_representative">Receipt No. (If you paid directly to representative):</string>
     <string name="field_cannot_be_empty">Field cannot be empty.</string>
-    <string name="choose_bank_deposit">Choose Bank Deposit</string>
+    <string name="choose_bank_deposit">Tap to Upload Bank Deposit</string>
 
 
 </resources>
