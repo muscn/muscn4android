@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.awecode.muscn.R;
@@ -103,6 +104,9 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
 
     @BindView(R.id.bottomLayout)
     LinearLayout bottomLayout;
+
+    @BindView(R.id.scrollView)
+    ScrollView scrollView;
 
     private ESewaConfiguration mEsewConfiguration;
     private static final int REQUEST_CODE_PAYMENT = 112;
@@ -393,6 +397,15 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
                     .resizeDimen(R.dimen.bank_deposit_img_width, R.dimen.bank_deposit_img_height)
                     .centerCrop()
                     .into(bankDepositImageView);
+
+            if (getActivity() != null && RegistrationFragment.this.isVisible())
+                scrollView.post(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        scrollView.fullScroll(ScrollView.FOCUS_DOWN);
+                    }
+                });
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -519,7 +532,7 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
             //send deposit status true
             map.put("deposit", RequestBody.create(MediaType.parse("text/plain"), "true"));
             //add bank deposit image to request
-            map.put("voucher_image", RequestBody.create(MediaType.parse("image/*"), file));
+            map.put("voucher_image", RequestBody.create(MediaType.parse("multipart/form-data"), file));
 
         } else if (mPaymentType == PaymentType.RECEIPT) {
             //send deposit status true
