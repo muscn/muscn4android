@@ -4,7 +4,7 @@ package com.awecode.muscn.util;
  * Created by munnadroid on 9/21/16.
  */
 public class Constants {
-    public static final String DISTRIBUTION_KEY = "########";
+    public static final String DISTRIBUTION_KEY = "#######";
     public static final String NONE = "none";
     public static final String INTENT_NOTIFICATION_DATA = "intent_notification_data";
     public static final String PREFS_FIXTURES = "prefs_fixtures";
@@ -24,7 +24,6 @@ public class Constants {
     public static final String ESEWA_CLIENT_ID = "########";
     public static final String ESEWA_SECRET_KEY = "#######";
     public static final String ESEWA_CALLBACK_URL = "https://requestb.in/17dpfl71";
-
     /**
      * payment status
      * disable registration for these status
