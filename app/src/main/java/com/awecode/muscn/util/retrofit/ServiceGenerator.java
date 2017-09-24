@@ -16,6 +16,7 @@ import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -31,7 +32,7 @@ public class ServiceGenerator {
     private static final String TAG = ServiceGenerator.class.getSimpleName();
 
     private static final int TIME_OUT = 15;
-    public static final String API_BASE_URL = "https://manutd.org.np/";
+    public static final String API_BASE_URL = "http://192.168.0.143:8000/";
     private static OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
     public static Retrofit retrofit;
     private static Retrofit.Builder builder =
@@ -47,7 +48,7 @@ public class ServiceGenerator {
             interceptor = new MyInterceptor();
         httpClient.interceptors().add(interceptor);
 
-        //httpClient.addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY));
+        httpClient.addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY));
         httpClient.connectTimeout(TIME_OUT, TimeUnit.SECONDS);
         httpClient.readTimeout(TIME_OUT, TimeUnit.SECONDS);
         httpClient.writeTimeout(TIME_OUT, TimeUnit.SECONDS);

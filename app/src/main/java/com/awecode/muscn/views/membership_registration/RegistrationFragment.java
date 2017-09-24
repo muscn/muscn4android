@@ -119,6 +119,7 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
     @OnClick({R.id.esewaButton, R.id.receiptButton,
             R.id.bankDepositButton, R.id.chooseBankDepositImgButton})
     public void BtnClicked(View view) {
+        //first fill full name and mobile number
         if (!mIsInputFieldFilled) {
             toast("Please enter full name and mobile number first.");
             return;
@@ -140,7 +141,9 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
 
     }
 
-
+    /**
+     * open image picker view
+     */
     private void openImagePicker() {
         ImagePicker.create(this)
                 .returnAfterFirst(true) // set whether pick or camera action should return immediate result or not. For pick image only work on single mode
@@ -156,6 +159,9 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
     }
 
 
+    /**
+     * Toggle bank deposit view, also hide receipt view
+     */
     private void handleBankDepositBtnClicked() {
         //reset receipt layout
         if (receiptLayout.getVisibility() == View.VISIBLE) {
@@ -179,6 +185,9 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
         }
     }
 
+    /**
+     * Hide bank deposit view, reset image view
+     */
     private void resetBankDepositView() {
         bankDepositLayout.setVisibility(View.GONE);
         bankDepositImageView.setImageBitmap(null);
@@ -186,6 +195,9 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
         mBankDepositImgFilePath = "";
     }
 
+    /**
+     * Toggle receipt view, also hide bank deposit view
+     */
     private void handleReceiptBtnClicked() {
 
         //reset receipt layout
@@ -286,11 +298,15 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
      * @param path
      */
     private void loadImageInView(String path) {
-        Picasso.with(mContext)
-                .load(new File(path))
-                .resizeDimen(R.dimen.bank_deposit_img_width, R.dimen.bank_deposit_img_height)
-                .centerCrop()
-                .into(bankDepositImageView);
+        try {
+            Picasso.with(mContext)
+                    .load(new File(path))
+                    .resizeDimen(R.dimen.bank_deposit_img_width, R.dimen.bank_deposit_img_height)
+                    .centerCrop()
+                    .into(bankDepositImageView);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
