@@ -14,7 +14,9 @@ import android.widget.EditText;
 
 import com.awecode.muscn.MyApplication;
 import com.awecode.muscn.R;
+import com.awecode.muscn.model.http.signin.SignInSuccessData;
 import com.awecode.muscn.util.Util;
+import com.awecode.muscn.util.prefs.PrefsHelper;
 import com.awecode.muscn.util.retrofit.MuscnApiInterface;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
@@ -56,6 +58,23 @@ public abstract class AppCompatBaseFragment extends Fragment implements Validato
         View view = inflater.inflate(getLayout(), container, false);
         ButterKnife.bind(this, view);
         return view;
+    }
+
+    public SignInSuccessData getUserDetail() {
+        return PrefsHelper.getLoginResponse();
+    }
+
+    /**
+     * update user detail model
+     *
+     * @param response
+     */
+    public void updateUserDetail(SignInSuccessData response) {
+        //pass token from saved to new response
+        response.setToken(getUserDetail().getToken());
+        //save full response model
+        PrefsHelper.saveLoginResponse(response);
+
     }
 
     public abstract int getLayout();

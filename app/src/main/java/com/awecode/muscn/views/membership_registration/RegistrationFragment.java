@@ -15,10 +15,8 @@ import android.widget.TextView;
 
 import com.awecode.muscn.R;
 import com.awecode.muscn.model.http.signin.SignInSuccessData;
-import com.awecode.muscn.model.membership.MembershipResponse;
 import com.awecode.muscn.util.Constants;
 import com.awecode.muscn.util.Util;
-import com.awecode.muscn.util.prefs.PrefsHelper;
 import com.awecode.muscn.util.retrofit.error.ErrorUtils;
 import com.awecode.muscn.util.saripaar.EditTextNotEmptyRule;
 import com.awecode.muscn.views.base.AppCompatBaseFragment;
@@ -160,10 +158,8 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
     }
 
     private void handleUserDetailRequestSuccess(SignInSuccessData response) {
-        //pass token from saved to new response
-        response.setToken(PrefsHelper.getLoginResponse().getToken());
-        //save full response model
-        PrefsHelper.saveLoginResponse(response);
+
+        updateUserDetail(response);
 
         //hide registration form if status is pending approval or member
         if (!Util.userNeedMemberRegistration()) {
@@ -180,6 +176,7 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
         //populate data in view
         populateUserDetailInView(response);
     }
+
 
     /**
      * populate membership fee, fullname and mobile number in textview
@@ -328,7 +325,7 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
         //config esewa with client id and secret key first
         setupEsewaConfig();
 
-        SignInSuccessData data = PrefsHelper.getLoginResponse();
+        SignInSuccessData data = getUserDetail();
         String productName = "Membership";
         if (data.getStatus().equalsIgnoreCase("Expired"))
             productName = "Renewal";
@@ -536,10 +533,10 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
         }
 
         try {
-            Observable<MembershipResponse> call = mApiInterface.postMembershipData(map);
+            Observable<SignInSuccessData> call = mApiInterface.postMembershipData(map);
             call.subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Observer<MembershipResponse>() {
+                    .subscribe(new Observer<SignInSuccessData>() {
                         @Override
                         public void onCompleted() {
                         }
@@ -551,10 +548,12 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
                         }
 
                         @Override
-                        public void onNext(MembershipResponse signUpPostData) {
+                        public void onNext(SignInSuccessData response) {
                             mActivity.closeProgressDialog();
-                            if (signUpPostData != null)
+                            if (response != null) {
+                                updateUserDetail(response);
                                 mActivity.successDialogAndCloseActivity(mContext, "Registration success. Thank you!");
+                            }
                         }
                     });
         } catch (Exception e) {
