@@ -91,7 +91,7 @@
                 android:id="@+id/paymentOptionLabelTextView"
                 style="@style/WidthMatchHeightWrap"
                 android:layout_marginTop="@dimen/activity_horizontal_margin"
-                android:text="Payment Via(Any One): "
+                android:text="@string/payment_via_any_one"
                 android:textColor="@color/black"
                 android:textSize="14sp"
                 android:textStyle="bold" />

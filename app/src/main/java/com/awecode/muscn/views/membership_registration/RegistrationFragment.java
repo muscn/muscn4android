@@ -391,7 +391,7 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
                 && esewaResponse.getTransactionDetails().getStatus().equalsIgnoreCase("COMPLETE")) {
             mEswaResponse = response;
             Log.i("Proof   of   Payment", response);
-            toast("SUCCESSFUL   PAYMENT");
+            toast(getString(R.string.esewa_payment_success_mg));
             mEsewaPaymentStatus = true;
             //show submit button
             submitButton.setVisibility(View.VISIBLE);
