@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.awecode.muscn.R;
@@ -21,6 +22,8 @@ import com.awecode.muscn.util.Util;
 import com.awecode.muscn.util.prefs.PrefsHelper;
 import com.awecode.muscn.util.saripaar.EditTextNotEmptyRule;
 import com.awecode.muscn.views.base.AppCompatBaseFragment;
+import com.esafirm.imagepicker.features.ImagePicker;
+import com.esafirm.imagepicker.model.Image;
 import com.esewa.android.sdk.payment.ESewaConfiguration;
 import com.esewa.android.sdk.payment.ESewaPayment;
 import com.esewa.android.sdk.payment.ESewaPaymentActivity;
@@ -28,8 +31,11 @@ import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.Validator;
 import com.mobsandgeeks.saripaar.annotation.Length;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
+import com.squareup.picasso.Picasso;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -79,9 +85,18 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
     @BindView(R.id.submitButton)
     Button submitButton;
 
+    @BindView(R.id.bankDepositLayout)
+    LinearLayout bankDepositLayout;
+
+    @BindView(R.id.bankDepositImageView)
+    ImageView bankDepositImageView;
+
     private Boolean mIsInputFieldFilled = false;
     private ESewaConfiguration mEsewConfiguration;
     private static final int REQUEST_CODE_PAYMENT = 112;
+    private static final int REQUEST_CODE_PICKER = 113;
+
+    private String mBankDepositImgFilePath = "";
 
 
     public static RegistrationFragment newInstance() {
@@ -101,8 +116,13 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
         setupForFormValidation();
     }
 
-    @OnClick({R.id.esewaButton, R.id.receiptButton, R.id.bankDepositButton})
-    public void paymentOptionsBtnClicked(View view) {
+    @OnClick({R.id.esewaButton, R.id.receiptButton,
+            R.id.bankDepositButton, R.id.chooseBankDepositImgButton})
+    public void BtnClicked(View view) {
+        if (!mIsInputFieldFilled) {
+            toast("Please enter full name and mobile number first.");
+            return;
+        }
         switch (view.getId()) {
             case R.id.esewaButton:
                 handleEsewaBtnClicked();
@@ -113,20 +133,67 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
             case R.id.bankDepositButton:
                 handleBankDepositBtnClicked();
                 break;
+            case R.id.chooseBankDepositImgButton:
+                openImagePicker();
+                break;
         }
 
     }
 
+
+    private void openImagePicker() {
+        ImagePicker.create(this)
+                .returnAfterFirst(true) // set whether pick or camera action should return immediate result or not. For pick image only work on single mode
+                .folderMode(true) // folder mode (false by default)
+                .folderTitle("Choose Image") // folder selection title
+                .imageTitle("Tap to select") // image selection title
+                .single() // single mode
+                .limit(1) // max images can be selected (99 by default)
+                .imageDirectory("Camera") // directory name for captured image  ("Camera" folder by default)
+                .theme(R.style.ImagePickerTheme) // must inherit ef_BaseTheme. please refer to sample
+                .enableLog(true) // disabling log
+                .start(REQUEST_CODE_PICKER); // start image picker activity with request code
+    }
+
+
     private void handleBankDepositBtnClicked() {
-        toast("Feature coming soon.");
+        //reset receipt layout
+        if (receiptLayout.getVisibility() == View.VISIBLE) {
+            receiptLayout.setVisibility(View.GONE);
+            removeReceiptNoFieldValidation();
+        }
+
+        if (bankDepositLayout.getVisibility() == View.VISIBLE) {
+            //hide receipt layout
+            resetBankDepositView();
+
+            //hide submit button
+            submitButton.setVisibility(View.GONE);
+        } else {
+            //show receipt layout
+            bankDepositLayout.setVisibility(View.VISIBLE);
+
+            //show submit button
+            submitButton.setVisibility(View.VISIBLE);
+
+        }
+    }
+
+    private void resetBankDepositView() {
+        bankDepositLayout.setVisibility(View.GONE);
+        bankDepositImageView.setImageBitmap(null);
+        bankDepositImageView.destroyDrawingCache();
+        mBankDepositImgFilePath = "";
     }
 
     private void handleReceiptBtnClicked() {
 
-        //reset receipt input field - remove field validation
-        mValidator.removeRules(receiptNoEditText);
-        receiptNoEditText.setError(null);
-        
+        //reset receipt layout
+        if (bankDepositLayout.getVisibility() == View.VISIBLE)
+            resetBankDepositView();
+
+        removeReceiptNoFieldValidation();
+
         if (receiptLayout.getVisibility() == View.VISIBLE) {
             //hide receipt layout
             receiptLayout.setVisibility(View.GONE);
@@ -147,17 +214,21 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
     }
 
     /**
+     * reset receipt input field - remove field validation
+     */
+    private void removeReceiptNoFieldValidation() {
+        mValidator.removeRules(receiptNoEditText);
+        receiptNoEditText.setError(null);
+        receiptNoEditText.setText("");
+    }
+
+    /**
      * handle esewa button click
      */
     private void handleEsewaBtnClicked() {
         //check internet connection
         if (!Util.checkInternetConnection(mContext)) {
             noInternetConnectionDialog();
-            return;
-        }
-
-        if (!mIsInputFieldFilled) {
-            toast("Please enter full name and mobile number first.");
             return;
         }
 
@@ -184,6 +255,7 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        //from esewa
         if (requestCode == REQUEST_CODE_PAYMENT) {
             //payment success
             if (resultCode == RESULT_OK) {
@@ -198,7 +270,27 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
                 String s = data.getStringExtra(ESewaPayment.EXTRA_RESULT_MESSAGE);
                 Log.i("Proof   of   Payment", s);
             }
+            //from image file picker
+        } else if (requestCode == REQUEST_CODE_PICKER) {
+            ArrayList<Image> images = (ArrayList<Image>) ImagePicker.getImages(data);
+            if (images.size() > 0) {
+                mBankDepositImgFilePath = images.get(0).getPath();
+                loadImageInView(mBankDepositImgFilePath);
+            }
         }
+    }
+
+    /**
+     * Load selected image in imageview
+     *
+     * @param path
+     */
+    private void loadImageInView(String path) {
+        Picasso.with(mContext)
+                .load(new File(path))
+                .resizeDimen(R.dimen.bank_deposit_img_width, R.dimen.bank_deposit_img_height)
+                .centerCrop()
+                .into(bankDepositImageView);
     }
 
 

@@ -75,7 +75,7 @@
             android:id="@+id/paymentOptionLabelTextView"
             style="@style/WidthMatchHeightWrap"
             android:layout_marginTop="@dimen/activity_horizontal_margin"
-            android:text="Payment Via: "
+            android:text="Payment Via(Any One): "
             android:textColor="@color/black"
             android:textSize="14sp"
             android:textStyle="bold" />
@@ -127,6 +127,32 @@
                 android:id="@+id/receiptNoEditText"
                 style="@style/normal_edit_text_style"
                 android:hint="@string/receipt_number" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/bankDepositLayout"
+            style="@style/WidthMatchHeightWrap"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <Button
+                android:id="@+id/chooseBankDepositImgButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#848484"
+                android:text="@string/choose_bank_deposit"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="13sp" />
+
+            <ImageView
+                android:id="@+id/bankDepositImageView"
+                android:layout_width="@dimen/bank_deposit_img_width"
+                android:layout_height="@dimen/bank_deposit_img_height"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/activity_horizontal_margin" />
+
         </LinearLayout>
 
         <Button
