@@ -11,9 +11,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.awecode.muscn.R;
 import com.awecode.muscn.model.http.api_error.APIError;
+import com.awecode.muscn.model.http.signin.SignInSuccessData;
 import com.awecode.muscn.model.http.signup.SignUpPostData;
 import com.awecode.muscn.model.membership.MembershipResponse;
 import com.awecode.muscn.util.Constants;
@@ -56,6 +58,12 @@ import static android.app.Activity.RESULT_OK;
 
 public class RegistrationFragment extends AppCompatBaseFragment implements DatePickerDialog.OnDateSetListener {
 
+    @Override
+    public int getLayout() {
+        return R.layout.fragment_registration;
+    }
+
+
     private static final String TAG = RegistrationFragment.class.getSimpleName();
 
     @NotEmpty
@@ -89,6 +97,15 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
     @BindView(R.id.bankDepositImageView)
     ImageView bankDepositImageView;
 
+    @BindView(R.id.membershipFeeTextView)
+    TextView membershipFeeTextView;
+
+    @BindView(R.id.messageTextView)
+    TextView messageTextView;
+
+    @BindView(R.id.bottomLayout)
+    LinearLayout bottomLayout;
+
     private ESewaConfiguration mEsewConfiguration;
     private static final int REQUEST_CODE_PAYMENT = 112;
     private static final int REQUEST_CODE_PICKER = 113;
@@ -102,16 +119,76 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
         return fragment;
     }
 
-    @Override
-    public int getLayout() {
-        return R.layout.fragment_registration;
-    }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         setupForFormValidation();
+        requestUserDetails();
+    }
+
+    /**
+     * request for user details- membership fee, payment status
+     */
+    private void requestUserDetails() {
+        mActivity.showProgressDialog("Please Wait...");
+        mApiInterface.getUserDetails()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<SignInSuccessData>() {
+                    @Override
+                    public void onCompleted() {
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mActivity.closeProgressDialog();
+                        toast("Network error. Please try again.");
+                        getFragmentManager().popBackStack();
+
+                    }
+
+                    @Override
+                    public void onNext(SignInSuccessData response) {
+                        mActivity.closeProgressDialog();
+                        handleUserDetailRequestSuccess(response);
+
+                    }
+                });
+    }
+
+    private void handleUserDetailRequestSuccess(SignInSuccessData response) {
+        //pass token from saved to new response
+        response.setToken(PrefsHelper.getLoginResponse().getToken());
+        //save full response model
+        PrefsHelper.saveLoginResponse(response);
+
+        //hide registration form if status is pending approval or member
+        if (!Util.userNeedMemberRegistration()) {
+            bottomLayout.setVisibility(View.GONE);
+            messageTextView.setVisibility(View.VISIBLE);
+
+            fullnameEditText.setFocusableInTouchMode(false);
+            fullnameEditText.setFocusable(false);
+            phoneNumberEditText.setFocusableInTouchMode(false);
+            phoneNumberEditText.setFocusable(false);
+        }
+
+
+        //populate data in view
+        populateUserDetailInView(response);
+    }
+
+    /**
+     * populate membership fee, fullname and mobile number in textview
+     *
+     * @param data
+     */
+    private void populateUserDetailInView(SignInSuccessData data) {
+        fullnameEditText.setText(data.getFullName());
+        phoneNumberEditText.setText(data.getMobile());
+        membershipFeeTextView.setText("Membership Fee: NRS " + data.getMembershipFee());
     }
 
     @OnClick({R.id.esewaButton, R.id.receiptButton,
@@ -413,9 +490,6 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
         SignUpPostData signUpPostData = new SignUpPostData();
         signUpPostData.setFullName(fullnameEditText.getText().toString());
         signUpPostData.setMobile(phoneNumberEditText.getText().toString());
-
-//        signUpPostData.setDateOfBirth(dateOfBirthEditText.getText().toString());
-//        signUpPostData.setAddress(addressEditText.getText().toString());
 
         Observable<MembershipResponse> call = mApiInterface.postMembershipData(signUpPostData);
         call.subscribeOn(Schedulers.io())

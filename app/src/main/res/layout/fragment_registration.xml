@@ -31,136 +31,153 @@
             android:hint="@string/mobile_number"
             android:inputType="phone" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="gone">
-            <!--date of birth-->
-            <TextView
-                style="@style/normal_text_view_style"
-                android:text="@string/date_of_birth" />
-
-            <EditText
-                android:id="@+id/dateOfBirthEditText"
-                style="@style/normal_edit_text_style"
-                android:focusable="false"
-                android:focusableInTouchMode="false"
-                android:hint="@string/date_of_birth" />
-
-            <!--address-->
-            <TextView
-                style="@style/normal_text_view_style"
-                android:text="@string/address" />
-
-            <EditText
-                android:id="@+id/addressEditText"
-                style="@style/normal_edit_text_style"
-                android:hint="@string/address"
-                android:imeOptions="actionDone" />
-
-        </LinearLayout>
-
-        <!--membership fee -->
+        <!--message text view - show if user is payment done-->
         <TextView
-            android:id="@+id/membershipFeeTextView"
+            android:id="@+id/messageTextView"
             style="@style/WidthMatchHeightWrap"
             android:layout_marginTop="@dimen/activity_horizontal_margin"
-            android:text="Membership Fee: NRS 200"
-            android:textColor="@color/black"
-            android:textSize="13sp" />
-
-        <!--payment options label-->
-        <TextView
-            android:id="@+id/paymentOptionLabelTextView"
-            style="@style/WidthMatchHeightWrap"
-            android:layout_marginTop="@dimen/activity_horizontal_margin"
-            android:text="Payment Via(Any One): "
-            android:textColor="@color/black"
-            android:textSize="14sp"
-            android:textStyle="bold" />
-
-        <LinearLayout
-            style="@style/WidthMatchHeightWrap"
-            android:layout_marginTop="5dp"
             android:gravity="center"
-            android:orientation="horizontal"
-            android:weightSum="3.2">
+            android:text="@string/thank_you_for_being_around_have_a_nice_day"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
 
-            <!--eswea-->
-            <Button
-                android:id="@+id/esewaButton"
-                style="@style/PaymentOptionBtnStyle"
-                android:text="@string/e_sewa" />
-
-            <!--receipt-->
-            <Button
-                android:id="@+id/receiptButton"
-                style="@style/PaymentOptionBtnStyle"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:text="@string/receipt" />
-
-            <!--bank deposit-->
-            <Button
-                android:id="@+id/bankDepositButton"
-                style="@style/PaymentOptionBtnStyle"
-                android:text="@string/bank_deposit" />
-
-
-        </LinearLayout>
-
-
-        <!--reciept layout-->
         <LinearLayout
-            android:id="@+id/receiptLayout"
+            android:id="@+id/bottomLayout"
             style="@style/WidthMatchHeightWrap"
-            android:layout_marginTop="@dimen/activity_horizontal_margin"
-            android:orientation="vertical"
-            android:visibility="gone">
+            android:orientation="vertical">
 
+            <LinearLayout
+                style="@style/WidthMatchHeightWrap"
+                android:orientation="vertical"
+                android:visibility="gone">
+                <!--date of birth-->
+                <TextView
+                    style="@style/normal_text_view_style"
+                    android:text="@string/date_of_birth" />
+
+                <EditText
+                    android:id="@+id/dateOfBirthEditText"
+                    style="@style/normal_edit_text_style"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:hint="@string/date_of_birth" />
+
+                <!--address-->
+                <TextView
+                    style="@style/normal_text_view_style"
+                    android:text="@string/address" />
+
+                <EditText
+                    android:id="@+id/addressEditText"
+                    style="@style/normal_edit_text_style"
+                    android:hint="@string/address"
+                    android:imeOptions="actionDone" />
+
+            </LinearLayout>
+
+            <!--membership fee -->
             <TextView
-                style="@style/normal_text_view_style"
-                android:text="@string/receipt_no_if_you_paid_directly_to_representative" />
-
-            <EditText
-                android:id="@+id/receiptNoEditText"
-                style="@style/normal_edit_text_style"
-                android:hint="@string/receipt_number" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/bankDepositLayout"
-            style="@style/WidthMatchHeightWrap"
-            android:layout_marginTop="@dimen/activity_horizontal_margin"
-            android:orientation="vertical"
-            android:visibility="gone">
-
-            <Button
-                android:id="@+id/chooseBankDepositImgButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="#848484"
-                android:text="@string/choose_bank_deposit"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
+                android:id="@+id/membershipFeeTextView"
+                style="@style/WidthMatchHeightWrap"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:textColor="@color/black"
                 android:textSize="13sp" />
 
-            <ImageView
-                android:id="@+id/bankDepositImageView"
-                android:layout_width="@dimen/bank_deposit_img_width"
-                android:layout_height="@dimen/bank_deposit_img_height"
-                android:layout_gravity="center"
-                android:layout_marginTop="@dimen/activity_horizontal_margin" />
+            <!--payment options label-->
+            <TextView
+                android:id="@+id/paymentOptionLabelTextView"
+                style="@style/WidthMatchHeightWrap"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:text="Payment Via(Any One): "
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
+            <LinearLayout
+                style="@style/WidthMatchHeightWrap"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:weightSum="3.2">
+
+                <!--eswea-->
+                <Button
+                    android:id="@+id/esewaButton"
+                    style="@style/PaymentOptionBtnStyle"
+                    android:text="@string/e_sewa" />
+
+                <!--receipt-->
+                <Button
+                    android:id="@+id/receiptButton"
+                    style="@style/PaymentOptionBtnStyle"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:text="@string/receipt" />
+
+                <!--bank deposit-->
+                <Button
+                    android:id="@+id/bankDepositButton"
+                    style="@style/PaymentOptionBtnStyle"
+                    android:text="@string/bank_deposit" />
+
+
+            </LinearLayout>
+
+
+            <!--reciept layout-->
+            <LinearLayout
+                android:id="@+id/receiptLayout"
+                style="@style/WidthMatchHeightWrap"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    style="@style/normal_text_view_style"
+                    android:text="@string/receipt_no_if_you_paid_directly_to_representative" />
+
+                <EditText
+                    android:id="@+id/receiptNoEditText"
+                    style="@style/normal_edit_text_style"
+                    android:hint="@string/receipt_number" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/bankDepositLayout"
+                style="@style/WidthMatchHeightWrap"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <Button
+                    android:id="@+id/chooseBankDepositImgButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#848484"
+                    android:text="@string/choose_bank_deposit"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="13sp" />
+
+                <ImageView
+                    android:id="@+id/bankDepositImageView"
+                    android:layout_width="@dimen/bank_deposit_img_width"
+                    android:layout_height="@dimen/bank_deposit_img_height"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/activity_horizontal_margin" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/submitButton"
+                style="@style/normal_button_style"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:text="@string/submit"
+                android:visibility="gone" />
         </LinearLayout>
-
-        <Button
-            android:id="@+id/submitButton"
-            style="@style/normal_button_style"
-            android:layout_marginBottom="@dimen/activity_vertical_margin"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:text="@string/submit"
-            android:visibility="gone" />
     </LinearLayout>
+
 </ScrollView>

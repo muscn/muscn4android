@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.awecode.muscn.BuildConfig;
 import com.awecode.muscn.model.http.api_error.APIError;
+import com.awecode.muscn.util.prefs.PrefsHelper;
 import com.awecode.muscn.util.retrofit.ServiceGenerator;
 import com.awecode.muscn.views.aboutus.CustomSpannable;
 
@@ -48,6 +49,21 @@ import retrofit2.adapter.rxjava.HttpException;
  */
 public class Util {
 
+    /**
+     * true- show user member registration button/form
+     *
+     * status- memeber and pending approval - no need of registration
+     *
+     * @return
+     */
+    public static Boolean userNeedMemberRegistration() {
+        String status = PrefsHelper.getLoginResponse().getStatus();
+        if (status.equalsIgnoreCase(Constants.STATUS_MEMBER)
+                || status.equalsIgnoreCase(Constants.STATUS_PENDING_APPROVAL))
+            return false;
+        else
+            return true;
+    }
 
     public static String getAppVersion() {
         String versionCode = "0.0";

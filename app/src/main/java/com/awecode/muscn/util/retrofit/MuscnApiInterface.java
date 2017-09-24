@@ -61,6 +61,9 @@ public interface MuscnApiInterface {
     @POST("api/v1/users/")
     Observable<SignUpPostData> postSignUpData(@Body SignUpPostData signUpPostData);
 
+    @GET("api/v1/users/")
+    Observable<SignInSuccessData> getUserDetails();
+
     @POST("api/v1/obtain_auth_token/")
     Observable<SignInSuccessData> doSignIn(@Body SignInData signInData);
 

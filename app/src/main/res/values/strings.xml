@@ -98,6 +98,7 @@
     <string name="receipt_no_if_you_paid_directly_to_representative">Receipt No. (If you paid directly to representative):</string>
     <string name="field_cannot_be_empty">Field cannot be empty.</string>
     <string name="choose_bank_deposit">Tap to Upload Bank Deposit</string>
+    <string name="thank_you_for_being_around_have_a_nice_day">Thank you for being around. Have a nice day!!!.</string>
 
 
 </resources>

@@ -15,6 +15,7 @@ import android.widget.Button;
 import com.awecode.muscn.R;
 import com.awecode.muscn.model.enumType.MenuType;
 import com.awecode.muscn.util.Constants;
+import com.awecode.muscn.util.Util;
 import com.awecode.muscn.util.prefs.Prefs;
 import com.awecode.muscn.util.prefs.PrefsHelper;
 import com.awecode.muscn.views.MasterFragment;
@@ -232,16 +233,21 @@ public class NavigationDrawerFragment extends MasterFragment implements Navigati
         }
         switch (view.getId()) {
             case R.id.signUpButton:
+                if (!Util.checkInternetConnection(mContext)) {
+                    noInternetConnectionDialog();
+                    return;
+                }
                 String text = signUpButton.getText().toString();
 
                 Intent intent = new Intent(mContext, SignUpActivity.class);
 
-                if (text.equalsIgnoreCase(getString(R.string.membership_registration))) {
+                if (text.equalsIgnoreCase(getString(R.string.membership_registration)))
                     intent.putExtra(SignUpActivity.TYPE_INTENT, MenuType.MEMBERSHIP_REGISTRATION);
-                } else {
+                else
                     intent.putExtra(SignUpActivity.TYPE_INTENT, MenuType.SIGN_UP);
-                }
+
                 startActivity(intent);
+
                 break;
             case R.id.signInButton:
                 if (signInButton.getText().toString().equalsIgnoreCase(getString(R.string.sign_in))) {
@@ -265,7 +271,7 @@ public class NavigationDrawerFragment extends MasterFragment implements Navigati
         super.onStart();
         if (PrefsHelper.getLoginStatus()) {
             signInButton.setText(getString(R.string.sign_out));
-            if (!PrefsHelper.getLoginResponse().getStatus())
+            if (Util.userNeedMemberRegistration())
                 signUpButton.setText(getString(R.string.membership_registration));
             else
                 signUpButton.setText("");

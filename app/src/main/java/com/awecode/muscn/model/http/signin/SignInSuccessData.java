@@ -1,5 +1,7 @@
 package com.awecode.muscn.model.http.signin;
 
+import com.google.gson.annotations.SerializedName;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,6 +13,11 @@ import lombok.Setter;
 @Setter
 public class SignInSuccessData {
     String token;
-    Boolean status;
+    String status;
     String email;
+    @SerializedName("full_name")
+    String fullName;
+    String mobile;
+    @SerializedName("membership_fee")
+    String membershipFee;
 }
