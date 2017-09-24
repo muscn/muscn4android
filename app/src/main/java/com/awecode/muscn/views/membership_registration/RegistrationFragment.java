@@ -178,6 +178,7 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
         } else {
             //show receipt layout
             bankDepositLayout.setVisibility(View.VISIBLE);
+            bankDepositImageView.setVisibility(View.GONE);
 
             //show submit button
             submitButton.setVisibility(View.VISIBLE);
@@ -283,7 +284,7 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
                 Log.i("Proof   of   Payment", s);
             }
             //from image file picker
-        } else if (requestCode == REQUEST_CODE_PICKER) {
+        } else if (requestCode == REQUEST_CODE_PICKER && resultCode == RESULT_OK && data != null) {
             ArrayList<Image> images = (ArrayList<Image>) ImagePicker.getImages(data);
             if (images.size() > 0) {
                 mBankDepositImgFilePath = images.get(0).getPath();
@@ -299,6 +300,7 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
      */
     private void loadImageInView(String path) {
         try {
+            bankDepositImageView.setVisibility(View.VISIBLE);
             Picasso.with(mContext)
                     .load(new File(path))
                     .resizeDimen(R.dimen.bank_deposit_img_width, R.dimen.bank_deposit_img_height)
