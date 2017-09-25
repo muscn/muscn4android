@@ -10,7 +10,6 @@ import com.awecode.muscn.model.http.signin.SignInData;
 import com.awecode.muscn.model.http.signin.SignInSuccessData;
 import com.awecode.muscn.model.http.signup.SignUpPostData;
 import com.awecode.muscn.model.http.top_scorers.TopScorersResponse;
-import com.awecode.muscn.model.membership.MembershipResponse;
 import com.awecode.muscn.model.registration.RegistrationPostData;
 import com.awecode.muscn.model.registration.RegistrationResponse;
 
@@ -75,9 +74,12 @@ public interface MuscnApiInterface {
 
     @Multipart
     @POST("api/v1/users/membership/")
-    Observable<SignInSuccessData> postMembershipData(@PartMap Map<String, RequestBody> map,@Part MultipartBody.Part file);
+    Observable<SignInSuccessData> postMembershipData(@PartMap Map<String, RequestBody> map, @Part MultipartBody.Part file);
 
     @GET("api/v1/partners/")
     Observable<PartnersResponse> getPartnersList();
+
+    @POST("api/v1/users/social_login/")
+    Observable<SignInSuccessData> requestSocialLogin(@Body SignUpPostData requestData);
 
 }

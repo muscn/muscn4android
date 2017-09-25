@@ -87,8 +87,8 @@
     <string name="install">Install</string>
 
     <!--facebook login-->
-    <string name="facebook_app_id">11111</string>
-    <string name="fb_login_protocol_scheme">22222</string>
+    <string name="facebook_app_id">745752022186281</string>
+    <string name="fb_login_protocol_scheme">fb745752022186281</string>
 
     <string name="partners">Partners</string>
     <string name="loading_partners">Loading partners...</string>
@@ -107,6 +107,8 @@
     <string name="esewa_payment_success_mg">Esewa payment success. Click submit to finish registration.</string>
     <string name="pickup_location">Pickup Location</string>
     <string name="membership_registration_success_msg">Thank you for registering to be a member. You\'ll be notified when your membership package is available.</string>
+    <string name="please_wait">Please Wait...</string>
+    <string name="please_check_email_confirmation">Please check your email and open confirmation link.</string>
 
 
 </resources>

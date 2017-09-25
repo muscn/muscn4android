@@ -36,7 +36,8 @@ public class ErrorUtils {
         try {
             String errorStr = errorBody.string();
             JSONObject object = new JSONObject(errorStr);
-            errorMessage = object.getString("detail");
+            if (object.has("detail"))
+                errorMessage = object.getString("detail");
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException e) {

@@ -17,7 +17,6 @@ import com.awecode.muscn.views.signin.SignInFragment;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.annotation.ConfirmPassword;
 import com.mobsandgeeks.saripaar.annotation.Email;
-import com.mobsandgeeks.saripaar.annotation.Length;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.mobsandgeeks.saripaar.annotation.Password;
 
@@ -49,8 +48,7 @@ public class SignUpFragment extends AppCompatBaseFragment {
     EditText emailEditText;
 
     @NotEmpty(messageResId = R.string.not_empty_error_text)
-    @Length(messageResId = R.string.invalid_length, min = 8)
-    @Password(messageResId = R.string.password_error_text, scheme = Password.Scheme.ALPHA_NUMERIC)
+    @Password()
     @BindView(R.id.passwordEditText)
     EditText passwordEditText;
 
@@ -58,9 +56,16 @@ public class SignUpFragment extends AppCompatBaseFragment {
     @ConfirmPassword
     @BindView(R.id.confirmPasswordEditText)
     EditText confirmPasswordEditText;
+    private SignUpPostData mSignupPostData;
 
     public static SignUpFragment newInstance() {
         SignUpFragment fragment = new SignUpFragment();
+        return fragment;
+    }
+
+    public static SignUpFragment newInstance(SignUpPostData signUpPostData) {
+        SignUpFragment fragment = new SignUpFragment();
+        fragment.setData(signUpPostData);
         return fragment;
     }
 
@@ -95,6 +100,12 @@ public class SignUpFragment extends AppCompatBaseFragment {
                 return handled;
             }
         });
+
+
+        if (mSignupPostData != null) {
+            fullnameEditText.setText(mSignupPostData.getFullName());
+            emailEditText.setText(mSignupPostData.getEmail());
+        }
     }
 
     //sign up request
@@ -104,6 +115,13 @@ public class SignUpFragment extends AppCompatBaseFragment {
         signUpPostData.setFullName(fullnameEditText.getText().toString());
         signUpPostData.setEmail(emailEditText.getText().toString());
         signUpPostData.setPassword(passwordEditText.getText().toString());
+
+        SignUpPostData socialData = new SignUpPostData();
+        socialData.setProvider(mSignupPostData.getProvider());
+        socialData.setFbToken(mSignupPostData.getFbToken());
+
+        signUpPostData.setSocialData(socialData);
+
         Observable<SignUpPostData> call = mApiInterface.postSignUpData(signUpPostData);
         call.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -115,20 +133,8 @@ public class SignUpFragment extends AppCompatBaseFragment {
                     @Override
                     public void onError(Throwable e) {
                         mActivity.closeProgressDialog();
-                        APIError apiError = null;
-                        String errorMessage = null;
-                        if (e instanceof HttpException) {
-                            apiError = Util.parseError(e);
-                            if (apiError != null)
-                                errorMessage = apiError.getError();
-                            if (!TextUtils.isEmpty(errorMessage)) {
-                                if (errorMessage.contains("users_user_username_key"))
-                                    showErrorDialog(getString(R.string.duplicate_username));
-                                else if (errorMessage.contains("users_user_email_key"))
-                                    showErrorDialog(getString(R.string.duplicate_email));
-                            }
-                        } else
-                            noInternetConnectionDialog();
+                        showSignupError(e);
+
                     }
 
                     @Override
@@ -140,6 +146,24 @@ public class SignUpFragment extends AppCompatBaseFragment {
                 });
     }
 
+    private String showSignupError(Throwable e) {
+        APIError apiError = null;
+        String errorMessage = null;
+        if (e instanceof HttpException) {
+            apiError = Util.parseError(e);
+            if (apiError != null)
+                errorMessage = apiError.getError();
+            if (!TextUtils.isEmpty(errorMessage)) {
+                if (errorMessage.contains("users_user_username_key"))
+                    return getString(R.string.duplicate_username);
+                else if (errorMessage.contains("users_user_email_key"))
+                    return getString(R.string.duplicate_email);
+            }
+        }
+
+        return "Network error. Please try again.";
+    }
+
     @Override
     public void onValidationSucceeded() {
         super.onValidationSucceeded();
@@ -149,5 +173,9 @@ public class SignUpFragment extends AppCompatBaseFragment {
     @Override
     public void onValidationFailed(List<ValidationError> errors) {
         super.onValidationFailed(errors);
+    }
+
+    public void setData(SignUpPostData data) {
+        this.mSignupPostData = data;
     }
 }

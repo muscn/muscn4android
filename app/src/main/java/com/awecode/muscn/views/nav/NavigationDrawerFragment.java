@@ -20,6 +20,8 @@ import com.awecode.muscn.util.prefs.Prefs;
 import com.awecode.muscn.util.prefs.PrefsHelper;
 import com.awecode.muscn.views.MasterFragment;
 import com.awecode.muscn.views.signup.SignUpActivity;
+import com.facebook.AccessToken;
+import com.facebook.login.LoginManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -260,6 +262,13 @@ public class NavigationDrawerFragment extends MasterFragment implements Navigati
                     mActivity.showSuccessDialog(mContext, getString(R.string.success), getString(R.string.success_sign_out_text));
                     signInButton.setText(getString(R.string.sign_in));
                     signUpButton.setText(getString(R.string.sign_up));
+
+                    try {
+                        LoginManager.getInstance().logOut();
+                        AccessToken.setCurrentAccessToken(null);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
 
                 }
                 break;
