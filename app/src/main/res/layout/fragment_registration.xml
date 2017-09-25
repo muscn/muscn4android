@@ -30,7 +30,9 @@
             style="@style/normal_edit_text_style"
             android:digits="@string/digits_only"
             android:hint="@string/mobile_number"
-            android:inputType="phone" />
+            android:imeOptions="actionDone"
+            android:inputType="phone"
+            android:maxLines="1" />
 
 
         <TextView
@@ -160,7 +162,9 @@
                 <EditText
                     android:id="@+id/receiptNoEditText"
                     style="@style/normal_edit_text_style"
-                    android:hint="@string/receipt_number" />
+                    android:hint="@string/receipt_number"
+                    android:imeOptions="actionDone"
+                    android:maxLines="1" />
             </LinearLayout>
 
             <LinearLayout

@@ -87,8 +87,8 @@
     <string name="install">Install</string>
 
     <!--facebook login-->
-    <string name="facebook_app_id">745752022186281</string>
-    <string name="fb_login_protocol_scheme">fb745752022186281</string>
+    <string name="facebook_app_id">########</string>
+    <string name="fb_login_protocol_scheme">#######</string>
 
     <string name="partners">Partners</string>
     <string name="loading_partners">Loading partners...</string>

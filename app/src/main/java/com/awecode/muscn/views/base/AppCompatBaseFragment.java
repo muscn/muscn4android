@@ -60,6 +60,10 @@ public abstract class AppCompatBaseFragment extends Fragment implements Validato
         return view;
     }
 
+    public void hideKeyboard() {
+        Util.hideSoftKeyboard(getActivity());
+    }
+
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);

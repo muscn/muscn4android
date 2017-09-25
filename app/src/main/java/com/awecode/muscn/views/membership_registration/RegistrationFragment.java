@@ -145,6 +145,22 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
     }
 
     /**
+     * done button click in receipt number edittext
+     *
+     * @param actionId
+     * @return
+     */
+    @OnEditorAction({R.id.receiptNoEditText, R.id.phoneNumberEditText})
+    public Boolean confirmPinDoneKeyboard(int actionId) {
+        if (actionId == EditorInfo.IME_ACTION_DONE) {
+            hideKeyboard();
+            mValidator.validate();
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * request for user details- membership fee, payment status
      */
     private void requestUserDetails() {
@@ -238,6 +254,7 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
     @OnClick({R.id.esewaButton, R.id.receiptButton,
             R.id.bankDepositButton})
     public void BtnClicked(View view) {
+        hideKeyboard();
         switch (view.getId()) {
             case R.id.esewaButton:
                 handleEsewaBtnClicked();
@@ -548,6 +565,7 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
             toast("Please select any payment options first.");
             return;
         }
+        hideKeyboard();
         switch (mPaymentType) {
             case ESEWA:
                 requestMembershipRegistrationRequest();
