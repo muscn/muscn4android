@@ -109,6 +109,7 @@
     <string name="membership_registration_success_msg">Thank you for registering to be a member. You\'ll be notified when your membership package is available.</string>
     <string name="please_wait">Please Wait...</string>
     <string name="please_check_email_confirmation">Please check your email and open confirmation link.</string>
+    <string name="login_with_facebook">Login with Facebook</string>
 
 
 </resources>

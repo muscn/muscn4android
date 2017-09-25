@@ -103,6 +103,9 @@ public class SignInFragment extends AppCompatBaseFragment {
         setEmailIfFromSignup();
         passwordEditTextIMEAction();
         fbLoginConfigure();
+
+        //fb logout if login already
+        fbLogout();
     }
 
     /**
