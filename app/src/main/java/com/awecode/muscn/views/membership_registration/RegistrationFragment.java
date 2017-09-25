@@ -151,7 +151,7 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
      * @return
      */
     @OnEditorAction({R.id.receiptNoEditText, R.id.phoneNumberEditText})
-    public Boolean confirmPinDoneKeyboard(int actionId) {
+    public boolean confirmPinDoneKeyboard(int actionId) {
         if (actionId == EditorInfo.IME_ACTION_DONE) {
             hideKeyboard();
             mValidator.validate();
