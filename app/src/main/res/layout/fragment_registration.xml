@@ -32,6 +32,21 @@
             android:hint="@string/mobile_number"
             android:inputType="phone" />
 
+
+        <!--pickup locations-->
+        <com.awecode.muscn.util.spinner.NoDefaultSpinner
+            android:id="@+id/pickupLocationSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:spinnerMode="dropdown" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.7dp"
+            android:layout_marginTop="12dp"
+            android:background="@color/black" />
+
         <!--message text view - show if user is payment done-->
         <TextView
             android:id="@+id/messageTextView"

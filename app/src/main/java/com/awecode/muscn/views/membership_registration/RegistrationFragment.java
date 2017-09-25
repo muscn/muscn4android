@@ -7,6 +7,8 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -16,11 +18,13 @@ import android.widget.TextView;
 
 import com.awecode.muscn.R;
 import com.awecode.muscn.model.esewa.EsewaResponse;
+import com.awecode.muscn.model.http.partners.PartnersResult;
 import com.awecode.muscn.model.http.signin.SignInSuccessData;
 import com.awecode.muscn.util.Constants;
 import com.awecode.muscn.util.Util;
 import com.awecode.muscn.util.retrofit.error.ErrorUtils;
 import com.awecode.muscn.util.saripaar.EditTextNotEmptyRule;
+import com.awecode.muscn.util.spinner.NoDefaultSpinner;
 import com.awecode.muscn.views.base.AppCompatBaseFragment;
 import com.esafirm.imagepicker.features.ImagePicker;
 import com.esafirm.imagepicker.model.Image;
@@ -111,6 +115,9 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
     @BindView(R.id.scrollView)
     ScrollView scrollView;
 
+    @BindView(R.id.pickupLocationSpinner)
+    NoDefaultSpinner pickupLocationSpinner;
+
     private ESewaConfiguration mEsewConfiguration;
     private static final int REQUEST_CODE_PAYMENT = 112;
     private static final int REQUEST_CODE_PICKER = 113;
@@ -131,6 +138,7 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        pickupLocationSpinner.setPrompt("Select Pickup Location");
         setupForFormValidation();
         requestUserDetails();
     }
@@ -140,7 +148,7 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
      */
     private void requestUserDetails() {
         mActivity.showProgressDialog("Please Wait...");
-        mApiInterface.getUserDetails()
+        mApiInterface.getMembershipDetails()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<SignInSuccessData>() {
@@ -195,7 +203,33 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
         fullnameEditText.setText(data.getFullName());
         phoneNumberEditText.setText(data.getMobile());
         membershipFeeTextView.setText("Membership Fee: NRS " + data.getMembershipFee());
+
+        //populate pickup locations
+        List<String> list = new ArrayList<String>();
+        for (PartnersResult partners : data.getPickupLocations())
+            list.add(partners.getName() + ", " + partners.getShortAddress());
+        populatePickupLocations(list);
     }
+
+    private void populatePickupLocations(List<String> dataList) {
+
+        ArrayAdapter spinnerAdapter = new ArrayAdapter(mContext, R.layout.spinner_row_selected,
+                dataList);
+        spinnerAdapter.setDropDownViewResource(R.layout.spinner_row);
+        pickupLocationSpinner.setAdapter(spinnerAdapter);
+
+        pickupLocationSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
 
     @OnClick({R.id.esewaButton, R.id.receiptButton,
             R.id.bankDepositButton})

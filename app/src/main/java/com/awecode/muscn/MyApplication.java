@@ -97,7 +97,9 @@ public class MyApplication extends Application {
                                     .addField("url", String.class)
                                     .addField("active", Boolean.class)
                                     .addField("location", Integer.class)
+                                    .addField("shortAddress", String.class)
                                     .addField("order", Integer.class);
+
 
                             schema.get("Result").addRealmObjectField("liveScreening", livscreenSchema)
                                     .addRealmObjectField("PartnersResult", partnersResultSchema);

@@ -30,5 +30,8 @@
     <dimen name="team_logo_size_new">100dp</dimen>
     <dimen name="bank_deposit_img_width">300dp</dimen>
     <dimen name="bank_deposit_img_height">400dp</dimen>
+    <dimen name="spinner_text_size">13sp</dimen>
+    <dimen name="spinner_item_padding_left">5dp</dimen>
+    <dimen name="spinner_txt_padding_top">10dp</dimen>
 
 </resources>

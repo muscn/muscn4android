@@ -45,4 +45,7 @@ public class PartnersResult extends RealmObject {
     @SerializedName("order")
     @Expose
     private Integer order;
+    @SerializedName("short_address")
+    @Expose
+    private String shortAddress;
 }

@@ -21,5 +21,7 @@
     <color name="dimPrimaryColor">#88e54d36</color>
     <color name="colorGreyDark">#606060</color>
 
+    <color name="grey_text_color">#6F6F6F</color>
+
 
 </resources>

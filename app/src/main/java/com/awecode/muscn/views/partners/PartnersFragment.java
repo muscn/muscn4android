@@ -135,7 +135,7 @@ public class PartnersFragment extends MasterFragment implements PartnerClickList
                 }
             });
         } catch (Exception e) {
-            Log.v("test","error get"+e.getLocalizedMessage());
+            Log.v("test", "error get" + e.getLocalizedMessage());
             e.printStackTrace();
         }
     }
@@ -150,12 +150,15 @@ public class PartnersFragment extends MasterFragment implements PartnerClickList
         List<PartnersResult> results = partnersResponse.getResults();
 
         if (results != null && results.size() > 0) {
-            Log.v("test","result present");
+            Log.v("test", "result present");
             mRealm.beginTransaction();
             realmFixtures = mRealm.copyToRealm(results);
             mRealm.commitTransaction();
         }
-        return new ArrayList<PartnersResult>(realmFixtures);
+        if (realmFixtures != null && realmFixtures.size() > 0)
+            return new ArrayList<PartnersResult>(realmFixtures);
+        else
+            return new ArrayList<>();
     }
 
     /**
@@ -166,7 +169,7 @@ public class PartnersFragment extends MasterFragment implements PartnerClickList
             mAdapter.notifyDataSetChanged();
             return;
         }
-        Log.v("test","data is "+mRealm.where(PartnersResult.class).findAll().get(0).getName());
+        Log.v("test", "data is " + mRealm.where(PartnersResult.class).findAll().get(0).getName());
         mAdapter = new PartnersAdapter(mRealm.where(PartnersResult.class).findAll());
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.partnerClickListener = this;

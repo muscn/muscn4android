@@ -1,6 +1,9 @@
 package com.awecode.muscn.model.http.signin;
 
+import com.awecode.muscn.model.http.partners.PartnersResult;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -22,4 +25,6 @@ public class SignInSuccessData {
     String membershipFee;
     @SerializedName("id")
     String userId;
+    @SerializedName("pickup_locations")
+    public List<PartnersResult> pickupLocations = null;
 }
