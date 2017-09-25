@@ -102,6 +102,8 @@
     <string name="this_field_cannot_be_empty">This field cannot be empty.</string>
     <string name="payment_via_any_one">Payment Via (any one):</string>
     <string name="esewa_payment_success_mg">Esewa payment success. Click submit to finish registration.</string>
+    <string name="pickup_location">Pickup Location</string>
+    <string name="membership_registration_success_msg">Thank you for registration. You will be notified by muscn representative later for the confirmation.</string>
 
 
 </resources>

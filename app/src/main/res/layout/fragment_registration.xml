@@ -33,6 +33,9 @@
             android:inputType="phone" />
 
 
+        <TextView
+            style="@style/normal_text_view_style"
+            android:text="@string/pickup_location" />
         <!--pickup locations-->
         <com.awecode.muscn.util.spinner.NoDefaultSpinner
             android:id="@+id/pickupLocationSpinner"

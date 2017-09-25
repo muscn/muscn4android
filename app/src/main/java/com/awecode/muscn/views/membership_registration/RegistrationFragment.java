@@ -83,6 +83,9 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
     @BindView(R.id.phoneNumberEditText)
     EditText phoneNumberEditText;
 
+    @BindView(R.id.pickupLocationSpinner)
+    NoDefaultSpinner pickupLocationSpinner;
+
 
     @BindView(R.id.dateOfBirthEditText)
     EditText dateOfBirthEditText;
@@ -115,15 +118,13 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
     @BindView(R.id.scrollView)
     ScrollView scrollView;
 
-    @BindView(R.id.pickupLocationSpinner)
-    NoDefaultSpinner pickupLocationSpinner;
-
     private ESewaConfiguration mEsewConfiguration;
     private static final int REQUEST_CODE_PAYMENT = 112;
     private static final int REQUEST_CODE_PICKER = 113;
 
     private String mBankDepositImgFilePath = "";
     private PaymentType mPaymentType;
+    private PartnersResult mSelectedPickupLocation;
     private Boolean mEsewaPaymentStatus = false;
     private String mEswaResponse = "";
 
@@ -205,22 +206,25 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
         membershipFeeTextView.setText("Membership Fee: NRS " + data.getMembershipFee());
 
         //populate pickup locations
-        List<String> list = new ArrayList<String>();
-        for (PartnersResult partners : data.getPickupLocations())
-            list.add(partners.getName() + ", " + partners.getShortAddress());
-        populatePickupLocations(list);
+
+        populatePickupLocations(data.getPickupLocations());
     }
 
-    private void populatePickupLocations(List<String> dataList) {
+    private void populatePickupLocations(final List<PartnersResult> dataList) {
+
+        List<String> dataStrList = new ArrayList<String>();
+        for (PartnersResult partners : dataList)
+            dataStrList.add(partners.getName() + ", " + partners.getShortAddress());
 
         ArrayAdapter spinnerAdapter = new ArrayAdapter(mContext, R.layout.spinner_row_selected,
-                dataList);
+                dataStrList);
         spinnerAdapter.setDropDownViewResource(R.layout.spinner_row);
         pickupLocationSpinner.setAdapter(spinnerAdapter);
 
         pickupLocationSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                mSelectedPickupLocation = dataList.get(position);
             }
 
             @Override
@@ -583,6 +587,11 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
             return;
         }
 
+        if (mSelectedPickupLocation == null) {
+            toast("Please select a pickup location.");
+            return;
+        }
+
         mActivity.showProgressDialog("Please wait...");
 
         MultipartBody.Part imageFile = null;
@@ -590,6 +599,7 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
         //add fullname and mobile number to request
         map.put("full_name", RequestBody.create(MediaType.parse("text/plain"), fullName));
         map.put("mobile", RequestBody.create(MediaType.parse("text/plain"), mobileNumber));
+        map.put("pickup_location", RequestBody.create(MediaType.parse("text/plain"), String.valueOf(mSelectedPickupLocation.getId())));
 
 
         if (mPaymentType == PaymentType.BANK_DEPOSIT) {
@@ -640,7 +650,8 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
                             mActivity.closeProgressDialog();
                             if (response != null) {
                                 updateUserDetail(response);
-                                mActivity.successDialogAndCloseActivity(mContext, "Registration success. Thank you!");
+                                mActivity.successDialogAndCloseActivity(mContext,
+                                        getString(R.string.membership_registration_success_msg));
                             }
                         }
                     });
