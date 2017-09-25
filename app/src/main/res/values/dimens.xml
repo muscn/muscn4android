@@ -22,7 +22,6 @@
     <dimen name="fixture_text_size">15sp</dimen>
     <dimen name="update_dialog_text_size">18sp</dimen>
     <dimen name="normal_text_size">12dp</dimen>
-    <dimen name="form_below_margin">14dp</dimen>
     <dimen name="toolbar_icon_size">24dp</dimen>
     <dimen name="injury_item_txt_size">12sp</dimen>
     <dimen name="signup_logo_width">120dp</dimen>
@@ -33,5 +32,7 @@
     <dimen name="spinner_text_size">13sp</dimen>
     <dimen name="spinner_item_padding_left">5dp</dimen>
     <dimen name="spinner_txt_padding_top">10dp</dimen>
+    <dimen name="social_login_margin_top">10dp</dimen>
+    <dimen name="fb_btn_padding">12dp</dimen>
 
 </resources>

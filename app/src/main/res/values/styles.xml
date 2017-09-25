@@ -41,8 +41,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">@dimen/normal_text_size</item>
         <item name="android:textColor">@color/black</item>
-        <item name="android:layout_marginTop">@dimen/activity_horizontal_margin</item>
-        <item name="android:layout_marginBottom">@dimen/form_below_margin</item>
+        <item name="android:layout_marginTop">@dimen/social_login_margin_top</item>
     </style>
 
     <style name="normal_edit_text_style">
@@ -52,6 +51,7 @@
         <item name="android:textColor">@color/black</item>
         <item name="android:textColorHint">@color/colorGrey</item>
         <item name="android:textCursorDrawable">@drawable/cursor_drawable</item>
+        <item name="android:layout_marginTop">5dp</item>
     </style>
 
     <style name="normal_button_style">

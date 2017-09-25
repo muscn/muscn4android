@@ -2,6 +2,7 @@ package com.awecode.muscn.views.signin;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -30,10 +31,26 @@ import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.annotation.Email;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.mobsandgeeks.saripaar.annotation.Password;
+import com.shobhitpuri.custombuttons.GoogleSignInButton;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -52,8 +69,9 @@ import rx.schedulers.Schedulers;
  * Created by surensth on 5/24/17.
  */
 
-public class SignInFragment extends AppCompatBaseFragment {
+public class SignInFragment extends AppCompatBaseFragment implements GoogleApiClient.OnConnectionFailedListener {
     private static final String TAG = "SignInFragment";
+    private static final int CODE_GOOGLE_SIGN_IN = 114;
 
     @NotEmpty(messageResId = R.string.not_empty_error_text)
     @Email
@@ -68,7 +86,13 @@ public class SignInFragment extends AppCompatBaseFragment {
 
     @BindView(R.id.fbLoginButton)
     LoginButton fbLoginButton;
+
+    @BindView(R.id.googleSignInButton)
+    GoogleSignInButton googleSignInButton;
+
     private CallbackManager mCallbackManager;
+    private GoogleApiClient mGoogleApiClient;
+    private FirebaseAuth mAuth;
 
     public SignInFragment() {
     }
@@ -102,10 +126,42 @@ public class SignInFragment extends AppCompatBaseFragment {
 
         setEmailIfFromSignup();
         passwordEditTextIMEAction();
+
+        //configure fb login
         fbLoginConfigure();
 
         //fb logout if login already
         fbLogout();
+
+        //configure google sign in
+        configureGoogleSignIn();
+
+        //google signout
+        googleSignOut();
+    }
+
+    /**
+     * configure google login
+     */
+    private void configureGoogleSignIn() {
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.request_id_token))
+                .requestEmail()
+                .build();
+        mGoogleApiClient = new GoogleApiClient.Builder(mContext)
+                .enableAutoManage(getActivity() /* FragmentActivity */, this /* OnConnectionFailedListener */)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
+
+        mAuth = FirebaseAuth.getInstance();
+    }
+
+    /**
+     * start google login
+     */
+    private void googleSignIn() {
+        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+        startActivityForResult(signInIntent, CODE_GOOGLE_SIGN_IN);
     }
 
     /**
@@ -273,7 +329,52 @@ public class SignInFragment extends AppCompatBaseFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        //for google login
+        if (requestCode == CODE_GOOGLE_SIGN_IN) {
+            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+            handleSignInResult(result);
+            return;
+        }
+        //for fb login
         mCallbackManager.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void handleSignInResult(GoogleSignInResult result) {
+        if (result.isSuccess()) {
+            // Signed in successfully, show authenticated UI.
+            GoogleSignInAccount acct = result.getSignInAccount();
+            firebaseAuthWithGoogle(acct);
+        } else {
+            toast(getString(R.string.google_login_error_try_again_msg));
+        }
+    }
+
+    private void firebaseAuthWithGoogle(final GoogleSignInAccount acct) {
+        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "signInWithCredential:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+
+                            Log.v(TAG, "testing google singin: " + acct.getDisplayName() + " email: " + acct.getEmail()
+                                    + " uid: " + user.getUid() + " id: " + acct.getId() + " idtoken: " + acct.getIdToken());
+
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            googleLoginErrorMessage();
+                        }
+
+
+                    }
+                });
+    }
+
+    private void googleLoginErrorMessage() {
+        toast("Google login error occurred. Please try again.");
     }
 
     @Override
@@ -350,11 +451,48 @@ public class SignInFragment extends AppCompatBaseFragment {
     }
 
 
-    @OnClick(R.id.signInButton)
-    public void onClick() {
-        if (Util.checkInternetConnection(mContext))
-            validateForm();
-        else
+    @OnClick({R.id.signInButton, R.id.googleSignInButton})
+    public void btnClick(View view) {
+        if (!Util.checkInternetConnection(mContext)) {
             noInternetConnectionDialog();
+            return;
+        }
+
+        switch (view.getId()) {
+            case R.id.signInButton:
+                validateForm();
+                break;
+            case R.id.googleSignInButton:
+                googleSignIn();
+                break;
+        }
+
     }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+    /**
+     * google log out
+     */
+    private void googleSignOut() {
+        try {
+            if (mGoogleApiClient != null && mGoogleApiClient.isConnected())
+                Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
+                        new ResultCallback<Status>() {
+                            @Override
+                            public void onResult(Status status) {
+                            }
+                        });
+
+            if (mAuth != null)
+                mAuth.signOut();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }
