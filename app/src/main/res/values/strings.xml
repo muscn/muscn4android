@@ -106,7 +106,7 @@
     <string name="payment_via_any_one">Payment Via (any one):</string>
     <string name="esewa_payment_success_mg">Esewa payment success. Click submit to finish registration.</string>
     <string name="pickup_location">Pickup Location</string>
-    <string name="membership_registration_success_msg">Thank you for registration. You will be notified by muscn representative later for the confirmation.</string>
+    <string name="membership_registration_success_msg">Thank you for registering to be a member. You\'ll be notified when your membership package is available.</string>
 
 
 </resources>

@@ -32,7 +32,6 @@ public class SignUpActivity extends AppCompatBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FacebookSdk.sdkInitialize(getApplicationContext());
 
         menuType = (MenuType) getIntent().getSerializableExtra(TYPE_INTENT);
         if (menuType != null)

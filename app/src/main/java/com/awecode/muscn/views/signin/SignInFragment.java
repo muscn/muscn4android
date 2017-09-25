@@ -149,19 +149,17 @@ public class SignInFragment extends AppCompatBaseFragment {
                                 JSONObject json = response.getJSONObject();
                                 try {
                                     if (json != null) {
-                                        Log.d(TAG, json.toString());
-                                        String text = "<b>Name :</b> " + json.getString("name") + "<br><br><b>Email :</b> " + json.getString("email") + "<br><br><b>Profile link :</b> " + json.getString("link") + "<br><br><b>Id :</b> " + json.getString("id");
-
-                                        Log.v(TAG, text);
-                                        Log.v(TAG, "email from json " + json.getString("email"));
+                                        Log.d(TAG, "testing fb login: " + json.toString());
+                                        String name = json.getString("name");
+                                        String email = json.getString("email");
+                                        //send name and email to server
+                                        requestSocialLogin(name, email);
 
                                     }
 
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
-//                                Profile profile = Profile.getCurrentProfile();
-//                                profile.getProfilePictureUri(20,20);
 
                             }
                         });
@@ -173,16 +171,25 @@ public class SignInFragment extends AppCompatBaseFragment {
 
             @Override
             public void onCancel() {
-                Log.v("test", "login cancel");
 
             }
 
             @Override
             public void onError(FacebookException exception) {
-                Log.v("test", "login error");
+                toast("Facebook login error occured. Please try again.");
 
             }
         });
+    }
+
+    /**
+     * request social login using name and email
+     *
+     * @param name
+     * @param email
+     */
+    private void requestSocialLogin(String name, String email) {
+
     }
 
     @Override

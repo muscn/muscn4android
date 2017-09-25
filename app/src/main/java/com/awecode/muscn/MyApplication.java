@@ -8,6 +8,8 @@ import com.awecode.muscn.util.retrofit.ServiceGenerator;
 import com.awecode.muscn.util.retrofit.feed.FeedApiInterface;
 import com.awecode.muscn.util.retrofit.feed.FeedClient;
 import com.crashlytics.android.Crashlytics;
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
 
 import java.io.FileNotFoundException;
 
@@ -46,6 +48,10 @@ public class MyApplication extends Application {
                 .build();
         Realm.setDefaultConfiguration(config);
         getRealmInstance();
+
+        //init fb sdk
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        AppEventsLogger.activateApp(this);
     }
 
     public Realm getRealmInstance() {
