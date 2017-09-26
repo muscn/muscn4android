@@ -164,3 +164,22 @@
    public *;
 }
 
+#facebook
+-keep class com.facebook.** {
+   *;
+}
+
+
+#realm
+-keep class io.realm.annotations.RealmModule
+-keep @io.realm.annotations.RealmModule class *
+-keep class io.realm.internal.Keep
+-keep @io.realm.internal.Keep class *
+-dontwarn javax.**
+-dontwarn io.realm.**
+
+
+#firebase gms
+-keep class com.google.android.gms.** { *; }
+-dontwarn com.google.android.gms.**
+
