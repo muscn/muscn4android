@@ -6,7 +6,7 @@
     <dimen name="home_view_margin_top_large">22dp</dimen>
     <dimen name="titlee_logo_size">30dp</dimen>
     <dimen name="match_between_txt_size">20sp</dimen>
-    <dimen name="competition_txt_size">19sp</dimen>
+    <dimen name="competition_txt_size">16sp</dimen>
     <dimen name="time_label_txt_size">18sp</dimen>
     <dimen name="vertical_line_height">60dp</dimen>
     <dimen name="team_logo_size">45dp</dimen>
@@ -34,5 +34,6 @@
     <dimen name="spinner_txt_padding_top">10dp</dimen>
     <dimen name="social_login_margin_top">10dp</dimen>
     <dimen name="fb_btn_padding">12dp</dimen>
+    <dimen name="date_txt_size">19sp</dimen>
 
 </resources>
