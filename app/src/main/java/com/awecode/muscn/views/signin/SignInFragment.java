@@ -404,10 +404,7 @@ public class SignInFragment extends AppCompatBaseFragment implements GoogleApiCl
                     @Override
                     public void onError(Throwable e) {
                         mActivity.closeProgressDialog();
-                        if (((HttpException) e).response().code() == 401)
-                            mActivity.showDialog(getString(R.string.please_check_email_confirmation));
-                        else
-                            handleSignInRequestError(e);
+                        handleSignInRequestError(e);
 
                     }
 
@@ -436,6 +433,9 @@ public class SignInFragment extends AppCompatBaseFragment implements GoogleApiCl
                     errorMessage = apiError.getNon_field_errors().get(0);
                     if (errorMessage.contains(getString(R.string.login_error)))
                         showErrorDialog(getString(R.string.username_password_incorrect_text));
+                    else if (((HttpException) e).response().code() == 400 &&
+                            errorMessage.contains("User account is disabled."))
+                        showErrorDialog(getString(R.string.please_check_email_confirmation));
 
                 } else if (apiError.getDetail() != null &&
                         !TextUtils.isEmpty(apiError.getDetail()))
