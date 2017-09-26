@@ -116,12 +116,14 @@ public class SignUpFragment extends AppCompatBaseFragment {
         signUpPostData.setEmail(emailEditText.getText().toString());
         signUpPostData.setPassword(passwordEditText.getText().toString());
 
-        SignUpPostData socialData = new SignUpPostData();
-        socialData.setProvider(mSignupPostData.getProvider());
-        socialData.setFbToken(mSignupPostData.getFbToken());
+        //if from social login
+        if (mSignupPostData != null) {
+            SignUpPostData socialData = new SignUpPostData();
+            socialData.setProvider(mSignupPostData.getProvider());
+            socialData.setFbToken(mSignupPostData.getFbToken());
 
-        signUpPostData.setSocialData(socialData);
-
+            signUpPostData.setSocialData(socialData);
+        }
         Observable<SignUpPostData> call = mApiInterface.postSignUpData(signUpPostData);
         call.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
