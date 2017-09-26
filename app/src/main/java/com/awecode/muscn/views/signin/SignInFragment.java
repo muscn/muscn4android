@@ -288,7 +288,7 @@ public class SignInFragment extends AppCompatBaseFragment implements GoogleApiCl
                             toast("Login successful. Please complete membership registration.");
                             handleSocialLoginResponseForExistingUser(response);
                         } else {
-                            showErrorDialog("Error occured during facebook login. Please try again.");
+                            showErrorDialog("Error occurred during facebook login. Please try again.");
 //                            signUpPostData.setProvider("facebook");
 //                            //go to signup view
 //                            Intent intent = new Intent(mContext, SignUpActivity.class);
