@@ -30,7 +30,7 @@ public class ServiceGenerator {
     private static final String TAG = ServiceGenerator.class.getSimpleName();
 
     private static final int TIME_OUT = 15;
-    public static final String API_BASE_URL = "http://192.168.0.143:8000/";
+    public static final String API_BASE_URL = "https://manutd.org.np/";
     private static OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
     public static Retrofit retrofit;
     private static Retrofit.Builder builder =
