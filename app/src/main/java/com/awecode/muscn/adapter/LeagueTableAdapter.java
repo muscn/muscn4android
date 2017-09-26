@@ -49,10 +49,25 @@ public class LeagueTableAdapter extends RealmRecyclerViewAdapter<LeagueTableResp
             gd = leagueTableResponse.getGd();
             pts = leagueTableResponse.getPts();
 
-            if (club.equalsIgnoreCase("Manchester United"))
-                holder.rowLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.league_table_manutd_color));
-            else
+            if (club.equalsIgnoreCase("Manchester United")) {
+                holder.rowLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.colorPrimary));
+                
+                int whiteColor = ContextCompat.getColor(mContext, R.color.white);
+                holder.serialNumber.setTextColor(whiteColor);
+                holder.club.setTextColor(whiteColor);
+                holder.p.setTextColor(whiteColor);
+                holder.gd.setTextColor(whiteColor);
+                holder.pts.setTextColor(whiteColor);
+            } else {
                 holder.rowLayout.setBackgroundColor(Color.TRANSPARENT);
+
+                int primaryColor = ContextCompat.getColor(mContext, R.color.colorPrimary);
+                holder.serialNumber.setTextColor(primaryColor);
+                holder.club.setTextColor(primaryColor);
+                holder.p.setTextColor(primaryColor);
+                holder.gd.setTextColor(primaryColor);
+                holder.pts.setTextColor(primaryColor);
+            }
 
 
 //       White divider line is hide if the table item is last
