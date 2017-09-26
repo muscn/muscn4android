@@ -404,7 +404,10 @@ public class SignInFragment extends AppCompatBaseFragment implements GoogleApiCl
                     @Override
                     public void onError(Throwable e) {
                         mActivity.closeProgressDialog();
-                        handleSignInRequestError(e);
+                        if (((HttpException) e).response().code() == 403)
+                            showErrorDialog(getString(R.string.please_check_email_confirmation));
+                        else
+                            handleSignInRequestError(e);
 
                     }
 
