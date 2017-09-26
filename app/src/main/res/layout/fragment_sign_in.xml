@@ -57,6 +57,7 @@
             style="@style/WidthMatchHeightWrap"
             android:layout_marginTop="@dimen/social_login_margin_top"
             android:text="@string/sign_in_with_google"
+            android:visibility="gone"
             app:isDarkTheme="true" />
 
 
