@@ -30,6 +30,13 @@ public class SignUpPostData implements Parcelable {
     public SignUpPostData() {
     }
 
+    public SignUpPostData(String fullName, String email, String provider, String fbToken) {
+        this.fullName = fullName;
+        this.email = email;
+        this.provider = provider;
+        this.fbToken = fbToken;
+    }
+
     public SignUpPostData(String provider, String fbToken) {
         this.provider = provider;
         this.fbToken = fbToken;

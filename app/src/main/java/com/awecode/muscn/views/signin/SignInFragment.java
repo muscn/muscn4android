@@ -230,7 +230,6 @@ public class SignInFragment extends AppCompatBaseFragment implements GoogleApiCl
                         JSONObject json = response.getJSONObject();
                         try {
                             if (json != null) {
-                                Log.d(TAG, "testing fb login: " + json.toString());
                                 String name = json.getString("name");
                                 String email = json.getString("email");
 
@@ -259,7 +258,11 @@ public class SignInFragment extends AppCompatBaseFragment implements GoogleApiCl
         mActivity.showProgressDialog(getString(R.string.please_wait));
 
 
-        mApiInterface.requestSocialLogin(new SignUpPostData("facebook", signUpPostData.getFbToken()))
+        mApiInterface.requestSocialLogin(
+                new SignUpPostData(signUpPostData.getFullName(),
+                        signUpPostData.getEmail(),
+                        "facebook",
+                        signUpPostData.getFbToken()))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<SignInSuccessData>() {
@@ -281,16 +284,18 @@ public class SignInFragment extends AppCompatBaseFragment implements GoogleApiCl
                         mActivity.closeProgressDialog();
 
                         //go to membership fee or home
-                        if (response != null && !TextUtils.isEmpty(response.getToken()))
+                        if (response != null && !TextUtils.isEmpty(response.getToken())) {
+                            toast("Login successful. Please complete membership registration.");
                             handleSocialLoginResponseForExistingUser(response);
-                        else {
-                            signUpPostData.setProvider("facebook");
-                            //go to signup view
-                            Intent intent = new Intent(mContext, SignUpActivity.class);
-                            intent.putExtra(SignUpActivity.TYPE_INTENT, MenuType.SIGN_UP);
-                            intent.putExtra(SignUpActivity.INTENT_SOCIAL_LOGIN_DATA, signUpPostData);
-                            mContext.startActivity(intent);
-                            getActivity().finish();
+                        } else {
+                            showErrorDialog("Error occured during facebook login. Please try again.");
+//                            signUpPostData.setProvider("facebook");
+//                            //go to signup view
+//                            Intent intent = new Intent(mContext, SignUpActivity.class);
+//                            intent.putExtra(SignUpActivity.TYPE_INTENT, MenuType.SIGN_UP);
+//                            intent.putExtra(SignUpActivity.INTENT_SOCIAL_LOGIN_DATA, signUpPostData);
+//                            mContext.startActivity(intent);
+//                            getActivity().finish();
                         }
 
 
