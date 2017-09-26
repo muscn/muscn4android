@@ -1,5 +1,6 @@
 package com.awecode.muscn.util.retrofit;
 
+import com.awecode.muscn.model.http.LogoutRequest;
 import com.awecode.muscn.model.http.fixtures.FixturesResponse;
 import com.awecode.muscn.model.http.injuries.InjuriesResponse;
 import com.awecode.muscn.model.http.leaguetable.LeagueTableResponse;
@@ -71,6 +72,9 @@ public interface MuscnApiInterface {
 
     @POST("api/v1/obtain_auth_token/")
     Observable<SignInSuccessData> doSignIn(@Body SignInData signInData);
+
+    @POST("api/v1/users/logout/")
+    Observable<SignInSuccessData> logoutRequest(@Body LogoutRequest logoutRequest);
 
     @Multipart
     @POST("api/v1/users/membership/")

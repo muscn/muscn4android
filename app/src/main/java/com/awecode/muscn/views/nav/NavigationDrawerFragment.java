@@ -1,5 +1,6 @@
 package com.awecode.muscn.views.nav;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,11 +10,14 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 
 import com.awecode.muscn.R;
 import com.awecode.muscn.model.enumType.MenuType;
+import com.awecode.muscn.model.http.LogoutRequest;
+import com.awecode.muscn.model.http.signin.SignInSuccessData;
 import com.awecode.muscn.util.Constants;
 import com.awecode.muscn.util.Util;
 import com.awecode.muscn.util.prefs.Prefs;
@@ -28,6 +32,9 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by surensth on 10/6/16.
@@ -51,6 +58,7 @@ public class NavigationDrawerFragment extends MasterFragment implements Navigati
     private boolean mFromSavedInstanceState;
     private int mCurrentSelectedPosition;
     private List<NavigationItem> navigationItems;
+    private ProgressDialog progressDialog;
 
     @Override
     public int getLayout() {
@@ -256,23 +264,65 @@ public class NavigationDrawerFragment extends MasterFragment implements Navigati
                     Intent signInIntent = new Intent(mContext, SignUpActivity.class);
                     signInIntent.putExtra(SignUpActivity.TYPE_INTENT, MenuType.SIGN_IN_OUT);
                     startActivity(signInIntent);
-                } else {//logout case
-                    PrefsHelper.saveLoginStatus(false);
-                    Prefs.remove(Constants.PREFS_LOGIN_TOKEN);
-                    mActivity.showSuccessDialog(mContext, getString(R.string.success), getString(R.string.success_sign_out_text));
-                    signInButton.setText(getString(R.string.sign_in));
-                    signUpButton.setText(getString(R.string.sign_up));
+                } else //logout case
+                    sendLogoutRequest();
 
-                    try {
-                        LoginManager.getInstance().logOut();
-                        AccessToken.setCurrentAccessToken(null);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
-                }
                 break;
         }
+    }
+
+    /**
+     * send logout request
+     */
+    private void sendLogoutRequest() {
+        String fcmToken = Prefs.getString(Constants.PREFS_REFRESH_TOKEN, "");
+        if (TextUtils.isEmpty(fcmToken)) {
+            clearDataForLogout();
+            return;
+        }
+        showProgressDialog(getString(R.string.please_wait));
+        mApiInterface.logoutRequest(new LogoutRequest(fcmToken))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<SignInSuccessData>() {
+                    @Override
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        closeProgressDialog();
+                        clearDataForLogout();
+
+                    }
+
+                    @Override
+                    public void onNext(SignInSuccessData signInSuccessData) {
+                        closeProgressDialog();
+                        clearDataForLogout();
+                    }
+                });
+    }
+
+    /**
+     * clear user data
+     */
+    private void clearDataForLogout() {
+        PrefsHelper.saveLoginStatus(false);
+        Prefs.remove(Constants.PREFS_LOGIN_TOKEN);
+        mActivity.showSuccessDialog(mContext, getString(R.string.success), getString(R.string.success_sign_out_text));
+        signInButton.setText(getString(R.string.sign_in));
+        signUpButton.setText(getString(R.string.sign_up));
+
+        try {
+            LoginManager.getInstance().logOut();
+            AccessToken.setCurrentAccessToken(null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        toast("Logout success!");
     }
 
     @Override
@@ -317,5 +367,17 @@ public class NavigationDrawerFragment extends MasterFragment implements Navigati
             signInButton.setText(getString(R.string.sign_in));
             signUpButton.setText(getString(R.string.signup));
         }
+    }
+
+    public void showProgressDialog(String message) {
+        progressDialog = new ProgressDialog(mContext);
+        progressDialog.setMessage(message);
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+    }
+
+    public void closeProgressDialog() {
+        if (progressDialog != null)
+            progressDialog.dismiss();
     }
 }
