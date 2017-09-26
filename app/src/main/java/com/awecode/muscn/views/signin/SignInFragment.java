@@ -321,7 +321,7 @@ public class SignInFragment extends AppCompatBaseFragment implements GoogleApiCl
             intent.putExtra(SignUpActivity.TYPE_INTENT, MenuType.MEMBERSHIP_REGISTRATION);
             mContext.startActivity(intent);
             getActivity().finish();
-        } else//go to home
+        } else//user is member,go to home
             getActivity().finish();
 
     }
