@@ -548,15 +548,6 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
                 Util.twoDigitFormat(dayOfMonth));
     }
 
-    @OnEditorAction(R.id.submitButton)
-    public boolean addressDoneBtnClicked(int actionId) {
-        if (actionId == EditorInfo.IME_ACTION_DONE) {
-            mValidator.validate();
-            return true;
-        }
-        return false;
-    }
-
 
     @Override
     public void onValidationSucceeded() {

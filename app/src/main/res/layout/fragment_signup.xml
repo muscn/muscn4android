@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/activity_vertical_margin">
@@ -23,8 +24,8 @@
             <EditText
                 android:id="@+id/fullnameEditText"
                 style="@style/normal_edit_text_style"
-                android:inputType="text"
-                android:hint="@string/full_name" />
+                android:hint="@string/full_name"
+                android:inputType="text" />
         </LinearLayout>
 
         <!--email-->
@@ -41,8 +42,8 @@
             <EditText
                 android:id="@+id/emailEditText"
                 style="@style/normal_edit_text_style"
-                android:inputType="textEmailAddress"
-                android:hint="@string/email" />
+                android:hint="@string/email"
+                android:inputType="textEmailAddress" />
         </LinearLayout>
         <!--password-->
         <LinearLayout
@@ -55,30 +56,24 @@
                 style="@style/normal_text_view_style"
                 android:text="@string/password" />
 
-            <EditText
-                android:id="@+id/passwordEditText"
-                style="@style/normal_edit_text_style"
-                android:fontFamily="sans-serif"
-                android:hint="@string/password"
-                android:inputType="textPassword" />
-        </LinearLayout>
-        <!--confirm password-->
-        <LinearLayout
-            android:id="@+id/confirmPasswordLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/etPasswordLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:hintEnabled="false"
+                app:passwordToggleDrawable="@drawable/ic_password_selector"
+                app:passwordToggleEnabled="true"
+                app:passwordToggleTint="@color/password_toggle_tint_color">
 
-            <TextView
-                style="@style/normal_text_view_style"
-                android:text="@string/confirmPassword" />
-
-            <EditText
-                android:id="@+id/confirmPasswordEditText"
-                style="@style/normal_edit_text_style"
-                android:fontFamily="sans-serif"
-                android:hint="@string/confirmPassword"
-                android:inputType="textPassword" />
+                <EditText
+                    android:id="@+id/passwordEditText"
+                    style="@style/normal_edit_text_style"
+                    android:fontFamily="sans-serif"
+                    android:hint="@string/password"
+                    android:imeOptions="actionDone"
+                    android:inputType="textPassword"
+                    android:maxLines="1" />
+            </android.support.design.widget.TextInputLayout>
         </LinearLayout>
         <!--sign up button-->
         <Button

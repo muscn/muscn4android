@@ -22,6 +22,7 @@
     <color name="colorGreyDark">#606060</color>
 
     <color name="grey_text_color">#6F6F6F</color>
+    <color name="password_toggle_tint_color">#585858</color>
 
 
 </resources>

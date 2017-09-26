@@ -87,8 +87,8 @@
     <string name="install">Install</string>
 
     <!--facebook login-->
-    <string name="facebook_app_id">########</string>
-    <string name="fb_login_protocol_scheme">#######</string>
+    <string name="facebook_app_id">745752022186281</string>
+    <string name="fb_login_protocol_scheme">fb745752022186281</string>
 
     <string name="partners">Partners</string>
     <string name="loading_partners">Loading partners...</string>
@@ -112,7 +112,7 @@
     <string name="login_with_facebook">Login with Facebook</string>
     <string name="google_login_error_try_again_msg">Google login error occurred. Please try again.</string>
     <string name="sign_in_with_google">Sign in with Google</string>
-    <string name="request_id_token">#######</string>
+    <string name="request_id_token">658479996714-7r2eh6uf4jhe7ge4bmrv3m6vru46orfh.apps.googleusercontent.com</string>
 
 
 </resources>
