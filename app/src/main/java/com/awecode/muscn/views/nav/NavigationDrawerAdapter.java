@@ -68,11 +68,21 @@ public class NavigationDrawerAdapter extends RecyclerView.Adapter<NavigationDraw
                                                }
         );
 
+//        //TODO: selected menu position, change layout accordingly
+//        if (mSelectedPosition == i || mTouchedPosition == i) {
+//            viewHolder.navMenuTextView.setTextColor(ContextCompat.getColor(mContext, R.color.colorPrimary));
+//        } else {
+//            viewHolder.navMenuTextView.setTextColor(ContextCompat.getColor(mContext, android.R.color.white));
+//        }
         //TODO: selected menu position, change layout accordingly
         if (mSelectedPosition == i || mTouchedPosition == i) {
-            viewHolder.navMenuTextView.setTextColor(ContextCompat.getColor(mContext, R.color.colorPrimary));
+            viewHolder.rowLinearLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.dimPrimaryColor));
+            viewHolder.navMenuTextView.setTextColor(ContextCompat.getColor(mContext, R.color.whiteColor));
+
         } else {
-            viewHolder.navMenuTextView.setTextColor(ContextCompat.getColor(mContext, android.R.color.white));
+            viewHolder.rowLinearLayout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.whiteColor));
+
+            viewHolder.navMenuTextView.setTextColor(ContextCompat.getColor(mContext, R.color.colorPrimary));
         }
     }
 

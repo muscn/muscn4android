@@ -18,7 +18,7 @@
             android:layout_weight="1.5"
             android:text="Player"
             android:textAllCaps="true"
-            android:textColor="@color/white"
+            android:textColor="@color/whiteColor"
             android:textStyle="bold"
             android:textSize="@dimen/header_caption_text_size" />
 
@@ -30,7 +30,7 @@
             android:text="Goals"
             android:textAllCaps="true"
             android:textStyle="bold"
-            android:textColor="@color/white"
+            android:textColor="@color/whiteColor"
             android:textSize="@dimen/header_caption_text_size" />
 
     </LinearLayout>

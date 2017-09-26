@@ -5,8 +5,8 @@
     <dimen name="drawable_size">76dp</dimen>
     <dimen name="home_view_margin_top_large">22dp</dimen>
     <dimen name="titlee_logo_size">30dp</dimen>
-    <dimen name="match_between_txt_size">25sp</dimen>
-    <dimen name="competition_txt_size">19sp</dimen>
+    <dimen name="match_between_txt_size">20sp</dimen>
+    <dimen name="competition_txt_size">16sp</dimen>
     <dimen name="time_label_txt_size">18sp</dimen>
     <dimen name="vertical_line_height">60dp</dimen>
     <dimen name="team_logo_size">45dp</dimen>
@@ -22,9 +22,18 @@
     <dimen name="fixture_text_size">15sp</dimen>
     <dimen name="update_dialog_text_size">18sp</dimen>
     <dimen name="normal_text_size">12dp</dimen>
-    <dimen name="form_below_margin">14dp</dimen>
     <dimen name="toolbar_icon_size">24dp</dimen>
     <dimen name="injury_item_txt_size">12sp</dimen>
     <dimen name="signup_logo_width">120dp</dimen>
     <dimen name="signup_header_img_width">185dp</dimen>
+    <dimen name="team_logo_size_new">100dp</dimen>
+    <dimen name="bank_deposit_img_width">300dp</dimen>
+    <dimen name="bank_deposit_img_height">400dp</dimen>
+    <dimen name="spinner_text_size">13sp</dimen>
+    <dimen name="spinner_item_padding_left">5dp</dimen>
+    <dimen name="spinner_txt_padding_top">10dp</dimen>
+    <dimen name="social_login_margin_top">10dp</dimen>
+    <dimen name="fb_btn_padding">12dp</dimen>
+    <dimen name="date_txt_size">19sp</dimen>
+
 </resources>

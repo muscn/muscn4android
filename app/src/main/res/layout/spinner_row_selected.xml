@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/spinnerTextView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="left"
+    android:paddingLeft="@dimen/spinner_item_padding_left"
+    android:paddingTop="@dimen/spinner_txt_padding_top"
+    android:textColor="@color/black"
+    android:textSize="@dimen/spinner_text_size"
+    tools:ignore="MissingPrefix" />

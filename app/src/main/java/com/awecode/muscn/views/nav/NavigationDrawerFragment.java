@@ -15,10 +15,13 @@ import android.widget.Button;
 import com.awecode.muscn.R;
 import com.awecode.muscn.model.enumType.MenuType;
 import com.awecode.muscn.util.Constants;
+import com.awecode.muscn.util.Util;
 import com.awecode.muscn.util.prefs.Prefs;
 import com.awecode.muscn.util.prefs.PrefsHelper;
 import com.awecode.muscn.views.MasterFragment;
 import com.awecode.muscn.views.signup.SignUpActivity;
+import com.facebook.AccessToken;
+import com.facebook.login.LoginManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -168,6 +171,8 @@ public class NavigationDrawerFragment extends MasterFragment implements Navigati
         items.add(new NavigationItem("Recent Results", "7", R.drawable.ic_fab_recent_result, true, MenuType.RECENT_RESULTS));//6 pos
         items.add(new NavigationItem("News", "8", R.drawable.ic_rss_feed_24dp, true, MenuType.NEWS));//7 pos
         items.add(new NavigationItem("About Us", "9", R.drawable.ic_fab_about_us, true, MenuType.ABOUT_US));//8 pos
+        items.add(new NavigationItem("Partners", "10", R.drawable.ic_partner_24dp, true, MenuType.PARTNERS));//9 pos
+
         return items;
     }
 
@@ -230,16 +235,21 @@ public class NavigationDrawerFragment extends MasterFragment implements Navigati
         }
         switch (view.getId()) {
             case R.id.signUpButton:
+                if (!Util.checkInternetConnection(mContext)) {
+                    noInternetConnectionDialog();
+                    return;
+                }
                 String text = signUpButton.getText().toString();
 
                 Intent intent = new Intent(mContext, SignUpActivity.class);
 
-                if (text.equalsIgnoreCase(getString(R.string.membership_registration))) {
+                if (text.equalsIgnoreCase(getString(R.string.membership_registration)))
                     intent.putExtra(SignUpActivity.TYPE_INTENT, MenuType.MEMBERSHIP_REGISTRATION);
-                } else {
+                else
                     intent.putExtra(SignUpActivity.TYPE_INTENT, MenuType.SIGN_UP);
-                }
+
                 startActivity(intent);
+
                 break;
             case R.id.signInButton:
                 if (signInButton.getText().toString().equalsIgnoreCase(getString(R.string.sign_in))) {
@@ -251,6 +261,14 @@ public class NavigationDrawerFragment extends MasterFragment implements Navigati
                     Prefs.remove(Constants.PREFS_LOGIN_TOKEN);
                     mActivity.showSuccessDialog(mContext, getString(R.string.success), getString(R.string.success_sign_out_text));
                     signInButton.setText(getString(R.string.sign_in));
+                    signUpButton.setText(getString(R.string.sign_up));
+
+                    try {
+                        LoginManager.getInstance().logOut();
+                        AccessToken.setCurrentAccessToken(null);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
 
                 }
                 break;
@@ -258,11 +276,42 @@ public class NavigationDrawerFragment extends MasterFragment implements Navigati
     }
 
     @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+
+        if (isVisibleToUser && isResumed()) {
+            //Only manually call onResume if fragment is already visible
+            //Otherwise allow natural fragment lifecycle to call onResume
+            onResume();
+        }
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (!getUserVisibleHint()) {
+            return;
+        }
+
+        changeRegisterLoginButtons();
+    }
+
+    @Override
     public void onStart() {
         super.onStart();
+        changeRegisterLoginButtons();
+    }
+
+    private void changeRegisterLoginButtons() {
         if (PrefsHelper.getLoginStatus()) {
             signInButton.setText(getString(R.string.sign_out));
-            signUpButton.setText(getString(R.string.membership_registration));
+            if (Util.userNeedMemberRegistration())
+                signUpButton.setText(getString(R.string.membership_registration));
+            else
+                signUpButton.setText("");
+
 
         } else {
             signInButton.setText(getString(R.string.sign_in));

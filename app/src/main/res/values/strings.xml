@@ -29,9 +29,9 @@
     <string name="copyright_owner_string">All Images and logos used in this app are copyright by their respective owners.</string>
     <string name="official_website_link_text">&lt;a href="https://manutd.org.np">manutd.org.np&lt;/a></string>
     <string name="facebook_link_text">&lt;a href="https://facebook.com/muscnepal">muscnepal&lt;/a></string>
-    <string name="twitter_link_text">&lt;a href="https://twitter.com/muscnp">@muncnp&lt;/a></string>
+    <string name="twitter_link_text">&lt;a href="https://twitter.com/muscnp">@muscnp&lt;/a></string>
     <string name="email_link_text">&lt;a href="mailto:info@manutd.org.np">info@manutd.org.np&lt;/a></string>
-    <string name="instagram_link_text">&lt;a href="https://instagram.com/muscnp">muscnp&lt;/a></string>
+    <string name="instagram_link_text">&lt;a href="https://www.instagram.com/muscnepal/">muscnepal&lt;/a></string>
     <string name="awecode_link_text">&lt;a href="https://awecode.com">Awecode&lt;/a></string>
     <string name="drawer_open">Menu opened</string>
     <string name="drawer_close">Menu closed</string>
@@ -80,6 +80,39 @@
     <string name="sign_up">Sign Up</string>
     <string name="submit">Submit</string>
     <string name="mobile_number">Mobile Number</string>
+    <string name="about_us">About Us</string>
+    <string name="live_screening">Live Screening @</string>
+    <string name="google_maps_package_name">com.google.android.apps.maps</string>
+    <string name="install_google_maps">Please install Google Maps.</string>
+    <string name="install">Install</string>
+
+    <!--facebook login-->
+    <string name="facebook_app_id">745752022186281</string>
+    <string name="fb_login_protocol_scheme">fb745752022186281</string>
+
+    <string name="partners">Partners</string>
+    <string name="loading_partners">Loading partners...</string>
+    <string name="digits_only">0123456789</string>
+    <string name="payment_options">Payment Options</string>
+    <string name="e_sewa">E-Sewa</string>
+    <string name="receipt">Receipt</string>
+    <string name="bank_deposit">Bank Deposit</string>
+    <string name="receipt_number">Receipt Number</string>
+    <string name="receipt_no_if_you_paid_directly_to_representative">Receipt No. (If you paid directly to representative):</string>
+    <string name="field_cannot_be_empty">Field cannot be empty.</string>
+    <string name="choose_bank_deposit">Tap to Upload Bank Deposit</string>
+    <string name="thank_you_for_being_around_have_a_nice_day">Thank you for being around. Have a nice day!!!.</string>
+    <string name="this_field_cannot_be_empty">This field cannot be empty.</string>
+    <string name="payment_via_any_one">Payment Via (any one):</string>
+    <string name="esewa_payment_success_mg">Esewa payment success. Click submit to finish registration.</string>
+    <string name="pickup_location">Pickup Location</string>
+    <string name="membership_registration_success_msg">Thank you for registering to be a member. You\'ll be notified when your membership package is available.</string>
+    <string name="please_wait">Please Wait...</string>
+    <string name="please_check_email_confirmation">Please confirm your email address.</string>
+    <string name="login_with_facebook">Login with Facebook</string>
+    <string name="google_login_error_try_again_msg">Google login error occurred. Please try again.</string>
+    <string name="sign_in_with_google">Sign in with Google</string>
+    <string name="request_id_token">658479996714-7r2eh6uf4jhe7ge4bmrv3m6vru46orfh.apps.googleusercontent.com</string>
 
 
 </resources>

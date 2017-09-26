@@ -52,13 +52,17 @@ public class ResultAdapter extends RealmRecyclerViewAdapter<RecentResultData, Re
         final RecentResultData recentResultData = getItem(position);
         final HeaderViewHolder itemController = (HeaderViewHolder) holder;
 
-
         if (recentResultData.getVenue().contains(","))
-            itemController.eplMatchweekTimeandHomeGround.setText(Util.commonDateFormatter(recentResultData.getDatetime(),
-                    "yyyy-MM-dd'T'hh:mm:ss'Z'") + "\n" + recentResultData.getVenue().substring(0, recentResultData.getVenue().indexOf(",")));
+            itemController.eplMatchweekTimeandHomeGround.setText(Util.recentResultCommonDateFormatter(recentResultData.getDatetime(),
+                    "yyyy-MM-dd'T'hh:mm:ss'Z'")
+                   /* + "\n" + recentResultData.getVenue().substring(0, recentResultData.getVenue().indexOf(","))*/);
         else
-            itemController.eplMatchweekTimeandHomeGround.setText(Util.commonDateFormatter(recentResultData.getDatetime(),
-                    "yyyy-MM-dd'T'hh:mm:ss'Z'") + "\n" + recentResultData.getVenue());
+            itemController.eplMatchweekTimeandHomeGround.setText(Util.recentResultCommonDateFormatter(recentResultData.getDatetime(),
+                    "yyyy-MM-dd'T'hh:mm:ss'Z'")/* + "\n" + recentResultData.getVenue()*/);
+        if (recentResultData.getCompetitionName() != null)
+            itemController.eplMatchweekCompetitionName.setText(recentResultData.getCompetitionName());
+        else
+            itemController.eplMatchweekCompetitionName.setText("");
 
 
         if (recentResultData.getIsHomeGame()) {
@@ -101,7 +105,10 @@ public class ResultAdapter extends RealmRecyclerViewAdapter<RecentResultData, Re
         itemController.matchResultRowLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mResultItemClickListener.onRecentResultClicked(recentResultData.getId());
+                if (recentResultData.getMufcScore() != null && recentResultData.getOpponentScore() != null)
+                    mResultItemClickListener.onRecentResultClicked(recentResultData.getId());
+                else
+                    Util.toast(context, "Details not available");
             }
         });
 
@@ -120,8 +127,8 @@ public class ResultAdapter extends RealmRecyclerViewAdapter<RecentResultData, Re
         ImageView eplMatchweekFixtureHomeTeamLogo;
         @BindView(R.id.eplMatchweekHomeTeamScore)
         TextView eplMatchweekHomeTeamScore;
-        @BindView(R.id.eplMatchweekMatchStatus)
-        TextView eplMatchweekMatchStatus;
+        @BindView(R.id.eplMatchweekCompetitionName)
+        TextView eplMatchweekCompetitionName;
         @BindView(R.id.eplMatchweekAwayTeamScore)
         TextView eplMatchweekAwayTeamScore;
         @BindView(R.id.eplMatchweekFixtureAwayTeamLogo)

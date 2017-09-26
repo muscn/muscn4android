@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
@@ -6,14 +6,13 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
     </style>
 
     <style name="countdown_timer_text_style">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:textSize">30sp</item>
         <item name="android:gravity">center</item>
     </style>
@@ -21,7 +20,7 @@
     <style name="AppCompatAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="colorAccent">@color/colorPrimary</item>
         <item name="android:textColorPrimary">@color/colorGrey</item>
-        <item name="android:background">@color/white</item>
+        <item name="android:background">@color/whiteColor</item>
     </style>
 
     <style name="update_dialog_textview_style">
@@ -42,8 +41,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">@dimen/normal_text_size</item>
         <item name="android:textColor">@color/black</item>
-        <item name="android:layout_marginTop">@dimen/activity_horizontal_margin</item>
-        <item name="android:layout_marginBottom">@dimen/form_below_margin</item>
+        <item name="android:layout_marginTop">@dimen/social_login_margin_top</item>
     </style>
 
     <style name="normal_edit_text_style">
@@ -53,13 +51,14 @@
         <item name="android:textColor">@color/black</item>
         <item name="android:textColorHint">@color/colorGrey</item>
         <item name="android:textCursorDrawable">@drawable/cursor_drawable</item>
+        <item name="android:layout_marginTop">5dp</item>
     </style>
 
     <style name="normal_button_style">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">@dimen/normal_text_size</item>
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@color/whiteColor</item>
         <item name="android:background">@color/colorPrimary</item>
     </style>
 
@@ -75,16 +74,50 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">@dimen/normal_text_size</item>
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:background">@null</item>
     </style>
 
     <style name="league_table_caption_style">
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@color/whiteColor</item>
         <item name="android:textSize">@dimen/header_caption_text_size</item>
         <item name="android:textStyle">bold</item>
     </style>
 
+
+    <style name="AlertDialogCustom" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:colorAccent" tools:targetApi="lollipop">@color/colorPrimary</item>
+    </style>
+
+    <style name="WidthMatchHeightWrap">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="WidthMatchHeightMatch">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="WidthWrapHeightWrap">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="PaymentOptionBtnStyle">
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="ImagePickerTheme" parent="ef_BaseTheme">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
 
 </resources>

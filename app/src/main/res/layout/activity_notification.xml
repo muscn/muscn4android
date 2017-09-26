@@ -1,35 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
-    android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    tools:context="com.awecode.muscn.views.notification.NotificationActivity">
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/whiteColor"
+              android:orientation="vertical"
+              tools:context="com.awecode.muscn.views.notification.NotificationActivity">
 
-    <TextView
-        android:id="@+id/notificationTitle"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:gravity="center"
-        android:text="Notification"
-        android:textAllCaps="true"
-        android:textColor="@color/white"
-        android:textSize="18sp" />
+        android:background="@color/colorPrimary"
+        android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/notificationImageView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/notificationTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Notification"
+            android:textAllCaps="true"
+            android:textColor="@color/whiteColor"
+            android:textSize="18sp"/>
+    </FrameLayout>
 
-    <TextView
-        android:id="@+id/notificationMessageTextView"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:text=""
-        android:textColor="@color/white" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin">
+
+        <ImageView
+            android:id="@+id/notificationImageView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/notificationMessageTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text=""
+            android:textColor="@color/whiteColor"/>
+    </LinearLayout>
 </LinearLayout>

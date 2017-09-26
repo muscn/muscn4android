@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#e54d36</color>
-    <color name="colorPrimaryDark">#99e54d36</color>
+    <color name="colorPrimaryDark">#ffc6260e</color><!--99e54d36-->
     <color name="colorAccent">#A4A4A4</color>
     <color name="white">#ffffff</color>
     <color name="colorGrey">#A4A4A4</color>
@@ -16,5 +16,13 @@
     <color name="mdtp_accent_color">@color/colorPrimary</color>
     <color name="mdtp_accent_color_dark">@color/colorPrimaryDark</color>
     <color name="league_table_manutd_color">#87e54d36</color>
+
+    <color name="whiteColor">#ffffff</color>
+    <color name="dimPrimaryColor">#88e54d36</color>
+    <color name="colorGreyDark">#606060</color>
+
+    <color name="grey_text_color">#6F6F6F</color>
+    <color name="password_toggle_tint_color">#585858</color>
+
 
 </resources>

@@ -16,7 +16,6 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.awecode.muscn.BuildConfig;
@@ -28,7 +27,7 @@ import com.awecode.muscn.model.registration.RegistrationResponse;
 import com.awecode.muscn.util.Constants;
 import com.awecode.muscn.util.Util;
 import com.awecode.muscn.util.prefs.Prefs;
-import com.awecode.muscn.views.aboutus.AboutUsActivity;
+import com.awecode.muscn.views.aboutus.AboutUsFragment;
 import com.awecode.muscn.views.base.BaseActivity;
 import com.awecode.muscn.views.fixture.FixturesFragment;
 import com.awecode.muscn.views.home.HomeFragment;
@@ -39,6 +38,7 @@ import com.awecode.muscn.views.nav.NavigationDrawerCallbacks;
 import com.awecode.muscn.views.nav.NavigationDrawerFragment;
 import com.awecode.muscn.views.nav.NavigationItem;
 import com.awecode.muscn.views.news.NewsFragment;
+import com.awecode.muscn.views.partners.PartnersFragment;
 import com.awecode.muscn.views.recent_results.ResultFragment;
 import com.awecode.muscn.views.top_scorers.TopScorersFragment;
 import com.getkeepsafe.taptargetview.TapTarget;
@@ -53,8 +53,6 @@ import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
-
-import static com.awecode.muscn.util.Util.getAppVersion;
 
 
 public class HomeActivity extends BaseActivity implements RecyclerViewScrollListener, NavigationDrawerCallbacks {
@@ -101,18 +99,18 @@ public class HomeActivity extends BaseActivity implements RecyclerViewScrollList
                         // All options below are optional
                         .outerCircleColor(R.color.colorPrimary)      // Specify a color for the outer circle
                         .outerCircleAlpha(0.96f)            // Specify the alpha amount for the outer circle
-                        .targetCircleColor(R.color.white)   // Specify a color for the target circle
+                        .targetCircleColor(R.color.whiteColor)   // Specify a color for the target circle
                         .titleTextSize(25)                  // Specify the size (in sp) of the title text
-                        .titleTextColor(R.color.white)      // Specify the color of the title text
+                        .titleTextColor(R.color.whiteColor)      // Specify the color of the title text
                         .descriptionTextSize(20)            // Specify the size (in sp) of the description text
-                        .descriptionTextColor(R.color.white)  // Specify the color of the description text
-                        .textColor(R.color.white)            // Specify a color for both the title and description text
+                        .descriptionTextColor(R.color.whiteColor)  // Specify the color of the description text
+                        .textColor(R.color.whiteColor)            // Specify a color for both the title and description text
                         .textTypeface(Typeface.SANS_SERIF)  // Specify a typeface for the text
                         .dimColor(R.color.black)            // If set, will dim behind the view with 30% opacity of the given color
                         .drawShadow(true)                   // Whether to draw a drop shadow or not
                         .cancelable(false)                  // Whether tapping outside the outer circle dismisses the view
                         .tintTarget(true)                   // Whether to tint the target view's color
-                        .transparentTarget(true)           // Specify whether the target is transparent (displays the content underneath)
+                        .transparentTarget(false)           // Specify whether the target is transparent (displays the content underneath)
                         .icon(ContextCompat.getDrawable(mContext, R.drawable.ic_ham_burger_taptarget))                     // Specify a custom drawable to draw as the target
                         .targetRadius(60),                  // Specify the target radius (in dp)
                 new TapTargetView.Listener() {          // The listener can listen for regular clicks, long clicks or cancels
@@ -200,15 +198,20 @@ public class HomeActivity extends BaseActivity implements RecyclerViewScrollList
             } else if (menuType == MenuType.RECENT_RESULTS) {
                 mResultFragment = new ResultFragment();
                 openFragment(mResultFragment);
-            } else if (menuType == MenuType.ABOUT_US)
-                startActivity(new Intent(this, AboutUsActivity.class));
-            else if(menuType==MenuType.NEWS)
+            } else if (menuType == MenuType.ABOUT_US) {
+                mAboutUsFragment = new AboutUsFragment();
+                openFragment(mAboutUsFragment);
+//                startActivity(new Intent(this, AboutUsActivity.class));
+            } else if (menuType == MenuType.NEWS)
                 openFragment(NewsFragment.newInstance());
+            else if (menuType == MenuType.PARTNERS)
+                openFragment(PartnersFragment.newInstance());
             else {
                 mHomeFragment = HomeFragment.newInstance();
                 openFragmentNoHistory(mHomeFragment, "HOME");
             }
         }
+
     }
 
     @OnClick(R.id.hamBurgerImageView)
@@ -281,7 +284,9 @@ public class HomeActivity extends BaseActivity implements RecyclerViewScrollList
     }
 
     public void setAppVersion() {
-        mVersionTextView.setText("v" + getAppVersion());
+//        mVersionTextView.setText("v" + getAppVersion());
+        mVersionTextView.setText("");
+
     }
 
     public void sendRegistrationToServer() {

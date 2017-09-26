@@ -3,6 +3,7 @@ package com.awecode.muscn.util.retrofit;
 import com.awecode.muscn.model.http.fixtures.FixturesResponse;
 import com.awecode.muscn.model.http.injuries.InjuriesResponse;
 import com.awecode.muscn.model.http.leaguetable.LeagueTableResponse;
+import com.awecode.muscn.model.http.partners.PartnersResponse;
 import com.awecode.muscn.model.http.recent_results.RecentResultsResponse;
 import com.awecode.muscn.model.http.resultdetails.ResultDetailsResponse;
 import com.awecode.muscn.model.http.signin.SignInData;
@@ -13,11 +14,17 @@ import com.awecode.muscn.model.registration.RegistrationPostData;
 import com.awecode.muscn.model.registration.RegistrationResponse;
 
 import java.util.List;
+import java.util.Map;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
+import retrofit2.http.PartMap;
 import retrofit2.http.Path;
 import rx.Observable;
 
@@ -26,10 +33,10 @@ import rx.Observable;
  */
 public interface MuscnApiInterface {
 
-    @GET("api/v1/fixtures")
+    @GET("api/v1/fixtures/")
     Observable<FixturesResponse> getFixtures();
 
-    @GET("api/v1/league_table")
+    @GET("api/v1/league_table/")
     Observable<List<LeagueTableResponse>> getLeague();
 
     /**
@@ -44,10 +51,10 @@ public interface MuscnApiInterface {
     @GET("api/v1/fixtures/epl_matchweek/")
     Observable<ResponseBody> getEplMatchweekFixtures();
 
-    @GET("api/v1/top_scorers")
+    @GET("api/v1/top_scorers/")
     Observable<List<TopScorersResponse>> getTopScorers();
 
-    @GET("api/v1/injuries")
+    @GET("api/v1/injuries/")
     Observable<InjuriesResponse> getInjuredPlayers();
 
     @POST("api/v1/user_device/")
@@ -59,6 +66,20 @@ public interface MuscnApiInterface {
     @POST("api/v1/users/")
     Observable<SignUpPostData> postSignUpData(@Body SignUpPostData signUpPostData);
 
+    @GET("api/v1/users/membership/")
+    Observable<SignInSuccessData> getMembershipDetails();
+
     @POST("api/v1/obtain_auth_token/")
     Observable<SignInSuccessData> doSignIn(@Body SignInData signInData);
+
+    @Multipart
+    @POST("api/v1/users/membership/")
+    Observable<SignInSuccessData> postMembershipData(@PartMap Map<String, RequestBody> map, @Part MultipartBody.Part file);
+
+    @GET("api/v1/partners/")
+    Observable<PartnersResponse> getPartnersList();
+
+    @POST("api/v1/users/social_login/")
+    Observable<SignInSuccessData> requestSocialLogin(@Body SignUpPostData requestData);
+
 }

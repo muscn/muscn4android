@@ -1,8 +1,11 @@
 package com.awecode.muscn.util;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -11,17 +14,21 @@ import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextPaint;
+import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.text.style.URLSpan;
 import android.text.style.UnderlineSpan;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.animation.OvershootInterpolator;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.awecode.muscn.BuildConfig;
 import com.awecode.muscn.model.http.api_error.APIError;
+import com.awecode.muscn.util.prefs.PrefsHelper;
 import com.awecode.muscn.util.retrofit.ServiceGenerator;
 import com.awecode.muscn.views.aboutus.CustomSpannable;
 
@@ -46,6 +53,32 @@ import retrofit2.adapter.rxjava.HttpException;
  */
 public class Util {
 
+    public static void hideSoftKeyboard(Activity activity) {
+        InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
+
+    }
+
+    public static void showKeyboard(EditText editText) {
+        InputMethodManager imm = (InputMethodManager) editText.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT);
+    }
+
+    /**
+     * true- show user member registration button/form
+     * <p>
+     * status- memeber and pending approval - no need of registration
+     *
+     * @return
+     */
+    public static Boolean userNeedMemberRegistration() {
+        String status = PrefsHelper.getLoginResponse().getStatus();
+        if (!TextUtils.isEmpty(status) && (status.equalsIgnoreCase(Constants.STATUS_MEMBER)
+                || status.equalsIgnoreCase(Constants.STATUS_PENDING_APPROVAL)))
+            return false;
+        else
+            return true;
+    }
 
     public static String getAppVersion() {
         String versionCode = "0.0";
@@ -79,6 +112,21 @@ public class Util {
             e.printStackTrace();
         }
         return date;
+    }
+
+    public static String recentResultCommonDateFormatter(String date, String obtainedFormat) {
+        String requiredFormat = "dd MMM";
+        SimpleDateFormat format = new SimpleDateFormat(obtainedFormat);
+        format.setTimeZone(TimeZone.getTimeZone("UTC"));
+        Date newDate = null;
+        try {
+            newDate = format.parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        format = new SimpleDateFormat(requiredFormat);
+        String time = format.format(newDate);
+        return time;
     }
 
     public static String commonDateFormatter(String date, String obtainedFormat) {
@@ -336,5 +384,16 @@ public class Util {
 
     public static String twoDigitFormat(int number) {
         return String.format("%02d", number);
+    }
+
+    /**
+     * open url in browser
+     *
+     * @param mContext  context
+     * @param uriString url to open in browser or other application
+     */
+    public static void openUrl(Context mContext, String uriString) {
+        Uri uri = Uri.parse(uriString);
+        mContext.startActivity(new Intent(Intent.ACTION_VIEW, uri));
     }
 }

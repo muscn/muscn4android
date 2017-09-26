@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/whiteColor"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:paddingBottom="24dp"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:paddingTop="24dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@mipmap/ic_launcher"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="MANCHESTER UNITED"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/labels_text_size"
+            android:textStyle="bold|italic"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-thin"
+                android:text="SUPPORTERS' CLUB,"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/labels_text_size"
+                android:textStyle="italic"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" NEPAL"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/labels_text_size"
+                android:textStyle="bold|italic"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:background="@drawable/horizontal_divider_line_widget"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbarStyle="insideInset"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textViewDescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/about_us_detail_text"
+                    android:textColor="@color/colorGreyDark"
+                    android:textSize="@dimen/about_us_body_text_size"/>
+
+                <TextView
+                    android:id="@+id/textViewMembership"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/about_us_membership_text"
+                    android:textColor="@color/colorGreyDark"
+                    android:textSize="@dimen/about_us_body_text_size"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Find us at:"
+                    android:textColor="@color/colorGreyDark"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+            <!--find us layout-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="8dp"
+                android:orientation="vertical">
+
+                <!--manutd link layout-->
+                <LinearLayout
+                    android:id="@+id/websiteLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.3"
+                        android:padding="3dp"
+                        android:src="@drawable/icon_link"/>
+
+                    <TextView
+                        android:id="@+id/textViewOfficial_website"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="2.7"
+                        android:text="manutd.org.np"
+                        android:textColor="@color/colorPrimary"
+                        android:textColorLink="@color/colorPrimary"
+                        android:textSize="@dimen/labels_text_size"
+                        android:textStyle="bold"/>
+
+
+                </LinearLayout>
+                <!--email layout-->
+                <LinearLayout
+                    android:id="@+id/emailLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.3"
+                        android:padding="3dp"
+                        android:src="@drawable/mail"/>
+
+                    <TextView
+                        android:id="@+id/textViewEmail"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2.7"
+                        android:gravity="left|center"
+                        android:text="info@manutd.org.np"
+                        android:textColor="@color/colorPrimary"
+                        android:textColorLink="@color/colorPrimary"
+                        android:textSize="@dimen/labels_text_size"
+                        android:textStyle="bold"/>
+
+
+                </LinearLayout>
+                <!--fb layout-->
+                <LinearLayout
+                    android:id="@+id/facebookLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.3"
+                        android:padding="3dp"
+                        android:src="@drawable/fb"/>
+
+                    <TextView
+                        android:id="@+id/textViewFacebook"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2.7"
+                        android:gravity="left|center"
+                        android:text="muscnepal"
+                        android:textColor="@color/colorPrimary"
+                        android:textColorLink="@color/colorPrimary"
+                        android:textSize="@dimen/labels_text_size"
+                        android:textStyle="bold"/>
+
+
+                </LinearLayout>
+                <!--twitter layout-->
+                <LinearLayout
+                    android:id="@+id/twitterLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.3"
+                        android:padding="3dp"
+                        android:src="@drawable/tw"/>
+
+                    <TextView
+                        android:id="@+id/textViewTwitter"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2.7"
+                        android:gravity="left|center"
+                        android:text="\@muscnp"
+                        android:textColor="@color/colorPrimary"
+                        android:textColorLink="@color/colorPrimary"
+                        android:textSize="@dimen/labels_text_size"
+                        android:textStyle="bold"/>
+
+
+                </LinearLayout>
+                <!--instagram layout-->
+                <LinearLayout
+                    android:id="@+id/instagramLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_weight="0.3"
+                        android:padding="3dp"
+                        android:src="@drawable/ins"/>
+
+                    <TextView
+                        android:id="@+id/textViewInstagram"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2.7"
+                        android:gravity="left|center"
+                        android:text="muscnepal"
+                        android:textColor="@color/colorPrimary"
+                        android:textColorLink="@color/colorPrimary"
+                        android:textSize="@dimen/labels_text_size"
+                        android:textStyle="bold"/>
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="MUSCN app for android"
+                    android:textColor="@color/colorGreyDark"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/versionTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Version 1.0"
+                    android:textColor="@color/colorGreyDark"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Powered by "
+                    android:textColor="@color/colorGreyDark"/>
+
+                <TextView
+                    android:id="@+id/textViewAwecode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Awecode"
+                    android:textColor="@color/colorGreyDark"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/copyright_owner_string"
+                    android:textColor="@color/colorGreyDark"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:text="©  2017 | MUSCN"
+                    android:textColor="@color/colorGreyDark"/>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

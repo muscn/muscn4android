@@ -5,12 +5,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.awecode.muscn.R;
 import com.awecode.muscn.model.http.fixtures.Result;
 import com.awecode.muscn.util.Util;
+import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -75,11 +77,12 @@ public class FixturesListAdapter extends RealmRecyclerViewAdapter<Result, Fixtur
 
             if (result.getIsHomeGame())
                 holder.mHomeVsAwayTeamTextView.setText(Util.getHtmlText(context.getString(R.string.manchester_united) + " <small>vs</small> " + result.getOpponent().getName()
-                        + " <small>- " + result.getCompetitionYear().getCompetition().getName()+"</small>"));
+                        + " <small>- " + result.getCompetitionYear().getCompetition().getName() + "</small>"));
             else if (!result.getIsHomeGame())
                 holder.mHomeVsAwayTeamTextView.setText(Util.getHtmlText(result.getOpponent().getName() + " <small>vs</small> " + context.getString(R.string.manchester_united)
-                        + " <small>- " + result.getCompetitionYear().getCompetition().getName()+"</small>"));
+                        + " <small>- " + result.getCompetitionYear().getCompetition().getName() + "</small>"));
 
+            Picasso.with(context).load(result.getOpponent().getCrest()).into(holder.mOponentLogoImageView);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -101,7 +104,8 @@ public class FixturesListAdapter extends RealmRecyclerViewAdapter<Result, Fixtur
         TextView mWeekTextView;
         @BindView(R.id.monthYearTextView)
         TextView mMonthYearTextView;
-
+        @BindView(R.id.oponentLogo)
+        ImageView mOponentLogoImageView;
 
         public FixtureViewHolder(View itemView) {
             super(itemView);
