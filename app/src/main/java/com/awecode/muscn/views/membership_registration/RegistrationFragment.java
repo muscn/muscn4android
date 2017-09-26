@@ -496,7 +496,7 @@ public class RegistrationFragment extends AppCompatBaseFragment implements DateP
             return;
         mEsewConfiguration = new ESewaConfiguration().clientId(Constants.ESEWA_CLIENT_ID)
                 .secretKey(Constants.ESEWA_SECRET_KEY)
-                .environment(ESewaConfiguration.ENVIRONMENT_TEST);
+                .environment(ESewaConfiguration.ENVIRONMENT_PRODUCTION);
     }
 
     /**
