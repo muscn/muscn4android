@@ -36,7 +36,7 @@ public interface MuscnApiInterface {
     @GET("api/v1/fixtures/")
     Observable<FixturesResponse> getFixtures();
 
-    @GET("api/v1/league_table")
+    @GET("api/v1/league_table/")
     Observable<List<LeagueTableResponse>> getLeague();
 
     /**
@@ -51,10 +51,10 @@ public interface MuscnApiInterface {
     @GET("api/v1/fixtures/epl_matchweek/")
     Observable<ResponseBody> getEplMatchweekFixtures();
 
-    @GET("api/v1/top_scorers")
+    @GET("api/v1/top_scorers/")
     Observable<List<TopScorersResponse>> getTopScorers();
 
-    @GET("api/v1/injuries")
+    @GET("api/v1/injuries/")
     Observable<InjuriesResponse> getInjuredPlayers();
 
     @POST("api/v1/user_device/")
