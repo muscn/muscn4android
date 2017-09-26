@@ -2,6 +2,7 @@ package com.awecode.muscn.fcm;
 
 import android.os.Build;
 import android.provider.Settings;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.awecode.muscn.MyApplication;
@@ -41,29 +42,31 @@ public class MyFirebaseInstanceIdService extends FirebaseInstanceIdService {
         final String deviceId = Settings.Secure.getString(getApplicationContext().getContentResolver(),
                 Settings.Secure.ANDROID_ID);
         String refreshedToken = Prefs.getString(Constants.PREFS_REFRESH_TOKEN, "");
-        RegistrationPostData mRegistrationPostData = new RegistrationPostData(deviceId, refreshedToken, Build.MODEL, Constants.DEVICE_TYPE);
+        if (!TextUtils.isEmpty(refreshedToken)) {
+            RegistrationPostData mRegistrationPostData = new RegistrationPostData(deviceId, refreshedToken, Build.MODEL, Constants.DEVICE_TYPE);
 
-        MuscnApiInterface mApiInterface = ((MyApplication) this.getApplicationContext()).getApiInterface();
-        Observable<RegistrationResponse> call = mApiInterface.postRegistrationData(mRegistrationPostData);
+            MuscnApiInterface mApiInterface = ((MyApplication) this.getApplicationContext()).getApiInterface();
+            Observable<RegistrationResponse> call = mApiInterface.postRegistrationData(mRegistrationPostData);
 
-        call.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<RegistrationResponse>() {
-                    @Override
-                    public void onCompleted() {
+            call.subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Observer<RegistrationResponse>() {
+                        @Override
+                        public void onCompleted() {
 
-                    }
+                        }
 
-                    @Override
-                    public void onError(Throwable e) {
+                        @Override
+                        public void onError(Throwable e) {
 
-                    }
+                        }
 
-                    @Override
-                    public void onNext(RegistrationResponse registrationResponse) {
-                        Prefs.putBoolean(Constants.PREFS_DEVICE_REGISTERED, true);
-                    }
-                });
+                        @Override
+                        public void onNext(RegistrationResponse registrationResponse) {
+                            Prefs.putBoolean(Constants.PREFS_DEVICE_REGISTERED, true);
+                        }
+                    });
 
+        }
     }
 }

@@ -17,7 +17,9 @@ import com.awecode.muscn.model.http.api_error.APIError;
 import com.awecode.muscn.model.http.signin.SignInData;
 import com.awecode.muscn.model.http.signin.SignInSuccessData;
 import com.awecode.muscn.model.http.signup.SignUpPostData;
+import com.awecode.muscn.util.Constants;
 import com.awecode.muscn.util.Util;
+import com.awecode.muscn.util.prefs.Prefs;
 import com.awecode.muscn.util.prefs.PrefsHelper;
 import com.awecode.muscn.util.retrofit.error.ErrorUtils;
 import com.awecode.muscn.views.base.AppCompatBaseFragment;
@@ -315,10 +317,7 @@ public class SignInFragment extends AppCompatBaseFragment implements GoogleApiCl
     }
 
     private void handleSocialLoginResponseForExistingUser(SignInSuccessData data) {
-        //first save
-        PrefsHelper.saveLoginResponse(data);
-        PrefsHelper.saveLoginStatus(true);
-        PrefsHelper.saveLoginToken(data.getToken());
+        saveLoginToken(data);
 
         if (Util.userNeedMemberRegistration()) {
             //go to registration view
@@ -420,15 +419,20 @@ public class SignInFragment extends AppCompatBaseFragment implements GoogleApiCl
                     public void onNext(SignInSuccessData signInSuccessData) {
                         mActivity.closeProgressDialog();
                         if (signInSuccessData.getToken() != null) {
-                            PrefsHelper.saveLoginStatus(true);
-                            PrefsHelper.saveLoginToken(signInSuccessData.getToken().toString());
+                            saveLoginToken(signInSuccessData);
 
-                            signInSuccessData.setEmail(emailEditText.getText().toString());
-                            PrefsHelper.saveLoginResponse(signInSuccessData);
                             mActivity.successDialogAndCloseActivity(mContext, getString(R.string.success_sign_in_text));
                         }
                     }
                 });
+    }
+
+    private void saveLoginToken(SignInSuccessData signInSuccessData) {
+        PrefsHelper.saveLoginStatus(true);
+        PrefsHelper.saveLoginToken(signInSuccessData.getToken().toString());
+        Prefs.putBoolean(Constants.PREFS_DEVICE_REGISTERED, false);
+        PrefsHelper.saveLoginResponse(signInSuccessData);
+
     }
 
     private void handleSignInRequestError(Throwable e) {
