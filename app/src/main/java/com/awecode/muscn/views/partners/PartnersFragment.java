@@ -13,7 +13,6 @@ import com.awecode.muscn.model.http.partners.PartnersResult;
 import com.awecode.muscn.model.listener.PartnerClickListener;
 import com.awecode.muscn.util.Util;
 import com.awecode.muscn.views.MasterFragment;
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -100,14 +99,10 @@ public class PartnersFragment extends MasterFragment implements PartnerClickList
 
                     @Override
                     public void onError(Throwable e) {
-
-                        Log.v(TAG, "Partners errors " + e.getLocalizedMessage());
-
                     }
 
                     @Override
                     public void onNext(PartnersResponse partnersResponse) {
-                        Log.v(TAG, "Partners res " + new Gson().toJson(partnersResponse));
                         deleteDataFromDBAndSave(partnersResponse);
                     }
                 });
@@ -150,7 +145,6 @@ public class PartnersFragment extends MasterFragment implements PartnerClickList
         List<PartnersResult> results = partnersResponse.getResults();
 
         if (results != null && results.size() > 0) {
-            Log.v("test", "result present");
             mRealm.beginTransaction();
             realmFixtures = mRealm.copyToRealm(results);
             mRealm.commitTransaction();
@@ -169,7 +163,6 @@ public class PartnersFragment extends MasterFragment implements PartnerClickList
             mAdapter.notifyDataSetChanged();
             return;
         }
-        Log.v("test", "data is " + mRealm.where(PartnersResult.class).findAll().get(0).getName());
         mAdapter = new PartnersAdapter(mRealm.where(PartnersResult.class).findAll());
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.partnerClickListener = this;

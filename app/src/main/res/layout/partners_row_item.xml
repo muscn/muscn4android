@@ -25,6 +25,7 @@
             android:id="@+id/partnerNameTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:gravity="center"
             android:text="Technical Partners"
             android:textColor="@color/colorGreyDark"

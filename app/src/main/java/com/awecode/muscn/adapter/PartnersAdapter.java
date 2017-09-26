@@ -1,7 +1,6 @@
 package com.awecode.muscn.adapter;
 
 import android.content.Context;
-import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
@@ -45,23 +44,35 @@ public class PartnersAdapter extends RealmRecyclerViewAdapter<PartnersResult, Pa
     @Override
     public void onBindViewHolder(PartnersViewHolder holder, int position) {
         final PartnersResult partnersResult = getItem(position);
-        if (partnersResult != null) {
-            if (!TextUtils.isEmpty(partnersResult.getName()))
-                holder.mPartnerNameTextView.setText(partnersResult.getName());
-            if (!TextUtils.isEmpty(partnersResult.getPartnership()))
-                holder.mPartnershipTextView.setText(partnersResult.getPartnership());
-            if (!TextUtils.isEmpty(partnersResult.getLogo())) {
-                Log.v("test","logo exists");
-                Picasso.with(mContext).load(Uri.parse(partnersResult.getLogo())).into(holder.mPartnerLogo);
-            }
-            holder.mPartnerLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (partnersResult.getUrl() != null)
-                        partnerClickListener.onClickPartner(partnersResult.getUrl());
-                }
-            });
+
+        String name = "";
+        if (!TextUtils.isEmpty(partnersResult.getName()))
+            name = partnersResult.getName();
+        holder.mPartnerNameTextView.setText(name);
+
+        String partners = "";
+        if (!TextUtils.isEmpty(partnersResult.getPartnership()))
+            partners = partnersResult.getPartnership();
+        holder.mPartnershipTextView.setText(partners);
+
+
+        try {
+            Picasso.with(mContext)
+                    .load(partnersResult.getLogo())
+                    .resize(500, 180)
+                    .into(holder.mPartnerLogo);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
+        holder.mPartnerLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (partnersResult.getUrl() != null)
+                    partnerClickListener.onClickPartner(partnersResult.getUrl());
+            }
+        });
+
     }
 
     public static class PartnersViewHolder extends RecyclerView.ViewHolder {
