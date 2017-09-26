@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.awecode.muscn.R;
+import com.awecode.muscn.fcm.FCMRegistrationService;
 import com.awecode.muscn.model.enumType.MenuType;
 import com.awecode.muscn.model.http.api_error.APIError;
 import com.awecode.muscn.model.http.signin.SignInData;
@@ -48,6 +49,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.mobsandgeeks.saripaar.ValidationError;
 import com.mobsandgeeks.saripaar.annotation.Email;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
@@ -430,9 +432,11 @@ public class SignInFragment extends AppCompatBaseFragment implements GoogleApiCl
     private void saveLoginToken(SignInSuccessData signInSuccessData) {
         PrefsHelper.saveLoginStatus(true);
         PrefsHelper.saveLoginToken(signInSuccessData.getToken().toString());
-        Prefs.putBoolean(Constants.PREFS_DEVICE_REGISTERED, false);
         PrefsHelper.saveLoginResponse(signInSuccessData);
 
+        Prefs.putBoolean(Constants.PREFS_DEVICE_REGISTERED, false);
+        Prefs.putString(Constants.PREFS_REFRESH_TOKEN, FirebaseInstanceId.getInstance().getToken());
+        FCMRegistrationService.sendFCMRegistrationToken(mContext);
     }
 
     private void handleSignInRequestError(Throwable e) {
