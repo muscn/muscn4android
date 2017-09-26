@@ -110,6 +110,9 @@
     <string name="please_wait">Please Wait...</string>
     <string name="please_check_email_confirmation">Please check your email and open confirmation link.</string>
     <string name="login_with_facebook">Login with Facebook</string>
+    <string name="google_login_error_try_again_msg">Google login error occurred. Please try again.</string>
+    <string name="sign_in_with_google">Sign in with Google</string>
+    <string name="request_id_token">#######</string>
 
 
 </resources>
