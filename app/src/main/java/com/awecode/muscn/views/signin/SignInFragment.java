@@ -437,7 +437,7 @@ public class SignInFragment extends AppCompatBaseFragment implements GoogleApiCl
                     if (errorMessage.contains(getString(R.string.login_error)))
                         showErrorDialog(getString(R.string.username_password_incorrect_text));
                     else if (((HttpException) e).response().code() == 400 &&
-                            errorMessage.contains("User account is disabled."))
+                            errorMessage.contains("User is inactive!"))
                         showErrorDialog(getString(R.string.please_check_email_confirmation));
 
                 } else if (apiError.getDetail() != null &&
