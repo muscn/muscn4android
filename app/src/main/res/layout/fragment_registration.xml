@@ -190,6 +190,13 @@
                 android:layout_marginTop="@dimen/activity_vertical_margin"
                 android:text="@string/submit"
                 android:visibility="gone" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Note: Membership package includes devil card, pin badge, calendar and special privileges."
+                android:textColor="@color/colorPrimary"
+                android:textSize="12sp" />
         </LinearLayout>
     </LinearLayout>
 
