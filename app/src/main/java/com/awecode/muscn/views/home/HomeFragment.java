@@ -118,7 +118,7 @@ HomeFragment extends MasterFragment {
 
         mActivity.setCustomTitle(R.string.muscn);
         initializeCountDownTimer();
-        setup_fixutres();
+        checkDBData();
         if (Util.checkInternetConnection(mContext))
             requestFixturesList();
     }
@@ -127,7 +127,7 @@ HomeFragment extends MasterFragment {
     /**
      * Load fixtures from db and show in view
      */
-    private void setup_fixutres() {
+    private void checkDBData() {
         try {
             RealmResults<Result> results = mRealm.where(Result.class).findAll();
             if (results != null
@@ -414,7 +414,7 @@ HomeFragment extends MasterFragment {
 
             @Override
             public void onFinish() {
-                setup_fixutres();
+                checkDBData();
             }
         });
     }
