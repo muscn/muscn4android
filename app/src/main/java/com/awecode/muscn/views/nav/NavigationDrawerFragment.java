@@ -251,10 +251,12 @@ public class NavigationDrawerFragment extends MasterFragment implements Navigati
 
                 Intent intent = new Intent(mContext, SignUpActivity.class);
 
-                if (text.equalsIgnoreCase(getString(R.string.membership_registration)))
+                if (text.equalsIgnoreCase(getString(R.string.membership_registration))) {
                     intent.putExtra(SignUpActivity.TYPE_INTENT, MenuType.MEMBERSHIP_REGISTRATION);
-                else
+                } else if (text.equalsIgnoreCase(getString(R.string.sign_up)))
                     intent.putExtra(SignUpActivity.TYPE_INTENT, MenuType.SIGN_UP);
+                else
+                    return;
 
                 startActivity(intent);
 
@@ -357,10 +359,11 @@ public class NavigationDrawerFragment extends MasterFragment implements Navigati
     private void changeRegisterLoginButtons() {
         if (PrefsHelper.getLoginStatus()) {
             signInButton.setText(getString(R.string.sign_out));
-            if (Util.userNeedMemberRegistration())
-                signUpButton.setText(getString(R.string.membership_registration));
-            else
-                signUpButton.setText("");
+            //enable below to enable member registration todo
+//            if (Util.userNeedMemberRegistration())
+            // signUpButton.setText(getString(R.string.membership_registration));
+//            else
+            signUpButton.setText("");
 
 
         } else {
