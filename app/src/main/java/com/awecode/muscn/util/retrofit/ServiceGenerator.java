@@ -2,6 +2,7 @@ package com.awecode.muscn.util.retrofit;
 
 import android.text.TextUtils;
 
+import com.awecode.muscn.BuildConfig;
 import com.awecode.muscn.model.http.signin.SignInSuccessData;
 import com.awecode.muscn.util.Constants;
 import com.awecode.muscn.util.prefs.PrefsHelper;
@@ -46,7 +47,8 @@ public class ServiceGenerator {
             interceptor = new MyInterceptor();
         httpClient.interceptors().add(interceptor);
 
-//        httpClient.addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY));
+        if (BuildConfig.DEBUG)
+            httpClient.addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY));
         httpClient.connectTimeout(TIME_OUT, TimeUnit.SECONDS);
         httpClient.readTimeout(TIME_OUT, TimeUnit.SECONDS);
         httpClient.writeTimeout(TIME_OUT, TimeUnit.SECONDS);
