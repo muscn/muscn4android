@@ -117,7 +117,7 @@ HomeFragment extends MasterFragment {
         super.onViewCreated(view, savedInstanceState);
 
         mActivity.setCustomTitle(R.string.muscn);
-        initializeCountDownTimer();
+
         checkDBData();
         if (Util.checkInternetConnection(mContext))
             requestFixturesList();
@@ -269,6 +269,9 @@ HomeFragment extends MasterFragment {
             List<Result> results = deletePastFixtureTable();
             if (results != null
                     && results.size() > 0) {
+                //initialize countdown timer
+                initializeCountDownTimer();
+
                 List<Result> arrangedResults = filterPastDateFromFixture(results);
 
                 if (arrangedResults.size() != 0) {
@@ -310,6 +313,7 @@ HomeFragment extends MasterFragment {
                         mLocationName = result.getLiveScreening().getName();
                     } else
                         mLiveScreeningLayout.setVisibility(View.GONE);
+
                 } else
                     showEmptyLayout();
             } else
@@ -399,6 +403,9 @@ HomeFragment extends MasterFragment {
      * init the countdown timer parameter and set listeners
      */
     private void initializeCountDownTimer() {
+        if (mCountDownTimer != null)
+            mCountDownTimer.stopCountDown();
+
         mCountDownTimer = new CountDownTimer();
         mCountDownTimer.setOnTimerListener(new CountDownTimer.TimerListener() {
             @Override

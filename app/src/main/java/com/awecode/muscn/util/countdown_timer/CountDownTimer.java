@@ -42,6 +42,12 @@ public class CountDownTimer {
         }
     }
 
+    public void stopCountDown(){
+        if(mCountDownTimer!=null){
+            mCountDownTimer.cancel();
+        }
+    }
+
     /**
      * initialize countdowntimer
      */
